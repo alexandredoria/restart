@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Formulários - Restart</title>
+    <title>Cadastrar </title>
 
     <!-- Núcleo CSS do Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -32,6 +32,7 @@
     <div id="wrapper">
 
       <!-- Barra Lateral -->
+     
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Marca e alterdação agrupados para uma melhor vizualização mobile -->
         <div class="navbar-header">
@@ -130,113 +131,10 @@
 
       <div id="page-wrapper">
 
-        <div class="row">
-          <div class="col-lg-12">
-            <h1> <p align="center">Cadastro de Usuário</p> </h1>
-            <ol class="breadcrumb">
-              <li><a href="index.html"><i class="fa fa-dashboard"></i> Painel</a></li>
-              <li class="active"><i class="fa fa-edit"></i> Cadastro</li>
-            </ol>
-         
-          </div>
-        </div><!-- /.row -->
-
-        <div class="row">
-          <div class="col-lg-4">
-
-            <form role="form">
-
-              <div class="form-group">
-                <label>Nome</label>
-                <input class="form-control">
-               
-              </div>
-
-              <div class="form-group">
-                <label>Matrícula</label>
-                <input class="form-control">
-               
-              </div>
-                <div class="form-group">
-                <label>Login</label>
-                <input class="form-control">
-               
-              </div>
-               <div class="form-group">
-                <label>Email</label>
-                <input class="form-control">
-               
-              </div>
-
-              <div class="form-group">
-                <label>Telefone Residencial</label>
-                <input class="form-control" type="text" id="campoTelefone">
-               
-              </div>
-
-          </form>
-
-          </div>
-          <div class="col-lg-8">
-              <div class="form-group">
-                <label>Sobrenome</label>
-                <input class="form-control">
-               
-              </div>
-                <div class="form-group">
-                <label>Endereço</label>
-                <input class="form-control">
-               
-              </div>
-
-           
-
-            <form role="form">
-
-               <div class="form-group">
-                <label>Senha</label>
-                <input class="form-control" type="password" maxlength="10">
-               
-              </div>
-
-              <div class="form-group">
-                <label>Telefone celular</label>
-                <input class="form-control" type="text" id="campoTelefonecel">
-               
-              </div>
-              
-              
-               <label>Tipo de usuário</label>
-               
-             <div class="form-group">
-                
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked> Administrador
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2"> Bolsista
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3"> Professor
-                </label>
-              </div>
-
-
-              
-
-               <button type="submit" class="btn btn-default">Submit Button</button>
-              <button type="reset" class="btn btn-default">Reset Button</button>  
-
-            </form>
-
-           
-            
-            
-           
-        
-
-          </div>
-        </div><!-- /.row -->
+       				
+         <?php
+         include("cadastrar_usuario.html");
+     ?>
 
       </div><!-- /#page-wrapper -->
 

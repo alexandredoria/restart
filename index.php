@@ -1,6 +1,6 @@
 <?php 
-  include("security.php"); // Inclui o arquivo com o sistema de segurança
-protegePagina(); // Chama a função que protege a página
+  //include("security.php"); // Inclui o arquivo com o sistema de segurança
+//protegePagina(); // Chama a função que protege a página
 ?>
 <!DOCTYPE html>
 <html lang="en">
