@@ -20,7 +20,7 @@
     
       <div class="col-lg-4"></div>
         <div class="col-lg-4">
-          <div class="panel panel-default">
+          <div class="panel panel-default" >
             <!-- Default panel contents -->
              
             
