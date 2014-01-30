@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
- <script src="jquery-1.11.0.min.js"></script>
-     <script src="maskplugin.js"></script>
+ <script src="js/jquery-1.11.0.min.js"></script>
+     <script src="js/maskplugin.js"></script>
   <head>
     <script>
 	jQuery(function($){
@@ -9,6 +9,7 @@
 	       $("#campoTelefone").mask("(999) 9999-9999");
 		   $("#campoTelefonecel").mask("(999) 9999-9999");
 	       $("#campoSenha").mask("***-****");
+		   
 	});
 	</script>
 
@@ -162,22 +163,28 @@
                 <input class="form-control">
                
               </div>
-               <div class="form-group">
-                <label>Email</label>
-                <input class="form-control">
-               
-              </div>
-
+           
               <div class="form-group">
                 <label>Telefone Residencial</label>
-                <input class="form-control" type="text" id="campoTelefone">
+                <input class="form-control" type="text" id="campoTelefonecel">
                
               </div>
 
           
-
+                       <label>Tipo de usuário</label>
+               
+             <div class="form-group">
+                
+              
+                <label class="radio-inline">
+                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2"> Bolsista
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3"> Professor
+                </label>
+              </div>
             
-
+ 
          
             
 
@@ -190,15 +197,16 @@
                 <input class="form-control">
                
               </div>
+            
+           
+
+            <form role="form">
                 <div class="form-group">
-                <label>Endereço</label>
+                <label>Email</label>
                 <input class="form-control">
                
               </div>
 
-           
-
-            <form role="form">
 
                <div class="form-group">
                 <label>Senha</label>
@@ -213,26 +221,13 @@
               </div>
               
               
-               <label>Tipo de usuário</label>
-               
-             <div class="form-group">
-                
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked> Administrador
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2"> Bolsista
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3"> Professor
-                </label>
-              </div>
+        
 
 
               
 
-               <button type="submit" class="btn btn-default">Submit Button</button>
-              <button type="reset" class="btn btn-default">Reset Button</button>  
+              <button type="submit" class="btn btn-default">Enviar</button>
+             <button type="reset" class="btn btn-default">Limpar</button>  
 
             </form>
 
