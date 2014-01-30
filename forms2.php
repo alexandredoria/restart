@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cadastrar </title>
+    <title>Formulários - Restart</title>
 
     <!-- Núcleo CSS do Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -32,7 +32,6 @@
     <div id="wrapper">
 
       <!-- Barra Lateral -->
-     
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Marca e alterdação agrupados para uma melhor vizualização mobile -->
         <div class="navbar-header">
@@ -129,14 +128,9 @@
         </div><!-- /.navbar-collapse -->
       </nav>
 
-      <div id="page-wrapper">
-
-       				
-         <?php
-         include("cadastrar_usuario.html");
-     ?>
-
-      </div><!-- /#page-wrapper -->
+      <?php 
+        include("cadastrar_usuario.html");
+        ?>
 
     </div><!-- /#wrapper -->
 
