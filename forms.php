@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
- <script src="jquery-1.11.0.min.js"></script>
-     <script src="maskplugin.js"></script>
+
   <head>
-    <script>
-	jQuery(function($){
-	       $("#campoData").mask("99/99/9999");
-	       $("#campoTelefone").mask("(999) 9999-9999");
-		   $("#campoTelefonecel").mask("(999) 9999-9999");
-	       $("#campoSenha").mask("***-****");
-	});
-	</script>
+  
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,7 +42,7 @@
             <li><a href="index.html"><i class="fa fa-dashboard"></i> Painel</a></li>
             <li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Gráficos</a></li>
             <li><a href="tables.html"><i class="fa fa-table"></i> Tabelas</a></li>
-            <li class="active"><a href="forms.html"><i class="fa fa-edit"></i> Formulários</a></li>
+            <li class="active"> <a href="forms.html"> <i class="fa fa-edit"></i> Formulários</a></li>
             <li><a href="typography.html"><i class="fa fa-font"></i> Tipografia</a></li>
             <li><a href="bootstrap-elements.html"><i class="fa fa-desktop"></i> Elementos Bootstrap</a></li>
             <li><a href="bootstrap-grid.html"><i class="fa fa-wrench"></i> Grid Bootstrap</a></li>
@@ -126,125 +118,23 @@
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->
-      </nav>
-
-      <div id="page-wrapper">
-
-        <div class="row">
-          <div class="col-lg-12">
-            <h1> <p align="center">Cadastro de Usuário</p> </h1>
-            <ol class="breadcrumb">
-              <li><a href="index.html"><i class="fa fa-dashboard"></i> Painel</a></li>
-              <li class="active"><i class="fa fa-edit"></i> Cadastro</li>
-            </ol>
-         
-          </div>
-        </div><!-- /.row -->
-
-        <div class="row">
-          <div class="col-lg-4">
-
-            <form role="form">
-
-              <div class="form-group">
-                <label>Nome</label>
-                <input class="form-control">
-               
-              </div>
-
-              <div class="form-group">
-                <label>Matrícula</label>
-                <input class="form-control">
-               
-              </div>
-                <div class="form-group">
-                <label>Login</label>
-                <input class="form-control">
-               
-              </div>
-               <div class="form-group">
-                <label>Email</label>
-                <input class="form-control">
-               
-              </div>
-
-              <div class="form-group">
-                <label>Telefone Residencial</label>
-                <input class="form-control" type="text" id="campoTelefone">
-               
-              </div>
-
-          </form>
-
-          </div>
-          <div class="col-lg-8">
-              <div class="form-group">
-                <label>Sobrenome</label>
-                <input class="form-control">
-               
-              </div>
-                <div class="form-group">
-                <label>Endereço</label>
-                <input class="form-control">
-               
-              </div>
-
-           
-
-            <form role="form">
-
-               <div class="form-group">
-                <label>Senha</label>
-                <input class="form-control" type="password" maxlength="10">
-               
-              </div>
-
-              <div class="form-group">
-                <label>Telefone celular</label>
-                <input class="form-control" type="text" id="campoTelefonecel">
-               
-              </div>
-              
-              
-               <label>Tipo de usuário</label>
-               
-             <div class="form-group">
-                
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked> Administrador
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2"> Bolsista
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3"> Professor
-                </label>
-              </div>
-
-
-              
-
-               <button type="submit" class="btn btn-default">Submit Button</button>
-              <button type="reset" class="btn btn-default">Reset Button</button>  
-
-            </form>
-
-           
-            
-            
-           
         
+    
+      </nav>
+       <?php
+         include("cadastrar_usuario.html");
+	     ?>
+      </div>
 
-          </div>
-        </div><!-- /.row -->
-
-      </div><!-- /#page-wrapper -->
 
     </div><!-- /#wrapper -->
+       
+    
 
     <!-- JavaScript -->
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
 
-  </body>
+   </body>
+   
 </html>
