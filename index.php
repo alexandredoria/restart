@@ -37,7 +37,7 @@
           <div class="col-lg-12">
             <h1>Painel <small>Visão geral de Estatísticas</small></h1>
             <ol class="breadcrumb">
-              <li class="active"><i class="fa fa-dashboard"></i> Painel</li>
+              <li class="active"><i class="glyphicon glyphicon-dashboard"></i> Painel</li>
             </ol>
             <div class="alert alert-success alert-dismissable">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -52,7 +52,7 @@
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-6">
-                    <i class="fa fa-comments fa-5x"></i>
+                    <i class="glyphicon glyphicon-comments fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
                     <p class="announcement-heading">8</p>
@@ -67,7 +67,7 @@
                       Ver Recados
                     </div>
                     <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
+                      <i class="glyphicon glyphicon-arrow-circle-right"></i>
                     </div>
                   </div>
                 </div>
@@ -79,7 +79,7 @@
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-6">
-                    <i class="fa fa-check fa-5x"></i>
+                    <i class="glyphicon glyphicon-check fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
                     <p class="announcement-heading">12</p>
@@ -94,7 +94,7 @@
                       Concluir tarefas
                     </div>
                     <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
+                      <i class="glyphicon glyphicon-arrow-circle-right"></i>
                     </div>
                   </div>
                 </div>
@@ -106,7 +106,7 @@
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-6">
-                    <i class="fa fa-tasks fa-5x"></i>
+                    <i class="glyphicon glyphicon-tasks fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
                     <p class="announcement-heading">3</p>
@@ -121,7 +121,7 @@
                       Corrigir problemas
                     </div>
                     <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
+                      <i class="glyphicon glyphicon-arrow-circle-right"></i>
                     </div>
                   </div>
                 </div>
@@ -133,7 +133,7 @@
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-6">
-                    <i class="fa fa-comments fa-5x"></i>
+                    <i class="glyphicon glyphicon-comments fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
                     <p class="announcement-heading">2</p>
@@ -148,7 +148,7 @@
                       Atender Chamados
                     </div>
                     <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
+                      <i class="glyphicon glyphicon-arrow-circle-right"></i>
                     </div>
                   </div>
                 </div>
@@ -161,7 +161,7 @@
           <div class="col-lg-12">
             <div class="panel panel-primary">
               <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Estatísticas de Atividades: 01 de outubro de 2013 - 31 de outubro de 2013</h3>
+                <h3 class="panel-title"><i class="glyphicon glyphicon-bar-chart-o"></i> Estatísticas de Atividades: 01 de outubro de 2013 - 31 de outubro de 2013</h3>
               </div>
               <div class="panel-body">
                 <div id="morris-chart-area"></div>
@@ -174,12 +174,12 @@
           <div class="col-lg-4">
             <div class="panel panel-primary">
               <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Atividades: 01 de outubro de 2013 - 31 de outubro de 2013</h3>
+                <h3 class="panel-title"><i class="glyphicon glyphicon-long-arrow-right"></i> Atividades: 01 de outubro de 2013 - 31 de outubro de 2013</h3>
               </div>
               <div class="panel-body">
                 <div id="morris-chart-donut"></div>
                 <div class="text-right">
-                  <a href="#">Ver Detalhes <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="#">Ver Detalhes <i class="glyphicon glyphicon-arrow-circle-right"></i></a>
                 </div>
               </div>
             </div>
@@ -187,33 +187,33 @@
           <div class="col-lg-4">
             <div class="panel panel-primary">
               <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-clock-o"></i> Atividades recentes</h3>
+                <h3 class="panel-title"><i class="glyphicon glyphicon-clock-o"></i> Atividades recentes</h3>
               </div>
               <div class="panel-body">
                 <div class="list-group">
                   <a href="#" class="list-group-item">
                     <span class="badge">agora mesmo</span>
-                    <i class="fa fa-calendar"></i> Calendário Atualizado
+                    <i class="glyphicon glyphicon-calendar"></i> Calendário Atualizado
                   </a>
                   <a href="#" class="list-group-item">
                     <span class="badge">4 minutos atrás</span>
-                    <i class="fa fa-comment"></i> Comentou em um post
+                    <i class="glyphicon glyphicon-comment"></i> Comentou em um post
                   </a>
                   <a href="#" class="list-group-item">
                     <span class="badge">1 hora atrás</span>
-                    <i class="fa fa-user"></i> Um novo usuário foi adicionado
+                    <i class="glyphicon glyphicon-user"></i> Um novo usuário foi adicionado
                   </a>
                   <a href="#" class="list-group-item">
                     <span class="badge">2 horas atrás</span>
-                    <i class="fa fa-check"></i> Tarefa concluída: "Formatar computadores do Laboratório 3"
+                    <i class="glyphicon glyphicon-check"></i> Tarefa concluída: "Formatar computadores do Laboratório 3"
                   </a>
                   <a href="#" class="list-group-item">
                     <span class="badge">2 dias atrás</span>
-                    <i class="fa fa-check"></i> Tarefa Concluída: "Configurar rede interna"
+                    <i class="glyphicon glyphicon-check"></i> Tarefa Concluída: "Configurar rede interna"
                   </a>
                 </div>
                 <div class="text-right">
-                  <a href="#">Ver Todas Atividades <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="#">Ver Todas Atividades <i class="glyphicon glyphicon-arrow-circle-right"></i></a>
                 </div>
               </div>
             </div>
