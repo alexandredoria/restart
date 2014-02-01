@@ -29,7 +29,7 @@
 
       <!-- Barra Lateral -->
       <?php 
-        include("barraLateral_adm.html");
+        include("barraLateral_coordenador.html");
       ?>
 
       <div id="page-wrapper">
