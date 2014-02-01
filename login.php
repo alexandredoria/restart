@@ -17,6 +17,57 @@
   </head>
 
   <body>
+    <?php
+error_reporting("E_Warning");
+if($_REQUEST["action"]=="logar"){
+if (!empty($_POST) AND (empty($_POST['usuario']) OR empty($_POST['senha']))) {
+  header("Location: index.php"); exit;
+}
+
+error_reporting("E_Warning");
+$con = mysql_connect("localhost", "root", "");
+if (!$con)
+   {
+     die("Erro na conexao". mysql_error());
+   }
+mysql_select_db("cose", $con);   
+error_reporting("E_Warning");
+$usuario = $_POST["usuario"];
+$senha = $_POST["senha"];
+$sql = ("SELECT id,login,nivel FROM usuario WHERE (login = '". $usuario ."') AND (senha = '". $senha ."')");
+$query = mysql_query($sql);
+if (mysql_num_rows($query) != 1)
+{
+           ?>
+             <script language="JavaScript">
+       alert('Login inválido. Tente novamente!');
+       location.href='index.php';
+         </script>
+       <?php
+       exit;
+} 
+else 
+{
+  $resultado = mysql_fetch_assoc($query);
+  if (!isset($_SESSION)) session_start();
+  $_SESSION['UsuarioID'] = $resultado['id'];
+  $_SESSION['UsuarioNome'] = $resultado['usuario'];
+  $_SESSION['UsuarioNivel'] = $resultado['nivel'];
+
+  if ($_SESSION['UsuarioNivel'] == 1)
+  {
+   header("Location: indexfuncionario.php"); exit;
+  }
+  elseif ($_SESSION['UsuarioNivel'] == 2)
+  {
+   header("Location: indexadmin.php"); exit;
+  }
+ }
+}
+
+else
+{
+?>
     
       <div class="col-lg-4"></div>
         <div class="col-lg-4">
@@ -41,9 +92,13 @@
          
         </div><!-- /.row -->
       <div class="col-lg-4"></div>
-    <!-- JavaScript -->
+   
+
+  <?php
+}
+?>
+ <!-- JavaScript -->
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
-
   </body>
 </html>
