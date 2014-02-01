@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Formulários - Restart</title>
+    <title>Usuário - Restart</title>
 
     <!-- Núcleo CSS do Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -129,7 +129,7 @@
       </nav>
 
       <?php 
-        include("cadastrar_usuario.html");
+        include("perfil_usuario.php");
         ?>
 
     </div><!-- /#wrapper -->
