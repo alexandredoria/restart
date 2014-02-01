@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Formulários - Restart</title>
+    <title>Login</title>
 
     <!-- Núcleo CSS do Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
