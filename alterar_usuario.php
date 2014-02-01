@@ -2,10 +2,10 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <h1> <p align="center">Cadastro de Usuário</p> </h1>
+            <h1> Alterar Dados de Usuário</h1>
             <ol class="breadcrumb">
               <li><a href="index.html"><i class="fa fa-dashboard"></i> Painel</a></li>
-              <li class="active"><i class="fa fa-edit"></i> Cadastro</li>
+              <li class="active"><i class="fa fa-edit"></i> Alteração de dados</li>
             </ol>
          
           </div>
@@ -40,25 +40,11 @@
                 <input class="form-control" type="password" maxlength="10">
                
               </div>
-
-              <label>Tipo de usuário</label>
-               
-             <div class="form-group">
-                
-               
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2"> Bolsista
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3"> Professor
-                </label>
-              </div>
-
-
-               
               
+               <button type="submit" class="btn btn-default">Enviar</button>
+              <button type="reset" class="btn btn-default">Limpar</button>  
 
-          </form>
+         </form>
 
           </div>
 
@@ -79,8 +65,6 @@
               </div>
 
 
-           
-
             <form role="form">
 
               <div class="form-group">
@@ -95,14 +79,6 @@
                
               </div>
               
-              
-               
-
-              
-
-               <button type="submit" class="btn btn-default">Enviar</button>
-              <button type="reset" class="btn btn-default">Limpar</button>  
-
             </form>
 
            
