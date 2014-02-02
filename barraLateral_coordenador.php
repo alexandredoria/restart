@@ -14,15 +14,9 @@
         <!-- Coletar os links de navegação, formulários e outros conteúdos para alternar -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-            <li class="active"><a href="index.php"><i class="fa fa-dashboard"></i> Painel</a></li>
+            <li <?php if ($pageTitle == "Restart") echo "class='active'"; ?>><a href="painel.php"><i class="fa fa-dashboard"></i> Painel</a></li>
             
-            <li class="dropdown">
-              <a href="charts.html" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> Usuários <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-plus"></i> Registrar usuário</a></li>
-                <li><a href="usuarios.php"><i class="fa fa-search"></i> Ver usuários</a></li>
-               </ul>
-            </li>
+            <li <?php if (($pageTitle == "Cadastrar usuário") || ($pageTitle == "Usuários &middot; Visão Geral")) echo "class='active'"; ?>><a href="usuarios.php"><i class="glyphicon glyphicon-user"></i> Usuários</a></li>
 
             <li><a href="tables.html"><i class="fa fa-edit"></i> Patrimônio</a></li>
             <li class="dropdown">
