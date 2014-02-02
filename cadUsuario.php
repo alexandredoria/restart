@@ -19,15 +19,15 @@
       include("barraLateral_coordenador.php");
   
       // Verifica se algum form foi enviado
-      /*if (!empty($_POST)) {
+      if (!empty($_POST)) {
         // Verifica se as variáveis relacionadas ao cadastro/edição existem
         if (isset($_POST['nome_user'], $_POST['plogin'])) {
-          $nome   = $_POST['nome_user'];
+          $nome   = $_POST['nome'];
           $email    = $_POST['email'];
-          $login    = $_POST['user'];
-          $senha    = $_POST['repass'];
+          $nome_login    = $_POST['nome_login'];
+          $senha    = $_POST['senha'];
           $pLogar   = $_POST['plogin'];
-          include_once 'core/functions.php';
+          include_once 'nucleo/funcoes.php';
           if ($pLogar == 1) {
             $pConf    = $_POST['pconf'];
             $pProd    = $_POST['pprod'];
@@ -44,7 +44,7 @@
         if ($_POST['acao'] == 'add') {
           $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
           $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario($nome, $email, $login, $senha, $perm);
+          $result   = $addUser->cadastrarUsuario($nome, $email, $nome_login, $senha, $perm);
           if (is_bool($result)) {
             echo "<div id='growl_box' class='good'><p>Usuário cadastrado.</p></div>";
           }else {
@@ -60,7 +60,7 @@
         } else {
           $senha = ((strlen($senha) != 60) && (strlen($senha) != 0)) ? criptografar_senha($senha) : $senha ;
           $editUser = new Usuario;
-          $editUser->editarUsuario($_POST['acao'], $nome, $email, $login, $senha, $perm);
+          $editUser->editarUsuario($_POST['acao'], $nome, $email, $nome_login, $senha, $perm);
           unset($editUser);
         }
       }
