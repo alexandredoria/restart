@@ -24,7 +24,7 @@
 
     <!-- Add custom CSS here -->
     <link href="css/sb-admin.css" rel="stylesheet">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"> <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
   </head>
 
   <body>
@@ -41,13 +41,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">Restart</a>
+          <a class="navbar-brand" href="index.html">Restart</a>
         </div>
 
         <!-- Coletar os links de navegação, formulários e outros conteúdos para alternar -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-            <li><a href="index.php"><i class="fa fa-dashboard"></i> Painel</a></li>
+            <li><a href="index.html"><i class="fa fa-dashboard"></i> Painel</a></li>
             <li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Gráficos</a></li>
             <li><a href="tables.html"><i class="fa fa-table"></i> Tabelas</a></li>
             <li class="active"><a href="forms.html"><i class="fa fa-edit"></i> Formulários</a></li>
@@ -128,124 +128,9 @@
         </div><!-- /.navbar-collapse -->
       </nav>
 
-      <div id="page-wrapper">
-
-        <div class="row">
-          <div class="col-lg-12">
-            <h1> <p align="center">Cadastro de Usuário</p> </h1>
-            <ol class="breadcrumb">
-              <li><a href="index.php"><i class="fa fa-dashboard"></i> Painel</a></li>
-              <li class="active"><i class="fa fa-edit"></i> Cadastro</li>
-            </ol>
-         
-          </div>
-        </div><!-- /.row -->
-
-        <div class="row">
-          <div class="col-lg-4">
-
-            <form role="form">
-
-              <div class="form-group">
-                <label>Nome</label>
-                <input class="form-control">
-               
-              </div>
-
-              <div class="form-group">
-                <label>Matrícula</label>
-                <input class="form-control">
-               
-              </div>
-                <div class="form-group">
-                <label>Login</label>
-                <input class="form-control">
-               
-              </div>
-               <div class="form-group">
-                <label>Email</label>
-                <input class="form-control">
-               
-              </div>
-
-              <div class="form-group">
-                <label>Telefone Residencial</label>
-                <input class="form-control" type="text" id="campoTelefone">
-               
-              </div>
-
-          
-
-            
-
-         
-            
-
-            </form>
-
-          </div>
-          <div class="col-lg-8">
-              <div class="form-group">
-                <label>Sobrenome</label>
-                <input class="form-control">
-               
-              </div>
-                <div class="form-group">
-                <label>Endereço</label>
-                <input class="form-control">
-               
-              </div>
-
-           
-
-            <form role="form">
-
-               <div class="form-group">
-                <label>Senha</label>
-                <input class="form-control" type="password" maxlength="10">
-               
-              </div>
-
-              <div class="form-group">
-                <label>Telefone celular</label>
-                <input class="form-control" type="text" id="campoTelefonecel">
-               
-              </div>
-              
-              
-               <label>Tipo de usuário</label>
-               
-             <div class="form-group">
-                
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked> Administrador
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2"> Bolsista
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3"> Professor
-                </label>
-              </div>
-
-
-              
-
-               <button type="submit" class="btn btn-default">Submit Button</button>
-              <button type="reset" class="btn btn-default">Reset Button</button>  
-
-            </form>
-
-           
-            
-            
-           
-        
-
-          </div>
-        </div><!-- /.row -->
-
-      </div><!-- /#page-wrapper -->
+      <?php 
+        include("cadastrar_usuario.html");
+        ?>
 
     </div><!-- /#wrapper -->
 
