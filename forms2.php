@@ -18,7 +18,11 @@
     <meta name="author" content="">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <title>Formulários - Restart</title>
+=======
+    <title>Usuário - Restart</title>
+>>>>>>> 7faa7aed6b5a6e5b102c43723572c13bc36bfba5
 =======
     <title>Usuário - Restart</title>
 >>>>>>> 7faa7aed6b5a6e5b102c43723572c13bc36bfba5
@@ -120,9 +124,15 @@
             </li>
             <li class="dropdown user-dropdown">
 <<<<<<< HEAD
+<<<<<<< HEAD
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> Walter Branco <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
+=======
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Walter Branco <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><i class="fa fa-user"></i> Perfil</a></li>
+>>>>>>> 7faa7aed6b5a6e5b102c43723572c13bc36bfba5
 =======
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Walter Branco <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -140,7 +150,11 @@
 
       <?php 
 <<<<<<< HEAD
+<<<<<<< HEAD
         include("cadastrar_usuario.html");
+=======
+        include("perfil_usuario.php");
+>>>>>>> 7faa7aed6b5a6e5b102c43723572c13bc36bfba5
 =======
         include("perfil_usuario.php");
 >>>>>>> 7faa7aed6b5a6e5b102c43723572c13bc36bfba5
