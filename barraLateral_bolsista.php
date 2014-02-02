@@ -18,7 +18,7 @@
             <li><a href="charts.html"><i class="fa fa-tasks"></i> Ocorrências</a></li>
             
             <li class="dropdown">
-              <a href="tables.html" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Componentes <b class="caret"></b></a>
+              <a href="tables.html" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-hdd"></i> Componentes <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="fa fa-plus"></i> Cadastrar componente</a></li>
                 <li><a href="#"><i class="fa fa-search"></i> Ver componentes</a></li>
@@ -77,7 +77,7 @@
               </ul>
             </li>
             <li class="dropdown user-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> Walter Branco <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['nome']." ". $_SESSION['sobrenome']; ?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>

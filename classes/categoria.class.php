@@ -42,11 +42,11 @@ class Categoria extends DB {
 
 	/**
 	 * Edita uma categoria existente
-	 * @param int $idUsuario Número de idUsuario da categoria a ser editada
+	 * @param int $id Número de id da categoria a ser editada
 	 * @return string Mensagem de retorno	
 	 */
-	public function editarCategoria($idUsuario, $nome) {
-		if ($edit = $this->db->query("UPDATE categorias SET nome = '$nome' WHERE idUsuario = $idUsuario")) {
+	public function editarCategoria($id, $nome) {
+		if ($edit = $this->db->query("UPDATE categorias SET nome = '$nome' WHERE id = $id")) {
 			if ($this->db->affected_rows) {
 				echo "<div id='growl_box' class='good'><p>Categoria editada.</p></div>";
 			}
@@ -66,12 +66,12 @@ class Categoria extends DB {
 
 	/**
 	 * Deleta uma categoria existente
-	 * @param int $idUsuario Número de idUsuario da categoria a ser excluída
+	 * @param int $id Número de id da categoria a ser excluída
 	 * @return string Mensagem de retorno
 	 */
-	public function deletarCategoria($idUsuario) {
-		$del_id		= $this->db->real_escape_string(trim($idUsuario));
-		if ($update = $this->db->query("DELETE FROM categorias WHERE idUsuario = $del_id")) {
+	public function deletarCategoria($id) {
+		$del_id		= $this->db->real_escape_string(trim($id));
+		if ($update = $this->db->query("DELETE FROM categorias WHERE id = $del_id")) {
 			if ($this->db->affected_rows) {
 				echo "<div id='growl_box' class='good'><p>Categoria removida.</p></div>";
 			}
@@ -84,7 +84,7 @@ class Categoria extends DB {
 			}
 		}
 		else {
-			$erromsg = ($this->db->error == "Cannot delete or update a parent row: a foreign key constraint fails (`restart`.`produtos`, CONSTRAINT `fk_produtos_categorias` FOREIGN KEY (`categorias_id`) REFERENCES `categorias` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION)") ? "A categoria não pôde ser removida.<br><span>Não é possível remover categorias que estão alocando produtos.</span>" : $this->db->error ;
+			$erromsg = ($this->db->error == "Cannot delete or update a parent row: a foreign key constraint fails (`restart`.`produtos`, CONSTRAINT `fk_produtos_categorias` FOREIGN KEY (`categorias_id`) REFERENCES `categorias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)") ? "A categoria não pôde ser removida.<br><span>Não é possível remover categorias que estão alocando produtos.</span>" : $this->db->error ;
 			echo "<div id='growl_box' class='bad'><p>" . $erromsg . "</p></div>";
 		}
 		echo "<script>showGrowl();</script>";
@@ -92,11 +92,11 @@ class Categoria extends DB {
 
 	/** 
 	 * Obtém o nome de uma categoria já cadastrada
-	 * @param int $idUsuario Número de idUsuario da categoria desejada
+	 * @param int $id Número de id da categoria desejada
 	 * @return string $string Nome da categoria
 	 */
-	public function obterNome($idUsuario) {
-		if ($valor = $this->db->query("SELECT nome FROM categorias WHERE idUsuario = $idUsuario")) {
+	public function obterNome($id) {
+		if ($valor = $this->db->query("SELECT nome FROM categorias WHERE id = $id")) {
 			if ($valor->num_rows) {
 				$string = $valor->fetch_assoc();
 				return (array_shift($string));
@@ -111,12 +111,12 @@ class Categoria extends DB {
 	 */
 	public function listarCategoria() {
 		// Executa a query das categorias e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM categorias ORDER BY idUsuario ASC")) {
+		if ($result	= $this->db->query("SELECT * FROM categorias ORDER BY id ASC")) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
 				foreach ($rows as $i => $value) {
-					if ($count = $this->db->query("SELECT COUNT(idUsuario) FROM produtos WHERE categorias_id = " . $value['idUsuario'])) {
+					if ($count = $this->db->query("SELECT COUNT(id) FROM produtos WHERE categorias_id = " . $value['id'])) {
 						$num = $count->fetch_row();
 						$rows[$i]['count'] = $num[0];
 					}

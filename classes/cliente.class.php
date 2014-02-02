@@ -40,7 +40,7 @@ class Cliente extends DB {
 	 * @param string $email Email para contato
 	 * @param string $tel Telefone para contato
 	 * @param string $notes Observações ou outras informações
-	 * @param int $user idUsuario do funcionario que cadastrou
+	 * @param int $user id do funcionario que cadastrou
 	 * @return string Mensagem de retorno
 	 */
 	public function cadastrarCliente($nome, $sobrenome,  $doc, $insc_estado, $cep, $endereco, $bairro, $uf, $cidade, $email, $tel, $notes, $user) {
@@ -69,18 +69,18 @@ class Cliente extends DB {
 	 * @param string $email Email para contato
 	 * @param string $tel Telefone para contato
 	 * @param string $notes Observações ou outras informações
-	 * @param int $idUsuario idUsuario do cliente a ser editado
+	 * @param int $id id do cliente a ser editado
 	 * @return string Mensagem de retorno
 	 */
-	public function editarCliente($nome, $sobrenome,  $doc, $insc_estado, $cep, $endereco, $bairro, $uf, $cidade, $email, $tel, $notes, $idUsuario) {
+	public function editarCliente($nome, $sobrenome,  $doc, $insc_estado, $cep, $endereco, $bairro, $uf, $cidade, $email, $tel, $notes, $id) {
 		$nome		= $this->db->real_escape_string(trim($nome));
 		$endereco	= $this->db->real_escape_string(trim($endereco));
 		$bairro		= $this->db->real_escape_string(trim($bairro));
 		$cidade		= $this->db->real_escape_string(trim($cidade));
 		$notes		= $this->db->real_escape_string(trim($notes));
 		$doc		= (!empty($doc)) ? $doc : NULL ;
-		$edit		= $this->db->prepare("UPDATE clientes SET nome_razao = ?, num_documento = ?, insc_estadual = ?, cep = ?, logradouro = ?, bairro = ?, estado = ?, cidade = ?, email = ?, telefone = ?, anotacoes = ? WHERE idUsuario = ?");
-		$edit->bind_param('sssssssssssi', $nome, $sobrenome,  $doc, $insc_estado, $cep, $endereco, $bairro, $uf, $cidade, $email, $tel, $notes, $idUsuario);
+		$edit		= $this->db->prepare("UPDATE clientes SET nome_razao = ?, num_documento = ?, insc_estadual = ?, cep = ?, logradouro = ?, bairro = ?, estado = ?, cidade = ?, email = ?, telefone = ?, anotacoes = ? WHERE id = ?");
+		$edit->bind_param('sssssssssssi', $nome, $sobrenome,  $doc, $insc_estado, $cep, $endereco, $bairro, $uf, $cidade, $email, $tel, $notes, $id);
 		if ($edit->execute()) {
 			if ($this->db->affected_rows) {
 				echo
@@ -105,12 +105,12 @@ class Cliente extends DB {
 
 	/**
 	 * Deleta um cliente existente
-	 * @param int $idUsuario Número de idUsuario do cliente a ser excluída
+	 * @param int $id Número de id do cliente a ser excluída
 	 * @return string Mensagem de retorno
 	 */
-	public function deletarCliente($idUsuario) {
-		$idUsuario		= $this->db->real_escape_string(trim($idUsuario));
-		if ($update = $this->db->query("DELETE FROM clientes WHERE idUsuario = $idUsuario")) {
+	public function deletarCliente($id) {
+		$id		= $this->db->real_escape_string(trim($id));
+		if ($update = $this->db->query("DELETE FROM clientes WHERE id = $id")) {
 			if ($this->db->affected_rows) {
 				echo "<div id='growl_box' class='good'><p>Cliente removido.</p></div>";
 			}
@@ -136,11 +136,11 @@ class Cliente extends DB {
 		$limite		= 10;	// Num max. de itens por pagina
 		$inicio		= ($pagina * $limite) - $limite;	//Determina o num do item inicial da consulta
 		// Executa a query dos clientes e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT idUsuario, nome_razao, num_documento, estado, telefone FROM clientes ORDER BY idUsuario DESC LIMIT $inicio, $limite")) {
+		if ($result	= $this->db->query("SELECT id, nome_razao, num_documento, estado, telefone FROM clientes ORDER BY id DESC LIMIT $inicio, $limite")) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
-				$count				= $this->db->query("SELECT COUNT(idUsuario) FROM clientes");
+				$count				= $this->db->query("SELECT COUNT(id) FROM clientes");
 				$count				= $count->fetch_row();
 				$rows[0]['itens']	= $count[0];
 				$rows[0]['limite']	= $limite;
@@ -154,12 +154,12 @@ class Cliente extends DB {
 
 	/**
 	 * Obtém o dado desejado de um cliente
-	 * @param int $idUsuario Número de idUsuario do usuário
+	 * @param int $id Número de id do usuário
 	 * @param string $field Campo da tabela que se deseja obter
 	 * @return string $string Valor obtido
 	 */
-	public function obterDados($field, $idUsuario) {
-		if ($valor = $this->db->query("SELECT $field FROM clientes WHERE idUsuario = $idUsuario")) {
+	public function obterDados($field, $id) {
+		if ($valor = $this->db->query("SELECT $field FROM clientes WHERE id = $id")) {
 			if ($valor->num_rows) {
 				$string = $valor->fetch_assoc();
 				return (array_shift($string));
@@ -177,18 +177,18 @@ class Cliente extends DB {
 		$termo	= preg_replace("/[^A-Za-z0-9]/", " ", $termo);
 		$termo	= $this->db->real_escape_string($termo);
 		if ((strlen($termo) >= 1) && ($termo !== ' ') && ($termo !== 'bo0bi3s')) {
-			if ($result = $this->db->query("SELECT idUsuario, nome_razao, num_documento, estado, telefone FROM clientes WHERE nome_razao LIKE '%$termo%'")) {
+			if ($result = $this->db->query("SELECT id, nome_razao, num_documento, estado, telefone FROM clientes WHERE nome_razao LIKE '%$termo%'")) {
 				if ($result->num_rows) {
 					while ($row = $result->fetch_assoc()) {
 						echo "
-							<tr><td>" . $row['idUsuario'] . "</td>
-							<td><a data-reveal-id='formCliente' data-animation='fade' data-focus='#nome_cli' onclick=\"ajaxEdit('cliente', 'formCli', " . $row['idUsuario'] . ")\">" . $row['nome_razao'] . "</a></td>
+							<tr><td>" . $row['id'] . "</td>
+							<td><a data-reveal-id='formCliente' data-animation='fade' data-focus='#nome_cli' onclick=\"ajaxEdit('cliente', 'formCli', " . $row['id'] . ")\">" . $row['nome_razao'] . "</a></td>
 							<td>" . $row['num_documento'] . "</td>
 							<td>" . $row['estado'] . "</td>
 							<td>" . $row['telefone'] . "</td>
 							<td>
-								<a class='btn_white' data-reveal-id='formCliente' data-animation='fade' data-focus='#nome_cli' onclick=\"ajaxEdit('cliente', 'formCli', " . $row['idUsuario'] . ")\">Editar</a> 
-								<a class='btn_white del' onclick=\"showConfirm('show'," . $row['idUsuario'] . ")\">Excluir</a>
+								<a class='btn_white' data-reveal-id='formCliente' data-animation='fade' data-focus='#nome_cli' onclick=\"ajaxEdit('cliente', 'formCli', " . $row['id'] . ")\">Editar</a> 
+								<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
 							</td></tr>";
 					}
 				}
@@ -202,14 +202,14 @@ class Cliente extends DB {
 			if (is_array($result)) {
 				foreach ($result as $row) {
 					echo "
-						<tr><td>" . $row['idUsuario'] . "</td>
-						<td><a data-reveal-id='formCliente' data-animation='fade' data-focus='#nome_cli' onclick=\"ajaxEdit('cliente', 'formCli', " . $row['idUsuario'] . ")\">" . $row['nome_razao'] . "</a></td>
+						<tr><td>" . $row['id'] . "</td>
+						<td><a data-reveal-id='formCliente' data-animation='fade' data-focus='#nome_cli' onclick=\"ajaxEdit('cliente', 'formCli', " . $row['id'] . ")\">" . $row['nome_razao'] . "</a></td>
 						<td>" . $row['num_documento'] . "</td>
 						<td>" . $row['estado'] . "</td>
 						<td>" . $row['telefone'] . "</td>
 						<td>
-							<a class='btn_white' data-reveal-id='formCliente' data-animation='fade' data-focus='#nome_cli' onclick=\"ajaxEdit('cliente', 'formCli', " . $row['idUsuario'] . ")\">Editar</a> 
-							<a class='btn_white del' onclick=\"showConfirm('show'," . $row['idUsuario'] . ")\">Excluir</a>
+							<a class='btn_white' data-reveal-id='formCliente' data-animation='fade' data-focus='#nome_cli' onclick=\"ajaxEdit('cliente', 'formCli', " . $row['id'] . ")\">Editar</a> 
+							<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
 						</td></tr>";
 				}
 			}

@@ -25,17 +25,17 @@ class Usuario extends DB {
 	 * Cadastra um novo usuario
 	 * @param string $nome Nome do usuario
 	 * @param string $email Endereço de email
-	 * @param string $nome_login Nome de nome_login para acesso
+	 * @param string $login Nome de login para acesso
 	 * @param string $senha Senha para acesso
 	 * @param string $perm Autorização para acesso ao sistema
 	 **/
-	public function cadastrarUsuario($nome, $sobrenome,  $email, $nome_login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular) {
+	public function cadastrarUsuario($nome, $sobrenome,  $email, $login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular) {
 		$nome		= $this->db->real_escape_string(trim($nome));
 		$email		= (!empty($email)) ? $this->db->real_escape_string(trim($email)) : NULL ;
-		$nome_login		= (!empty($nome_login)) ? $this->db->real_escape_string(trim($nome_login)) : NULL ;
+		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
 		$senha		= (!empty($senha)) ? $senha : NULL ;
-		$insert = $this->db->prepare("INSERT INTO usuario (nome, sobrenome, email, nome_login, senha, permissao, matricula, telefone_residencial, telefone_celular) VALUES (?, ?, ?, ?, ?)");
-		$insert->bind_param('sssss',$nome, $sobrenome,  $email, $nome_login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular);
+		$insert = $this->db->prepare("INSERT INTO usuario (nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular) VALUES (?, ?, ?, ?, ?)");
+		$insert->bind_param('sssss',$nome, $sobrenome,  $email, $login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular);
 		if ($insert->execute()) { return true; }
 		else { return ($this->db->error); }
 	}
@@ -44,18 +44,18 @@ class Usuario extends DB {
 	 * Edita um usuário
 	 * @param string $nome Nome do usuário
 	 * @param string $email Email do usuário
-	 * @param string $nome_login Nome de nome_login
+	 * @param string $login Nome de login
 	 * @param string $senha Senha de acesso
 	 * @param string $perm Permissões de acesso aos módulos
 	 * @return string Mensagem de retorno
 	 */
-	public function editarUsuario($idUsuario, $nome, $sobrenome,  $email, $nome_login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular) {
+	public function editarUsuario($id, $nome, $sobrenome,  $email, $login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular) {
 		$nome		= $this->db->real_escape_string(trim($nome));
 		$email		= (!empty($email)) ? $this->db->real_escape_string(trim($email)) : NULL ;
-		$nome_login		= (!empty($nome_login)) ? $this->db->real_escape_string(trim($nome_login)) : NULL ;
+		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
 		$senha		= (!empty($senha)) ? $senha : NULL ;
-		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, nome_login = ?, senha = ?, permissao = ?, matricula = ?, telefone_residencial = ?, telefone_celular = ? WHERE idUsuario = ?");
-		$edit->bind_param('sssssssssi', $nome, $sobrenome,  $email, $nome_login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular, $idUsuario);
+		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, login = ?, senha = ?, nivel_acesso = ?, matricula = ?, telefone_residencial = ?, telefone_celular = ? WHERE id = ?");
+		$edit->bind_param('sssssssssi', $nome, $sobrenome,  $email, $login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular, $id);
 		if ($edit->execute()) {
 			if ($this->db->affected_rows) {
 				echo
@@ -80,12 +80,12 @@ class Usuario extends DB {
 
 	/**
 	 * Deleta um usuário existente
-	 * @param int $idUsuario Número de idUsuario do usuário a ser excluída
+	 * @param int $id Número de id do usuário a ser excluída
 	 * @return string Mensagem de retorno
 	 */
-	public function deletarUsuario($idUsuario) {
-		$del_id		= $this->db->real_escape_string(trim($idUsuario));
-		if ($update = $this->db->query("DELETE FROM usuario WHERE idUsuario = $del_id")) {
+	public function deletarUsuario($id) {
+		$del_id		= $this->db->real_escape_string(trim($id));
+		if ($update = $this->db->query("DELETE FROM usuario WHERE id = $del_id")) {
 			if ($this->db->affected_rows) {
 				echo "<div id='growl_box' class='good'><p>Usuário removido.</p></div>";
 			}
@@ -105,12 +105,12 @@ class Usuario extends DB {
 
 	/**
 	 * Obtém o dado desejado de um usuário
-	 * @param int $idUsuario Número de idUsuario do usuário
+	 * @param int $id Número de id do usuário
 	 * @param string $field Campo da tabela que se deseja obter
 	 * @return string $string Valor obtido
 	 */
-	public function obterDados($field, $idUsuario) {
-		if ($valor = $this->db->query("SELECT $field FROM usuario WHERE idUsuario = $idUsuario")) {
+	public function obterDados($field, $id) {
+		if ($valor = $this->db->query("SELECT $field FROM usuario WHERE id = $id")) {
 			if ($valor->num_rows) {
 				$string = $valor->fetch_assoc();
 				return (array_shift($string));
@@ -125,7 +125,7 @@ class Usuario extends DB {
 	 */
 	public function listarusuario(){
 		// Executa a query dos usuários e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM usuario ORDER BY idUsuario ASC")) {
+		if ($result	= $this->db->query("SELECT * FROM usuario ORDER BY id ASC")) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -149,41 +149,41 @@ class Usuario extends DB {
 	 * @param string $senha Senha para acesso
 	 * @return string Mensagem de erro; caso sucesso envia para a pagina inicial
 	 */
-	public function nome_login($usuario, $senha) {
-		$usuario		= $this->db->real_escape_string(trim($usuario));
+	public function login($usuario, $senha) {
+		$usuario	= $this->db->real_escape_string(trim($usuario));
 		$senha		= $this->db->real_escape_string(trim($senha));
-		if ($nome_login = $this->db->query("SELECT idUsuario, nome, sobrenome, email, nome_login, senha, permissao, matricula, telefone_residencial, telefone_celular FROM usuario WHERE nome_login = '$usuario'")) {
-			if ($nome_login->num_rows) {
+		if ($login = $this->db->query("SELECT id, nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular FROM usuario WHERE login = '$usuario'")) {
+			if ($login->num_rows) {
 				$dados = array();
-				while ($info = $nome_login->fetch_assoc()) {
-					$dados['idUsuario']	= $info['idUsuario'];
+				while ($info = $login->fetch_assoc()) {
+					$dados['id']	= $info['id'];
 					$dados['nome']	= $info['nome'];
 					$dados['sobrenome']	= $info['sobrenome'];
 					$dados['email']	= $info['email'];					
-					$dados['nome_login']	= $info['nome_login'];
+					$dados['login']	= $info['login'];
 					$dados['senha']	= $info['senha'];
-					$dados['perm']	= explode('-', $info['permissao']);
+					$dados['perm']	= explode('-', $info['nivel_acesso']);
 					$dados['matricula']	= $info['matricula'];
 					$dados['telefone_residencial']	= $info['telefone_residencial'];
 					$dados['telefone_celular']	= $info['telefone_celular'];
 				}
-				if ($dados['perm'][0] == 'lo1') {
-					if (crypt($senha, $dados['senha']) === $dados['senha']) {
-						session_start();
-						$_SESSION['idUsuario']		= $dados['idUsuario'];
-						$_SESSION['nome']	= $dados['nome'];
-						$_SESSION['perm']	= $dados['perm'];
-						$_SESSION['hora']	= date("H:i");
-						header("Location: painel.php");
-					}
-					else echo "<div id='login_error'>Senha incorreta.</div>";	
-				}
-				else echo "<div id='login_error'>Este usuário não possui permissão para logar.</div>";
-			}
-			else echo "<div id='login_error'>Usuário '$usuario' inexistente.</div>";
-			$nome_login->free();
-		}
-		else echo "<div id='login_error'>" . $this->db->error . "</div>";
+				if (crypt($senha, $dados['senha']) === $dados['senha']) {
+					session_start();
+					$_SESSION['id']		= $dados['id'];
+					$_SESSION['nome']	= $dados['nome'];
+					$_SESSION['sobrenome']	= $dados['sobrenome'];
+					$_SESSION['email']	= $dados['email'];
+					$_SESSION['login']	= $dados['login'];
+					$_SESSION['perm']	= $dados['perm'];
+					$_SESSION['matricula']	= $dados['matricula'];
+					$_SESSION['telefone_residencial']	= $dados['telefone_residencial'];
+					$_SESSION['telefone_celular']	= $dados['telefone_celular'];
+					$_SESSION['hora']	= date("H:i");
+					header("Location: painel.php");
+				} else echo "<div id='login_error'>Senha incorreta.</div>";	
+			} else echo "<div>Usuário '$usuario' inexistente.</div>";
+			$login->free();
+		} else echo "<div>" . $this->db->error . "</div>";
 	}
 
 	/**

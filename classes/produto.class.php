@@ -31,12 +31,12 @@ class Produto extends DB {
 	 * Cadastra um novo produto
 	 * @param string $nome Nome do produto
 	 * @param string $und Se é CX, CP, etc
-	 * @param int $categ Número de idUsuario da categoria
+	 * @param int $categ Número de id da categoria
 	 * @param float $custo Valor pago pelo produto
 	 * @param float $venda Valor que o produto será vendido
 	 * @param string $obs Anotações
 	 * @param string $status ON (Ativo) / OFF (Inativo)
-	 * @param int $user idUsuario do funcionario que cadastrou
+	 * @param int $user id do funcionario que cadastrou
 	 * @return boolean Se foi possível cadastrar ou não a categoria
 	 */
 	public function cadastrarProduto($nome, $sobrenome,  $und, $categ, $custo, $venda, $obs, $status, $user) {
@@ -52,18 +52,18 @@ class Produto extends DB {
 	 * Edita um produto
 	 * @param string $nome Nome do produto
 	 * @param string $und Se é CX, CP, etc
-	 * @param int $categ Número de idUsuario da categoria
+	 * @param int $categ Número de id da categoria
 	 * @param float $custo Valor pago pelo produto
 	 * @param float $venda Valor que o produto será vendido
 	 * @param string $obs Anotações
 	 * @param string $status ON (Ativo) / OFF (Inativo)
-	 * @param int $user idUsuario do funcionario que editou
+	 * @param int $user id do funcionario que editou
 	 * @return string Mensagem de retorno
 	 */
-	public function editarProduto($idUsuario, $nome, $sobrenome,  $und, $categ, $custo, $venda, $obs, $status) {
+	public function editarProduto($id, $nome, $sobrenome,  $und, $categ, $custo, $venda, $obs, $status) {
 		$nome	= $this->db->real_escape_string(trim($nome));
 		$obs	= $this->db->real_escape_string(trim($obs));
-		if ($edit = $this->db->query("UPDATE produtos SET nome = '$nome', unidade = '$und', categorias_id = '$categ', preco_custo = '$custo', preco_venda = '$venda', anotacoes = '$obs', status = '$status' WHERE idUsuario = $idUsuario")) {
+		if ($edit = $this->db->query("UPDATE produtos SET nome = '$nome', unidade = '$und', categorias_id = '$categ', preco_custo = '$custo', preco_venda = '$venda', anotacoes = '$obs', status = '$status' WHERE id = $id")) {
 			if ($this->db->affected_rows) {
 				echo "<div id='growl_box' class='good'><p>Produto editado.</p></div>";
 			}
@@ -83,12 +83,12 @@ class Produto extends DB {
 
 	/**
 	 * Deleta um produto existente
-	 * @param int $idUsuario Número de idUsuario do produto a ser excluída
+	 * @param int $id Número de id do produto a ser excluída
 	 * @return string Mensagem de retorno
 	 */
-	public function deletarProduto($idUsuario) {
-		$del_id		= $this->db->real_escape_string(trim($idUsuario));
-		if ($update = $this->db->query("DELETE FROM produtos WHERE idUsuario = $del_id")) {
+	public function deletarProduto($id) {
+		$del_id		= $this->db->real_escape_string(trim($id));
+		if ($update = $this->db->query("DELETE FROM produtos WHERE id = $del_id")) {
 			if ($this->db->affected_rows) {
 				echo "<div id='growl_box' class='good'><p>Produto removido.</p></div>";
 			}
@@ -108,12 +108,12 @@ class Produto extends DB {
 
 	/**
 	 * Obtém o dado desejado de um produto
-	 * @param int $idUsuario Número de idUsuario do produt
+	 * @param int $id Número de id do produt
 	 * @param string $field Campo da tabela que se deseja obter
 	 * @return string $string Valor obtido
 	 */
-	public function obterDados($field, $idUsuario) {
-		if ($valor = $this->db->query("SELECT $field FROM produtos WHERE idUsuario = $idUsuario")) {
+	public function obterDados($field, $id) {
+		if ($valor = $this->db->query("SELECT $field FROM produtos WHERE id = $id")) {
 			if ($valor->num_rows) {
 				$string = $valor->fetch_assoc();
 				return (array_shift($string));
@@ -135,14 +135,14 @@ class Produto extends DB {
 				if ($result->num_rows) {
 					while ($row = $result->fetch_assoc()) {
 						echo "
-							<tr><td>" . $row['idUsuario'] . "</td>
-							<td><a data-reveal-id='formProdutos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('produto', 'formProd', " . $row['idUsuario'] . ")\">" . $row['nome'] . "</a></td>
+							<tr><td>" . $row['id'] . "</td>
+							<td><a data-reveal-id='formProdutos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('produto', 'formProd', " . $row['id'] . ")\">" . $row['nome'] . "</a></td>
 							<td>" . $row['unidade'] . "</td>
 							<td>" . $row['preco_custo'] . "</td>
 							<td>" . $row['preco_venda'] . "</td>
 							<td>
-								<a class='btn_white' data-reveal-id='formProdutos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('produto', 'formProd', " . $row['idUsuario'] . ")\">Editar</a> 
-								<a class='btn_white del' onclick=\"showConfirm('show'," . $row['idUsuario'] . ")\">Excluir</a>
+								<a class='btn_white' data-reveal-id='formProdutos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('produto', 'formProd', " . $row['id'] . ")\">Editar</a> 
+								<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
 							</td></tr>";
 					}
 				}
@@ -156,14 +156,14 @@ class Produto extends DB {
 			if (is_array($result)) {
 				foreach ($result as $row) {
 					echo "
-						<tr><td>" . $row['idUsuario'] . "</td>
-						<td><a data-reveal-id='formProdutos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('produto', 'formProd', " . $row['idUsuario'] . ")\">" . $row['nome'] . "</a></td>
+						<tr><td>" . $row['id'] . "</td>
+						<td><a data-reveal-id='formProdutos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('produto', 'formProd', " . $row['id'] . ")\">" . $row['nome'] . "</a></td>
 						<td>" . $row['unidade'] . "</td>
 						<td>" . $row['preco_custo'] . "</td>
 						<td>" . $row['preco_venda'] . "</td>
 						<td>
-							<a class='btn_white' data-reveal-id='formProdutos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('produto', 'formProd', " . $row['idUsuario'] . ")\">Editar</a> 
-							<a class='btn_white del' onclick=\"showConfirm('show'," . $row['idUsuario'] . ")\">Excluir</a>
+							<a class='btn_white' data-reveal-id='formProdutos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('produto', 'formProd', " . $row['id'] . ")\">Editar</a> 
+							<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
 						</td></tr>";
 				}
 			}
@@ -185,11 +185,11 @@ class Produto extends DB {
 		$limite		= 5;	// Num max. de itens por pagina
 		$inicio		= ($pagina * $limite) - $limite;	//Determina o num do item inicial da consulta
 		// Executa a query dos produtos e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM produtos WHERE status = 'ON' ORDER BY idUsuario DESC LIMIT $inicio, $limite")) {
+		if ($result	= $this->db->query("SELECT * FROM produtos WHERE status = 'ON' ORDER BY id DESC LIMIT $inicio, $limite")) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows				= $result->fetch_all(MYSQLI_ASSOC);
-				$count				= $this->db->query("SELECT COUNT(idUsuario) FROM produtos WHERE status = 'ON'");
+				$count				= $this->db->query("SELECT COUNT(id) FROM produtos WHERE status = 'ON'");
 				$count				= $count->fetch_row();
 				$rows[0]['itens']	= $count[0];
 				$rows[0]['limite']	= $limite;

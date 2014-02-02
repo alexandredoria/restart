@@ -9,17 +9,17 @@ USE `restart` ;
 -- Table `restart`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Usuario` (
-  `idUsuario` INT NOT NULL,
+  `id` INT NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
   `sobrenome` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `nome_login` VARCHAR(45) NOT NULL,
+  `login` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
-  `permissao` VARCHAR(12) NULL,
+  `nivel_acesso` INT NULL,
   `matricula` VARCHAR(45) NULL,
   `telefone_residencial` VARCHAR(10) NULL,
   `telefone_celular` VARCHAR(10) NULL,
-  PRIMARY KEY (`idUsuario`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -64,18 +64,18 @@ CREATE TABLE IF NOT EXISTS `restart`.`Chamado` (
   `previa_entrega` DATE NULL,
   `Usuario_idUsuario` INT NOT NULL,
   `Patrimonio_num_patrimonio` INT NOT NULL,
-  `Usuario_idUsuario1` INT NOT NULL,
+  `Usuario_id` INT NOT NULL,
   PRIMARY KEY (`idChamado`),
   INDEX `fk_Chamado_Patrimonio1_idx` (`Patrimonio_num_patrimonio` ASC),
-  INDEX `fk_Chamado_Usuario1_idx` (`Usuario_idUsuario1` ASC),
+  INDEX `fk_Chamado_Usuario1_idx` (`Usuario_id` ASC),
   CONSTRAINT `fk_Chamado_Patrimonio1`
     FOREIGN KEY (`Patrimonio_num_patrimonio`)
     REFERENCES `restart`.`Patrimonio` (`num_patrimonio`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Chamado_Usuario1`
-    FOREIGN KEY (`Usuario_idUsuario1`)
-    REFERENCES `restart`.`Usuario` (`idUsuario`)
+    FOREIGN KEY (`Usuario_id`)
+    REFERENCES `restart`.`Usuario` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

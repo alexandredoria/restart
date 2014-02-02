@@ -68,7 +68,7 @@
                         <td>" . $row['nome'] . "</td>
                         <td>" . $row['email'] . "</td>
                         <td>" . $row['login'] . "</td>
-                        <td>" . $row["perm"] . "</a>
+                        <td>" . $row["nivel_acesso"] . "</a>
                         <td>" . $row['matricula'] . "</td>
                         <td><button alterar></td>
                         <td> <button excluir></td>

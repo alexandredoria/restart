@@ -19,32 +19,26 @@
       include("barraLateral_coordenador.php");
   
       // Verifica se algum form foi enviado
+     /* 
       if (!empty($_POST)) {
         // Verifica se as variáveis relacionadas ao cadastro/edição existem
-        if (isset($_POST['nome_user'], $_POST['plogin'])) {
+        if (isset($_POST['nome'], $_POST['plogin'])) {
           $nome   = $_POST['nome'];
           $email    = $_POST['email'];
-          $nome_login    = $_POST['nome_login'];
+          $login    = $_POST['login'];
           $senha    = $_POST['senha'];
           $pLogar   = $_POST['plogin'];
           include_once 'nucleo/funcoes.php';
           if ($pLogar == 1) {
-            $pConf    = $_POST['pconf'];
-            $pProd    = $_POST['pprod'];
-            $pCateg   = $_POST['pcat'];
             $pUser    = $_POST['puser'];
-            $pCli   = $_POST['pcli'];
-            $pVenda   = $_POST['pvenda'];
-            $pEntre   = $_POST['pent'];
-            $pParc    = $_POST['pparc'];
-            $perm   = criar_permissao($pLogar, $pConf, $pProd, $pCateg, $pUser, $pCli, $pVenda, $pEntre, $pParc);
+            $nivel_acesso   = criar_nivel_acesso($pLogar, $pUser);
           }
-        else $perm    = criar_permissao($pLogar);
+        else $nivel_acesso    = criar_nivel_acesso($pLogar);
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'add') {
           $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
-          $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario($nome, $email, $nome_login, $senha, $perm);
+          $cadUsuario  = new Usuario;
+          $result   = $cadUsuario->cadastrarUsuario($nome, $sobrenome,  $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
           if (is_bool($result)) {
             echo "<div id='growl_box' class='good'><p>Usuário cadastrado.</p></div>";
           }else {
@@ -55,12 +49,12 @@
               </p>
             </div>";
           }
-          unset($addUser);
+          unset($cadUsuario);
           echo "<script>showGrowl();</script>";
         } else {
           $senha = ((strlen($senha) != 60) && (strlen($senha) != 0)) ? criptografar_senha($senha) : $senha ;
           $editUser = new Usuario;
-          $editUser->editarUsuario($_POST['acao'], $nome, $email, $nome_login, $senha, $perm);
+          $editUser->editarUsuario($_POST['acao'], $nome, $email, $login, $senha, $nivel_acesso);
           unset($editUser);
         }
       }
@@ -98,7 +92,7 @@
           </div>              
           <div class="form-group">
             <label>Login</label>
-            <input class="form-control" id="nome_login" name="nome_login" required autocomplete="off">
+            <input class="form-control" id="login" name="login" required autocomplete="off">
           </div>
           <div class="form-group">
             <label>Senha</label>
@@ -107,10 +101,10 @@
           <label>Tipo de usuário</label>
           <div class="form-group">
             <label class="radio-inline">
-              <input type="radio" name="perm" id="perm2" value="2"> Bolsista
+              <input type="radio" name="nivel_acesso" id="nivel_acesso2" value="2"> Bolsista
             </label>
             <label class="radio-inline">
-              <input type="radio" name="perm" id="perm3" value="3"> Professor
+              <input type="radio" name="nivel_acesso" id="nivel_acesso3" value="3"> Professor
             </label>
           </div>
         </form>

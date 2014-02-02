@@ -6,7 +6,7 @@ class FormaPagamento {
 	/**
 	 * TODO Auto-generated comment.
 	 */
-	private $idUsuario;
+	private $id;
 	/**
 	 * TODO Auto-generated comment.
 	 */
