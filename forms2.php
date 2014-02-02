@@ -17,7 +17,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+<<<<<<< HEAD
     <title>Formulários - Restart</title>
+=======
+    <title>Usuário - Restart</title>
+>>>>>>> 7faa7aed6b5a6e5b102c43723572c13bc36bfba5
 
     <!-- Núcleo CSS do Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -115,9 +119,15 @@
               </ul>
             </li>
             <li class="dropdown user-dropdown">
+<<<<<<< HEAD
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> Walter Branco <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
+=======
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Walter Branco <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><i class="fa fa-user"></i> Perfil</a></li>
+>>>>>>> 7faa7aed6b5a6e5b102c43723572c13bc36bfba5
                 <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>
                 <li><a href="#"><i class="fa fa-gear"></i> Configurações</a></li>
                 <li class="divider"></li>
@@ -129,7 +139,11 @@
       </nav>
 
       <?php 
+<<<<<<< HEAD
         include("cadastrar_usuario.html");
+=======
+        include("perfil_usuario.php");
+>>>>>>> 7faa7aed6b5a6e5b102c43723572c13bc36bfba5
         ?>
 
     </div><!-- /#wrapper -->
