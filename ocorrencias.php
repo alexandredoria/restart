@@ -6,10 +6,9 @@
     exit;
   }*/
   $pageTitle  = "Ocorrências &middot; Visão Geral";
-  $sliding  = true;
-  $mask   = false;
+  
   include 'nucleo/cabecario.php';
-  include 'classes/usuario.class.php';
+  
 ?>
 
   <body>
@@ -58,27 +57,7 @@
                   <th>Nº de Patrimônio</th>
 
                 </tr>
-                <?php
-                   /** $listaUser    = new Usuario;
-                    $result     = $listaUser->listarUsuarios();
-                    if (is_array($result)) {
-                      foreach ($result as $row) {
-                        echo "
-                      <tr>
-                        <td>" . $row['id'] . "</td>
-                        <td>" . $row['nome'] . "</td>
-                        <td>" . $row['email'] . "</td>
-                        <td>" . $row['login'] . "</td>
-                        <td>" . $row["nivel_acesso"] . "</a>
-                        <td>" . $row['matricula'] . "</td>
-                        <td><button alterar></td>
-                        <td> <button excluir></td>
-                      </tr>";
-        }
-      }
-      else echo "<tr><td></td><td>" . $result . "</td><td></td><td></td><td></td></tr>";
-      unset($listaUser);*/
-      ?>
+                
                 <tr>
                   <td>1</td>
                   <td>Walter Branco</td>

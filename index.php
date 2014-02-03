@@ -18,19 +18,7 @@
   </head>
 
   <body>
-    <?php
-      if (!empty($_POST)) {
-        if (isset($_POST['usuario'], $_POST['senha'])) {
-          include_once 'class/usuario.class.php';
-          $usuario = $_POST['usuario'];
-          $senha = $_POST['senha'];
-          $query  = new Usuario;
-          $query->login($usuario, $senha);
-          unset($query);
-        }
-      }
-      ?>
-    
+   
       <div class="col-lg-4"></div>
         <div class="col-lg-4">
           <div class="panel panel-default" >

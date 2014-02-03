@@ -6,10 +6,9 @@
     exit;
   }*/
   $pageTitle  = "Patrimônio &middot; Visão Geral";
-  $sliding  = true;
-  $mask   = false;
+  
   include 'nucleo/cabecario.php';
-  include 'classes/usuario.class.php';
+  
 ?>
 
   <body>
@@ -25,7 +24,7 @@
 
        <div class="row">
            <div class="col-lg-6">
-              <h1>Patrimônios <small>Visão geral</small></h1>
+              <h1>Patrimônio <small>Visão geral</small></h1>
             </div>
             <div class="col-lg-6" align="right">
               <a href="cadUsuario.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Novo patrimônio</button></a>
@@ -47,35 +46,15 @@
 
             <table class="table table-striped table-hover">
                 <tr>
-                  <th>Número de Patrimônio</th>
+                  <th>Registro Nº</th>
                   <th>Tipo</th>
-                  <th>Número de Posicionamento</th>
-                  <th>Número de Laboratório</th>
+                  <th>Posição</th>
+                  <th>Laboratório</th>
                   <th>Situação</th>
                   <th>Vencimento da Garantia</th>
                   
                 </tr>
-                <?php
-                   /** $listaUser    = new Usuario;
-                    $result     = $listaUser->listarUsuarios();
-                    if (is_array($result)) {
-                      foreach ($result as $row) {
-                        echo "
-                      <tr>
-                        <td>" . $row['id'] . "</td>
-                        <td>" . $row['nome'] . "</td>
-                        <td>" . $row['email'] . "</td>
-                        <td>" . $row['login'] . "</td>
-                        <td>" . $row["nivel_acesso"] . "</a>
-                        <td>" . $row['matricula'] . "</td>
-                        <td><button alterar></td>
-                        <td> <button excluir></td>
-                      </tr>";
-        }
-      }
-      else echo "<tr><td></td><td>" . $result . "</td><td></td><td></td><td></td></tr>";
-      unset($listaUser);*/
-      ?>
+                
                 <tr>
                   <td>1</td>
                   <td>Walter Branco</td>

@@ -5,8 +5,7 @@
     exit;
   }*/
   $pageTitle  = "Restart";
-  $sliding  = false;
-  $mask   = false;
+  
   include 'nucleo/cabecario.php';
 ?>
 <body>
