@@ -14,6 +14,18 @@
         <!-- Coletar os links de navegação, formulários e outros conteúdos para alternar -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
+          <li <?php if ($pageTitle == "Restart") echo "class='active'"; ?>><a href="painel.php"><i class="fa fa-dashboard"></i> Painel</a></li>
+            
+             <li <?php if (($pageTitle == "Cadastrar usuário") || ($pageTitle == "Usuários &middot; Visão Geral")) echo "class='active'"; ?>><a href="usuarios.php"><i class="glyphicon glyphicon-user"></i> Usuários</a></li>
+            
+             <li <?php if (($pageTitle == "Componentes") || ($pageTitle == "Componentes &middot; Visão Geral")) echo "class='active'"; ?>><a href="componentes.php"><i class="glyphicon glyphicon-user"></i> Componentes</a></li>
+            
+              <li <?php if (($pageTitle == "Ocorrências") || ($pageTitle == "Ocorrências &middot; Visão Geral")) echo "class='active'"; ?>><a href="ocorrencias.php"><i class="glyphicon glyphicon-user"></i> Ocorrências</a></li>
+                        
+              <li <?php if (($pageTitle == "Programas") || ($pageTitle == "Programas &middot; Visão Geral")) echo "class='active'"; ?>><a href="programas.php"><i class="glyphicon glyphicon-user"></i> Programas</a></li>
+               
+               <li <?php if (($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) echo "class='active'"; ?>><a href="patrimonio.php"><i class="glyphicon glyphicon-user"></i> Patrimônio</a></li>
+          
             <li class="active"><a href="index.php"><i class="fa fa-dashboard"></i> Painel</a></li>
             <li><a href="charts.html"><i class="fa fa-tasks"></i> Ocorrências</a></li>
             
