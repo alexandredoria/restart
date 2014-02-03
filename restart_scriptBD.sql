@@ -41,31 +41,30 @@ ENGINE = InnoDB;
 -- Table `restart`.`Programa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Programa` (
-  `idPrograma` INT NOT NULL,
+  `id` INT NOT NULL,
   `nome` VARCHAR(45) NULL,
   `versao` VARCHAR(45) NULL,
   `nome_desenvolvedor_fabricante` VARCHAR(45) NULL,
   `tipo_chave_licenca` VARCHAR(11) NULL,
   `cod_chave_licenca` VARCHAR(45) NULL,
-  PRIMARY KEY (`idPrograma`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `restart`.`Chamado`
+-- Table `restart`.`Ocorrencia`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restart`.`Chamado` (
-  `idChamado` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia` (
+  `id` INT NOT NULL,
   `categoria` VARCHAR(8) NULL,
   `descricao_chamado` VARCHAR(45) NULL,
   `estado_servico` VARCHAR(45) NULL,
   `data_ocorrencia` DATE NULL,
-  `data_entrega` DATE NULL,
   `previa_entrega` DATE NULL,
-  `Usuario_idUsuario` INT NOT NULL,
+  `data_entrega` DATE NULL,
   `Patrimonio_num_patrimonio` INT NOT NULL,
   `Usuario_id` INT NOT NULL,
-  PRIMARY KEY (`idChamado`),
+  PRIMARY KEY (`id`),
   INDEX `fk_Chamado_Patrimonio1_idx` (`Patrimonio_num_patrimonio` ASC),
   INDEX `fk_Chamado_Usuario1_idx` (`Usuario_id` ASC),
   CONSTRAINT `fk_Chamado_Patrimonio1`
@@ -102,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `restart`.`Software_Equipamento` (
   INDEX `fk_Software_has_Equipamento_Software1_idx` (`Software_idSoftware` ASC),
   CONSTRAINT `fk_Software_has_Equipamento_Software1`
     FOREIGN KEY (`Software_idSoftware`)
-    REFERENCES `restart`.`Programa` (`idPrograma`)
+    REFERENCES `restart`.`Programa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Software_has_Equipamento_Equipamento1`
@@ -117,13 +116,13 @@ ENGINE = InnoDB;
 -- Table `restart`.`Componente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Componente` (
-  `idComponente` INT NOT NULL,
+  `id` INT NOT NULL,
   `tipo` VARCHAR(45) NOT NULL,
   `modelo` VARCHAR(45) NOT NULL,
   `capacidade` INT NULL,
   `quantidade` INT NULL,
   `Equipamento_num_patrimonio` INT NOT NULL,
-  PRIMARY KEY (`idComponente`),
+  PRIMARY KEY (`id`),
   INDEX `fk_Hardware_Equipamento1_idx` (`Equipamento_num_patrimonio` ASC),
   CONSTRAINT `fk_Hardware_Equipamento1`
     FOREIGN KEY (`Equipamento_num_patrimonio`)
@@ -134,44 +133,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `restart`.`Defeito_Componente`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restart`.`Defeito_Componente` (
-  `Chamado_idChamado` INT NOT NULL,
-  `Componente_idComponente` INT NOT NULL,
-  PRIMARY KEY (`Chamado_idChamado`, `Componente_idComponente`),
-  INDEX `fk_Chamado_has_Componente_Componente1_idx` (`Componente_idComponente` ASC),
-  INDEX `fk_Chamado_has_Componente_Chamado1_idx` (`Chamado_idChamado` ASC),
-  CONSTRAINT `fk_Chamado_has_Componente_Chamado1`
-    FOREIGN KEY (`Chamado_idChamado`)
-    REFERENCES `restart`.`Chamado` (`idChamado`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Chamado_has_Componente_Componente1`
-    FOREIGN KEY (`Componente_idComponente`)
-    REFERENCES `restart`.`Componente` (`idComponente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `restart`.`Defeito_Programa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Defeito_Programa` (
-  `Chamado_idChamado` INT NOT NULL,
-  `Programa_idPrograma` INT NOT NULL,
-  PRIMARY KEY (`Chamado_idChamado`, `Programa_idPrograma`),
-  INDEX `fk_Chamado_has_Programa_Programa1_idx` (`Programa_idPrograma` ASC),
-  INDEX `fk_Chamado_has_Programa_Chamado1_idx` (`Chamado_idChamado` ASC),
-  CONSTRAINT `fk_Chamado_has_Programa_Chamado1`
-    FOREIGN KEY (`Chamado_idChamado`)
-    REFERENCES `restart`.`Chamado` (`idChamado`)
+  `Ocorrencia_id` INT NOT NULL,
+  `Programa_id` INT NOT NULL,
+  PRIMARY KEY (`Ocorrencia_id`, `Programa_id`),
+  INDEX `fk_Ocorrencia_has_Programa_Programa1_idx` (`Programa_id` ASC),
+  INDEX `fk_Ocorrencia_has_Programa_Ocorrencia1_idx` (`Ocorrencia_id` ASC),
+  CONSTRAINT `fk_Ocorrencia_has_Programa_Ocorrencia1`
+    FOREIGN KEY (`Ocorrencia_id`)
+    REFERENCES `restart`.`Ocorrencia` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Chamado_has_Programa_Programa1`
-    FOREIGN KEY (`Programa_idPrograma`)
-    REFERENCES `restart`.`Programa` (`idPrograma`)
+  CONSTRAINT `fk_Ocorrencia_has_Programa_Programa1`
+    FOREIGN KEY (`Programa_id`)
+    REFERENCES `restart`.`Programa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -181,19 +158,41 @@ ENGINE = InnoDB;
 -- Table `restart`.`Programa_has_Patrimonio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Programa_has_Patrimonio` (
-  `Programa_idPrograma` INT NOT NULL,
+  `Programa_id` INT NOT NULL,
   `Patrimonio_num_patrimonio` INT NOT NULL,
-  PRIMARY KEY (`Programa_idPrograma`, `Patrimonio_num_patrimonio`),
+  PRIMARY KEY (`Programa_id`, `Patrimonio_num_patrimonio`),
   INDEX `fk_Programa_has_Patrimonio_Patrimonio1_idx` (`Patrimonio_num_patrimonio` ASC),
-  INDEX `fk_Programa_has_Patrimonio_Programa1_idx` (`Programa_idPrograma` ASC),
+  INDEX `fk_Programa_has_Patrimonio_Programa1_idx` (`Programa_id` ASC),
   CONSTRAINT `fk_Programa_has_Patrimonio_Programa1`
-    FOREIGN KEY (`Programa_idPrograma`)
-    REFERENCES `restart`.`Programa` (`idPrograma`)
+    FOREIGN KEY (`Programa_id`)
+    REFERENCES `restart`.`Programa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Programa_has_Patrimonio_Patrimonio1`
     FOREIGN KEY (`Patrimonio_num_patrimonio`)
     REFERENCES `restart`.`Patrimonio` (`num_patrimonio`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `restart`.`Defeito_Componente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restart`.`Defeito_Componente` (
+  `Ocorrencia_id` INT NOT NULL,
+  `Componente_id` INT NOT NULL,
+  PRIMARY KEY (`Ocorrencia_id`, `Componente_id`),
+  INDEX `fk_Ocorrencia_has_Componente_Componente1_idx` (`Componente_id` ASC),
+  INDEX `fk_Ocorrencia_has_Componente_Ocorrencia1_idx` (`Ocorrencia_id` ASC),
+  CONSTRAINT `fk_Ocorrencia_has_Componente_Ocorrencia1`
+    FOREIGN KEY (`Ocorrencia_id`)
+    REFERENCES `restart`.`Ocorrencia` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Ocorrencia_has_Componente_Componente1`
+    FOREIGN KEY (`Componente_id`)
+    REFERENCES `restart`.`Componente` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

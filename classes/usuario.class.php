@@ -27,15 +27,15 @@ class Usuario extends DB {
 	 * @param string $email Endereço de email
 	 * @param string $login Nome de login para acesso
 	 * @param string $senha Senha para acesso
-	 * @param string $perm Autorização para acesso ao sistema
+	 * @param string $nivel_acesso Autorização para acesso ao sistema
 	 **/
-	public function cadastrarUsuario($nome, $sobrenome,  $email, $login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular) {
+	public function cadastrarUsuario($nome, $sobrenome,  $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular) {
 		$nome		= $this->db->real_escape_string(trim($nome));
 		$email		= (!empty($email)) ? $this->db->real_escape_string(trim($email)) : NULL ;
 		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
 		$senha		= (!empty($senha)) ? $senha : NULL ;
 		$insert = $this->db->prepare("INSERT INTO usuario (nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular) VALUES (?, ?, ?, ?, ?)");
-		$insert->bind_param('sssss',$nome, $sobrenome,  $email, $login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular);
+		$insert->bind_param('sssss',$nome, $sobrenome,  $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
 		if ($insert->execute()) { return true; }
 		else { return ($this->db->error); }
 	}
@@ -46,16 +46,16 @@ class Usuario extends DB {
 	 * @param string $email Email do usuário
 	 * @param string $login Nome de login
 	 * @param string $senha Senha de acesso
-	 * @param string $perm Permissões de acesso aos módulos
+	 * @param string $nivel_acesso Permissões de acesso aos módulos
 	 * @return string Mensagem de retorno
 	 */
-	public function editarUsuario($id, $nome, $sobrenome,  $email, $login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular) {
+	public function editarUsuario($id, $nome, $sobrenome,  $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular) {
 		$nome		= $this->db->real_escape_string(trim($nome));
 		$email		= (!empty($email)) ? $this->db->real_escape_string(trim($email)) : NULL ;
 		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
 		$senha		= (!empty($senha)) ? $senha : NULL ;
 		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, login = ?, senha = ?, nivel_acesso = ?, matricula = ?, telefone_residencial = ?, telefone_celular = ? WHERE id = ?");
-		$edit->bind_param('sssssssssi', $nome, $sobrenome,  $email, $login, $senha, $perm, $matricula, $telefone_residencial, $telefone_celular, $id);
+		$edit->bind_param('sssssssssi', $nome, $sobrenome,  $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular, $id);
 		if ($edit->execute()) {
 			if ($this->db->affected_rows) {
 				echo
@@ -162,7 +162,7 @@ class Usuario extends DB {
 					$dados['email']	= $info['email'];					
 					$dados['login']	= $info['login'];
 					$dados['senha']	= $info['senha'];
-					$dados['perm']	= explode('-', $info['nivel_acesso']);
+					$dados['nivel_acesso']	= explode('-', $info['nivel_acesso']);
 					$dados['matricula']	= $info['matricula'];
 					$dados['telefone_residencial']	= $info['telefone_residencial'];
 					$dados['telefone_celular']	= $info['telefone_celular'];
@@ -174,7 +174,7 @@ class Usuario extends DB {
 					$_SESSION['sobrenome']	= $dados['sobrenome'];
 					$_SESSION['email']	= $dados['email'];
 					$_SESSION['login']	= $dados['login'];
-					$_SESSION['perm']	= $dados['perm'];
+					$_SESSION['nivel_acesso']	= $dados['nivel_acesso'];
 					$_SESSION['matricula']	= $dados['matricula'];
 					$_SESSION['telefone_residencial']	= $dados['telefone_residencial'];
 					$_SESSION['telefone_celular']	= $dados['telefone_celular'];

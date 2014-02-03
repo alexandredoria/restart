@@ -19,14 +19,20 @@
       include("barraLateral_coordenador.php");
   
       // Verifica se algum form foi enviado
-     /* 
+      
       if (!empty($_POST)) {
         // Verifica se as variáveis relacionadas ao cadastro/edição existem
         if (isset($_POST['nome'], $_POST['plogin'])) {
           $nome   = $_POST['nome'];
+          $sobrenome   = $_POST['sobrenome'];
           $email    = $_POST['email'];
           $login    = $_POST['login'];
           $senha    = $_POST['senha'];
+          $nivel_acesso    = $_POST['nivel_acesso'];
+          $matricula    = $_POST['matricula'];
+          $telefone_residencial    = $_POST['telefone_residencial'];
+          $telefone_celular    = $_POST['telefone_celular'];
+          
           $pLogar   = $_POST['plogin'];
           include_once 'nucleo/funcoes.php';
           if ($pLogar == 1) {
