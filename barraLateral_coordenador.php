@@ -18,14 +18,14 @@
             
             <li <?php if (($pageTitle == "Cadastrar usuário") || ($pageTitle == "Usuários &middot; Visão Geral")) echo "class='active'"; ?>><a href="usuarios.php"><i class="glyphicon glyphicon-user"></i> Usuários</a></li>
 
-            <li><a href="tables.html"><i class="fa fa-edit"></i> Patrimônio</a></li>
+            <li><a href="patrimonio.php"><i class="fa fa-edit"></i> Patrimônio</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-paperclip"></i> Relatórios <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-tasks"></i> Ocorrências</a></li>
+                <li><a href="ocorrencias.php"><i class="fa fa-tasks"></i> Ocorrências</a></li>
 
-                <li><a href="#"><i class="glyphicon glyphicon-hdd"></i> Componentes</a></li>
-                <li><a href="#"><i class="fa fa-th"></i> Programas</a></li>
+                <li><a href="componentes.php"><i class="glyphicon glyphicon-hdd"></i> Componentes</a></li>
+                <li><a href="programas.php"><i class="fa fa-th"></i> Programas</a></li>
               </ul>
             </li>
           </ul>
