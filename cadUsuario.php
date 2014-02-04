@@ -1,4 +1,4 @@
-
+  
 <?php
   /*session_start();
   if (empty($_SESSION)) {
@@ -8,12 +8,16 @@
   $pageTitle  = "Cadastrar usuário";
   
   include 'nucleo/cabecario.php';
-  
-?>
+
+    include "config.php";
+
+  ?>
+
 
 <body>
   <div id="wrapper">
     <!-- Barra Lateral -->
+
     <?php 
       include("barraLateral_coordenador.php");
   
@@ -32,6 +36,7 @@
       <div class="row">
         <div class="col-lg-6">
           <form role="form" id="formUsuario" action="cadUsuario.php" method="post">
+            <input type="hidden" value="add" name="cad">
             <input type="hidden" name="acao">
             <div class="form-group">
               <label>Nome</label>
@@ -91,5 +96,29 @@
       </div><!-- /#row -->  
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
+  <?php
+    if (isset($_POST['cad'])){
+      $nome = $_POST["nome"];
+      $sobrenome = $_POST["sobrenome"];
+      $login = $_POST["login"];
+      $matricula = $_POST["matricula"];
+      $email = $_POST["email"];
+      $senha = $_POST["senha"];
+      $nivel_acesso = $_POST["nivel_acesso"];
+      $telefone_residencial = $_POST["telefone_residencial"];
+      $telefone_celular = $_POST["telefone_celular"];
+    
+      $sql = mysql_query("insert into `usuario` (nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular) values( '$nome', '$sobrenome', '$email', '$login', '$senha', '$nivel_acesso', '$matricula', '$telefone_residencial', '$telefone_celular')", $db_connection) or die("Error: Insert ".mysql_Error());
+
+  
+      if(($sql) > 0){
+        echo "Usuario cadastrado com sucesso.";
+      } 
+      else{
+        echo "Erro ao tentar cadastrar usuario.";
+      }
+      mysql_close($db_connection);
+    }
+  ?>
 </body>
 </html>

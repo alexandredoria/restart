@@ -8,6 +8,7 @@
   $pageTitle  = "Usuários &middot; Visão Geral";
   
   include 'nucleo/cabecario.php';
+  include 'nucleo/cabecario.php';
   
 ?>
 
