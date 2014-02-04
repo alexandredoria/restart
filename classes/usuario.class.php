@@ -27,18 +27,27 @@ class Usuario extends DB {
 	/**
 	 * Cadastra um novo usuario
 	 * @param string $nome Nome do usuario
+	 * @param string $sobrenome Nome do usuario
 	 * @param string $email Endereço de email
 	 * @param string $login Nome de login para acesso
 	 * @param string $senha Senha para acesso
-	 * @param string $perm Autorização para acesso ao sistema
+	 * @param int $nivel_acesso Nivel de acesso para acesso ao sistema
+	 * @param string $matricula Matricula do usuario
+	 * @param string $telefone_residencial Telefone residencial do usuario
+	 * @param string $telefone_celular Telefone celular do usuario
 	 **/
-	public function cadastrarUsuario($nome, $email, $login, $senha, $perm) {
+	public function cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular) {
 		$nome		= $this->db->real_escape_string(trim($nome));
+		$sobrenome		= $this->db->real_escape_string(trim($sobrenome));
 		$email		= (!empty($email)) ? $this->db->real_escape_string(trim($email)) : NULL ;
 		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
 		$senha		= (!empty($senha)) ? $senha : NULL ;
-		$insert = $this->db->prepare("INSERT INTO usuarios (nome, email, login, senha, permissao) VALUES (?, ?, ?, ?, ?)");
-		$insert->bind_param('sssss',$nome, $email, $login, $senha, $perm);
+		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim($matricula)) : NULL ;
+		$telefone_residencial		= $this->db->real_escape_string(trim($telefone_residencial));
+		$telefone_celular		= $this->db->real_escape_string(trim($telefone_celular));
+
+		$insert = $this->db->prepare("INSERT INTO usuario (nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$insert->bind_param('sssssisss', $nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
 		if ($insert->execute()) { return true; }
 		else { return ($this->db->error); }
 	}

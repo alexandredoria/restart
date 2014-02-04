@@ -9,7 +9,7 @@ USE `restart` ;
 -- Table `restart`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Usuario` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `sobrenome` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
@@ -27,7 +27,7 @@ ENGINE = InnoDB;
 -- Table `restart`.`Patrimonio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Patrimonio` (
-  `num_patrimonio` INT NOT NULL,
+  `num_patrimonio` INT NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(45) NULL,
   `num_posicionamento` INT NULL,
   `num_laboratorio` INT NULL,
@@ -41,7 +41,7 @@ ENGINE = InnoDB;
 -- Table `restart`.`Programa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Programa` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL,
   `versao` VARCHAR(45) NULL,
   `nome_desenvolvedor_fabricante` VARCHAR(45) NULL,
@@ -55,7 +55,7 @@ ENGINE = InnoDB;
 -- Table `restart`.`Ocorrencia`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `categoria` VARCHAR(8) NULL,
   `descricao_chamado` VARCHAR(45) NULL,
   `estado_servico` VARCHAR(45) NULL,
@@ -116,7 +116,7 @@ ENGINE = InnoDB;
 -- Table `restart`.`Componente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Componente` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(45) NOT NULL,
   `modelo` VARCHAR(45) NOT NULL,
   `capacidade` INT NULL,
@@ -155,28 +155,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `restart`.`Programa_has_Patrimonio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restart`.`Programa_has_Patrimonio` (
-  `Programa_id` INT NOT NULL,
-  `Patrimonio_num_patrimonio` INT NOT NULL,
-  PRIMARY KEY (`Programa_id`, `Patrimonio_num_patrimonio`),
-  INDEX `fk_Programa_has_Patrimonio_Patrimonio1_idx` (`Patrimonio_num_patrimonio` ASC),
-  INDEX `fk_Programa_has_Patrimonio_Programa1_idx` (`Programa_id` ASC),
-  CONSTRAINT `fk_Programa_has_Patrimonio_Programa1`
-    FOREIGN KEY (`Programa_id`)
-    REFERENCES `restart`.`Programa` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Programa_has_Patrimonio_Patrimonio1`
-    FOREIGN KEY (`Patrimonio_num_patrimonio`)
-    REFERENCES `restart`.`Patrimonio` (`num_patrimonio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `restart`.`Defeito_Componente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Defeito_Componente` (
@@ -193,6 +171,28 @@ CREATE TABLE IF NOT EXISTS `restart`.`Defeito_Componente` (
   CONSTRAINT `fk_Ocorrencia_has_Componente_Componente1`
     FOREIGN KEY (`Componente_id`)
     REFERENCES `restart`.`Componente` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `restart`.`Programa_has_Patrimonio`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restart`.`Programa_has_Patrimonio` (
+  `Programa_id` INT NOT NULL,
+  `Patrimonio_num_patrimonio` INT NOT NULL,
+  PRIMARY KEY (`Programa_id`, `Patrimonio_num_patrimonio`),
+  INDEX `fk_Programa_has_Patrimonio_Patrimonio1_idx` (`Patrimonio_num_patrimonio` ASC),
+  INDEX `fk_Programa_has_Patrimonio_Programa1_idx` (`Programa_id` ASC),
+  CONSTRAINT `fk_Programa_has_Patrimonio_Programa1`
+    FOREIGN KEY (`Programa_id`)
+    REFERENCES `restart`.`Programa` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Programa_has_Patrimonio_Patrimonio1`
+    FOREIGN KEY (`Patrimonio_num_patrimonio`)
+    REFERENCES `restart`.`Patrimonio` (`num_patrimonio`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

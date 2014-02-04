@@ -2,8 +2,7 @@
 	/**
 	* Classe que realiza a conexão com o banco de dados.
 	*
-	* @package	COVEG - Controle de Vendas Globo
-	* @author	Claudson Martins <claudson.m@gmail.com>	
+	*
 	*/
 	class DB{
 		/**
@@ -13,7 +12,7 @@
 		 * @param string $senhaDB Crenciais de acesso ao banco
 		 */
 		var $serverDB	= 'localhost';
-		var $tabelaDB	= 'coveg';
+		var $tabelaDB	= 'restart';
 		var $userDB		= 'root';
 		var $senhaDB	= '';
 
