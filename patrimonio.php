@@ -34,7 +34,7 @@
         <div class="row">
           <div class="col-lg-12">            
             <ol class="breadcrumb">
-               <li class="active"><i class="glyphicon glyphicon-user"></i> Usuários</li>
+               <li class="active"><i class="fa fa-edit"></i>Patriônio</li>
             </ol>
          
           </div>

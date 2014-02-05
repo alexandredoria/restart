@@ -34,7 +34,7 @@
         <div class="row">
           <div class="col-lg-12">            
             <ol class="breadcrumb">
-               <li class="active"><i class="glyphicon glyphicon-user"></i> Ocorrências</li>
+               <li class="active"><i class="fa fa-tasks"></i> Ocorrências</li>
             </ol>
          
           </div>

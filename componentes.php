@@ -34,7 +34,7 @@
         <div class="row">
           <div class="col-lg-12">            
             <ol class="breadcrumb">
-               <li class="active"><i class="glyphicon glyphicon-user"></i> Componentes</li>
+               <li class="active"><i class="glyphicon glyphicon-hdd"></i> Componentes</li>
             </ol>
          
           </div>
