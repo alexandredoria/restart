@@ -81,38 +81,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `restart`.`Disciplina_Pessoa`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restart`.`Disciplina_Pessoa` (
-  `Disciplina_idDisciplina` INT NOT NULL,
-  `Pessoa_idPessoa` INT NOT NULL,
-  PRIMARY KEY (`Disciplina_idDisciplina`, `Pessoa_idPessoa`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `restart`.`Software_Equipamento`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restart`.`Software_Equipamento` (
-  `Software_idSoftware` INT NOT NULL,
-  `Equipamento_num_patrimonio` INT NOT NULL,
-  PRIMARY KEY (`Software_idSoftware`, `Equipamento_num_patrimonio`),
-  INDEX `fk_Software_has_Equipamento_Equipamento1_idx` (`Equipamento_num_patrimonio` ASC),
-  INDEX `fk_Software_has_Equipamento_Software1_idx` (`Software_idSoftware` ASC),
-  CONSTRAINT `fk_Software_has_Equipamento_Software1`
-    FOREIGN KEY (`Software_idSoftware`)
-    REFERENCES `restart`.`Programa` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Software_has_Equipamento_Equipamento1`
-    FOREIGN KEY (`Equipamento_num_patrimonio`)
-    REFERENCES `restart`.`Patrimonio` (`num_patrimonio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `restart`.`Componente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Componente` (

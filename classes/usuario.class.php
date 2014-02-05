@@ -54,40 +54,50 @@ class Usuario extends DB {
 
 	/**
 	 * Edita um usuário
-	 * @param string $nome Nome do usuário
-	 * @param string $email Email do usuário
-	 * @param string $login Nome de login
-	 * @param string $senha Senha de acesso
-	 * @param string $perm Permissões de acesso aos módulos
+	 * 
+	 * @param string $nome Nome do usuario
+	 * @param string $sobrenome Nome do usuario
+	 * @param string $email Endereço de email
+	 * @param string $login Nome de login para acesso
+	 * @param string $senha Senha para acesso
+	 * @param int $nivel_acesso Nivel de acesso para acesso ao sistema
+	 * @param string $matricula Matricula do usuario
+	 * @param string $telefone_residencial Telefone residencial do usuario
+	 * @param string $telefone_celular Telefone celular do usuario
 	 * @return string Mensagem de retorno
 	 */
-	public function editarUsuario($id, $nome, $email, $login, $senha, $perm) {
+	public function editarUsuario($id, $nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular) {
 		$nome		= $this->db->real_escape_string(trim($nome));
+		$sobrenome		= $this->db->real_escape_string(trim($sobrenome));
 		$email		= (!empty($email)) ? $this->db->real_escape_string(trim($email)) : NULL ;
 		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
 		$senha		= (!empty($senha)) ? $senha : NULL ;
-		$edit		= $this->db->prepare("UPDATE usuarios SET nome = ?, email = ?, login = ?, senha = ?, permissao = ? WHERE id = ?");
-		$edit->bind_param('sssssi', $nome, $email, $login, $senha, $perm, $id);
+		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim($matricula)) : NULL ;
+		$telefone_residencial		= $this->db->real_escape_string(trim($telefone_residencial));
+		$telefone_celular		= $this->db->real_escape_string(trim($telefone_celular));
+
+		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, login = ?, senha = ?, nivel_acesso = ?, matricula = ?, telefone_residencial = ?, telefone_celular = ? WHERE id = ?");
+		$edit->bind_param('sssssisssi', $nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular, $id);
 		if ($edit->execute()) {
 			if ($this->db->affected_rows) {
 				echo
-				"<div id='growl_box' class='good'>
+				"<div>
 					<p>Usuário editado.
 					<br><span>Para validar novas permissões é necessário sair do sistema.</span></p>
 				</div>";
 			}
 			else {
 				echo
-				"<div id='growl_box' class='bad'>
+				"<div>
 					<p>Não foi possível editar o usuário.
 					<br><span>Lembre-se que usuarios devem possuir um nome exclusivo<span></p>
 				</div>";
 			}
 		}
 		else {
-			echo "<div id='growl_box' class='bad'><p>" . $this->db->error . "</p></div>";
+			echo "<div><p>" . $this->db->error . "</p></div>";
 		}
-		echo "<script>showGrowl();</script>";
+		
 	}
 
 	/**
@@ -97,22 +107,22 @@ class Usuario extends DB {
 	 */
 	public function deletarUsuario($id) {
 		$del_id		= $this->db->real_escape_string(trim($id));
-		if ($update = $this->db->query("DELETE FROM usuarios WHERE id = $del_id")) {
+		if ($update = $this->db->query("DELETE FROM usuario WHERE id = $del_id")) {
 			if ($this->db->affected_rows) {
-				echo "<div id='growl_box' class='good'><p>Usuário removido.</p></div>";
+				echo "<div><p>Usuário removido.</p></div>";
 			}
 			else {
 				echo
-				"<div id='growl_box' class='bad'>
+				"<div>
 					<p>Não foi possível remover o usuário.
-					<br><span>Lembre-se: usuários que cadastraram vendas ou produtos não podem ser removidos.<span></p>
+					<br><span>Lembre-se: usuários que cadastraram ocorrências não podem ser removidos.<span></p>
 				</div>";
 			}
 		}
 		else {
-			echo "<div id='growl_box' class='bad'><p>" . $this->db->error . "</p></div>";
+			echo "<div><p>" . $this->db->error . "</p></div>";
 		}
-		echo "<script>showGrowl();</script>";
+		
 	}
 
 	/**
@@ -122,7 +132,7 @@ class Usuario extends DB {
 	 * @return string $string Valor obtido
 	 */
 	public function obterDados($field, $id) {
-		if ($valor = $this->db->query("SELECT $field FROM usuarios WHERE id = $id")) {
+		if ($valor = $this->db->query("SELECT $field FROM usuario WHERE id = $id")) {
 			if ($valor->num_rows) {
 				$string = $valor->fetch_assoc();
 				return (array_shift($string));
@@ -137,7 +147,7 @@ class Usuario extends DB {
 	 */
 	public function listarUsuarios(){
 		// Executa a query dos usuários e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM usuarios ORDER BY id ASC")) {
+		if ($result	= $this->db->query("SELECT * FROM usuario ORDER BY id ASC")) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -164,7 +174,7 @@ class Usuario extends DB {
 	public function login($user, $pass) {
 		$user		= $this->db->real_escape_string(trim($user));
 		$pass		= $this->db->real_escape_string(trim($pass));
-		if ($login = $this->db->query("SELECT id, nome, senha, permissao, login FROM usuarios WHERE login = '$user'")) {
+		if ($login = $this->db->query("SELECT id, nome, senha, permissao, login FROM usuario WHERE login = '$user'")) {
 			if ($login->num_rows) {
 				$dados = array();
 				while ($info = $login->fetch_assoc()) {
@@ -200,8 +210,7 @@ class Usuario extends DB {
 		session_start();
 		session_unset();
 		session_destroy();
-		header("Location: ../coveg");
-	}
+		header("Location: ../restart");	}
 
 	/**
 	 * Verifica se determinado usuário existe e retorna para o AJAX
@@ -211,7 +220,7 @@ class Usuario extends DB {
 	 */
 	public function checkUser($termo, $campo) {
 		$termo	= $this->db->real_escape_string(trim($termo));
-		if ($check = $this->db->query("SELECT $campo FROM usuarios WHERE $campo = '$termo'")) {
+		if ($check = $this->db->query("SELECT $campo FROM usuario WHERE $campo = '$termo'")) {
 			if ($check->num_rows) echo "false"; // Nome está em uso
 			else echo "true"; // Não está em uso
 			$check->free();

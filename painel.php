@@ -14,7 +14,7 @@
 
       <!-- Barra Lateral -->
       <?php 
-        include("barraLateral_coordenador.php");
+        include("nucleo/barraLateral_coordenador.php");
       ?>
 
       <div id="page-wrapper">

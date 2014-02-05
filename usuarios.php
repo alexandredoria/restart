@@ -8,7 +8,7 @@
   $pageTitle  = "Usuários &middot; Visão Geral";
   
   include 'nucleo/cabecario.php';
-  include 'nucleo/cabecario.php';
+  include 'classes/usuario.class.php';
   
 ?>
 
@@ -18,7 +18,7 @@
 
       <!-- Barra Lateral -->
       <?php 
-        include("barraLateral_coordenador.php");
+        include("nucleo/barraLateral_coordenador.php");
       ?>
 
       <div id="page-wrapper">
@@ -55,29 +55,41 @@
                   <th>Matrícula</th>
                   <th>Tel. Residencial</th>
                   <th>Tel. Celular</th>
+                  <th></th>
 
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Walter Branco</td>
-                  <td>walterbranco@email.com</td> 
-                  <td>wbranco</td>   
-                  <td>Coordenador</td>  
-                  <td>20101IINF0000</td>    
-                  <td>(79) 9999-9999</td>  
-                  <td>(79) 0000-0000</td>      
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Alex DeLarge</td>
-                  <td>alexdelarge@email.com</td>
-                  <td>aldelarge</td>
-                  <td>Bolsista Trainee</td>
-                  <td>20101IINF1111</td>
-                  <td>(79) 0000-0000</td>
-                  <td>(79) 9999-9999</td>
-                </tr>
-                <tr>
+                
+                <tbody>
+                  <?php
+                    $listaUser    = new Usuario;
+                    $result     = $listaUser->listarUsuarios();
+                    if (is_array($result)) {
+                      foreach ($result as $row) {
+                        echo "
+                          <tr><td>" . $row['id'] . "</td>
+                            <td>". $row['nome'] . " ".$row['sobrenome']."</td>
+                            <td>" . $row['email'] . "</td>
+                            <td>" . $row['login'] . "</td>
+                            <td>" . $row['nivel_acesso'] . "</td>
+                            <td>" . $row['matricula'] . "</td>
+                            <td>" . $row['telefone_residencial'] . "</td>
+                            <td>" . $row['telefone_celular'] . "</td>
+                            <td>
+                              Editar
+                              Excluir
+                          </tr>"; 
+                      }
+                    } else echo 
+                        "<tr>
+                          <td></td>
+                          <td>" . $result . "</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>";
+                    unset($listaUser);
+                  ?>
+                </tbody>
               
             </table>
 
