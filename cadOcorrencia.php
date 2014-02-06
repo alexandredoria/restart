@@ -5,7 +5,7 @@
     header("Location: ../restart");
     exit;
   }*/
-  $pageTitle  = "Abrir Componente";
+  $pageTitle  = "Abrir Chamado";
   
   include 'nucleo/cabecario.php';
 
