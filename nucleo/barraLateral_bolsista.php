@@ -36,7 +36,7 @@
                 <li><a href="#"><i class="fa fa-search"></i> Ver componentes</a></li>
              </ul>
             </li>
-            <li><a href="forms.html"><i class="fa fa-th"></i> Programas</a></li>
+            <li><a href="forms.html"><i class="glyphicon glyphicon-th"></i> Programas</a></li>
             <li><a href="typography.html"><i class="fa fa-edit"></i> Patrimônio</a></li>
           </ul>
 

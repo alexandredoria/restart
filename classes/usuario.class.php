@@ -107,20 +107,55 @@ class Usuario extends DB {
 	 */
 	public function deletarUsuario($id) {
 		$del_id		= $this->db->real_escape_string(trim($id));
-		if ($update = $this->db->query("DELETE FROM usuario WHERE id = $del_id")) {
+		if ($update = $this->db->query("DELETE FROM usuarios WHERE id = $del_id")) {
 			if ($this->db->affected_rows) {
-				echo "<div><p>Usuário removido.</p></div>";
+				echo "<!-- Modal -->
+					<div class='modal fade' id='modal_excUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuario2' aria-hidden='true'>
+					  <div class='modal-dialog'>
+					    <div class='modal-content panel-success'>
+					      <div class='modal-header panel-heading'>
+					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+					        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário removido!</h4>
+					      </div>
+					      
+					    </div>
+					  </div>
+					</div>";
 			}
 			else {
-				echo
-				"<div>
-					<p>Não foi possível remover o usuário.
-					<br><span>Lembre-se: usuários que cadastraram ocorrências não podem ser removidos.<span></p>
-				</div>";
+				echo "<!-- Modal -->
+					<div class='modal fade' id='modal_excUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuario2' aria-hidden='true'>
+					  <div class='modal-dialog'>
+					    <div class='modal-content panel-danger'>
+					      <div class='modal-header panel-heading'>
+					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+					        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível remover o usuário</h4>
+					      </div>
+					      <div class='modal-body'>
+					        <p>Lembre-se: usuários que cadastraram ocorrências não podem ser removidos.</p>
+					      </div>
+					    </div>
+					  </div>
+					</div>";
 			}
+			echo "<script>$('#modal_excUsuario2').modal('show');</script>";
 		}
 		else {
-			echo "<div><p>" . $this->db->error . "</p></div>";
+			echo "<!-- Modal -->
+					<div class='modal fade' id='modal_erroBD' tabindex='-1' role='dialog' aria-labelledby='modal_erroBD' aria-hidden='true'>
+					  <div class='modal-dialog'>
+					    <div class='modal-content panel-danger'>
+					      <div class='modal-header panel-heading'>
+					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+					        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Erro encontrado</h4>
+					      </div>
+					      <div class='modal-body'>
+					        <p>". $this->db->error."</p>
+					      </div>
+					    </div>
+					  </div>
+					</div>";
+					echo "<script>$('#modal_erroBD').modal('show');</script>";
 		}
 		
 	}

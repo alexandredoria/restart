@@ -42,16 +42,37 @@
           $addUser  = new Usuario;
           $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
           if (is_bool($result)) {
-            $mensagem= "<div><p>Usuário cadastrado.</p></div>";
+            echo "<!-- Modal -->
+<div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content panel-success'>
+      <div class='modal-header panel-heading'>
+        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário cadastrado com sucesso!</h4>
+      </div>
+      
+    </div>
+  </div>
+</div>";
           }
           else {
-            $mensagem =
-            "<div>
-              <p>Não foi possível cadastrar o usuário.
-              <br><span>" . $result . "<span></p>
-            </div>";
+            echo "<!-- Modal -->
+<div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content panel-danger'>
+      <div class='modal-header panel-heading'>
+        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível cadastrar o usuário</h4>
+      </div>
+      <div class='modal-body'>
+        <p>".$result."</p>
+      </div>
+    </div>
+  </div>
+</div>";
           }
           unset($addUser);
+          echo "<script>$('#modal_cadUsuario').modal('show');</script>";
         }
       
       }
@@ -123,15 +144,19 @@
       </div><!-- /.row -->
 
       <div class="row">
-        <div class="col-lg-12" align="right">          
+        <div class="col-lg-12" align="right">   
+
             <button type="submit" class="btn btn-default">Enviar</button>
             <button type="reset" class="btn btn-default">Limpar</button>             
-            <?php if(isset($mensagem)){
-              echo $mensagem;
-            }?>
+            
           </form> 
         </div>
-      </div><!-- /#row -->  
+      </div><!-- /#row --> 
+              <!-- Button trigger modal -->
+
+
+
+
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
   

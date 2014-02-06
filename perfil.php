@@ -1,4 +1,29 @@
-<div id="page-wrapper">
+
+
+
+<?php
+  /*session_start();
+  if (empty($_SESSION)) {
+    header("Location: ../restart");
+    exit;
+  }*/
+  $pageTitle  = "Usuários &middot; Visão Geral";
+  
+  include 'nucleo/cabecario.php';
+  include 'classes/usuario.class.php';
+  
+?>
+
+  <body>
+
+    <div id="wrapper">
+
+      <!-- Barra Lateral -->
+      <?php 
+        include("nucleo/barraLateral_coordenador.php");
+      ?>
+
+     <div id="page-wrapper">
 
         <div class="row">
           <div class="col-lg-12">
@@ -13,6 +38,7 @@
 
         <div class="row">
           <div class="col-lg-4">
+ 
 
             <form role="form">
 
@@ -103,3 +129,10 @@
         </div><!-- /.row -->
 
       </div><!-- /#page-wrapper -->
+
+    </div><!-- /#wrapper -->
+
+    
+
+  </body>
+</html>

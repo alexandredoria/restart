@@ -25,7 +25,7 @@
                 <li><a href="ocorrencias.php"><i class="fa fa-tasks"></i> Ocorrências</a></li>
 
                 <li><a href="componentes.php"><i class="glyphicon glyphicon-hdd"></i> Componentes</a></li>
-                <li><a href="programas.php"><i class="fa fa-th"></i> Programas</a></li>
+                <li><a href="programas.php"><i class="glyphicon glyphicon-th"></i> Programas</a></li>
               </ul>
             </li>
           </ul>
@@ -79,7 +79,7 @@
               </ul>
             </li>
             <li class="dropdown user-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php //echo $_SESSION['nome']." ". $_SESSION['sobrenome']; ?> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i><?php //echo $_SESSION['nome']." ". $_SESSION['sobrenome']; ?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>

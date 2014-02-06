@@ -19,6 +19,15 @@
       <!-- Barra Lateral -->
       <?php 
         include("nucleo/barraLateral_coordenador.php");
+
+        if (!empty($_POST)) {
+          if (isset($_POST['id_action'])) {
+            $del_id   = $_POST['id_action'];
+            $delUser  = new Usuario;
+            $delUser->deletarUsuario($del_id);
+            unset($delUser);
+          }
+        }
       ?>
 
       <div id="page-wrapper">
@@ -56,6 +65,7 @@
                   <th>Tel. Residencial</th>
                   <th>Tel. Celular</th>
                   <th></th>
+                  <th></th>
 
                 </tr>
                 
@@ -66,7 +76,8 @@
                     if (is_array($result)) {
                       foreach ($result as $row) {
                         echo "
-                          <tr><td>" . $row['id'] . "</td>
+                          <tr>
+                            <td align='right'>" . $row['id'] . "</td>
                             <td>". $row['nome'] . " ".$row['sobrenome']."</td>
                             <td>" . $row['email'] . "</td>
                             <td>" . $row['login'] . "</td>
@@ -75,8 +86,13 @@
                             <td>" . $row['telefone_residencial'] . "</td>
                             <td>" . $row['telefone_celular'] . "</td>
                             <td>
-                              Editar
-                              Excluir
+                                <i class='glyphicon glyphicon-pencil'></i> Editar
+                            </td> 
+                            <td>
+                              <a data-toggle='modal' data-target='#modal_excUsuario'>
+                                <i class='glyphicon glyphicon-remove'></i> Excluir
+                              </a>
+                            </td>
                           </tr>"; 
                       }
                     } else echo 
@@ -97,6 +113,31 @@
          
         </div><!-- /.row -->
 
+        <!-- Button trigger modal -->
+        <div class='modal fade' id='modal_excUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content panel-danger'>
+      <div class='modal-header panel-heading'>
+        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+        <h4 class='modal-title' id='modal_cadUsuarioLabel'>O usuário será excluído</h4>
+      </div>
+      <div class='modal-body'>
+        Você realmente deseja executar essa operação?
+      </div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+        <form role="form" id="excUsuario" action="usuarios.php" method="post">
+          <input type="hidden" name="id_action">
+          <button type="submit" class="btn btn-danger">Sim</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
       </div><!-- /#page-wrapper -->
 
     </div><!-- /#wrapper -->
@@ -104,4 +145,4 @@
     
 
   </body>
-</html>
+</html> 
