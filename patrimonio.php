@@ -46,7 +46,7 @@
 
             <table class="table table-striped table-hover">
                 <tr>
-                  <th>Registro Nº</th>
+                  <th>Nº de Registro</th>
                   <th>Tipo</th>
                   <th>Posição</th>
                   <th>Laboratório</th>
