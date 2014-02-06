@@ -19,50 +19,39 @@
     <!-- Barra Lateral -->
 
     <?php 
-      include("barraLateral_bolsista.php");
+      include("barraLateral_professor.php");
   
     ?>
     <div id="page-wrapper">
       <div class="row">
         <div class="col-lg-12">
-          <h1> Cadastrar Componente</h1>
+          <h1> Abrir Chamado</h1>
           <ol class="breadcrumb">
-            <li><a href="componentes.php"><i class="glyphicon glyphicon-hdd"></i> Componentes</a></li>
-            <li class="active"><i class="glyphicon glyphicon-plus-sign"></i> Cadastrar Componente</li>
+            <li><a href="componentes.php"><i class="glyphicon glyphicon-hdd"></i> Ocorrências</a></li>
+            <li class="active"><i class="glyphicon glyphicon-plus-sign"></i> Novo Chamado</li>
           </ol>
         </div>
         </div><!-- /.row -->
       
       <div class="row">
         <div class="col-lg-6">
-          <form role="form" id="formComponente" action="cadComponente.php" method="post">
+          <form role="form" id="formOcorrencia" action="cadOcorrencia.php" method="post">
             <input type="hidden" value="add" name="cad">
             <input type="hidden" name="acao">
             
-            <label>Tipo de usuário</label>
+              <div class="form-group">
+              <label>Nº de Patrimonio</label>
+              <input class="form-control" id="patrimonio" name="patriomonio" required autocomplete="off">             
+          </div>
             <div class="form-group">
-              <label class="radio-inline">
-                <input type="radio" name="tipo_componente" id="tipo1" value="1">  Tipo 1
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="tipo_componente" id="tipo2" value="2"> Tipo 2
-              </label>
-            </div>
-            <div class="form-group">
-              <label>Modelo</label>
-              <input class="form-control" id="modelo" name="modelo" required autocomplete="off">          
+              <label>Descrição do Chamado</label>
+              <textarea  rows="2" class="form-control" id="descricao" name="descricao" required autocomplete="off">       </textarea>   
             </div> 
              <div class="form-group">
-              <label>Capacidade</label>
-              <input class="form-control" id="matricula" name="matricula" required autocomplete="off">
+              <label>Data de Ocorrência</label>
+              <input type="date" id="data" name="matricula" required autocomplete="off">
             </div>
-            <div class="form-group">
-              <label>Quantidade</label>
-              <input class="form-control" id="email" name="email" required autocomplete="off">             
-          
-            
-          
-        </div>
+           
         <div class="col-lg-6">    </div>
          
           

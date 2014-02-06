@@ -27,7 +27,7 @@
               <h1>Ocorrências <small>Visão geral</small></h1>
             </div>
             <div class="col-lg-6" align="right">
-              <a href="#"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Nova ocorrência</button></a>
+ 
             </div>      
        </div><!-- /.row -->
 
