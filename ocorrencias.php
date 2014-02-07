@@ -27,14 +27,14 @@
               <h1>Ocorrências <small>Visão geral</small></h1>
             </div>
             <div class="col-lg-6" align="right">
-              <a href="#"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Nova ocorrência</button></a>
+ 
             </div>      
        </div><!-- /.row -->
 
         <div class="row">
           <div class="col-lg-12">            
             <ol class="breadcrumb">
-               <li class="active"><i class="glyphicon glyphicon-user"></i> Ocorrências</li>
+               <li class="active"><i class="fa fa-tasks"></i> Ocorrências</li>
             </ol>
          
           </div>

@@ -34,7 +34,7 @@
         <div class="row">
           <div class="col-lg-12">            
             <ol class="breadcrumb">
-               <li class="active"><i class="glyphicon glyphicon-user"></i> Usuários</li>
+               <li class="active"><i class="fa fa-edit"></i>Patriônio</li>
             </ol>
          
           </div>
@@ -46,7 +46,7 @@
 
             <table class="table table-striped table-hover">
                 <tr>
-                  <th>Registro Nº</th>
+                  <th>Nº de Registro</th>
                   <th>Tipo</th>
                   <th>Posição</th>
                   <th>Laboratório</th>

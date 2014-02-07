@@ -14,7 +14,7 @@
         <!-- Coletar os links de navegação, formulários e outros conteúdos para alternar -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-          <li <?php if ($pageTitle == "Restart") echo "class='active'"; ?>><a href="painel.php"><i class="fa fa-dashboard"></i> Painel</a></li>
+          <!--<li <?php if ($pageTitle == "Restart") echo "class='active'"; ?>><a href="painel.php"><i class="fa fa-dashboard"></i> Painel</a></li>
             
              <li <?php if (($pageTitle == "Cadastrar usuário") || ($pageTitle == "Usuários &middot; Visão Geral")) echo "class='active'"; ?>><a href="usuarios.php"><i class="glyphicon glyphicon-user"></i> Usuários</a></li>
             
@@ -24,16 +24,16 @@
                         
               <li <?php if (($pageTitle == "Programas") || ($pageTitle == "Programas &middot; Visão Geral")) echo "class='active'"; ?>><a href="programas.php"><i class="glyphicon glyphicon-user"></i> Programas</a></li>
                
-               <li <?php if (($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) echo "class='active'"; ?>><a href="patrimonio.php"><i class="glyphicon glyphicon-user"></i> Patrimônio</a></li>
+               <li <?php if (($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) echo "class='active'"; ?>><a href="patrimonio.php"><i class="glyphicon glyphicon-user"></i> Patrimônio</a></li> -->
           
           
-            <li class="active"><a href="index.php"><i class="fa fa-dashboard"></i> Painel</a></li>
+            <li class="active"><a href="painel.php"><i class="fa fa-dashboard"></i> Painel</a></li>
 
             <li class="dropdown">
               <a href="charts.html" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tasks"></i> Ocorrências <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-plus"></i> Abrir chamado</a></li>
-                <li><a href="#"><i class="fa fa-search"></i> Ver chamados</a></li>
+                <li><a href="cadOcorrencia.php"><i class="fa fa-plus"></i> Abrir Chamado</a></li>
+                <li><a href="#"><i class="fa fa-search"></i> Ver meus chamados</a></li>
               </ul>
             </li>
           </ul>
@@ -87,7 +87,7 @@
               </ul>
             </li>
             <li class="dropdown user-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['nome']." ". $_SESSION['sobrenome']; ?> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php //echo $_SESSION['nome']." ". $_SESSION['sobrenome']; ?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>

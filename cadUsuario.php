@@ -8,8 +8,13 @@
   $pageTitle  = "Cadastrar usuário";
   
   include 'nucleo/cabecario.php';
+<<<<<<< HEAD
   
   include 'classes/usuario.class.php';
+=======
+
+   include "config.php";
+>>>>>>> b1a51295cf4d8b2b47ef2dfefeeaab96bc992d4e
 
   ?>
 
