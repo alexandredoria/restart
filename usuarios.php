@@ -23,6 +23,7 @@
         if (!empty($_POST)) {
           if (isset($_POST['id_action'])) {
             $del_id   = $_POST['id_action'];
+           
             $delUser  = new Usuario;
             $delUser->deletarUsuario($del_id);
             unset($delUser);
@@ -89,20 +90,28 @@
                                 <i class='glyphicon glyphicon-pencil'></i> Editar
                             </td> 
                             <td>
-                              <a data-toggle='modal' data-target='#modal_excUsuario'>
+                              <form action='#confirm' method='post'>
+                                <input type='hidden' name='id_action' value='".$row['id']."'>
+                                <a data-toggle='modal' data-target='#modal_excUsuario'>                              
                                 <i class='glyphicon glyphicon-remove'></i> Excluir
+                              </a>
                               </a>
                             </td>
                           </tr>"; 
                       }
                     } else echo 
-                        "<tr>
-                          <td></td>
-                          <td>" . $result . "</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>";
+                        " <tr>
+                            <td></td>
+                            <td>". $result."</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td> 
+                            <td></td>
+                          </tr>";
                     unset($listaUser);
                   ?>
                 </tbody>
@@ -125,9 +134,9 @@
         Você realmente deseja executar essa operação?
       </div>
        <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-        <form role="form" id="excUsuario" action="usuarios.php" method="post">
-          <input type="hidden" name="id_action">
+        <form role="form" id="confirm" action="usuarios.php" method="post">
+            
+          <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
           <button type="submit" class="btn btn-danger">Sim</button>
         </form>
       </div>

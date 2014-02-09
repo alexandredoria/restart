@@ -8,6 +8,7 @@
   $pageTitle  = "Ocorrências &middot; Visão Geral";
   
   include 'nucleo/cabecario.php';
+  include 'classes/ocorrencia.class.php';
   
 ?>
 
@@ -22,12 +23,13 @@
 
       <div id="page-wrapper">
 
+
        <div class="row">
            <div class="col-lg-6">
               <h1>Ocorrências <small>Visão geral</small></h1>
             </div>
             <div class="col-lg-6" align="right">
- 
+               <a href="cadOcorrencia.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Abrir chamado</button></a>
             </div>      
        </div><!-- /.row -->
 
@@ -62,7 +64,7 @@
                   <td>1</td>
                   <td>Walter Branco</td>
                   <td>Hardware</td> 
-                  <td>Motherfucker</td>   
+                  <td>Computador não liga</td>   
                   <td>Aberto</td>  
                   <td>02/02/2014</td>    
                   <td>05/02/2014</td>  
@@ -73,7 +75,7 @@
                   <td>2</td>
                   <td>Alex DeLarge</td>
                   <td>Software</td>
-                  <td>Doido, venha logo</td>
+                  <td>Internet não funciona</td>
                   <td>Aberto</td>  
                   <td>02/02/2014</td>    
                   <td>05/02/2014</td>  

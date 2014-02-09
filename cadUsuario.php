@@ -8,14 +8,8 @@
   $pageTitle  = "Cadastrar usuário";
   
   include 'nucleo/cabecario.php';
-<<<<<<< HEAD
-  
+
   include 'classes/usuario.class.php';
-=======
-
-   include "config.php";
->>>>>>> b1a51295cf4d8b2b47ef2dfefeeaab96bc992d4e
-
   ?>
 
 
@@ -48,8 +42,8 @@
           $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
           if (is_bool($result)) {
             echo "<!-- Modal -->
-<div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
-  <div class='modal-dialog'>
+<div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+  <div class='modal-dialog modal-sm'>
     <div class='modal-content panel-success'>
       <div class='modal-header panel-heading'>
         <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>

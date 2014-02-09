@@ -20,25 +20,11 @@
              
              <li <?php if (($pageTitle == "Ocorrências") || ($pageTitle == "Ocorrências &middot; Visão Geral")) echo "class='active'"; ?>><a href="ocorrencias.php"><i class="fa fa-tasks"></i> Ocorrências</a></li>
             
-<<<<<<< HEAD:nucleo/barraLateral_coordenador.php
-            <li <?php if (($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônio &middot; Visão Geral")) echo "class='active'"; ?>><a href="patrimonio.php"><i class="fa fa-edit"></i> Patrimônio</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-paperclip"></i> Relatórios <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="ocorrencias.php"><i class="fa fa-tasks"></i> Ocorrências</a></li>
-
-                <li><a href="componentes.php"><i class="glyphicon glyphicon-hdd"></i> Componentes</a></li>
-                <li><a href="programas.php"><i class="glyphicon glyphicon-th"></i> Programas</a></li>
-              </ul>
-=======
              <li <?php if (($pageTitle == "Componentes") || ($pageTitle == "Componentes &middot; Visão Geral")) echo "class='active'"; ?>><a href="componentes.php"><i class="glyphicon glyphicon-hdd"></i> Componentes</a></li>
             
-              <li <?php if (($pageTitle == "Programas") || ($pageTitle == "Programas &middot; Visão Geral")) echo "class='active'"; ?>><a href="programas.php"><i class="fa fa-th"></i> Programas</a></li>
+              <li <?php if (($pageTitle == "Programas") || ($pageTitle == "Programas &middot; Visão Geral")) echo "class='active'"; ?>><a href="programas.php"><i class="glyphicon glyphicon-th"></i> Programas</a></li>
               
               <li <?php if (($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) echo "class='active'"; ?>><a href="patrimonio.php"><i class="fa fa-edit"></i> Patrimônio</a></li>
-               
-           
->>>>>>> b1a51295cf4d8b2b47ef2dfefeeaab96bc992d4e:barraLateral_coordenador.php
             </li>
           </ul>
 

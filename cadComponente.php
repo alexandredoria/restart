@@ -9,7 +9,7 @@
   
   include 'nucleo/cabecario.php';
 
-    include "config.php";
+   
 
   ?>
 

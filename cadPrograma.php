@@ -9,8 +9,6 @@
   
   include 'nucleo/cabecario.php';
 
-    include "config.php";
-
   ?>
 
 
@@ -27,7 +25,7 @@
         <div class="col-lg-12">
           <h1> Cadastrar Programa</h1>
           <ol class="breadcrumb">
-            <li><a href="programas.php"><i class="fa fa-th"></i> Programas</a></li>
+            <li><a href="programas.php"><i class="glyphicon glyphicon-th"></i> Programas</a></li>
             <li class="active"><i class="glyphicon glyphicon-plus-sign"></i> Cadastrar Programa</li>
           </ol>
         </div>

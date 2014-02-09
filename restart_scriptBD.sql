@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `restart`.`Usuario` (
   `email` VARCHAR(45) NOT NULL,
   `login` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
-  `nivel_acesso` INT NULL,
+  `nivel_acesso` INT NOT NULL,
   `matricula` VARCHAR(45) NULL,
   `telefone_residencial` VARCHAR(10) NULL,
   `telefone_celular` VARCHAR(10) NULL,
@@ -56,8 +56,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `categoria` VARCHAR(8) NULL,
-  `descricao_chamado` VARCHAR(45) NULL,
+  `categoria` VARCHAR(8) NOT NULL,
+  `descricao` VARCHAR(45) NOT NULL,
   `estado_servico` VARCHAR(45) NULL,
   `data_ocorrencia` DATE NULL,
   `previa_entrega` DATE NULL,

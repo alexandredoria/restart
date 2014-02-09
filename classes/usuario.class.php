@@ -107,11 +107,11 @@ class Usuario extends DB {
 	 */
 	public function deletarUsuario($id) {
 		$del_id		= $this->db->real_escape_string(trim($id));
-		if ($update = $this->db->query("DELETE FROM usuarios WHERE id = $del_id")) {
+		if ($update = $this->db->query("DELETE FROM usuario WHERE id = $del_id")) {
 			if ($this->db->affected_rows) {
 				echo "<!-- Modal -->
-					<div class='modal fade' id='modal_excUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuario2' aria-hidden='true'>
-					  <div class='modal-dialog'>
+					<div class='modal fade bs-modal-sm' id='modal_excUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuario2' aria-hidden='true'>
+					  <div class='modal-dialog modal-sm'>
 					    <div class='modal-content panel-success'>
 					      <div class='modal-header panel-heading'>
 					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
