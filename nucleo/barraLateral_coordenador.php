@@ -77,13 +77,13 @@
               </ul>
             </li>
             <li class="dropdown user-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i><?php //echo $_SESSION['nome']." ". $_SESSION['sobrenome']; ?> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['nome']." ". $_SESSION['sobrenome']; ?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
+                <li><a href="perfil.php"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>
                 <li><a href="#"><i class="fa fa-gear"></i> Configurações</a></li>
                 <li class="divider"></li>
-                <li><a href="#"><i class="fa fa-power-off"></i> Sair</a></li>
+                <li><a href="logout.php"><i class="fa fa-power-off"></i> Sair</a></li>
               </ul>
             </li>
           </ul>

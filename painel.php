@@ -1,9 +1,9 @@
 <?php
   session_start();
-  /**if (empty($_SESSION)) {
+  if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
-  }*/
+  }
   $pageTitle  = "Restart";
   
   include 'nucleo/cabecario.php';

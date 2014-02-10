@@ -31,10 +31,10 @@
                 <li><a href="#"><i class="fa fa-search"></i> Ver programas</a></li>
              </ul>
             </li>
-<<<<<<< HEAD:nucleo/barraLateral_bolsista.php
+
             <li><a href="forms.html"><i class="glyphicon glyphicon-th"></i> Programas</a></li>
             <li><a href="typography.html"><i class="fa fa-edit"></i> Patrimônio</a></li>
-=======
+
             
              <!--<li <?php if (($pageTitle == "Componentes") || ($pageTitle == "Componentes &middot; Visão Geral")) echo "class='active'"; ?>><a href="componentes.php"><i class="glyphicon glyphicon-user"></i> Componentes</a></li> -->
             
@@ -44,7 +44,7 @@
                
              <li <?php if (($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) echo "class='active'"; ?>><a href="patrimonio.php"><i class="fa fa-edit"></i> Patrimônio</a></li>
         
->>>>>>> b1a51295cf4d8b2b47ef2dfefeeaab96bc992d4e:barraLateral_bolsista.php
+
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -98,7 +98,7 @@
             <li class="dropdown user-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php //echo $_SESSION['nome']." ". $_SESSION['sobrenome']; ?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
+                <li><a href="perfil.php"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>
                 <li><a href="#"><i class="fa fa-gear"></i> Configurações</a></li>
                 <li class="divider"></li>

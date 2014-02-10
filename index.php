@@ -16,6 +16,13 @@
     <link href="css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"> <link rel="icon" type="image/png" href="favicon.png" />
   </head>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      setTimeout(function () {
+        $('#login_error').slideUp();
+      },5000);
+    });
+  </script>
 
   <body>
    
@@ -24,7 +31,18 @@
           <div class="panel panel-default" >
             <!-- Default panel contents -->
              
-            
+            <?php
+              if (!empty($_POST)) {
+                if (isset($_POST['usuario'], $_POST['senha'])) {
+                  include_once 'classes/usuario.class.php';
+                  $usuario = $_POST['usuario'];
+                  $senha = $_POST['senha'];
+                  $query  = new Usuario;
+                  $query->login($usuario, $senha);
+                  unset($query);
+                }
+              }
+            ?>
             
             <div class="panel-body">
               <center><p><img src="logo.png" class="img-responsive" alt="Restart"></p></center><br>
@@ -36,9 +54,10 @@
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                   <input type="password" class="form-control" name="senha" placeholder="Senha">
-                </div>
-              </form><br>
+                </div><br>
               <button type="submit" class="btn btn-default">Entrar</button>
+              </form><br>
+              
             </div>
              
          

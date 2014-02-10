@@ -23,9 +23,12 @@
       if (!empty($_POST)) {
       // Verifica se as variáveis relacionadas ao cadastro/edição existem
       if (isset($_POST['descricao'])) {
+
+        descricao, estado_servico, data_ocorrencia, Patrimonio_num_patrimonio, Usuario_idf
+
         $descricao   = $_POST['descricao'];
-        $sobrenome   = $_POST['sobrenome'];
-        $email    = $_POST['email'];
+        $estado_servico   = $_POST['estado_servico'];
+        $data_ocorrencia    = $_POST['data_ocorrencia'];
         $login    = $_POST['login'];
         $senha    = $_POST['senha'];
         $nivel_acesso    = $_POST['nivel_acesso'];
@@ -38,7 +41,7 @@
         if ($_POST['acao'] == 'add') {
           $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
           $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario($descricao, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
+          $result   = $addUser->cadastrarUsuario($descricao, $estado_servico, $data_ocorrencia, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
           if (is_bool($result)) {
             echo "<!-- Modal -->
 <div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
@@ -126,16 +129,16 @@
   <?php
     if (isset($_POST['cad'])){
       $descricao = $_POST["descricao"];
-      $sobrenome = $_POST["sobrenome"];
+      $estado_servico = $_POST["estado_servico"];
       $login = $_POST["login"];
       $matricula = $_POST["matricula"];
-      $email = $_POST["email"];
+      $data_ocorrencia = $_POST["data_ocorrencia"];
       $senha = $_POST["senha"];
       $nivel_acesso = $_POST["nivel_acesso"];
       $telefone_residencial = $_POST["telefone_residencial"];
       $telefone_celular = $_POST["telefone_celular"];
     
-      $sql = mysql_query("insert into `usuario` (descricao, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular) values( '$descricao', '$sobrenome', '$email', '$login', '$senha', '$nivel_acesso', '$matricula', '$telefone_residencial', '$telefone_celular')", $db_connection) or die("Error: Insert ".mysql_Error());
+      $sql = mysql_query("insert into `usuario` (descricao, estado_servico, data_ocorrencia, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular) values( '$descricao', '$estado_servico', '$data_ocorrencia', '$login', '$senha', '$nivel_acesso', '$matricula', '$telefone_residencial', '$telefone_celular')", $db_connection) or die("Error: Insert ".mysql_Error());
 
   
       if(($sql) > 0){

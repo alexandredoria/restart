@@ -2,12 +2,12 @@
 
 
 <?php
-  /*session_start();
+  session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
-  }*/
-  $pageTitle  = "Usuários &middot; Visão Geral";
+  }
+  $pageTitle  = "Perfil &middot; ".$_SESSION['nome']." ".$_SESSION['sobrenome'];
   
   include 'nucleo/cabecario.php';
   include 'classes/usuario.class.php';
@@ -27,7 +27,7 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <h1> Perfil de Usuário</h1>
+            <h1> Perfil</h1>
             <ol class="breadcrumb">
               <li><a href="index.html"><i class="fa fa-dashboard"></i> Painel</a></li>
               <li class="active"><i class="fa fa-edit"></i> Perfil</li>

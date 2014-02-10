@@ -1,10 +1,14 @@
-
+  
 <?php
-  /*session_start();
+  session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
-  }*/
+  } else if ($_SESSION['nivel_acesso'] != "1"){
+    header("Location: ../restart/painel.php");
+    exit;
+
+  }
   $pageTitle  = "Usuários &middot; Visão Geral";
   
   include 'nucleo/cabecario.php';
@@ -66,7 +70,6 @@
                   <th>Tel. Residencial</th>
                   <th>Tel. Celular</th>
                   <th></th>
-                  <th></th>
 
                 </tr>
                 
@@ -86,9 +89,7 @@
                             <td>" . $row['matricula'] . "</td>
                             <td>" . $row['telefone_residencial'] . "</td>
                             <td>" . $row['telefone_celular'] . "</td>
-                            <td>
-                                <i class='glyphicon glyphicon-pencil'></i> Editar
-                            </td> 
+                            
                             <td>
                               <form action='#confirm' method='post'>
                                 <input type='hidden' name='id_action' value='".$row['id']."'>
@@ -110,7 +111,6 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <td></td>
                           </tr>";
                     unset($listaUser);
                   ?>
