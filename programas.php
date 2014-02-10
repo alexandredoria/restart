@@ -1,5 +1,6 @@
 
 <?php
+error_reporting("E_warning");
   /*session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
