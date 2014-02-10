@@ -136,16 +136,19 @@
             </div>
             <div class="form-group">
               <label>Telefone Residencial</label>
-              <input class="form-control" type="text" id="telefone_residencial" name="telefone_residencial" required autocomplete="off">
+              <input class="form-control" type="text" data-mask="(99) 9999-9999" required autocomplete="off">
             </div>
             <div class="form-group">
               <label>Telefone celular</label>
-              <input class="form-control" type="text" id="telefone_celular" name="telefone_celular" required autocomplete="off">               
+              <input class="form-control" type="text" data-mask="(99) 9999-9999"required autocomplete="off">               
             </div>
           
         </div>
       </div><!-- /.row -->
-
+      
+   
+        
+        	
       <div class="row">
         <div class="col-lg-12" align="right">   
 
@@ -158,7 +161,7 @@
               <!-- Button trigger modal -->
 
 
-
+     <script src="js/inputmask.js"></script>
 
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
