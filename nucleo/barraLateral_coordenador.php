@@ -20,9 +20,7 @@
              
              <li <?php if (($pageTitle == "Ocorrências") || ($pageTitle == "Ocorrências &middot; Visão Geral")) echo "class='active'"; ?>><a href="ocorrencias.php"><i class="fa fa-tasks"></i> Ocorrências</a></li>
             
-             <li <?php if (($pageTitle == "Componentes") || ($pageTitle == "Componentes &middot; Visão Geral")) echo "class='active'"; ?>><a href="componentes.php"><i class="glyphicon glyphicon-hdd"></i> Componentes</a></li>
-            
-              <li <?php if (($pageTitle == "Programas") || ($pageTitle == "Programas &middot; Visão Geral")) echo "class='active'"; ?>><a href="programas.php"><i class="glyphicon glyphicon-th"></i> Programas</a></li>
+              <li <?php if (($pageTitle == "Defeito") || ($pageTitle == "Defeitos &middot; Visão Geral")) echo "class='active'"; ?>><a href="defeitos.php"><i class="glyphicon glyphicon-wrench"></i> Defeitos</a></li>
               
               <li <?php if (($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) echo "class='active'"; ?>><a href="patrimonio.php"><i class="fa fa-edit"></i> Patrimônio</a></li>
             </li>

@@ -1,7 +1,6 @@
 <?php
 	/**
-	 * @package COVEG - Controle de Vendas Globo
-	 * @author Claudson Martins <claudson.m@gmail.com>
+		*
 	 *
 	 *
 	 * Cria as permissões de acesso aos módulos do sistema para os usuários

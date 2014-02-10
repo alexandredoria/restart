@@ -1,4 +1,5 @@
-<?php
+cax<?php
+
 /**
  *
  */
@@ -36,19 +37,16 @@ class Usuario extends DB {
 	 * @param string $telefone_residencial Telefone residencial do usuario
 	 * @param string $telefone_celular Telefone celular do usuario
 	 **/
-	public function cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular) {
-		$nome		= $this->db->real_escape_string(trim($nome));
-		$sobrenome		= $this->db->real_escape_string(trim($sobrenome));
-		$email		= (!empty($email)) ? $this->db->real_escape_string(trim($email)) : NULL ;
+	public function cadastrarUsuario($login, $senha, $nivel_acesso) {
+		
 		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
 		$senha		= (!empty($senha)) ? $senha : NULL ;
 		$nivel_acesso		= (!empty($nivel_acesso)) ? $nivel_acesso : NULL ;
-		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim($matricula)) : NULL ;
-		$telefone_residencial		= $this->db->real_escape_string(trim($telefone_residencial));
-		$telefone_celular		= $this->db->real_escape_string(trim($telefone_celular));
+		
+        $data_cadastro = date('Y-m-d');
 
-		$insert = $this->db->prepare("INSERT INTO usuario (nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		$insert->bind_param('sssssisss', $nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
+		$insert = $this->db->prepare("INSERT INTO usuario ( login, senha, nivel_acesso, data_cadastro) VALUES ( ?, ?, ?, ?)");
+		$insert->bind_param('ssis', $login, $senha, $nivel_acesso, $data_cadastro);
 		if ($insert->execute()) { return true; }
 		else { return ($this->db->error); }
 	}
@@ -76,7 +74,7 @@ class Usuario extends DB {
 		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim($matricula)) : NULL ;
 		$telefone_residencial		= $this->db->real_escape_string(trim($telefone_residencial));
 		$telefone_celular		= $this->db->real_escape_string(trim($telefone_celular));
-
+//nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular, data_cadastro
 		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, login = ?, senha = ?, nivel_acesso = ?, matricula = ?, telefone_residencial = ?, telefone_celular = ? WHERE id = ?");
 		$edit->bind_param('sssssisssi', $nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular, $id);
 		if ($edit->execute()) {
@@ -181,9 +179,9 @@ class Usuario extends DB {
 	 * Gera um array com as informações dos usuários cadastrados
 	 * @return array $rows Dados dos usuários
 	 */
-	public function listarUsuarios(){
+	public function listarUsuarios($id){
 		// Executa a query dos usuários e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM usuario ORDER BY id ASC")) {
+		if ($result	= $this->db->query("SELECT * FROM usuario WHERE id != $id ORDER BY id ASC ")) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -223,12 +221,12 @@ class Usuario extends DB {
 				}
 				
 				if (crypt($pass, $dados['senha']) === $dados['senha']) {
-					if ($dados['nivel_acesso'] == '3') {
-						$barraLateral = "../nucleo/barraLateral_coordenador.php";
+					if ($dados['nivel_acesso'] == '1') {
+						$barraLateral = 'nucleo/barraLateral_coordenador.php';
 					} else if ($dados['nivel_acesso'] == '2') {
-						$barraLateral = "../nucleo/barraLateral_bolsista.php";
+						$barraLateral = 'nucleo/barraLateral_bolsista.php';
 					} else if ($dados['nivel_acesso'] == '3') {
-							$barraLateral = "../nucleo/barraLateral_professor.php";
+							$barraLateral = 'nucleo/barraLateral_professor.php';
 					}
 					
 					session_start();

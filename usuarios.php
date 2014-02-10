@@ -1,6 +1,6 @@
   
 <?php
-  session_start();
+ session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
@@ -76,7 +76,7 @@
                 <tbody>
                   <?php
                     $listaUser    = new Usuario;
-                    $result     = $listaUser->listarUsuarios();
+                    $result     = $listaUser->listarUsuarios($_SESSION['id']);
                     if (is_array($result)) {
                       foreach ($result as $row) {
                         echo "

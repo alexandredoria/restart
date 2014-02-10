@@ -28,22 +28,17 @@
     if (!empty($_POST)) {
       // Verifica se as variáveis relacionadas ao cadastro/edição existem
       if (isset($_POST['nome'])) {
-        $nome   = $_POST['nome'];
-        $sobrenome   = $_POST['sobrenome'];
-        $email    = $_POST['email'];
+        
         $login    = $_POST['login'];
-        $senha    = $_POST['senha'];
         $nivel_acesso    = $_POST['nivel_acesso'];
-        $matricula    = $_POST['matricula'];
-        $telefone_residencial    = $_POST['telefone_residencial'];
-        $telefone_celular    = $_POST['telefone_celular'];
         
         include_once 'nucleo/funcoes.php';
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'add') {
+          $senha = "123";
           $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
           $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
+          $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular, $data_cadastro);
           if (is_bool($result)) {
             echo "<!-- Modal -->
 <div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
@@ -94,24 +89,12 @@
         </div><!-- /.row -->
       
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <form role="form" id="formUsuario" action="cadUsuario.php" method="post">
             <input type="hidden" name="acao" value="add">
-            <div class="form-group">
-              <label>Nome</label>
-              <input class="form-control" type="text" id="nome" name="nome" required autocomplete="off">      
-            </div>
-            <div class="form-group">
-              <label>Sobrenome</label>
-              <input class="form-control" id="sobrenome" name="sobrenome" required autocomplete="off">          
-            </div>              
-            <div class="form-group">
+             <div class="form-group">
               <label>Login</label>
               <input class="form-control" id="login" name="login" required autocomplete="off">
-            </div>
-            <div class="form-group">
-              <label>Senha</label>
-              <input class="form-control" type="password" maxlength="10" id="senha" name="senha" required autocomplete="off">
             </div>
             <label>Tipo de usuário</label>
             <div class="form-group">
@@ -124,42 +107,32 @@
             </div>
           
         </div>
-        <div class="col-lg-6">
-          
-            <div class="form-group">
-              <label>Matrícula</label>
-              <input class="form-control" id="matricula" name="matricula" required autocomplete="off">
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input class="form-control" id="email" name="email" required autocomplete="off">
-            </div>
-            <div class="form-group">
-              <label>Telefone Residencial</label>
-              <input class="form-control" type="text" id="telefone_residencial" name="telefone_residencial" required autocomplete="off">
-            </div>
-            <div class="form-group">
-              <label>Telefone celular</label>
-              <input class="form-control" type="text" id="telefone_celular" name="telefone_celular" required autocomplete="off">               
-            </div>
-          
+        
+        <div class="col-lg-4">
+                    
+        </div>
+        <div class="col-lg-4">
+            
         </div>
       </div><!-- /.row -->
 
       <div class="row">
-        <div class="col-lg-12" align="right">   
-
-            <button type="submit" class="btn btn-default">Enviar</button>
-            <button type="reset" class="btn btn-default">Limpar</button>             
-            
-          </form> 
+        <div class="col-lg-4"  align="right">
+          <button type="submit" class="btn btn-default">Enviar</button>
+            <button type="reset" class="btn btn-default">Limpar</button>                     
         </div>
-      </div><!-- /#row --> 
-              <!-- Button trigger modal -->
+        
+        <div class="col-lg-4">
+                    
+        </div>
+        <div class="col-lg-4">
+            
+                    
+        </div>
+      </div><!-- /.row -->
 
 
-
-
+     
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
   

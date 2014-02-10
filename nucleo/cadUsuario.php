@@ -37,13 +37,18 @@
         $matricula    = $_POST['matricula'];
         $telefone_residencial    = $_POST['telefone_residencial'];
         $telefone_celular    = $_POST['telefone_celular'];
+
+        $timestamp = time(); 
+      
+        $data_cadastro = date("Y/m/d", $timestamp); // formato yyyy/mm/dd
+        
         
         include_once 'nucleo/funcoes.php';
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'add') {
           $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
           $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
+          $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular, $data_cadastro);
           if (is_bool($result)) {
             echo "<!-- Modal -->
 <div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>

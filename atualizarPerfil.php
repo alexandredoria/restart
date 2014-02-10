@@ -1,16 +1,19 @@
   
 <?php
-  /*session_start();
+  session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
-  }*/
-  $pageTitle  = "Cadastrar usuário";
+  } else if ($_SESSION['nivel_acesso'] != "1"){
+    header("Location: ../restart/painel.php");
+    exit;
+
+  }
+  $pageTitle  = "Atualizar perfil";
   
   include 'nucleo/cabecario.php';
-  
-  include 'classes/usuario.class.php';
 
+  include 'classes/usuario.class.php';
   ?>
 
 
@@ -30,28 +33,48 @@
         $email    = $_POST['email'];
         $login    = $_POST['login'];
         $senha    = $_POST['senha'];
-        $nivel_acesso    = $_POST['nivel_acesso'];
         $matricula    = $_POST['matricula'];
         $telefone_residencial    = $_POST['telefone_residencial'];
-        $telefone_celular    = $_POST['telefone_celular'];
+        $telefone_celular    = $_POST['telefone_celular'];        
         
         include_once 'nucleo/funcoes.php';
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'add') {
           $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
           $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
+          $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $matricula, $telefone_residencial, $telefone_celular, $data_cadastro);
           if (is_bool($result)) {
-            $mensagem= "<div><p>Usuário cadastrado.</p></div>";
+            echo "<!-- Modal -->
+<div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+  <div class='modal-dialog modal-sm'>
+    <div class='modal-content panel-success'>
+      <div class='modal-header panel-heading'>
+        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário cadastrado com sucesso!</h4>
+      </div>
+      
+    </div>
+  </div>
+</div>";
           }
           else {
-            $mensagem =
-            "<div>
-              <p>Não foi possível cadastrar o usuário.
-              <br><span>" . $result . "<span></p>
-            </div>";
+            echo "<!-- Modal -->
+<div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content panel-danger'>
+      <div class='modal-header panel-heading'>
+        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível cadastrar o usuário</h4>
+      </div>
+      <div class='modal-body'>
+        <p>".$result."</p>
+      </div>
+    </div>
+  </div>
+</div>";
           }
           unset($addUser);
+          echo "<script>$('#modal_cadUsuario').modal('show');</script>";
         }
       
       }
@@ -123,15 +146,19 @@
       </div><!-- /.row -->
 
       <div class="row">
-        <div class="col-lg-12" align="right">          
+        <div class="col-lg-12" align="right">   
+
             <button type="submit" class="btn btn-default">Enviar</button>
             <button type="reset" class="btn btn-default">Limpar</button>             
-            <?php if(isset($mensagem)){
-              echo $mensagem;
-            }?>
+            
           </form> 
         </div>
-      </div><!-- /#row -->  
+      </div><!-- /#row --> 
+              <!-- Button trigger modal -->
+
+
+
+
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
   
