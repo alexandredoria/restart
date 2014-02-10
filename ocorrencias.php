@@ -1,5 +1,6 @@
 
 <?php
+error_reporting("E_warning");
   /*session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
@@ -29,7 +30,7 @@
               <h1>Ocorrências <small>Visão geral</small></h1>
             </div>
             <div class="col-lg-6" align="right">
-               <a href="cadOcorrencia.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Abrir chamado</button></a>
+               <a href="cadOcorrencia.php"> <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Abrir chamado</button></a>
             </div>      
        </div><!-- /.row -->
 
