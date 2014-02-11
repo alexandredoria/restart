@@ -91,10 +91,10 @@ ENGINE = InnoDB;
 -- Table `restart`.`Defeito`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Defeito` (
-  `idDefeito` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(8) NULL,
   `categoria` VARCHAR(45) NULL,
-  PRIMARY KEY (`idDefeito`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia_has_Defeito` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Ocorrencia_has_Defeito_Defeito1`
     FOREIGN KEY (`Defeito_idDefeito`)
-    REFERENCES `restart`.`Defeito` (`idDefeito`)
+    REFERENCES `restart`.`Defeito` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
