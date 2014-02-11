@@ -12,7 +12,7 @@
   ?>
 
 
-<body>o
+<body>
   <div id="wrapper">
     <!-- Barra Lateral -->
 

@@ -156,6 +156,6 @@
 
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
-  
+  <script src="js/inputmask.js"></script>
 </body>
 </html>

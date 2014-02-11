@@ -107,32 +107,24 @@ session_start();
             </div>
           
         </div>
-        
-        <div class="col-lg-4">
-                    
-        </div>
-        <div class="col-lg-4">
-            
+
         </div>
       </div><!-- /.row -->
-
+      
+   
+        
+        	
       <div class="row">
         <div class="col-lg-4"  align="right">
           <button type="submit" class="btn btn-default">Enviar</button>
             <button type="reset" class="btn btn-default">Limpar</button>                     
         </div>
         
-        <div class="col-lg-4">
-                    
-        </div>
-        <div class="col-lg-4">
-            
-                    
-        </div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4"></div>
+
       </div><!-- /.row -->
-
-
-     
+          
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
   
