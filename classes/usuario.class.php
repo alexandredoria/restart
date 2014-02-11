@@ -44,10 +44,11 @@ class Usuario extends DB {
 		$nivel_acesso		= (!empty($nivel_acesso)) ? $nivel_acesso : NULL ;
 		
         $data_cadastro = date('Y-m-d');
-        $usuario = "Anônimo";
+        $nome = "Anônimo";
+        $sobrenome = "";
 
-		$insert = $this->db->prepare("INSERT INTO usuario ( nome, login, senha, nivel_acesso, data_cadastro) VALUES ( ?, ?, ?, ?, ?)");	
-		$insert->bind_param('sssis', $nome, $login, $senha, $nivel_acesso, $data_cadastro);
+		$insert = $this->db->prepare("INSERT INTO usuario ( nome, sobrenome, login, senha, nivel_acesso, data_cadastro) VALUES ( ?, ?, ?, ?, ?, ?)");	
+		$insert->bind_param('ssssis', $nome, $sobrenome, $login, $senha, $nivel_acesso, $data_cadastro);
 		if ($insert->execute()) { return true; }
 		else { return ($this->db->error); }
 	}
@@ -83,6 +84,7 @@ class Usuario extends DB {
 		$edit->bind_param('sssssssssi', $nome, $sobrenome, $email, $login, $senha, $matricula, $telefone_residencial, $telefone_celular, $data_atualizacao, $id);
 		if ($edit->execute()) {
 			if ($this->db->affected_rows) {
+
 				echo
 				"<!-- Modal -->
 					<div class='modal fade bs-modal-sm' id='modal_editUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_editUsuario2' aria-hidden='true'>
@@ -134,6 +136,27 @@ class Usuario extends DB {
 					echo "<script>$('#modal_erroBD').modal('show');</script>";
 		}
 		
+	if ($login = $this->db->query("SELECT id, nome, sobrenome, senha, nivel_acesso, login, data_cadastro, data_atualizacao FROM usuario WHERE id = '$id'")) {
+			if ($login->num_rows) {
+				$dados = array();
+				while ($info = $login->fetch_assoc()) {
+					$dados['nome']	= $info['nome'];
+					$dados['sobrenome']	= $info['sobrenome'];
+					$dados['senha']	= $info['senha'];
+					$dados['id']	= $info['id'];
+					$dados['login']	= $info['login'];
+					$dados['nivel_acesso']	= $info['nivel_acesso'];
+					$dados['data_cadastro']	= $info['data_cadastro'];
+					$dados['data_atualizacao']	= $info['data_atualizacao'];
+				}
+				
+				$_SESSION['id']		= $dados['id'];
+				$_SESSION['nome']	= $dados['nome'];
+				$_SESSION['sobrenome']	= $dados['sobrenome'];
+				$_SESSION['nivel_acesso']	= $dados['nivel_acesso'];	
+				echo "<meta http-equiv='refresh' content='5'>";
+			}	
+	}	
 	}
 
 	/**
