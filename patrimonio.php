@@ -1,10 +1,10 @@
 
 <?php
-  /*session_start();
+  session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
-  }*/
+  }
   $pageTitle  = "Patrimônio &middot; Visão Geral";
   
   include 'nucleo/cabecario.php';
@@ -34,7 +34,7 @@
         <div class="row">
           <div class="col-lg-12">            
             <ol class="breadcrumb">
-               <li class="active"><i class="fa fa-edit"></i>Patriônio</li>
+               <li class="active"><i class="fa fa-edit"></i> Patrimônio</li>
             </ol>
          
           </div>

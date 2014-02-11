@@ -10,16 +10,17 @@ USE `restart` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NULL,
+  `nome` VARCHAR(45) NOT NULL,
   `sobrenome` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
   `login` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
   `nivel_acesso` INT NOT NULL,
+  `data_cadastro` DATE NOT NULL,
+  `data_atualizacao` DATE NULL,
   `matricula` VARCHAR(45) NULL,
   `telefone_residencial` VARCHAR(10) NULL,
   `telefone_celular` VARCHAR(10) NULL,
-  `data_cadastro` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -28,7 +29,7 @@ ENGINE = InnoDB;
 -- Table `restart`.`Configuracao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Configuracao` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `fabricante` VARCHAR(45) NOT NULL,
   `modelo_maquina` VARCHAR(45) NOT NULL,
   `modelo_processador` VARCHAR(45) NOT NULL,
@@ -89,7 +90,7 @@ ENGINE = InnoDB;
 -- Table `restart`.`Defeito`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Defeito` (
-  `idDefeito` INT NOT NULL,
+  `idDefeito` INT NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(8) NULL,
   `motivo` VARCHAR(45) NULL,
   PRIMARY KEY (`idDefeito`))

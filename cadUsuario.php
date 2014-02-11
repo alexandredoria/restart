@@ -1,6 +1,6 @@
   
 <?php
-  session_start();
+session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
@@ -27,7 +27,7 @@
       // Verifica se algum form foi enviado
     if (!empty($_POST)) {
       // Verifica se as variáveis relacionadas ao cadastro/edição existem
-      if (isset($_POST['nome'])) {
+      if (isset($_POST['login'])) {
         
         $login    = $_POST['login'];
         $nivel_acesso    = $_POST['nivel_acesso'];
@@ -38,7 +38,7 @@
           $senha = "123";
           $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
           $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular, $data_cadastro);
+          $result   = $addUser->cadastrarUsuario( $login, $senha, $nivel_acesso);
           if (is_bool($result)) {
             echo "<!-- Modal -->
 <div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>

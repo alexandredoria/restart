@@ -1,4 +1,4 @@
-cax<?php
+<?php
 
 /**
  *
@@ -44,9 +44,10 @@ class Usuario extends DB {
 		$nivel_acesso		= (!empty($nivel_acesso)) ? $nivel_acesso : NULL ;
 		
         $data_cadastro = date('Y-m-d');
+        $usuario = "Anônimo";
 
-		$insert = $this->db->prepare("INSERT INTO usuario ( login, senha, nivel_acesso, data_cadastro) VALUES ( ?, ?, ?, ?)");
-		$insert->bind_param('ssis', $login, $senha, $nivel_acesso, $data_cadastro);
+		$insert = $this->db->prepare("INSERT INTO usuario ( nome, login, senha, nivel_acesso, data_cadastro) VALUES ( ?, ?, ?, ?, ?)");	
+		$insert->bind_param('sssis', $nome, $login, $senha, $nivel_acesso, $data_cadastro);
 		if ($insert->execute()) { return true; }
 		else { return ($this->db->error); }
 	}
@@ -65,7 +66,7 @@ class Usuario extends DB {
 	 * @param string $telefone_celular Telefone celular do usuario
 	 * @return string Mensagem de retorno
 	 */
-	public function editarUsuario($id, $nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular) {
+	public function editarUsuario($id, $nome, $sobrenome, $email, $login, $senha, $matricula, $telefone_residencial, $telefone_celular) {
 		$nome		= $this->db->real_escape_string(trim($nome));
 		$sobrenome		= $this->db->real_escape_string(trim($sobrenome));
 		$email		= (!empty($email)) ? $this->db->real_escape_string(trim($email)) : NULL ;
@@ -74,27 +75,63 @@ class Usuario extends DB {
 		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim($matricula)) : NULL ;
 		$telefone_residencial		= $this->db->real_escape_string(trim($telefone_residencial));
 		$telefone_celular		= $this->db->real_escape_string(trim($telefone_celular));
-//nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular, data_cadastro
-		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, login = ?, senha = ?, nivel_acesso = ?, matricula = ?, telefone_residencial = ?, telefone_celular = ? WHERE id = ?");
-		$edit->bind_param('sssssisssi', $nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular, $id);
+
+		$data_atualizacao = date('Y-m-d');
+
+//nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular, data_atualizacao
+		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, login = ?, senha = ?,  matricula = ?, telefone_residencial = ?, telefone_celular = ?, data_atualizacao = ? WHERE id = ?");
+		$edit->bind_param('sssssssssi', $nome, $sobrenome, $email, $login, $senha, $matricula, $telefone_residencial, $telefone_celular, $data_atualizacao, $id);
 		if ($edit->execute()) {
 			if ($this->db->affected_rows) {
 				echo
-				"<div>
-					<p>Usuário editado.
-					<br><span>Para validar novas permissões é necessário sair do sistema.</span></p>
-				</div>";
+				"<!-- Modal -->
+					<div class='modal fade bs-modal-sm' id='modal_editUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_editUsuario2' aria-hidden='true'>
+					  <div class='modal-dialog modal-sm'>
+					    <div class='modal-content panel-success'>
+					      <div class='modal-header panel-heading'>
+					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+					        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário atualizado!</h4>
+					      </div>
+					      
+					    </div>
+					  </div>
+					</div>";
 			}
 			else {
 				echo
-				"<div>
-					<p>Não foi possível editar o usuário.
-					<br><span>Lembre-se que usuarios devem possuir um nome exclusivo<span></p>
-				</div>";
+				"<!-- Modal -->
+					<div class='modal fade' id='modal_editUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_editUsuario2' aria-hidden='true'>
+					  <div class='modal-dialog'>
+					    <div class='modal-content panel-danger'>
+					      <div class='modal-header panel-heading'>
+					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+					        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível remover o usuário</h4>
+					      </div>
+					      <div class='modal-body'>
+					        <p>Lembre-se: seu nome de login deve ser único.</p>
+					      </div>
+					    </div>
+					  </div>
+					</div>";
 			}
+			echo "<script>$('#modal_editUsuario2').modal('show');</script>";
 		}
 		else {
-			echo "<div><p>" . $this->db->error . "</p></div>";
+			echo "<!-- Modal -->
+					<div class='modal fade' id='modal_erroBD' tabindex='-1' role='dialog' aria-labelledby='modal_erroBD' aria-hidden='true'>
+					  <div class='modal-dialog'>
+					    <div class='modal-content panel-danger'>
+					      <div class='modal-header panel-heading'>
+					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+					        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Erro encontrado</h4>
+					      </div>
+					      <div class='modal-body'>
+					        <p>". $this->db->error."</p>
+					      </div>
+					    </div>
+					  </div>
+					</div>";
+					echo "<script>$('#modal_erroBD').modal('show');</script>";
 		}
 		
 	}
@@ -208,7 +245,7 @@ class Usuario extends DB {
 	public function login($user, $pass) {
 		$user		= $this->db->real_escape_string(trim($user));
 		$pass		= $this->db->real_escape_string(trim($pass));
-		if ($login = $this->db->query("SELECT id, nome, sobrenome, senha, nivel_acesso, login FROM usuario WHERE login = '$user'")) {
+		if ($login = $this->db->query("SELECT id, nome, sobrenome, senha, nivel_acesso, login, data_cadastro, data_atualizacao FROM usuario WHERE login = '$user'")) {
 			if ($login->num_rows) {
 				$dados = array();
 				while ($info = $login->fetch_assoc()) {
@@ -218,6 +255,8 @@ class Usuario extends DB {
 					$dados['id']	= $info['id'];
 					$dados['login']	= $info['login'];
 					$dados['nivel_acesso']	= $info['nivel_acesso'];
+					$dados['data_cadastro']	= $info['data_cadastro'];
+					$dados['data_atualizacao']	= $info['data_atualizacao'];
 				}
 				
 				if (crypt($pass, $dados['senha']) === $dados['senha']) {
@@ -232,10 +271,48 @@ class Usuario extends DB {
 					session_start();
 					$_SESSION['id']		= $dados['id'];
 					$_SESSION['nome']	= $dados['nome'];
-					$_SESSION['sobrenome']	= $dados['sobrenome'];
+					if(isset($dados['sobrenome'])){ $_SESSION['sobrenome']	= $dados['sobrenome'];}
 					$_SESSION['nivel_acesso']	= $dados['nivel_acesso'];
 					$_SESSION['hora']	= date("H:i");
 					header("Location: painel.php");
+
+					
+					if( $dados['data_atualizacao'] === null){
+						//Aqui geramos um timestamp da data atual
+						$timestampNow = strtotime('now');
+						
+						/**
+						* Agora convertemos a data inicial em timpestamp strtotime($dateStart)
+						* Depois acrescentamos os dias nessa data convertida (+{$days} day) //$days = 14
+						*/
+						//, e acrescentamos os dias
+						$timestampExpirado = strtotime("+{14} day", strtotime($data_cadastro));
+						
+						/**
+						* Agora fazemos uma verificação,
+						* se data de expiração for maior que hoje,
+						* retorna verdadeiro, senão falso
+						*/
+						if ($timestampExpirado > $timestampNow){
+							echo" <!-- Modal -->
+								<div class='modal fade' id='modal_expiraSenha' tabindex='-1' role='dialog' aria-labelledby='modal_expiraSenha' aria-hidden='true'>
+								  <div class='modal-dialog'>
+								    <div class='modal-content panel-danger'>
+								      <div class='modal-header panel-heading'>
+								        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+								        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Atualize o seu perfil!</h4>
+								      </div>
+								      <div class='modal-body'>
+								        <p>Você deve atualizar os dados de seu perfil até o dia ".date('d/m/Y H:i:s', $timestampExpirado)." sob pena de exclusão automática do sistema.</p>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								<script>$('#modal_expiraSenha').modal('show');</script>";
+						} else deletarUsuario($_SESSION['id']);
+
+					}
+
 				} else echo "<div id='login_error'>Senha incorreta.</div>";	
 				
 			} else echo "<div id='login_error'>Usuário '$user' inexistente.</div>";

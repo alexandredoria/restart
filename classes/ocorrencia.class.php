@@ -39,7 +39,7 @@ class Ocorrencia extends DB {
 	 * @param int $user ID do funcionario que cadastrou
 	 * @return boolean Se foi possível cadastrar ou não a categoria
 	 */
-	public function cadastrarOcorrencia(descricao, estado_servico, data_ocorrencia, patrimonio_num_patrimonio, usuario_id) {
+	public function cadastrarOcorrencia($descricao, $estado_servico, $data_ocorrencia, $patrimonio_num_patrimonio, $usuario_id) {
 		$descricao	= $this->db->real_escape_string(trim($nome));
 		$obs	= $this->db->real_escape_string(trim($obs));
 		$insert = $this->db->prepare("INSERT INTO ocorrencia (descricao, estado_servico, data_ocorrencia, Patrimonio_num_patrimonio, Usuario_id  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");

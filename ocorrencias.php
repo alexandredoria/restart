@@ -1,10 +1,10 @@
 
 <?php
-  /*session_start();
+  session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
-  }*/
+  }
   $pageTitle  = "Ocorrências &middot; Visão Geral";
   
   include 'nucleo/cabecario.php';

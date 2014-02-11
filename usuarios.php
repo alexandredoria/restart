@@ -1,6 +1,6 @@
   
 <?php
- session_start();
+session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
@@ -69,6 +69,7 @@
                   <th>Matrícula</th>
                   <th>Tel. Residencial</th>
                   <th>Tel. Celular</th>
+                  <th>Data de atualização</th>
                   <th></th>
 
                 </tr>
@@ -79,8 +80,8 @@
                     $result     = $listaUser->listarUsuarios($_SESSION['id']);
                     if (is_array($result)) {
                       foreach ($result as $row) {
+                        if($row['data_atualizacao']===null){echo "<tr class='danger'>";} else echo "<tr>";
                         echo "
-                          <tr>
                             <td align='right'>" . $row['id'] . "</td>
                             <td>". $row['nome'] . " ".$row['sobrenome']."</td>
                             <td>" . $row['email'] . "</td>
@@ -89,6 +90,7 @@
                             <td>" . $row['matricula'] . "</td>
                             <td>" . $row['telefone_residencial'] . "</td>
                             <td>" . $row['telefone_celular'] . "</td>
+                            <td>"; if ($row['data_atualizacao']===null){echo "Pendente";} else {echo date('d/m/Y', strtotime($row['data_atualizacao']));} echo "</td>
                             
                             <td>
                               <form action='#confirm' method='post'>
