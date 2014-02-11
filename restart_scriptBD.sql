@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS `restart`.`Usuario` (
   `data_cadastro` DATE NOT NULL,
   `data_atualizacao` DATE NULL,
   `matricula` VARCHAR(45) NULL,
-  `telefone_residencial` VARCHAR(10) NULL,
-  `telefone_celular` VARCHAR(10) NULL,
+  `telefone_residencial` VARCHAR(15) NULL,
+  `telefone_celular` VARCHAR(15) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `restart`.`Configuracao` (
   `modelo_maquina` VARCHAR(45) NOT NULL,
   `modelo_processador` VARCHAR(45) NOT NULL,
   `capacidade_ram` VARCHAR(8) NOT NULL,
+  `capacidade_hd` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -90,10 +91,10 @@ ENGINE = InnoDB;
 -- Table `restart`.`Defeito`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Defeito` (
-  `idDefeito` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(8) NULL,
-  `motivo` VARCHAR(45) NULL,
-  PRIMARY KEY (`idDefeito`))
+  `categoria` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -113,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia_has_Defeito` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Ocorrencia_has_Defeito_Defeito1`
     FOREIGN KEY (`Defeito_idDefeito`)
-    REFERENCES `restart`.`Defeito` (`idDefeito`)
+    REFERENCES `restart`.`Defeito` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
