@@ -18,7 +18,7 @@
     <!-- Barra Lateral -->
 
     <?php 
-      include("nucleo/barraLateral_coordenador.php");
+      include("nucleo/barraLateral.php");
       
       // Verifica se algum form foi enviado
     if (!empty($_POST)) {

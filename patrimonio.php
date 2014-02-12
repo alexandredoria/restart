@@ -19,7 +19,7 @@
 
       <!-- Barra Lateral -->
       <?php 
-        include("nucleo/barraLateral_coordenador.php");
+        include("nucleo/barraLateral.php");
       ?>
 
       <div id="page-wrapper">
@@ -46,7 +46,7 @@
        <div class="row">
           <div class="col-lg-12">
 
-            <table class="table table-striped table-hover">
+            <div class="table-responsive"><table class="table table-striped table-hover">
                 <tr>
                   <th>Nº de Registro</th>
                   <th>Tipo</th>
@@ -78,6 +78,7 @@
                 <tr>
               
             </table>
+          </div>
 
           </div>
          

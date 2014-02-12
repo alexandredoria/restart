@@ -15,6 +15,35 @@ session_start();
 
   include 'classes/usuario.class.php';
   ?>
+  <script type="text/javascript">
+      $("#formUsuario").validate({
+        // Define as regras
+        rules:{
+          
+          login:{
+            remote: 'nucleo/uniquecheck.php',
+            minlength: 4
+          }
+        },
+        // Define as mensagens de erro
+        messages:{
+         
+          login:{
+            remote: jQuery.format("Nome de usuário existente"),
+            minlength: "Insira ao menos {0} caracteres"
+          }
+        },
+        success: function (label) {
+          // set &nbsp; as text for IE
+          label.html("&nbsp;").addClass("sucess");
+        },
+        highlight: function (element, errorClass) {
+          $(element).parent().find("." + errorClass).removeClass("sucess");
+          $(element).addClass("error");
+        }
+      });
+    });
+  </script>
 
 
 <body>
@@ -22,7 +51,7 @@ session_start();
     <!-- Barra Lateral -->
 
     <?php 
-      include("nucleo/barraLateral_coordenador.php");
+      include("nucleo/barraLateral.php");
       
       // Verifica se algum form foi enviado
     if (!empty($_POST)) {
@@ -78,6 +107,7 @@ session_start();
     }
     ?>
     <div id="page-wrapper">
+
       <div class="row">
         <div class="col-lg-12">
           <h1> Cadastrar usuário</h1>

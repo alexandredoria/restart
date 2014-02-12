@@ -16,13 +16,22 @@
           <ul class="nav navbar-nav side-nav">
              <li <?php if ($pageTitle == "Restart") echo "class='active'"; ?>><a href="painel.php"><i class="fa fa-dashboard"></i> Painel</a></li>
             
-             <li <?php if (($pageTitle == "Cadastrar usuário") || ($pageTitle == "Usuários &middot; Visão Geral")) echo "class='active'"; ?>><a href="usuarios.php"><i class="glyphicon glyphicon-user"></i> Usuários</a></li>
+              <?php 
+                if ($_SESSION['nivel_acesso'] == 1) {
+                  echo ((($pageTitle == "Cadastrar usuário") || ($pageTitle == "Usuários &middot; Visão Geral")) ? "<li class='active'>" : "<li>");
+                  echo "<a href='usuarios.php'><i class='glyphicon glyphicon-user'></i> Usuários</a></li>"; 
+                }
+              ?>
              
              <li <?php if (($pageTitle == "Ocorrências") || ($pageTitle == "Ocorrências &middot; Visão Geral")) echo "class='active'"; ?>><a href="ocorrencias.php"><i class="fa fa-tasks"></i> Ocorrências</a></li>
             
-              <li <?php if (($pageTitle == "Defeito") || ($pageTitle == "Defeitos &middot; Visão Geral")) echo "class='active'"; ?>><a href="defeitos.php"><i class="glyphicon glyphicon-wrench"></i> Defeitos</a></li>
-              
-              <li <?php if (($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) echo "class='active'"; ?>><a href="patrimonio.php"><i class="fa fa-edit"></i> Patrimônio</a></li>
+            
+             <?php 
+                if (($_SESSION['nivel_acesso'] == 1) ||($_SESSION['nivel_acesso'] == 2)) { 
+                  echo ((($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) ? "<li class='active'" : "<li>");
+                  echo "<a href='patrimonio.php'><i class='fa fa-edit'></i> Patrimônio</a></li>";
+                }  
+              ?>  
             </li>
           </ul>
 
@@ -79,7 +88,11 @@
               <ul class="dropdown-menu">
                 <li><a href="perfil.php"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>
-                <li><a href="#"><i class="fa fa-gear"></i> Configurações</a></li>
+                <?php 
+                if (($_SESSION['nivel_acesso'] == 1) ||($_SESSION['nivel_acesso'] == 2)) { 
+                  echo "<li><a href='configuracoes.php'><i class='fa fa-gear'></i> Configurações</a></li>";
+                }  
+              ?>  
                 <li class="divider"></li>
                 <li><a href="logout.php"><i class="fa fa-power-off"></i> Sair</a></li>
               </ul>

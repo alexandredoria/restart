@@ -19,6 +19,7 @@
     	
     	<!-- Page Specific CSS -->
     	<link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
+        <script type="text/javascript" src="js/jquery.validate.js"></script>
     	
     	<!-- Add custom CSS here -->
     	<link href="css/sb-admin.css" rel="stylesheet">

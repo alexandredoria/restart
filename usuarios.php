@@ -22,7 +22,7 @@ session_start();
 
       <!-- Barra Lateral -->
       <?php 
-        include("nucleo/barraLateral_coordenador.php");
+        include("nucleo/barraLateral.php");
 
         if (!empty($_POST)) {
           if (isset($_POST['id_action'])) {
@@ -59,7 +59,7 @@ session_start();
        <div class="row">
           <div class="col-lg-12">
 
-            <table class="table table-striped table-hover">
+            <div class="table-responsive"><table class="table table-striped table-hover">
                 <tr>
                   <th>ID</th>
                   <th>Nome</th>
@@ -118,7 +118,7 @@ session_start();
                   ?>
                 </tbody>
               
-            </table>
+            </table></div>
 
           </div>
          

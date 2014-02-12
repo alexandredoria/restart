@@ -19,7 +19,7 @@ session_start();
 
       <!-- Barra Lateral -->
       <?php 
-        include("nucleo/barraLateral_coordenador.php");
+        include("nucleo/barraLateral.php");
       ?>
 
       <div id="page-wrapper">
@@ -47,7 +47,7 @@ session_start();
        <div class="row">
           <div class="col-lg-12">
 
-            <table class="table table-striped table-hover">
+            <div class="table-responsive"><table class="table table-striped table-hover">
                 <tr>
                   <th>ID</th>
                   <th>Solicitante</th>
@@ -86,6 +86,7 @@ session_start();
                 <tr>
               
             </table>
+          </div>
 
           </div>
          

@@ -23,7 +23,7 @@ error_reporting("E_warning");
     <!-- Barra Lateral -->
 
     <?php 
-      include("nucleo/barraLateral_coordenador.php");
+      include("nucleo/barraLateral.php");
     ?>
     <div id="page-wrapper">
       <div class="row">
