@@ -64,7 +64,7 @@
         </div><!-- /.row -->
       <div class="col-lg-4"></div>
  <!-- JavaScript -->
-    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery-2.0.3.min.js"></script>
     <script src="js/bootstrap.js"></script>
    
   </body>

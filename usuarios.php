@@ -58,9 +58,31 @@ session_start();
 
        <div class="row">
           <div class="col-lg-12">
+            
+            <table>
+              <tr>
+                <td>
+                  &nbsp;&nbsp;<input type='checkbox'> Exibição: 
+
+                  <div class="btn-group">
+                    <span type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      Todos <span class="caret"></span>
+                    </span>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Bolsista</a></li>
+                      <li><a href="#">Professor</a></li>                      
+                    </ul>
+                  </div>
+
+                </td>
+                <td> <i class='glyphicon glyphicon-remove'></i> Excluir</td>
+              </tr>
+            </table> 
 
             <div class="table-responsive"><table class="table table-striped table-hover">
+                <p>
                 <tr>
+                  <th></th>
                   <th>ID</th>
                   <th>Nome</th>
                   <th>Email</th>
@@ -82,6 +104,7 @@ session_start();
                       foreach ($result as $row) {
                         if($row['data_atualizacao']===null){echo "<tr class='danger'>";} else echo "<tr>";
                         echo "
+                            <td><input type='checkbox'></td>
                             <td align='right'>" . $row['id'] . "</td>
                             <td>". $row['nome'] . " ".$row['sobrenome']."</td>
                             <td>" . $row['email'] . "</td>

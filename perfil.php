@@ -83,9 +83,13 @@
           echo "<script>$('#modal_cadUsuario').modal('show');</script>";*/
         }
       
+      
       }
       
-    }
+  }
+  $nomeUser = new Usuario;
+  $nomeUser->obterDados('nome', $_SESSION['id']);
+
 
     ?>
 
@@ -106,7 +110,7 @@
             <input type="hidden" name="acao" value="atualiza">
             <div class="form-group">
               <label>Nome</label>
-              <input class="form-control" type="text" id="nome" name="nome"  vrequired autocomplete="off">      
+              <input class="form-control" type="text" id="nome" name="nome" value="<?php if(is_bool($nomeUser)){echo $nomeUser;}?>" required autocomplete="off">      
             </div>
             <div class="form-group">
               <label>Sobrenome</label>
@@ -139,11 +143,11 @@
             </div>
             <div class="form-group">
               <label>Telefone Residencial</label>
-              <input class="form-control" type="text" id="telefone_residencial" name="telefone_residencial" required autocomplete="off">
+              <input class="form-control" type="text" id="telefone_residencial" name="telefone_residencial" data-mask="(99) 9999-9999" required autocomplete="off">
             </div>
             <div class="form-group">
               <label>Telefone celular</label>
-              <input class="form-control" type="text" id="telefone_celular" name="telefone_celular" required autocomplete="off">               
+              <input class="form-control" type="text" id="telefone_celular" name="telefone_celular" data-mask="(99) 9999-9999" required autocomplete="off">               
             </div>
 
             <div class="form-group" align="right"><br>
@@ -152,10 +156,11 @@
             </div>
         </div>
       </div><!-- /.row -->
-
+<?php unset($nomeUser);?>
 
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
   <script src="js/inputmask.js"></script>
+  <?php ?>
 </body>
 </html>

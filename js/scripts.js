@@ -44,7 +44,7 @@ function resetForm (form) {
  *************************************************/
 function ajaxEdit (location, form, value) {
 	$.get(
-		"core/editrequests.php",
+		"nucleo/editrequests.php", 
 		{module: location, id: value},
 		function (data) {
 			cleanFormCSS(form, value);
@@ -96,22 +96,22 @@ function cleanFormCSS (form_id, texto) {
 			var word = ' Cliente';
 		break;
 
-		case 'formUser':
+		case 'formUsuario':
 			var word = ' Usuário';
 			if (texto == 'Cadastrar') {
 				$("#steps form fieldset:nth-child(2) p:first label[for='plogin_n']").click();
 				$("#steps form fieldset:nth-child(1) p.enviar_edit").remove();
-				$('input#user').rules("add", {
-					remote: 'core/uniquecheck.php'
+				$('input#login').rules("add", {
+					remote: 'nucleo/uniquecheck.php'
 				});
 				$('input#email').rules("add", {
-					remote: 'core/uniquecheck.php'
+					remote: 'nucleo/uniquecheck.php'
 				});
 			}
 			else {
 				$("#steps form fieldset:nth-child(1) p.enviar_edit").remove();
 				$("<p class='enviar_edit'><label>&nbsp;</label><input class='btn_black' type='submit' value='Editar'></p>").appendTo("#steps form fieldset:nth-child(1)");
-				$('input#user').rules("remove", "remote");
+				$('input#login').rules("remove", "remote");
 				$('input#email').rules("remove", "remote");
 			}
 		break;
@@ -127,7 +127,7 @@ function cleanFormCSS (form_id, texto) {
 			}
 			else {
 				$('input#nome_prod').rules("add", {
-					remote: 'core/uniquecheck.php'
+					remote: 'nucleo/uniquecheck.php'
 				});
 			}
 		break;

@@ -38,16 +38,26 @@ class Usuario extends DB {
 	 * @param string $telefone_celular Telefone celular do usuario
 	 **/
 	public function cadastrarUsuario($login, $senha, $nivel_acesso) {
+
 		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
-		$senha		= (!empty($senha)) ? $senha : NULL ;
-		$nivel_acesso		= (!empty($nivel_acesso)) ? $nivel_acesso : NULL ;
-		$data_cadastro = date('Y-m-d');
-		$nome = "Anônimo";
-		$sobrenome = "";
-		$insert = $this->db->prepare("INSERT INTO usuario ( nome, sobrenome, login, senha, nivel_acesso, data_cadastro) VALUES ( ?, ?, ?, ?, ?, ?)");	
-		$insert->bind_param('ssssis', $nome, $sobrenome, $login, $senha, $nivel_acesso, $data_cadastro);
-		if ($insert->execute()) { return true; }
-			else { return ($this->db->error); }		
+		
+		if ($check = $this->db->query("SELECT login FROM usuario WHERE login = '$login'")) {
+			if ($check->num_rows) return "O nome já está em uso.";
+			else {
+				$senha		= (!empty($senha)) ? $senha : NULL ;
+				$nivel_acesso		= (!empty($nivel_acesso)) ? $nivel_acesso : NULL ;
+				$data_cadastro = date('Y-m-d');
+				$nome = "Anônimo";
+				$sobrenome = "";
+				$insert = $this->db->prepare("INSERT INTO usuario ( nome, sobrenome, login, senha, nivel_acesso, data_cadastro) VALUES ( ?, ?, ?, ?, ?, ?)");	
+				$insert->bind_param('ssssis', $nome, $sobrenome, $login, $senha, $nivel_acesso, $data_cadastro);
+				if ($insert->execute()) { return true; }
+					else { return ($this->db->error); }
+			} // Não está em uso
+			$check->free();
+			
+		}
+				
 			
 	} 
 	
@@ -78,7 +88,6 @@ class Usuario extends DB {
 
 		$data_atualizacao = date('Y-m-d');
 
-//nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular, data_atualizacao
 		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, login = ?, senha = ?,  matricula = ?, telefone_residencial = ?, telefone_celular = ?, data_atualizacao = ? WHERE id = ?");
 		$edit->bind_param('sssssssssi', $nome, $sobrenome, $email, $login, $senha, $matricula, $telefone_residencial, $telefone_celular, $data_atualizacao, $id);
 		if ($edit->execute()) {
@@ -218,6 +227,67 @@ class Usuario extends DB {
 		
 	}
 
+
+		public function expirarUsuario($id){
+			date_default_timezone_set("America/Bahia");
+		
+			if ($expUsuario = $this->db->query("SELECT data_cadastro, data_atualizacao FROM usuario WHERE id = '$id'")) {
+				if ($expUsuario->num_rows) {
+					$dados = array();
+					while ($info = $expUsuario->fetch_assoc()) {
+						$dados['data_cadastro']	= $info['data_cadastro'];
+						$dados['data_atualizacao']	= $info['data_atualizacao'];
+					}
+
+					if( $dados['data_atualizacao'] === null){
+						//Aqui geramos um timestamp da data atual
+						$timestampNow = strtotime('now');
+							
+						/**
+						* Agora convertemos a data inicial em timpestamp strtotime($dateStart)
+						* Depois acrescentamos os dias nessa data convertida (+{$days} day) //$days = 14
+						*/
+						//, e acrescentamos os dias
+						$timestampExpirado = strtotime("+14 day", strtotime($dados['data_cadastro']));
+									
+						/**
+						* Agora fazemos uma verificação,
+						* se data de expiração for maior que hoje,
+						* retorna verdadeiro, senão falso
+						*/
+						if ($timestampExpirado >= $timestampNow){
+							echo "<!-- Modal -->
+                           <div class='modal fade' id='modal_expiraSenha' tabindex='-1' role='dialog' aria-labelledby='modal_expiraSenha' aria-hidden='true'>
+                                <div class='modal-dialog'>
+                                  <div class='modal-content panel-danger'>
+                                    <div class='modal-header panel-heading'>
+                                      <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                      <h4 class='modal-title' id='modal_cadUsuarioLabel'>Atualize o seu perfil!</h4>
+                                    </div>
+                                    <div class='modal-body'>
+                                      <p>Você deve atualizar os dados de seu perfil até o dia ".date('d/m/Y H:i:s', $timestampExpirado)." sob pena de exclusão automática do sistema.</p>
+                                    </div>
+                                    <div class='modal-footer'>
+                                    	<button type='button' class='btn btn-danger' data-dismiss='modal'>Certo</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <script>$('#modal_expiraSenha').modal('show');</script>";
+							
+						} else { 
+							$del_id		= $this->db->real_escape_string(trim($id));
+							$this->db->query("DELETE FROM usuario WHERE id = $del_id");
+							
+						}	
+
+					} 
+				}
+			}		
+		
+		}
+
+
 	/**
 	 * Obtém o dado desejado de um usuário
 	 * @param int $id Número de ID do usuário
@@ -225,10 +295,10 @@ class Usuario extends DB {
 	 * @return string $string Valor obtido
 	 */
 	public function obterDados($field, $id) {
-		if ($valor = $this->db->query("SELECT $field FROM usuario WHERE id = $id")) {
-			if ($valor->num_rows) {
-				$string = $valor->fetch_assoc();
-				return (array_shift($string));
+		if ($result = $this->db->query("SELECT $field FROM usuario WHERE id = $id")) {
+			if ($result->num_rows) {
+				$string = $result->fetch_assoc();
+				return ($string);
 			}
 			$valor->free();
 		}
@@ -282,66 +352,29 @@ class Usuario extends DB {
 				}
 				
 				if (crypt($pass, $dados['senha']) === $dados['senha']) {
-					if ($dados['nivel_acesso'] == '1') {
-						$barraLateral = 'nucleo/barraLateral.php';
-					} else if ($dados['nivel_acesso'] == '2') {
-						$barraLateral = 'nucleo/barraLateral_bolsista.php';
-					} else if ($dados['nivel_acesso'] == '3') {
-							$barraLateral = 'nucleo/barraLateral_professor.php';
-					}
 					
 					session_start();
 					$_SESSION['id']		= $dados['id'];
 					$_SESSION['nome']	= $dados['nome'];
 					if(isset($dados['sobrenome'])){ $_SESSION['sobrenome']	= $dados['sobrenome'];}
 					$_SESSION['nivel_acesso']	= $dados['nivel_acesso'];
+					$_SESSION['data_atualizacao']	= $dados['data_atualizacao'];
 					$_SESSION['hora']	= date("H:i");
 					header("Location: painel.php");
 
-					if ($_SESSION['nivel_acesso'] != 1 ){
-						if( $dados['data_atualizacao'] === null){
-							//Aqui geramos um timestamp da data atual
-							$timestampNow = strtotime('now');
-							
-							/**
-							* Agora convertemos a data inicial em timpestamp strtotime($dateStart)
-							* Depois acrescentamos os dias nessa data convertida (+{$days} day) //$days = 14
-							*/
-							//, e acrescentamos os dias
-							$timestampExpirado = strtotime("+{14} day", strtotime($data_cadastro));
-							
-							/**
-							* Agora fazemos uma verificação,
-							* se data de expiração for maior que hoje,
-							* retorna verdadeiro, senão falso
-							*/
-							if ($timestampExpirado > $timestampNow){
-								echo" <!-- Modal -->
-									<div class='modal fade' id='modal_expiraSenha' tabindex='-1' role='dialog' aria-labelledby='modal_expiraSenha' aria-hidden='true'>
-									  <div class='modal-dialog'>
-									    <div class='modal-content panel-danger'>
-									      <div class='modal-header panel-heading'>
-									        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-									        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Atualize o seu perfil!</h4>
-									      </div>
-									      <div class='modal-body'>
-									        <p>Você deve atualizar os dados de seu perfil até o dia ".date('d/m/Y H:i:s', $timestampExpirado)." sob pena de exclusão automática do sistema.</p>
-									      </div>
-									    </div>
-									  </div>
-									</div>
-									<script>$('#modal_expiraSenha').modal('show');</script>";
-							} else deletarUsuario($_SESSION['id']);
-
-						}
-					}	
+						
 
 				} else echo "<div id='login_error'>Senha incorreta.</div>";	
 				
 			} else echo "<div id='login_error'>Usuário '$user' inexistente.</div>";
 			$login->free();
-		} else echo "<div id='login_error'>" . $this->db->error . "</div>";
+		} else { 
+			echo "<div id='login_error'>" . $this->db->error . "</div>";
+			$this->logout();
+		}	
 	}
+
+
 
 	/**
 	 * Realiza o LogOut dos usuarios no sistema

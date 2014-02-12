@@ -89,7 +89,7 @@
                 <li><a href="perfil.php"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>
                 <?php 
-                if (($_SESSION['nivel_acesso'] == 1) ||($_SESSION['nivel_acesso'] == 2)) { 
+                if ($_SESSION['nivel_acesso'] == 1) { 
                   echo "<li><a href='configuracoes.php'><i class='fa fa-gear'></i> Configurações</a></li>";
                 }  
               ?>  

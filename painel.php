@@ -4,9 +4,16 @@
     header("Location: ../restart");
     exit;
   }
+
   $pageTitle  = "Restart";
   
   include 'nucleo/cabecario.php';
+  include 'classes/usuario.class.php';
+  if ($_SESSION['nivel_acesso'] != 1) {
+    $expUser  = new Usuario;
+    $expUser->expirarUsuario($_SESSION['id']);           
+    unset($expUser);
+  }
 ?>
 <body>
 
@@ -206,6 +213,8 @@
       </div><!-- /#page-wrapper -->
 
     </div><!-- /#wrapper -->
+
+               
 
    
 
