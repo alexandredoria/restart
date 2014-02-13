@@ -15,7 +15,19 @@ session_start();
   include 'classes/usuario.class.php';
   
 ?>
+<script language="JavaScript">
+function toggle(source) {
+  checkboxes = document.getElementsByName('foo');
+  
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+    document.getElementsByName('fooTr').className = "active";
+    
 
+  }
+
+}
+</script>
   <body>
 
     <div id="wrapper">
@@ -58,11 +70,11 @@ session_start();
 
        <div class="row">
           <div class="col-lg-12">
-            
+
             <table>
               <tr>
                 <td>
-                  &nbsp;&nbsp;<input type='checkbox'> Exibição: 
+                  &nbsp;&nbsp;<input type='checkbox' onClick="toggle(this)"> Exibição: 
 
                   <div class="btn-group">
                     <span type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -76,7 +88,7 @@ session_start();
                   </div>
 
                 </td>
-                <td> <i class='glyphicon glyphicon-remove'></i> Excluir</td>
+                <td style="display:none;"> <i class='glyphicon glyphicon-remove'></i> Excluir</td>
               </tr>
             </table> 
 
@@ -103,9 +115,9 @@ session_start();
                     $result     = $listaUser->listarUsuarios($_SESSION['id']);
                     if (is_array($result)) {
                       foreach ($result as $row) {
-                        if($row['data_atualizacao']===null){echo "<tr class='danger'>";} else echo "<tr>";
+                        if($row['data_atualizacao']===null){echo "<tr id='fooTr'class='danger'>";} else echo "<tr id='fooTr'>";
                         echo "
-                            <td><input type='checkbox'></td>
+                            <td ><input type='checkbox' name='foo' value='".$row['id']."'></td>
                             <td align='right'>" . $row['id'] . "</td>
                             <td>". $row['nome'] . " ".$row['sobrenome']."</td>
                             <td>" . $row['email'] . "</td>

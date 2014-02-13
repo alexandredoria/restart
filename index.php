@@ -54,7 +54,12 @@
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                   <input type="password" class="form-control" name="senha" placeholder="Senha">
-                </div><br>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Mantenha-me conectado
+                  </label>
+                </div>
               <button type="submit" class="btn btn-default">Entrar</button>
               </form><br>
               

@@ -248,7 +248,7 @@ class Usuario extends DB {
 						* Depois acrescentamos os dias nessa data convertida (+{$days} day) //$days = 14
 						*/
 						//, e acrescentamos os dias
-						$timestampExpirado = strtotime("+0 day", strtotime($dados['data_cadastro']));
+						$timestampExpirado = strtotime("+14 day", strtotime($dados['data_cadastro']));
 									
 						/**
 						* Agora fazemos uma verificação,
@@ -277,8 +277,8 @@ class Usuario extends DB {
 							
 						} else { 
 							$del_id		= $this->db->real_escape_string(trim($id));
-							$this->db->query("DELETE FROM usuario WHERE id = $del_id");
-							
+							$this->logout($del_id);
+							$this->db->query("DELETE FROM usuario WHERE id = $del_id");							
 						}	
 
 					} 
