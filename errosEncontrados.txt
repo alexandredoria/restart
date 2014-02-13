@@ -1,0 +1,11 @@
+- validar senha com Javascript e PHP
+
+- Testar Cookies
+
+- Filtrar tabelas de usuários em usuarios.php
+
+- Toggle all e show/hide botão excluir
+
+- preenche todos os checkbox e preencher o toggle
+
+- Botao excluir e 

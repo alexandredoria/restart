@@ -11,7 +11,22 @@
 
   include 'classes/usuario.class.php';
   ?>
+<script>
+  function checkPasswordMatch() {
+    var password = $("#senha").val();
+    var confirmPassword = $("#confirmsenha").val();
 
+    if (password != confirmPassword)
+        $("#divCheckPass").html("Senhas não conferem!");
+    else
+        $("#divCheckPass").html("");
+}
+
+$(document).ready(function () {
+   $("#txtConfirmPassword").keyup(checkPasswordMatch);
+});
+
+</script>
 
 <body>
   <div id="wrapper">
@@ -94,8 +109,9 @@
             </div>
             <div class="form-group">
               <label>Confirme a nova senha</label>
-              <input class="form-control" type="password" maxlength="10" id="confirmsenha" name="confirmsenha" required autocomplete="off">
+              <input class="form-control" type="password" maxlength="10" onChange="checkPasswordMatch();" id="confirmSenha" name="confirmsenha" required autocomplete="off">
             </div>
+            <div id="divCheckPass"></div>
            
           
         </div>
@@ -107,7 +123,7 @@
             </div>
             <div class="form-group">
               <label>Email</label>
-              <input class="form-control" id="email" name="email" required autocomplete="off">
+              <input type="email" class="form-control" id="email" name="email" required autocomplete="off">
             </div>
             <div class="form-group">
               <label>Telefone Residencial</label>
