@@ -39,6 +39,11 @@
                   $senha = $_POST['senha'];
                   $query  = new Usuario;
                   $query->login($usuario, $senha);
+                  if(is_bool($query) && $_POST['cookieCheck']=="yep"){
+                      setcookie('login', $usuario, (time() + (24 * 3600)));
+                      setcookie('senha', $senha, (time() + (24 * 3600)));
+                    
+                  }  
                   unset($query);
                 }
               }
@@ -57,15 +62,16 @@
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> Mantenha-me conectado
+                    <input type="checkbox" name="cookieCheck" value="yep"> Mantenha-me conectado
                   </label>
                 </div>
+                <br>
               <button type="submit" class="btn btn-default">Entrar</button>
               </form><br>
               
             </div>
              
-         
+            
         </div><!-- /.row -->
       <div class="col-lg-4"></div>
  <!-- JavaScript -->

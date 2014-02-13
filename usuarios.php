@@ -131,6 +131,8 @@ function toggle(source) {
                 
                 <tbody>
                   <?php
+                    
+
                     $listaUser    = new Usuario;
                     $result     = $listaUser->listarUsuarios($_SESSION['id']);
                     if (is_array($result)) {

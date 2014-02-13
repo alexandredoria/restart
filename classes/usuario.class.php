@@ -161,7 +161,8 @@ class Usuario extends DB {
 				$_SESSION['id']		= $dados['id'];
 				$_SESSION['nome']	= $dados['nome'];
 				$_SESSION['sobrenome']	= $dados['sobrenome'];
-				$_SESSION['nivel_acesso']	= $dados['nivel_acesso'];	
+				$_SESSION['nivel_acesso']	= $dados['nivel_acesso'];
+					
 				echo "<meta http-equiv='refresh' content='5'>";
 			}	
 	}	
@@ -337,6 +338,7 @@ class Usuario extends DB {
 	public function login($user, $pass) {
 		$user		= $this->db->real_escape_string(trim($user));
 		$pass		= $this->db->real_escape_string(trim($pass));
+
 		if ($login = $this->db->query("SELECT id, nome, sobrenome, senha, nivel_acesso, login, data_cadastro, data_atualizacao FROM usuario WHERE login = '$user'")) {
 			if ($login->num_rows) {
 				$dados = array();
