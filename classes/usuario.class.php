@@ -248,14 +248,14 @@ class Usuario extends DB {
 						* Depois acrescentamos os dias nessa data convertida (+{$days} day) //$days = 14
 						*/
 						//, e acrescentamos os dias
-						$timestampExpirado = strtotime("+14 day", strtotime($dados['data_cadastro']));
+						$timestampExpirado = strtotime("+0 day", strtotime($dados['data_cadastro']));
 									
 						/**
 						* Agora fazemos uma verificação,
 						* se data de expiração for maior que hoje,
 						* retorna verdadeiro, senão falso
 						*/
-						if ($timestampExpirado >= $timestampNow){
+						if ($timestampExpirado > $timestampNow){
 							echo "<!-- Modal -->
                            <div class='modal fade' id='modal_expiraSenha' tabindex='-1' role='dialog' aria-labelledby='modal_expiraSenha' aria-hidden='true'>
                                 <div class='modal-dialog'>
@@ -265,7 +265,7 @@ class Usuario extends DB {
                                       <h4 class='modal-title' id='modal_cadUsuarioLabel'>Atualize o seu perfil!</h4>
                                     </div>
                                     <div class='modal-body'>
-                                      <p>Você deve atualizar os dados de seu perfil até o dia ".date('d/m/Y H:i:s', $timestampExpirado)." sob pena de exclusão automática do sistema.</p>
+                                      <p>Você deve atualizar os dados de seu perfil até o dia ".date('d/m/Y', $timestampExpirado)." sob pena de exclusão automática do sistema.</p>
                                     </div>
                                     <div class='modal-footer'>
                                     	<button type='button' class='btn btn-danger' data-dismiss='modal'>Certo</button>
@@ -294,14 +294,14 @@ class Usuario extends DB {
 	 * @param string $field Campo da tabela que se deseja obter
 	 * @return string $string Valor obtido
 	 */
-	public function obterDados($field, $id) {
-		if ($result = $this->db->query("SELECT $field FROM usuario WHERE id = $id")) {
+	public function obterDados($campo, $id) {
+		if ($result = $this->db->query("SELECT $campo FROM usuario WHERE id = $id")) {
 			if ($result->num_rows) {
 				$string = $result->fetch_assoc();
-				return ($string);
-			}
-			$valor->free();
-		}
+				return $string;
+			}$result->free();
+			
+		}else return ($this->db->error);
 	}
 
 	/**
@@ -366,7 +366,7 @@ class Usuario extends DB {
 
 				} else echo "<div id='login_error'>Senha incorreta.</div>";	
 				
-			} else echo "<div id='login_error'>Usuário '$user' inexistente.</div>";
+			} else echo "<div id='login_error'>Usuário $user inexistente.</div>";
 			$login->free();
 		} else { 
 			echo "<div id='login_error'>" . $this->db->error . "</div>";

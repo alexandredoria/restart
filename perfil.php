@@ -46,41 +46,7 @@
           unset($editUser);
 
 
-         /* $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
-          $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario($nome, $sobrenome, $email, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular, $data_cadastro);
-          if (is_bool($result)) {
-            echo "<!-- Modal -->
-<div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
-  <div class='modal-dialog modal-sm'>
-    <div class='modal-content panel-success'>
-      <div class='modal-header panel-heading'>
-        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário cadastrado com sucesso!</h4>
-      </div>
-      
-    </div>
-  </div>
-</div>";
-          }
-          else {
-            echo "<!-- Modal -->
-<div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
-  <div class='modal-dialog'>
-    <div class='modal-content panel-danger'>
-      <div class='modal-header panel-heading'>
-        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível cadastrar o usuário</h4>
-      </div>
-      <div class='modal-body'>
-        <p>".$result."</p>
-      </div>
-    </div>
-  </div>
-</div>";
-          }
-          unset($addUser);
-          echo "<script>$('#modal_cadUsuario').modal('show');</script>";*/
+         
         }
       
       
@@ -89,6 +55,8 @@
   }
   $nomeUser = new Usuario;
   $nomeUser->obterDados('nome', $_SESSION['id']);
+
+
 
 
     ?>
@@ -110,7 +78,7 @@
             <input type="hidden" name="acao" value="atualiza">
             <div class="form-group">
               <label>Nome</label>
-              <input class="form-control" type="text" id="nome" name="nome" value="<?php if(is_bool($nomeUser)){echo $nomeUser;}?>" required autocomplete="off">      
+              <input class="form-control" type="text" id="nome" name="nome" value="<?php if(is_array($nomeUser)){echo $nomeUser;}?>" required autocomplete="off">      
             </div>
             <div class="form-group">
               <label>Sobrenome</label>

@@ -69,8 +69,9 @@ session_start();
                       Todos <span class="caret"></span>
                     </span>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Bolsista</a></li>
-                      <li><a href="#">Professor</a></li>                      
+                      <li><a href="#">Todos</a></li>
+                      <li><a href="#">Bolsistas</a></li>
+                      <li><a href="#">Professores</a></li>                      
                     </ul>
                   </div>
 
