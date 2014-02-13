@@ -21,7 +21,10 @@ function toggle(source) {
   
   for(var i=0, n=checkboxes.length;i<n;i++) {
     checkboxes[i].checked = source.checked;
-    document.getElementsByName('fooTr').className = "active";
+   
+    $(".xyz input[type=checkbox]:checked").each(function() {
+    $(this).closest("tr").addClass("selected");
+});
     
 
   }
@@ -75,10 +78,10 @@ function toggle(source) {
               <tr>
                 <td>
                   &nbsp;&nbsp;<input type='checkbox' onClick="toggle(this)"> Exibição: 
-
+                  
                   <div class="btn-group">
                     <span type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      Todos <span class="caret"></span>
+                      <strong>Todos</strong> <span class="caret"></span>
                     </span>
                     <ul class="dropdown-menu" role="menu">
                       <li><a href="#">Todos</a></li>
@@ -86,13 +89,15 @@ function toggle(source) {
                       <li><a href="#">Professores</a></li>                      
                     </ul>
                   </div>
+                
 
                 </td>
-                <td style="display:none;"> <i class='glyphicon glyphicon-remove'></i> Excluir</td>
+                <td id="exc"><a><i class='glyphicon glyphicon-remove'></i> Excluir</a></td>
               </tr>
             </table> 
 
-            <div class="table-responsive"><table class="table table-striped table-hover">
+            <div class="table-responsive">
+              <table id="" class="table table-striped table-hover">
                 <p>
                 <tr>
                   <th></th>
@@ -117,7 +122,7 @@ function toggle(source) {
                       foreach ($result as $row) {
                         if($row['data_atualizacao']===null){echo "<tr id='fooTr'class='danger'>";} else echo "<tr id='fooTr'>";
                         echo "
-                            <td ><input type='checkbox' name='foo' value='".$row['id']."'></td>
+                            <td ><input type='checkbox'   name='foo' value='".$row['id']."'></td>
                             <td align='right'>" . $row['id'] . "</td>
                             <td>". $row['nome'] . " ".$row['sobrenome']."</td>
                             <td>" . $row['email'] . "</td>
@@ -132,9 +137,8 @@ function toggle(source) {
                               <form action='#confirm' method='post'>
                                 <input type='hidden' name='id_action' value='".$row['id']."'>
                                 <a data-toggle='modal' data-target='#modal_excUsuario'>                              
-                                <i class='glyphicon glyphicon-remove'></i> Excluir
-                              </a>
-                              </a>
+                                 <i class='glyphicon glyphicon-remove'></i> Excluir
+                               </a>
                             </td>
                           </tr>"; 
                       }
