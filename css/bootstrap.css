@@ -5,6 +5,7 @@
  */
 
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -5827,5 +5828,9 @@ td.visible-print {
   td.hidden-print {
     display: none !important;
   }
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer; cursor: hand;
 }
 /*# sourceMappingURL=bootstrap.css.map */

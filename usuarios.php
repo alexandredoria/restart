@@ -16,20 +16,30 @@ session_start();
   
 ?>
 <script language="JavaScript">
+
+$(document).ready(function() {
+
+    var $submit = $("#exc").hide(),
+        $cbs = $('input[name="foo"]').click(function() {
+            $submit.toggle( $cbs.is(":checked") );
+        });
+});
+
 function toggle(source) {
   checkboxes = document.getElementsByName('foo');
-  
+  $("#exc").show();
   for(var i=0, n=checkboxes.length;i<n;i++) {
     checkboxes[i].checked = source.checked;
-   
-    $(".xyz input[type=checkbox]:checked").each(function() {
-    $(this).closest("tr").addClass("selected");
-});
     
-
   }
+ 
 
 }
+
+
+
+
+
 </script>
   <body>
 
@@ -76,23 +86,28 @@ function toggle(source) {
 
             <table>
               <tr>
-                <td>
-                  &nbsp;&nbsp;<input type='checkbox' onClick="toggle(this)"> Exibição: 
+                  <th></th>
+                  <th></th>
+                  <th></th>
                   
-                  <div class="btn-group">
-                    <span type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      <strong>Todos</strong> <span class="caret"></span>
-                    </span>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Todos</a></li>
-                      <li><a href="#">Bolsistas</a></li>
-                      <li><a href="#">Professores</a></li>                      
-                    </ul>
-                  </div>
-                
-
+              </tr>
+              <tr>
+                <td>
+                  &nbsp;&nbsp;<input type='checkbox' id="toggle" onClick="toggle(this)">&nbsp;&nbsp;&nbsp;Exibição:&nbsp;
+                </td>  
+                <td>
+                  <select style="font-weight:bold"  class="form-control">
+                    <option value="todos">Todos</option>
+                    <option value="bolsistas">Bolsistas</option>
+                    <option value="professores">Professores</option>
+                  </select>
                 </td>
-                <td id="exc"><a><i class='glyphicon glyphicon-remove'></i> Excluir</a></td>
+                <td>
+                  &nbsp;&nbsp;
+                  <button type="button" id="exc" class="btn btn-primary">
+                    <i class='glyphicon glyphicon-remove'></i> Excluir
+                  </button>
+                </td>
               </tr>
             </table> 
 
