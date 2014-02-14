@@ -31,10 +31,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `restart`.`Configuracao` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `fabricante` VARCHAR(45) NOT NULL,
-  `modelo_maquina` VARCHAR(45) NOT NULL,
-  `modelo_processador` VARCHAR(45) NOT NULL,
-  `capacidade_ram` VARCHAR(8) NOT NULL,
-  `capacidade_hd` VARCHAR(45) NOT NULL,
+  `modelo_maquina` VARCHAR(45) NULL,
+  `modelo_processador` VARCHAR(45) NULL,
+  `capacidade_ram` VARCHAR(8) NULL,
+  `capacidade_hd` VARCHAR(45) NULL,
+  `data_vencimento` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -48,7 +49,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Patrimonio` (
   `num_posicionamento` INT NOT NULL,
   `num_laboratorio` INT NOT NULL,
   `situacao` VARCHAR(45) NOT NULL,
-  `vencimento_garantia` DATE NOT NULL,
   `Configuracao_id` INT NOT NULL,
   PRIMARY KEY (`num_patrimonio`),
   INDEX `fk_Patrimonio_Configuracao1_idx` (`Configuracao_id` ASC),
@@ -92,8 +92,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Defeito` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `tipo` VARCHAR(8) NULL,
-  `categoria` VARCHAR(45) NULL,
+  `tipo` VARCHAR(8) NOT NULL,
+  `categoria` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
