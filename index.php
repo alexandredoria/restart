@@ -54,11 +54,11 @@
               <form role="form" method="post" action="index.php">
                 <div class="input-group">
                   <span class="input-group-addon"><i placeholder="Nome de usuário" class="glyphicon glyphicon-user"></i></span>
-                  <input type="text" class="form-control" name="usuario" placeholder="Nome de usuário">
+                  <input type="text" class="form-control" name="usuario" placeholder="Nome de usuário" required autocomplete="off">
                 </div>           
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                  <input type="password" class="form-control" name="senha" placeholder="Senha">
+                  <input type="password" class="form-control" name="senha" placeholder="Senha" required autocomplete="off">
                 </div>
                 <div class="checkbox">
                   <label>
