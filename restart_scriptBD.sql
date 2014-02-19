@@ -9,18 +9,28 @@ USE `restart` ;
 -- Table `restart`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Usuario` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `matricula` VARCHAR(16) NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
   `sobrenome` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
-  `login` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
-  `nivel_acesso` INT NOT NULL,
+  `nivel_acesso` SMALLINT NOT NULL,
   `data_cadastro` DATE NOT NULL,
   `data_atualizacao` DATE NULL,
-  `matricula` VARCHAR(45) NULL,
   `telefone_residencial` VARCHAR(15) NULL,
   `telefone_celular` VARCHAR(15) NULL,
+  PRIMARY KEY (`matricula`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `restart`.`Imagem_HD`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restart`.`Imagem_HD` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome_arquivo` VARCHAR(50) NOT NULL,
+  `data_criacao` DATE NOT NULL,
+  `data_atualizacao` DATE NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -34,8 +44,25 @@ CREATE TABLE IF NOT EXISTS `restart`.`Configuracao` (
   `modelo_maquina` VARCHAR(45) NULL,
   `modelo_processador` VARCHAR(45) NULL,
   `capacidade_ram` VARCHAR(8) NULL,
-  `capacidade_hd` VARCHAR(45) NULL,
+  `capacidade_hd` VARCHAR(8) NULL,
   `data_vencimento` DATE NOT NULL,
+  `Imagem_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Configuracao_Imagem1_idx` (`Imagem_id` ASC),
+  CONSTRAINT `fk_Configuracao_Imagem1`
+    FOREIGN KEY (`Imagem_id`)
+    REFERENCES `restart`.`Imagem_HD` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `restart`.`Laboratorio`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restart`.`Laboratorio` (
+  `id` INT NOT NULL,
+  `num_bens` INT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -50,11 +77,18 @@ CREATE TABLE IF NOT EXISTS `restart`.`Patrimonio` (
   `num_laboratorio` INT NOT NULL,
   `situacao` VARCHAR(45) NOT NULL,
   `Configuracao_id` INT NOT NULL,
+  `Laboratorio_id` INT NOT NULL,
   PRIMARY KEY (`num_patrimonio`),
   INDEX `fk_Patrimonio_Configuracao1_idx` (`Configuracao_id` ASC),
+  INDEX `fk_Patrimonio_Laboratorio1_idx` (`Laboratorio_id` ASC),
   CONSTRAINT `fk_Patrimonio_Configuracao1`
     FOREIGN KEY (`Configuracao_id`)
     REFERENCES `restart`.`Configuracao` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Patrimonio_Laboratorio1`
+    FOREIGN KEY (`Laboratorio_id`)
+    REFERENCES `restart`.`Laboratorio` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -68,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia` (
   `descricao` VARCHAR(45) NOT NULL,
   `estado_servico` VARCHAR(45) NOT NULL,
   `data_ocorrencia` DATE NOT NULL,
+  `data_previa` DATE NULL,
   `data_entrega` DATE NULL,
   `Patrimonio_num_patrimonio` INT NOT NULL,
   `Usuario_id` INT NOT NULL,
@@ -81,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Chamado_Usuario1`
     FOREIGN KEY (`Usuario_id`)
-    REFERENCES `restart`.`Usuario` (`id`)
+    REFERENCES `restart`.`Usuario` (`matricula`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -92,8 +127,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Defeito` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `tipo` VARCHAR(8) NOT NULL,
-  `categoria` VARCHAR(45) NOT NULL,
+  `categoria` SMALLINT NOT NULL,
+  `detalhe` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -103,9 +138,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia_has_Defeito` (
   `Ocorrencia_id` INT NOT NULL,
-  `Defeito_idDefeito` INT NOT NULL,
-  PRIMARY KEY (`Ocorrencia_id`, `Defeito_idDefeito`),
-  INDEX `fk_Ocorrencia_has_Defeito_Defeito1_idx` (`Defeito_idDefeito` ASC),
+  `Defeito_id` INT NOT NULL,
+  PRIMARY KEY (`Ocorrencia_id`, `Defeito_id`),
+  INDEX `fk_Ocorrencia_has_Defeito_Defeito1_idx` (`Defeito_id` ASC),
   INDEX `fk_Ocorrencia_has_Defeito_Ocorrencia1_idx` (`Ocorrencia_id` ASC),
   CONSTRAINT `fk_Ocorrencia_has_Defeito_Ocorrencia1`
     FOREIGN KEY (`Ocorrencia_id`)
@@ -113,8 +148,67 @@ CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia_has_Defeito` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Ocorrencia_has_Defeito_Defeito1`
-    FOREIGN KEY (`Defeito_idDefeito`)
+    FOREIGN KEY (`Defeito_id`)
     REFERENCES `restart`.`Defeito` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `restart`.`Software`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restart`.`Software` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `fabricante` VARCHAR(45) NULL,
+  `versao` VARCHAR(10) NULL,
+  `tipo_licenca` VARCHAR(15) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `restart`.`Software_has_Imagem_HD`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restart`.`Software_has_Imagem_HD` (
+  `Software_id` INT NOT NULL,
+  `Imagem_HD_id` INT NOT NULL,
+  PRIMARY KEY (`Software_id`, `Imagem_HD_id`),
+  INDEX `fk_Software_has_Imagem_Imagem1_idx` (`Imagem_HD_id` ASC),
+  INDEX `fk_Software_has_Imagem_Software1_idx` (`Software_id` ASC),
+  CONSTRAINT `fk_Software_has_Imagem_Software1`
+    FOREIGN KEY (`Software_id`)
+    REFERENCES `restart`.`Software` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Software_has_Imagem_Imagem1`
+    FOREIGN KEY (`Imagem_HD_id`)
+    REFERENCES `restart`.`Imagem_HD` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `restart`.`Licenca`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restart`.`Licenca` (
+  `Software_id` INT NOT NULL,
+  `Patrimonio_num_patrimonio` INT NOT NULL,
+  `codigo_licenca` VARCHAR(45) NULL,
+  `data_expiracao` DATE NULL,
+  PRIMARY KEY (`Software_id`, `Patrimonio_num_patrimonio`),
+  INDEX `fk_Software_has_Patrimonio_Patrimonio1_idx` (`Patrimonio_num_patrimonio` ASC),
+  INDEX `fk_Software_has_Patrimonio_Software1_idx` (`Software_id` ASC),
+  CONSTRAINT `fk_Software_has_Patrimonio_Software1`
+    FOREIGN KEY (`Software_id`)
+    REFERENCES `restart`.`Software` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Software_has_Patrimonio_Patrimonio1`
+    FOREIGN KEY (`Patrimonio_num_patrimonio`)
+    REFERENCES `restart`.`Patrimonio` (`num_patrimonio`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
