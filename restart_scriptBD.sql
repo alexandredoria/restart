@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `restart`.`Usuario` (
   `sobrenome` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
   `senha` VARCHAR(45) NOT NULL,
-  `nivel_acesso` SMALLINT NOT NULL,
+  `tipo_usuario` SMALLINT NOT NULL,
   `data_cadastro` DATE NOT NULL,
   `data_atualizacao` DATE NULL,
   `telefone_residencial` VARCHAR(15) NULL,
@@ -28,7 +28,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Imagem_HD` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome_arquivo` VARCHAR(50) NOT NULL,
+  `nome_arquivo` VARCHAR(60) NOT NULL,
   `data_criacao` DATE NOT NULL,
   `data_atualizacao` DATE NULL,
   PRIMARY KEY (`id`))
@@ -41,11 +41,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `restart`.`Configuracao` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `fabricante` VARCHAR(45) NOT NULL,
-  `modelo_maquina` VARCHAR(45) NULL,
+  `modelo_equipamento` VARCHAR(45) NULL,
   `modelo_processador` VARCHAR(45) NULL,
-  `capacidade_ram` VARCHAR(8) NULL,
-  `capacidade_hd` VARCHAR(8) NULL,
-  `data_vencimento` DATE NOT NULL,
+  `capacidade_ram` VARCHAR(20) NULL,
+  `capacidade_hd` VARCHAR(20) NULL,
+  `vencimento_garantia` DATE NOT NULL,
   `Imagem_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Configuracao_Imagem1_idx` (`Imagem_id` ASC),
@@ -62,7 +62,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Laboratorio` (
   `id` INT NOT NULL,
-  `num_bens` INT NULL,
+  `qtd_bens` INT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -72,10 +72,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Patrimonio` (
   `num_patrimonio` INT NOT NULL AUTO_INCREMENT,
-  `tipo` VARCHAR(45) NOT NULL,
+  `tipo` SMALLINT NOT NULL,
   `num_posicionamento` INT NOT NULL,
-  `num_laboratorio` INT NOT NULL,
-  `situacao` VARCHAR(45) NOT NULL,
+  `situacao` SMALLINT NOT NULL,
   `Configuracao_id` INT NOT NULL,
   `Laboratorio_id` INT NOT NULL,
   PRIMARY KEY (`num_patrimonio`),
@@ -100,7 +99,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(45) NOT NULL,
-  `estado_servico` VARCHAR(45) NOT NULL,
+  `estado_servico` SMALLINT NOT NULL,
   `data_ocorrencia` DATE NOT NULL,
   `data_previa` DATE NULL,
   `data_entrega` DATE NULL,
@@ -163,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `restart`.`Software` (
   `nome` VARCHAR(45) NOT NULL,
   `fabricante` VARCHAR(45) NULL,
   `versao` VARCHAR(10) NULL,
-  `tipo_licenca` VARCHAR(15) NULL,
+  `tipo_licenca` SMALLINT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
