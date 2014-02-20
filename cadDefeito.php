@@ -89,11 +89,11 @@
       $matricula = $_POST["matricula"];
       $email = $_POST["email"];
       $senha = $_POST["senha"];
-      $nivel_acesso = $_POST["nivel_acesso"];
+      $tipo_usuario = $_POST["tipo_usuario"];
       $telefone_residencial = $_POST["telefone_residencial"];
       $telefone_celular = $_POST["telefone_celular"];
     
-      $sql = mysql_query("insert into `usuario` (nome, sobrenome, email, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular) values( '$nome', '$sobrenome', '$email', '$login', '$senha', '$nivel_acesso', '$matricula', '$telefone_residencial', '$telefone_celular')", $db_connection) or die("Error: Insert ".mysql_Error());
+      $sql = mysql_query("insert into `usuario` (nome, sobrenome, email, login, senha, tipo_usuario, matricula, telefone_residencial, telefone_celular) values( '$nome', '$sobrenome', '$email', '$login', '$senha', '$tipo_usuario', '$matricula', '$telefone_residencial', '$telefone_celular')", $db_connection) or die("Error: Insert ".mysql_Error());
 
   
       if(($sql) > 0){

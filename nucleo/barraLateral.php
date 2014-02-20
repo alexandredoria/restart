@@ -17,7 +17,7 @@
              <li <?php if ($pageTitle == "Restart") echo "class='active'"; ?>><a href="painel.php"><i class="fa fa-dashboard"></i> Painel</a></li>
             
               <?php 
-                if ($_SESSION['nivel_acesso'] == 1) {
+                if ($_SESSION['tipo_usuario'] == 1) {
                   echo ((($pageTitle == "Cadastrar usuário") || ($pageTitle == "Usuários &middot; Visão Geral")) ? "<li class='active'>" : "<li>");
                   echo "<a href='usuarios.php'><i class='glyphicon glyphicon-user'></i> Usuários</a></li>"; 
                 }
@@ -27,7 +27,7 @@
             
             
              <?php 
-                if (($_SESSION['nivel_acesso'] == 1) ||($_SESSION['nivel_acesso'] == 2)) { 
+                if (($_SESSION['tipo_usuario'] == 1) ||($_SESSION['tipo_usuario'] == 2)) { 
                   echo ((($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) ? "<li class='active'" : "<li>");
                   echo "<a href='patrimonio.php'><i class='fa fa-edit'></i> Patrimônio</a></li>";
                 }  
@@ -89,7 +89,7 @@
                 <li><a href="perfil.php"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>
                 <?php 
-                if ($_SESSION['nivel_acesso'] == 1) { 
+                if ($_SESSION['tipo_usuario'] == 1) { 
                   echo "<li><a href='configuracoes.php'><i class='fa fa-gear'></i> Configurações</a></li>";
                 }  
               ?>  

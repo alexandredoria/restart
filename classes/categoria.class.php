@@ -71,8 +71,8 @@ class Categoria extends DB {
 	 * @return string Mensagem de retorno
 	 */
 	public function deletarCategoria($id) {
-		$del_id		= $this->db->real_escape_string(trim($id));
-		if ($update = $this->db->query("DELETE FROM categorias WHERE id = $del_id")) {
+		$del_matricula		= $this->db->real_escape_string(trim($id));
+		if ($update = $this->db->query("DELETE FROM categorias WHERE id = $del_matricula")) {
 			if ($this->db->affected_rows) {
 				echo "<div id='growl_box' class='good'><p>Categoria removida.</p></div>";
 			}

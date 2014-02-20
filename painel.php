@@ -9,9 +9,9 @@
   
   include 'nucleo/cabecario.php';
   include 'classes/usuario.class.php';
-  if ($_SESSION['nivel_acesso'] != 1) {
+  if ($_SESSION['tipo_usuario'] != 1) {
     $expUser  = new Usuario;
-    $expUser->expirarUsuario($_SESSION['id']);           
+    $expUser->expirarUsuario($_SESSION['matricula']);           
     unset($expUser);
   }
 ?>
@@ -37,34 +37,8 @@
         </div><!-- /.row -->
 
         <div class="row">
-          <div class="col-lg-3">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-6">
-                    <i class="fa fa-comments fa-5x"></i>
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">8</p>
-                    <p class="announcement-text">Novos Recados!</p>
-                  </div>
-                </div>
-              </div>
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <div class="col-xs-6">
-                      Ver Recados
-                    </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-lg-3">
+          
+          <div class="col-lg-4">
             <div class="panel panel-warning">
               <div class="panel-heading">
                 <div class="row">
@@ -91,7 +65,7 @@
               </a>
             </div>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-4">
             <div class="panel panel-danger">
               <div class="panel-heading">
                 <div class="row">
@@ -118,7 +92,7 @@
               </a>
             </div>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-4">
             <div class="panel panel-success">
               <div class="panel-heading">
                 <div class="row">

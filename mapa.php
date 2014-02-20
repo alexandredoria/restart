@@ -5,7 +5,7 @@ error_reporting("E_warning");
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
-  } else if ($_SESSION['nivel_acesso'] != "1"){
+  } else if ($_SESSION['tipo_usuario'] != "1"){
     header("Location: ../restart/painel.php");
     exit;
 

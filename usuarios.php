@@ -4,7 +4,7 @@ session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
-  } else if ($_SESSION['nivel_acesso'] != "1"){
+  } else if ($_SESSION['tipo_usuario'] != "1"){
     header("Location: ../restart/painel.php");
     exit;
 
@@ -51,10 +51,10 @@ function toggle(source) {
 
         if (!empty($_POST)) {
           if (isset($_POST['id_action'])) {
-            $del_id   = $_POST['id_action'];
+            $del_matricula   = $_POST['id_action'];
            
             $delUser  = new Usuario;
-            $delUser->deletarUsuario($del_id);
+            $delUser->deletarUsuario($del_matricula);
             unset($delUser);
           }
         }
@@ -116,12 +116,11 @@ function toggle(source) {
                 <p>
                 <tr>
                   <th></th>
-                  <th>ID</th>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Login</th>
-                  <th>Tipo</th>
+                  
                   <th>Matrícula</th>
+                  <th>Nome</th>
+                  <th>Tipo de usuário</th>
+                  <th>Email</th>
                   <th>Tel. Residencial</th>
                   <th>Tel. Celular</th>
                   <th>Data de atualização</th>
@@ -134,25 +133,28 @@ function toggle(source) {
                     
 
                     $listaUser    = new Usuario;
-                    $result     = $listaUser->listarUsuarios($_SESSION['id']);
+                    $result     = $listaUser->listarUsuarios($_SESSION['matricula']);
                     if (is_array($result)) {
                       foreach ($result as $row) {
+                        if ($row['tipo_usuario'] == 2){
+                          $tipo = "Bolsista";
+                        } if ( $row['tipo_usuario'] == 3){
+                          $tipo = "Professor";
+                        }
                         if($row['data_atualizacao']===null){echo "<tr id='fooTr'class='danger'>";} else echo "<tr id='fooTr'>";
                         echo "
-                            <td ><input type='checkbox'   name='foo' value='".$row['id']."'></td>
-                            <td align='right'>" . $row['id'] . "</td>
-                            <td>". $row['nome'] . " ".$row['sobrenome']."</td>
-                            <td>" . $row['email'] . "</td>
-                            <td>" . $row['login'] . "</td>
-                            <td>" . $row['nivel_acesso'] . "</td>
+                            <td ><input type='checkbox'   name='foo' value='".$row['matricula']."'></td>
                             <td>" . $row['matricula'] . "</td>
+                            <td>". $row['nome'] . " ".$row['sobrenome']."</td>
+                            <td>" . $tipo . "</td>
+                            <td>" . $row['email'] . "</td>
                             <td>" . $row['telefone_residencial'] . "</td>
                             <td>" . $row['telefone_celular'] . "</td>
                             <td>"; if ($row['data_atualizacao']===null){echo "Pendente";} else {echo date('d/m/Y', strtotime($row['data_atualizacao']));} echo "</td>
                             
                             <td>
                               <form action='#confirm' method='post'>
-                                <input type='hidden' name='id_action' value='".$row['id']."'>
+                                <input type='hidden' name='id_action' value='".$row['matricula']."'>
                                 <a data-toggle='modal' data-target='#modal_excUsuario'>                              
                                  <i class='glyphicon glyphicon-remove'></i> Excluir
                                </a>

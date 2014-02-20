@@ -30,27 +30,27 @@ class Usuario extends DB {
 	 * @param string $nome Nome do usuario
 	 * @param string $sobrenome Nome do usuario
 	 * @param string $email Endereço de email
-	 * @param string $login Nome de login para acesso
+	 * @param string $matricula Nome de login para acesso
 	 * @param string $senha Senha para acesso
-	 * @param int $nivel_acesso Nivel de acesso para acesso ao sistema
+	 * @param int $tipo_usuario Nivel de acesso para acesso ao sistema
 	 * @param string $matricula Matricula do usuario
 	 * @param string $telefone_residencial Telefone residencial do usuario
 	 * @param string $telefone_celular Telefone celular do usuario
 	 **/
-	public function cadastrarUsuario($login, $senha, $nivel_acesso) {
+	public function cadastrarUsuario($nome, $matricula, $senha, $tipo_usuario) {
 
-		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
+		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim(strtoupper($matricula))) : NULL ;
 		
-		if ($check = $this->db->query("SELECT login FROM usuario WHERE login = '$login'")) {
-			if ($check->num_rows) return "O nome já está em uso.";
+		if ($check = $this->db->query("SELECT matricula FROM usuario WHERE matricula = '$matricula'")) {
+			if ($check->num_rows) return "A matricula $matricula já está cadastrada no sistema.";
 			else {
+				$nome = (!empty($nome)) ? $this->db->real_escape_string(trim($nome)) : NULL ;
 				$senha		= (!empty($senha)) ? $senha : NULL ;
-				$nivel_acesso		= (!empty($nivel_acesso)) ? $nivel_acesso : NULL ;
+				$tipo_usuario		= (!empty($tipo_usuario)) ? $tipo_usuario : NULL ;
 				$data_cadastro = date('Y-m-d');
-				$nome = "Anônimo";
 				$sobrenome = "";
-				$insert = $this->db->prepare("INSERT INTO usuario ( nome, sobrenome, login, senha, nivel_acesso, data_cadastro) VALUES ( ?, ?, ?, ?, ?, ?)");	
-				$insert->bind_param('ssssis', $nome, $sobrenome, $login, $senha, $nivel_acesso, $data_cadastro);
+				$insert = $this->db->prepare("INSERT INTO usuario ( nome, sobrenome, matricula, senha, tipo_usuario, data_cadastro) VALUES ( ?, ?, ?, ?, ?, ?)");	
+				$insert->bind_param('ssssis', $nome, $sobrenome, $matricula, $senha, $tipo_usuario, $data_cadastro);
 				if ($insert->execute()) { return true; }
 					else { return ($this->db->error); }
 			} // Não está em uso
@@ -68,28 +68,26 @@ class Usuario extends DB {
 	 * @param string $nome Nome do usuario
 	 * @param string $sobrenome Nome do usuario
 	 * @param string $email Endereço de email
-	 * @param string $login Nome de login para acesso
+	 * @param string $matricula Nome de login para acesso
 	 * @param string $senha Senha para acesso
-	 * @param int $nivel_acesso Nivel de acesso para acesso ao sistema
+	 * @param int $tipo_usuario Nivel de acesso para acesso ao sistema
 	 * @param string $matricula Matricula do usuario
 	 * @param string $telefone_residencial Telefone residencial do usuario
 	 * @param string $telefone_celular Telefone celular do usuario
 	 * @return string Mensagem de retorno
 	 */
-	public function editarUsuario($id, $nome, $sobrenome, $email, $login, $senha, $matricula, $telefone_residencial, $telefone_celular) {
+	public function editarUsuario($matricula, $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular) {
 		$nome		= $this->db->real_escape_string(trim($nome));
 		$sobrenome		= $this->db->real_escape_string(trim($sobrenome));
 		$email		= (!empty($email)) ? $this->db->real_escape_string(trim($email)) : NULL ;
-		$login		= (!empty($login)) ? $this->db->real_escape_string(trim($login)) : NULL ;
 		$senha		= (!empty($senha)) ? $senha : NULL ;
-		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim($matricula)) : NULL ;
 		$telefone_residencial		= $this->db->real_escape_string(trim($telefone_residencial));
 		$telefone_celular		= $this->db->real_escape_string(trim($telefone_celular));
 
 		$data_atualizacao = date('Y-m-d');
 
-		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, login = ?, senha = ?,  matricula = ?, telefone_residencial = ?, telefone_celular = ?, data_atualizacao = ? WHERE id = ?");
-		$edit->bind_param('sssssssssi', $nome, $sobrenome, $email, $login, $senha, $matricula, $telefone_residencial, $telefone_celular, $data_atualizacao, $id);
+		$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, senha = ?, telefone_residencial = ?, telefone_celular = ?, data_atualizacao = ? WHERE matricula = ?");
+		$edit->bind_param('ssssssss', $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular, $data_atualizacao, $matricula);
 		if ($edit->execute()) {
 			if ($this->db->affected_rows) {
 
@@ -144,38 +142,37 @@ class Usuario extends DB {
 					echo "<script>$('#modal_erroBD').modal('show');</script>";
 		}
 		
-	if ($login = $this->db->query("SELECT id, nome, sobrenome, senha, nivel_acesso, login, data_cadastro, data_atualizacao FROM usuario WHERE id = '$id'")) {
-			if ($login->num_rows) {
+	if ($matricula = $this->db->query("SELECT * FROM usuario WHERE matricula = '$matricula'")) {
+			
 				$dados = array();
-				while ($info = $login->fetch_assoc()) {
+				while ($info = $matricula->fetch_assoc()) {
 					$dados['nome']	= $info['nome'];
 					$dados['sobrenome']	= $info['sobrenome'];
 					$dados['senha']	= $info['senha'];
-					$dados['id']	= $info['id'];
-					$dados['login']	= $info['login'];
-					$dados['nivel_acesso']	= $info['nivel_acesso'];
+					$dados['matricula']	= $info['matricula'];
+					$dados['tipo_usuario']	= $info['tipo_usuario'];
 					$dados['data_cadastro']	= $info['data_cadastro'];
 					$dados['data_atualizacao']	= $info['data_atualizacao'];
 				}
 				
-				$_SESSION['id']		= $dados['id'];
+				$_SESSION['matricula']		= $dados['matricula'];
 				$_SESSION['nome']	= $dados['nome'];
 				$_SESSION['sobrenome']	= $dados['sobrenome'];
-				$_SESSION['nivel_acesso']	= $dados['nivel_acesso'];
+				$_SESSION['tipo_usuario']	= $dados['tipo_usuario'];
 					
 				echo "<meta http-equiv='refresh' content='5'>";
-			}	
+			
 	}	
 	}
 
 	/**
 	 * Deleta um usuário existente
-	 * @param int $id Número de ID do usuário a ser excluída
+	 * @param int $matricula Número de ID do usuário a ser excluída
 	 * @return string Mensagem de retorno
 	 */
-	public function deletarUsuario($id) {
-		$del_id		= $this->db->real_escape_string(trim($id));
-		if ($update = $this->db->query("DELETE FROM usuario WHERE id = $del_id")) {
+	public function deletarUsuario($matricula) {
+		$del_matricula		= $this->db->real_escape_string(trim(strtoupper($matricula)));
+		if ($update = $this->db->query("DELETE FROM usuario WHERE matricula = $del_matricula")) {
 			if ($this->db->affected_rows) {
 				echo "<!-- Modal -->
 					<div class='modal fade bs-modal-sm' id='modal_excUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuario2' aria-hidden='true'>
@@ -229,10 +226,10 @@ class Usuario extends DB {
 	}
 
 
-		public function expirarUsuario($id){
+		public function expirarUsuario($matricula){
 			date_default_timezone_set("America/Bahia");
 		
-			if ($expUsuario = $this->db->query("SELECT data_cadastro, data_atualizacao FROM usuario WHERE id = '$id'")) {
+			if ($expUsuario = $this->db->query("SELECT data_cadastro, data_atualizacao FROM usuario WHERE matricula = '$matricula'")) {
 				if ($expUsuario->num_rows) {
 					$dados = array();
 					while ($info = $expUsuario->fetch_assoc()) {
@@ -277,9 +274,9 @@ class Usuario extends DB {
                               <script>$('#modal_expiraSenha').modal('show');</script>";
 							
 						} else { 
-							$del_id		= $this->db->real_escape_string(trim($id));
-							$this->logout($del_id);
-							$this->db->query("DELETE FROM usuario WHERE id = $del_id");							
+							$del_matricula		= $this->db->real_escape_string(trim($matricula));
+							$this->logout($del_matricula);
+							$this->db->query("DELETE FROM usuario WHERE matricula = $del_matricula");							
 						}	
 
 					} 
@@ -291,12 +288,12 @@ class Usuario extends DB {
 
 	/**
 	 * Obtém o dado desejado de um usuário
-	 * @param int $id Número de ID do usuário
+	 * @param int $matricula Número de ID do usuário
 	 * @param string $field Campo da tabela que se deseja obter
 	 * @return string $string Valor obtido
 	 */
-	public function obterDados($campo, $id) {
-		if ($result = $this->db->query("SELECT $campo FROM usuario WHERE id = $id")) {
+	public function obterDados($campo, $matricula) {
+		if ($result = $this->db->query("SELECT $campo FROM usuario WHERE id = $matricula")) {
 			if ($result->num_rows) {
 				$string = $result->fetch_assoc();
 				return $string;
@@ -309,9 +306,9 @@ class Usuario extends DB {
 	 * Gera um array com as informações dos usuários cadastrados
 	 * @return array $rows Dados dos usuários
 	 */
-	public function listarUsuarios($id){
+	public function listarUsuarios($matricula){
 		// Executa a query dos usuários e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM usuario WHERE id != $id ORDER BY id ASC ")) {
+		if ($result	= $this->db->query("SELECT * FROM usuario WHERE matricula != '".$matricula."' ORDER BY matricula ASC ")) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -339,16 +336,15 @@ class Usuario extends DB {
 		$user		= $this->db->real_escape_string(trim($user));
 		$pass		= $this->db->real_escape_string(trim($pass));
 
-		if ($login = $this->db->query("SELECT id, nome, sobrenome, senha, nivel_acesso, login, data_cadastro, data_atualizacao FROM usuario WHERE login = '$user'")) {
-			if ($login->num_rows) {
+		if ($matricula = $this->db->query("SELECT * FROM usuario WHERE matricula = '$user'")) {
+			if ($matricula->num_rows) {
 				$dados = array();
-				while ($info = $login->fetch_assoc()) {
+				while ($info = $matricula->fetch_assoc()) {
 					$dados['nome']	= $info['nome'];
 					$dados['sobrenome']	= $info['sobrenome'];
 					$dados['senha']	= $info['senha'];
-					$dados['id']	= $info['id'];
-					$dados['login']	= $info['login'];
-					$dados['nivel_acesso']	= $info['nivel_acesso'];
+					$dados['matricula']	= $info['matricula'];
+					$dados['tipo_usuario']	= $info['tipo_usuario'];
 					$dados['data_cadastro']	= $info['data_cadastro'];
 					$dados['data_atualizacao']	= $info['data_atualizacao'];
 				}
@@ -356,10 +352,10 @@ class Usuario extends DB {
 				if (crypt($pass, $dados['senha']) === $dados['senha']) {
 					
 					session_start();
-					$_SESSION['id']		= $dados['id'];
+					$_SESSION['matricula']		= $dados['matricula'];
 					$_SESSION['nome']	= $dados['nome'];
 					if(isset($dados['sobrenome'])){ $_SESSION['sobrenome']	= $dados['sobrenome'];}
-					$_SESSION['nivel_acesso']	= $dados['nivel_acesso'];
+					$_SESSION['tipo_usuario']	= $dados['tipo_usuario'];
 					$_SESSION['data_atualizacao']	= $dados['data_atualizacao'];
 					$_SESSION['hora']	= date("H:i");
 					header("Location: painel.php");
@@ -369,7 +365,7 @@ class Usuario extends DB {
 				} else echo "<div id='login_error'>Senha incorreta.</div>";	
 				
 			} else echo "<div id='login_error'>Usuário $user inexistente.</div>";
-			$login->free();
+			$matricula->free();
 		} else { 
 			echo "<div id='login_error'>" . $this->db->error . "</div>";
 			$this->logout();

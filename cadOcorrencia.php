@@ -31,7 +31,7 @@
         $data_ocorrencia    = $_POST['data_ocorrencia'];
         $login    = $_POST['login'];
         $senha    = $_POST['senha'];
-        $nivel_acesso    = $_POST['nivel_acesso'];
+        $tipo_usuario    = $_POST['tipo_usuario'];
         $matricula    = $_POST['matricula'];
         $telefone_residencial    = $_POST['telefone_residencial'];
         $telefone_celular    = $_POST['telefone_celular'];
@@ -41,7 +41,7 @@
         if ($_POST['acao'] == 'add') {
           $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
           $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario($descricao, $estado_servico, $data_ocorrencia, $login, $senha, $nivel_acesso, $matricula, $telefone_residencial, $telefone_celular);
+          $result   = $addUser->cadastrarUsuario($descricao, $estado_servico, $data_ocorrencia, $login, $senha, $tipo_usuario, $matricula, $telefone_residencial, $telefone_celular);
           if (is_bool($result)) {
             echo "<!-- Modal -->
 <div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
@@ -134,11 +134,11 @@
       $matricula = $_POST["matricula"];
       $data_ocorrencia = $_POST["data_ocorrencia"];
       $senha = $_POST["senha"];
-      $nivel_acesso = $_POST["nivel_acesso"];
+      $tipo_usuario = $_POST["tipo_usuario"];
       $telefone_residencial = $_POST["telefone_residencial"];
       $telefone_celular = $_POST["telefone_celular"];
     
-      $sql = mysql_query("insert into `usuario` (descricao, estado_servico, data_ocorrencia, login, senha, nivel_acesso, matricula, telefone_residencial, telefone_celular) values( '$descricao', '$estado_servico', '$data_ocorrencia', '$login', '$senha', '$nivel_acesso', '$matricula', '$telefone_residencial', '$telefone_celular')", $db_connection) or die("Error: Insert ".mysql_Error());
+      $sql = mysql_query("insert into `usuario` (descricao, estado_servico, data_ocorrencia, login, senha, tipo_usuario, matricula, telefone_residencial, telefone_celular) values( '$descricao', '$estado_servico', '$data_ocorrencia', '$login', '$senha', '$tipo_usuario', '$matricula', '$telefone_residencial', '$telefone_celular')", $db_connection) or die("Error: Insert ".mysql_Error());
 
   
       if(($sql) > 0){

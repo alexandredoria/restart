@@ -4,7 +4,7 @@ session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
-  } else if ($_SESSION['nivel_acesso'] != "1"){
+  } else if ($_SESSION['tipo_usuario'] != "1"){
     header("Location: ../restart/painel.php");
     exit;
 
@@ -25,10 +25,10 @@ session_start();
       // Verifica se algum form foi enviado
     if (!empty($_POST)) {
       // Verifica se as variáveis relacionadas ao cadastro/edição existem
-      if (isset($_POST['login'])) {
-        
-        $login    = $_POST['login'];
-        $nivel_acesso    = $_POST['nivel_acesso'];
+      if (isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'])) {
+        $nome    = $_POST['nome']; 
+        $matricula    = $_POST['matricula'];
+        $tipo_usuario    = $_POST['tipo_usuario'];
         
         include_once 'nucleo/funcoes.php';
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
@@ -36,7 +36,7 @@ session_start();
           $senha = "123";
           $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
           $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario( $login, $senha, $nivel_acesso);
+          $result   = $addUser->cadastrarUsuario( $nome, $matricula, $senha, $tipo_usuario);
           if (is_bool($result)) {
             echo "<!-- Modal -->
                   <div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
@@ -94,16 +94,22 @@ session_start();
           <div class="col-lg-4">            
               <input type="hidden" name="acao" value="add">
               <div class="form-group">
-                <label>Login</label>
-                <input class="form-control" id="login" name="login" required autocomplete="off">
+                <label>Nome</label>
+                <input class="form-control" id="nome" name="nome" required autocomplete="off">
               </div>
+
+              <div class="form-group">
+                <label>Matricula</label>
+                <input class="form-control" id="matricula" name="matricula" required autocomplete="off">
+              </div>
+
               <label>Tipo de usuário</label>
               <div class="form-group">
                 <label class="radio-inline">
-                  <input type="radio" name="nivel_acesso" id="nivel_acesso2" value="2" required autocomplete="off"> Bolsista
+                  <input type="radio" name="tipo_usuario" id="tipo_usuario2" value="2" required autocomplete="off"> Bolsista
                 </label>
                 <label class="radio-inline">
-                  <input type="radio" name="nivel_acesso" id="nivel_acesso3" value="3" required autocomplete="off"> Professor
+                  <input type="radio" name="tipo_usuario" id="tipo_usuario3" value="3" required autocomplete="off"> Professor
                 </label>
               </div>            
           </div>

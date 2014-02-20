@@ -28,7 +28,7 @@
    
       <div class="col-lg-4"></div>
         <div class="col-lg-4">
-          <div class="panel panel-default" >
+          <div class="panel panel-default" style="border: 1px solid #D0D0D0;">
             <!-- Default panel contents -->
              
             <?php
@@ -53,8 +53,8 @@
               <center><p><img src="logo.png" class="img-responsive" alt="Restart"></p></center><br>
               <form role="form" method="post" action="index.php">
                 <div class="input-group">
-                  <span class="input-group-addon"><i placeholder="Nome de usuário" class="glyphicon glyphicon-user"></i></span>
-                  <input type="text" class="form-control" name="usuario" placeholder="Nome de usuário" required autocomplete="off">
+                  <span class="input-group-addon"><i placeholder="Matrícula" class="glyphicon glyphicon-user"></i></span>
+                  <input type="text" class="form-control" name="usuario" placeholder="Matrícula" required autocomplete="off">
                 </div>           
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>

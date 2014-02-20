@@ -42,9 +42,7 @@ $(document).ready(function () {
         $nome   = $_POST['nome'];
         $sobrenome   = $_POST['sobrenome'];
         $email    = $_POST['email'];
-        $login    = $_POST['login'];
         $senha    = $_POST['senha'];
-        $matricula    = $_POST['matricula'];
         $telefone_residencial    = $_POST['telefone_residencial'];
         $telefone_celular    = $_POST['telefone_celular'];
 
@@ -54,26 +52,15 @@ $(document).ready(function () {
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'atualiza') {
 
-
           $senha = ((strlen($senha) != 60) && (strlen($senha) != 0)) ? criptografar_senha($senha) : $senha ;
           $editUser = new Usuario;
-          $editUser->editarUsuario($_SESSION['id'], $nome, $sobrenome, $email, $login, $senha, $matricula, $telefone_residencial, $telefone_celular);
+          $editUser->editarUsuario($_SESSION['matricula'], $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular);
           unset($editUser);
-
-
-         
-        }
-      
-      
-      }
-      
+        }   
+      }      
   }
   $nomeUser = new Usuario;
-  $nomeUser->obterDados('nome', $_SESSION['id']);
-
-
-
-
+  $nomeUser->obterDados('nome', $_SESSION['matricula']);
     ?>
 
     <div id="page-wrapper">
@@ -100,10 +87,6 @@ $(document).ready(function () {
               <input class="form-control" id="sobrenome" name="sobrenome" value ="" required autocomplete="off">          
             </div>              
             <div class="form-group">
-              <label>Login</label>
-              <input class="form-control" id="login" name="login" value= "" required autocomplete="off">
-            </div>
-            <div class="form-group">
               <label>Nova senha</label>
               <input class="form-control" type="password" maxlength="10" id="senha" name="senha" required autocomplete="off">
             </div>
@@ -117,10 +100,6 @@ $(document).ready(function () {
         </div>
         <div class="col-lg-6">
           
-            <div class="form-group">
-              <label>Matrícula</label>
-              <input class="form-control" id="matricula" name="matricula" required autocomplete="off">
-            </div>
             <div class="form-group">
               <label>Email</label>
               <input type="email" class="form-control" id="email" name="email" required autocomplete="off">
