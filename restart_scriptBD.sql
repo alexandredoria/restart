@@ -104,17 +104,17 @@ CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia` (
   `data_previa` DATE NULL,
   `data_entrega` DATE NULL,
   `Patrimonio_num_patrimonio` INT NOT NULL,
-  `Usuario_id` INT NOT NULL,
+  `Usuario_matricula` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Chamado_Patrimonio1_idx` (`Patrimonio_num_patrimonio` ASC),
-  INDEX `fk_Chamado_Usuario1_idx` (`Usuario_id` ASC),
+  INDEX `fk_Ocorrencia_Usuario1_idx` (`Usuario_matricula` ASC),
   CONSTRAINT `fk_Chamado_Patrimonio1`
     FOREIGN KEY (`Patrimonio_num_patrimonio`)
     REFERENCES `restart`.`Patrimonio` (`num_patrimonio`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Chamado_Usuario1`
-    FOREIGN KEY (`Usuario_id`)
+  CONSTRAINT `fk_Ocorrencia_Usuario1`
+    FOREIGN KEY (`Usuario_matricula`)
     REFERENCES `restart`.`Usuario` (`matricula`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
