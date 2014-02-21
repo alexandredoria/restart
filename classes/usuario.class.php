@@ -113,7 +113,7 @@ class Usuario extends DB {
 					    <div class='modal-content panel-danger'>
 					      <div class='modal-header panel-heading'>
 					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível remover o usuário</h4>
+					        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível atualizar o seu perfil</h4>
 					      </div>
 					      <div class='modal-body'>
 					        <p>Lembre-se: seu nome de login deve ser único.</p>
@@ -293,7 +293,7 @@ class Usuario extends DB {
 	 * @return string $string Valor obtido
 	 */
 	public function obterDados($campo, $matricula) {
-		if ($result = $this->db->query("SELECT '$campo' FROM usuario WHERE matricula = '$matricula'")) {
+		if ($result = $this->db->query("SELECT `$campo` FROM usuario WHERE matricula = '$matricula'")) {
 			if ($result->num_rows) {
 				while ($string = $result->fetch_array()){
 					$valor = $string[$campo];

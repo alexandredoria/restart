@@ -1,4 +1,4 @@
-  
+''  
 <?php
   session_start();
   if (empty($_SESSION)) {
@@ -26,7 +26,14 @@
         $nome   = $_POST['nome'];
         $sobrenome   = $_POST['sobrenome'];
         $email    = $_POST['email'];
-        $senha    = $_POST['senha'];
+        
+        if ($_POST['senha'] == "semsenha") { 
+          $senha    = $_POST['antigasenha'];
+        } else if ($_POST['senha'] == "comsenha"){
+            $senha    = $_POST['novasenha'];
+            $senha = ((strlen($senha) != 60) && (strlen($senha) != 0)) ? criptografar_senha($senha) : $senha ;
+        }
+
         $telefone_residencial    = $_POST['telefone_residencial'];
         $telefone_celular    = $_POST['telefone_celular'];
 
@@ -35,8 +42,7 @@
         include_once 'nucleo/funcoes.php';
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'atualiza') {
-
-          $senha = ((strlen($senha) != 60) && (strlen($senha) != 0)) ? criptografar_senha($senha) : $senha ;
+         
           $editUser = new Usuario;
           $editUser->editarUsuario($_SESSION['matricula'], $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular);
           unset($editUser);
@@ -69,10 +75,11 @@
             </div>
             <div class="form-group">
               <label>Sobrenome</label>
-              <input class="form-control" id="sobrenome" name="sobrenome" value ="" required autocomplete="off">          
+              <input class="form-control" id="sobrenome" name="sobrenome" value ="<?php echo $user->obterDados('sobrenome', $_SESSION['matricula']);?>" required autocomplete="off">          
             </div>   
             <div class="radio">
                 <input type="radio" name="senha" id="senha" value="semsenha" onClick="Disab(this.value)" checked>
+                <input type="hidden" id="antigasenha" name="antigasenha" value="<?php echo $user->obterDados('senha', $_SESSION['matricula']);?>">
                 <label> Desejo continuar com a mesma senha</label>
             </div>           
             
@@ -83,9 +90,9 @@
                     <input type="radio" name="senha" id="senha" value="comsenha"  onClick="Disab(this.value)">
                   
                   <label class="sr-only" for="exampleInputPassword2">Nova senha</label> 
-                  <input class="form-control" type="password" maxlength="10" id="novasenha" placeholder="Nova senha" name="senha" required autocomplete="off">
+                  <input class="form-control" type="password" maxlength="10" id="novasenha" placeholder="Nova senha" name="novasenha" required autocomplete="off">
                   <label class="sr-only" for="exampleInputPassword2">Confirma</label>
-                  <input class="form-control" type="password" maxlength="10" placeholder="Confirma"  onChange="checkPasswordMatch();" id="confirma" name="confirmsenha" required autocomplete="off">
+                  <input class="form-control" type="password" maxlength="10" placeholder="Confirma" id="confirma" name="confirmsenha" required autocomplete="off">
               
                 </label>
                 </div>
@@ -100,15 +107,15 @@
           
             <div class="form-group">
               <label>Email</label>
-              <input type="email" class="form-control" id="email" name="email" required autocomplete="off">
+              <input type="email" class="form-control" id="email" name="email" value="<?php echo $user->obterDados('email', $_SESSION['matricula']);?>" required autocomplete="off">
             </div>
             <div class="form-group">
               <label>Telefone Residencial</label>
-              <input class="form-control" type="text" id="telefone_residencial" name="telefone_residencial" data-mask="(99) 9999-9999" required autocomplete="off">
+              <input class="form-control" type="text" id="telefone_residencial" name="telefone_residencial" value="<?php echo $user->obterDados('telefone_residencial', $_SESSION['matricula']);?>" data-mask="(99) 9999-9999" required autocomplete="off">
             </div>
             <div class="form-group">
               <label>Telefone celular</label>
-              <input class="form-control" type="text" id="telefone_celular" name="telefone_celular" data-mask="(99) 9999-9999" required autocomplete="off">               
+              <input class="form-control" type="text" id="telefone_celular" name="telefone_celular" value="<?php echo $user->obterDados('telefone_celular', $_SESSION['matricula']);?>" data-mask="(99) 9999-9999" required autocomplete="off">               
             </div>
 
             <div class="form-group" align="right"><br>
