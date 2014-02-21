@@ -23,29 +23,35 @@
     if (!empty($_POST)) {
       // Verifica se as variáveis relacionadas ao cadastro/edição existem
       if (isset($_POST['nome'])) {
+        
+        include_once 'nucleo/funcoes.php';
+
         $nome   = $_POST['nome'];
         $sobrenome   = $_POST['sobrenome'];
         $email    = $_POST['email'];
         
-        if ($_POST['senha'] == "semsenha") { 
-          $senha    = $_POST['antigasenha'];
-        } else if ($_POST['senha'] == "comsenha"){
-            $senha    = $_POST['novasenha'];
-            $senha = ((strlen($senha) != 60) && (strlen($senha) != 0)) ? criptografar_senha($senha) : $senha ;
-        }
+        if ($_POST['senhaRadio'] == 0) { 
+            $senha    = $_POST['antigasenha'];//A senha já está criptografada
+          } else if ($_POST['senhaRadio'] == 1) { 
+              $senha    = $_POST['novasenha'];
+              $senha = ((strlen($senha) != 60) && (strlen($senha) != 0)) ? criptografar_senha($senha) : $senha ;
+          }
+        
 
         $telefone_residencial    = $_POST['telefone_residencial'];
         $telefone_celular    = $_POST['telefone_celular'];
 
         
         
-        include_once 'nucleo/funcoes.php';
-        // Verifica se será realizado um CADASTRO ou EDIÇÃO
+        
+        // Verifica se será realizado EDIÇÃO
         if ($_POST['acao'] == 'atualiza') {
-         
+          
+
           $editUser = new Usuario;
           $editUser->editarUsuario($_SESSION['matricula'], $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular);
           unset($editUser);
+          
         }   
       }      
   }
@@ -78,7 +84,7 @@
               <input class="form-control" id="sobrenome" name="sobrenome" value ="<?php echo $user->obterDados('sobrenome', $_SESSION['matricula']);?>" required autocomplete="off">          
             </div>   
             <div class="radio">
-                <input type="radio" name="senha" id="senha" value="semsenha" onClick="Disab(this.value)" checked>
+                <input type="radio" name="senhaRadio" id="senhaRadio" value="0" onClick="Disab(this.value)" checked>
                 <input type="hidden" id="antigasenha" name="antigasenha" value="<?php echo $user->obterDados('senha', $_SESSION['matricula']);?>">
                 <label> Desejo continuar com a mesma senha</label>
             </div>           
@@ -87,20 +93,12 @@
               <div class="form-inline">
                 <label>
                   <div class="radio">
-                    <input type="radio" name="senha" id="senha" value="comsenha"  onClick="Disab(this.value)">
-                  
-                  <label class="sr-only" for="exampleInputPassword2">Nova senha</label> 
-                  <input class="form-control" type="password" maxlength="10" id="novasenha" placeholder="Nova senha" name="novasenha" required autocomplete="off">
-                  <label class="sr-only" for="exampleInputPassword2">Confirma</label>
-                  <input class="form-control" type="password" maxlength="10" placeholder="Confirma" id="confirma" name="confirmsenha" required autocomplete="off">
-              
+                    <input type="radio" name="senhaRadio" id="senhaRadio" value="1"  onClick="Disab(this.value)">
+                  </div>
+                    <input class="form-control" type="password" maxlength="10" id="novasenha" placeholder="Nova senha" name="novasenha" required autocomplete="off">
+                    <input class="form-control" type="password" maxlength="10" placeholder="Confirma" id="confirma" name="confirmsenha" required autocomplete="off">
                 </label>
-                </div>
-              </div>           
-          
-
-            <div id="divCheckPass"></div>
-           
+              </div>                      
           
         </div>
         <div class="col-lg-6">
@@ -125,7 +123,10 @@
           </form>
         </div>
       </div><!-- /.row -->
-<?php unset($nomeUser);?>
+
+<?php 
+unset($user);
+?>
 
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
@@ -133,7 +134,7 @@
   <SCRIPT LANGUAGE="JavaScript">
 
 function Disab (val) {
-if(document.getElementById('senha').checked) {
+if(document.getElementById('senhaRadio').checked) {
   document.getElementById('novasenha').disabled = true;
   document.getElementById('confirma').disabled = true;
   document.getElementById('novasenha').value = "";
@@ -149,7 +150,7 @@ else {
 
 }
 
-if(document.getElementById('senha').checked) {
+if(document.getElementById('senhaRadio').checked) {
   document.getElementById('novasenha').disabled = true;
   document.getElementById('confirma').disabled = true;
   document.getElementById('novasenha').value = "";

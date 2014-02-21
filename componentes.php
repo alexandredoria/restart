@@ -12,9 +12,7 @@ error_reporting("E_warning");
   
 ?>
 
-  <body>
-
-    <div id="wrapper">
+  
 
       <!-- Barra Lateral -->
       <?php 

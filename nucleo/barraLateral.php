@@ -1,4 +1,4 @@
- <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Marca e alterdação agrupados para uma melhor vizualização mobile -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -7,8 +7,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          
+          <a class="navbar-brand" href="painel.php">Restart </a>
 
-          <a class="navbar-brand" href="painel.php">Restart</a>
         </div>
 
         <!-- Coletar os links de navegação, formulários e outros conteúdos para alternar -->
@@ -100,3 +101,13 @@
           </ul>
         </div><!-- /.navbar-collapse -->
       </nav>
+<body>
+
+    <div id="wrapper">
+      <noscript id="noscript" class="col-lg-12 container">
+        Para uma melhor experiência no Restart, ative o JavaScript no seu navegador.
+      </noscript>
+        
+      
+      
+

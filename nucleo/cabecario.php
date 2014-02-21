@@ -23,13 +23,12 @@
     	
     	<!-- Add custom CSS here -->
     	<link href="css/sb-admin.css" rel="stylesheet">
-    	
-
-    
-		
+        
 	</head>
 
 		<!-- JavaScript -->
     <script src="js/jquery-2.0.3.min.js"></script>
     <script src="js/bootstrap.js"></script>
-	
+
+    
+    

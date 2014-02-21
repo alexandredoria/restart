@@ -15,10 +15,8 @@
     unset($expUser);
   }
 ?>
-<body>
 
-    <div id="wrapper">
-
+      
       <!-- Barra Lateral -->
       <?php 
         include("nucleo/barraLateral.php");

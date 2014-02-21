@@ -8,9 +8,7 @@
   
   include 'nucleo/cabecario.php';
 ?>
-<body>
 
-    <div id="wrapper">
 
       <!-- Barra Lateral -->
       <?php 

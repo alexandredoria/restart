@@ -13,9 +13,7 @@ session_start();
   
 ?>
 
-  <body>
-
-    <div id="wrapper">
+  
 
       <!-- Barra Lateral -->
       <?php 

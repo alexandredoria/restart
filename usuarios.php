@@ -41,9 +41,7 @@ function toggle(source) {
 
 
 </script>
-  <body>
-
-    <div id="wrapper">
+  
 
       <!-- Barra Lateral -->
       <?php 

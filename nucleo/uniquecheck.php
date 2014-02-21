@@ -1,5 +1,5 @@
 <?php
-	if (!empty($_GET)) {
+/**	if (!empty($_GET)) {
 		if (isset($_GET['nome_categ'])) {
 			require '../classes/categoria.classes.php';
 			$nome		= $_GET['nome_categ'];
@@ -31,5 +31,5 @@
 			$verifica->checkDoc($nome);
 		}
 		unset($verifica);
-	}
+	}**/
 ?>
