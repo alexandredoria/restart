@@ -11,22 +11,6 @@
 
   include 'classes/usuario.class.php';
   ?>
-<script>
-  function checkPasswordMatch() {
-    var password = $("#senha").val();
-    var confirmPassword = $("#confirmsenha").val();
-
-    if (password != confirmPassword)
-        $("#divCheckPass").html("Senhas não conferem!");
-    else
-        $("#divCheckPass").html("");
-}
-
-$(document).ready(function () {
-   $("#txtConfirmPassword").keyup(checkPasswordMatch);
-});
-
-</script>
 
 <body>
   <div id="wrapper">
@@ -59,8 +43,9 @@ $(document).ready(function () {
         }   
       }      
   }
-  $nomeUser = new Usuario;
-  $nomeUser->obterDados('nome', $_SESSION['matricula']);
+
+  $user = new Usuario;
+  
     ?>
 
     <div id="page-wrapper">
@@ -80,20 +65,33 @@ $(document).ready(function () {
             <input type="hidden" name="acao" value="atualiza">
             <div class="form-group">
               <label>Nome</label>
-              <input class="form-control" type="text" id="nome" name="nome" value="<?php if(is_array($nomeUser)){echo $nomeUser;}?>" required autocomplete="off">      
+              <input class="form-control" type="text" id="nome" name="nome" value="<?php echo $user->obterDados('nome', $_SESSION['matricula']);?>" required autocomplete="off">      
             </div>
             <div class="form-group">
               <label>Sobrenome</label>
               <input class="form-control" id="sobrenome" name="sobrenome" value ="" required autocomplete="off">          
-            </div>              
-            <div class="form-group">
-              <label>Nova senha</label>
-              <input class="form-control" type="password" maxlength="10" id="senha" name="senha" required autocomplete="off">
-            </div>
-            <div class="form-group">
-              <label>Confirme a nova senha</label>
-              <input class="form-control" type="password" maxlength="10" onChange="checkPasswordMatch();" id="confirmSenha" name="confirmsenha" required autocomplete="off">
-            </div>
+            </div>   
+            <div class="radio">
+                <input type="radio" name="senha" id="senha" value="semsenha" onClick="Disab(this.value)" checked>
+                <label> Desejo continuar com a mesma senha</label>
+            </div>           
+            
+            
+              <div class="form-inline">
+                <label>
+                  <div class="radio">
+                    <input type="radio" name="senha" id="senha" value="comsenha"  onClick="Disab(this.value)">
+                  
+                  <label class="sr-only" for="exampleInputPassword2">Nova senha</label> 
+                  <input class="form-control" type="password" maxlength="10" id="novasenha" placeholder="Nova senha" name="senha" required autocomplete="off">
+                  <label class="sr-only" for="exampleInputPassword2">Confirma</label>
+                  <input class="form-control" type="password" maxlength="10" placeholder="Confirma"  onChange="checkPasswordMatch();" id="confirma" name="confirmsenha" required autocomplete="off">
+              
+                </label>
+                </div>
+              </div>           
+          
+
             <div id="divCheckPass"></div>
            
           
@@ -117,6 +115,7 @@ $(document).ready(function () {
               <button type="submit" class="btn btn-default">Atualizar</button>
               <button type="reset" class="btn btn-default">Limpar</button>    
             </div>
+          </form>
         </div>
       </div><!-- /.row -->
 <?php unset($nomeUser);?>
@@ -124,6 +123,38 @@ $(document).ready(function () {
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
   <script src="js/inputmask.js"></script>
+  <SCRIPT LANGUAGE="JavaScript">
+
+function Disab (val) {
+if(document.getElementById('senha').checked) {
+  document.getElementById('novasenha').disabled = true;
+  document.getElementById('confirma').disabled = true;
+  document.getElementById('novasenha').value = "";
+  document.getElementById('confirma').value = "";
+  
+
+}
+
+else {  
+  document.getElementById('novasenha').disabled = false;
+  document.getElementById('confirma').disabled = false;
+}
+
+}
+
+if(document.getElementById('senha').checked) {
+  document.getElementById('novasenha').disabled = true;
+  document.getElementById('confirma').disabled = true;
+  document.getElementById('novasenha').value = "";
+  document.getElementById('confirma').value = "";
+}
+
+else {  
+  document.getElementById('novasenha').disabled = false;
+  document.getElementById('confirma').disabled = false;
+}
+
+</script>
   <?php ?>
 </body>
 </html>

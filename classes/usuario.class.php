@@ -274,7 +274,7 @@ class Usuario extends DB {
                               <script>$('#modal_expiraSenha').modal('show');</script>";
 							
 						} else { 
-							$del_matricula		= $this->db->real_escape_string(trim($matricula));
+							$del_matricula		= $this->db->real_escape_string(trim(strtoupper($matricula)));
 							$this->logout($del_matricula);
 							$this->db->query("DELETE FROM usuario WHERE matricula = $del_matricula");							
 						}	
@@ -293,10 +293,12 @@ class Usuario extends DB {
 	 * @return string $string Valor obtido
 	 */
 	public function obterDados($campo, $matricula) {
-		if ($result = $this->db->query("SELECT $campo FROM usuario WHERE id = $matricula")) {
+		if ($result = $this->db->query("SELECT '$campo' FROM usuario WHERE matricula = '$matricula'")) {
 			if ($result->num_rows) {
-				$string = $result->fetch_assoc();
-				return $string;
+				while ($string = $result->fetch_array()){
+					$valor = $string[$campo];
+				}
+				return $valor;
 			}$result->free();
 			
 		}else return ($this->db->error);
