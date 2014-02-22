@@ -272,7 +272,7 @@ class Usuario extends DB {
                                       <h4 class='modal-title' id='modal_cadUsuarioLabel'>Atualize o seu perfil!</h4>
                                     </div>
                                     <div class='modal-body'>
-                                      <p>Você deve atualizar os dados de seu perfil até o dia ".date('d/m/Y', $timestampExpirado)." sob pena de exclusão automática do sistema.</p>
+                                      <p>Você deve atualizar os dados de seu perfil até o dia ".date('d/m/Y', $timestampExpirado)." sob pena de perda do histórico de atividades e exclusão automática do sistema.</p>
                                     </div>
                                     <div class='modal-footer'>
                                     	<button type='button' class='btn btn-danger' data-dismiss='modal'>Certo</button>
@@ -373,12 +373,12 @@ class Usuario extends DB {
 
 						
 
-				} else echo "<div id='login_error'>Senha incorreta.</div>";	
+				} else return "Essa senha está incorreta.";	
 				
-			} else echo "<div id='login_error'>Usuário $user inexistente.</div>";
+			} else return "A matrícula digitada não pertence a nenhuma conta.";
 			$matricula->free();
 		} else { 
-			echo "<div id='login_error'>" . $this->db->error . "</div>";
+			return $this->db->error;
 			$this->logout();
 		}	
 	}

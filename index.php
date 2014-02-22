@@ -16,15 +16,7 @@
     <link href="css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"> <link rel="icon" type="image/png" href="favicon.png" />
   </head>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      setTimeout(function () {
-        $('#login_error').slideUp();
-      },5000);
-    });
-  </script>
-
-  <body>
+<body onLoad="document.frmEnviaDados.usuario.focus();">
    
       <div class="col-lg-4"></div>
         <div class="col-lg-4">
@@ -38,7 +30,8 @@
                   $usuario = $_POST['usuario'];
                   $senha = $_POST['senha'];
                   $query  = new Usuario;
-                  $query->login($usuario, $senha);
+                  $result = $query->login($usuario, $senha);
+
                   if(is_bool($query) && $_POST['cookieCheck']=="yep"){
                       setcookie('login', $usuario, (time() + (24 * 3600)));
                       setcookie('senha', $senha, (time() + (24 * 3600)));
@@ -50,11 +43,12 @@
             ?>
             
             <div class="panel-body">
-              <center><p><img src="logo.png" class="img-responsive" alt="Restart"></p></center><br>
-              <form role="form" method="post" action="index.php">
+              <center><p><img src="logo.png" class="img-responsive" alt="Restart"></p></center>
+              <?php if (isset($result)){ if (!is_bool($result)){ echo "<div id='login_error' style='color:#D00000;'>".$result."</div>";;}}else{echo "<br>";}?><br>
+              <form role="form" method="post" name="frmEnviaDados" action="index.php">
                 <div class="input-group">
                   <span class="input-group-addon"><i placeholder="Matrícula" class="glyphicon glyphicon-user"></i></span>
-                  <input type="text" class="form-control" name="usuario" placeholder="Matrícula" required autocomplete="off">
+                  <input type="text" class="form-control" name="usuario" value="<?php if (isset($usuario)){ echo $usuario;}?>" placeholder="Matrícula" required autocomplete="off">
                 </div>           
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
@@ -67,8 +61,11 @@
                 </div>
                 <br>
               <button type="submit" class="btn btn-default">Entrar</button>
-              </form><br>
-              
+              <br><br>
+              <div class="input-group">
+                <a>Esqueceu sua senha?</a>
+              </div>  
+              </form>              
             </div>
              
             
@@ -77,6 +74,8 @@
  <!-- JavaScript -->
     <script src="js/jquery-2.0.3.min.js"></script>
     <script src="js/bootstrap.js"></script>
+
+      
    
   </body>
 </html>

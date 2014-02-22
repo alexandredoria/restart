@@ -104,7 +104,7 @@
 <body>
 
     <div id="wrapper">
-      <noscript id="noscript" class="col-lg-12 container">
+      <noscript id="noscript" class="container col-lg-12">
         Para uma melhor experiência no Restart, ative o JavaScript no seu navegador.
       </noscript>
         
