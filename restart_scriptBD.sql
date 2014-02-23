@@ -46,11 +46,11 @@ CREATE TABLE IF NOT EXISTS `restart`.`Configuracao` (
   `capacidade_ram` VARCHAR(20) NULL,
   `capacidade_hd` VARCHAR(20) NULL,
   `vencimento_garantia` DATE NOT NULL,
-  `Imagem_id` INT NOT NULL,
+  `Imagem_HD_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Configuracao_Imagem1_idx` (`Imagem_id` ASC),
-  CONSTRAINT `fk_Configuracao_Imagem1`
-    FOREIGN KEY (`Imagem_id`)
+  INDEX `fk_Configuracao_Imagem_HD1_idx` (`Imagem_HD_id` ASC),
+  CONSTRAINT `fk_Configuracao_Imagem_HD1`
+    FOREIGN KEY (`Imagem_HD_id`)
     REFERENCES `restart`.`Imagem_HD` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -75,6 +75,8 @@ CREATE TABLE IF NOT EXISTS `restart`.`Patrimonio` (
   `tipo` SMALLINT NOT NULL,
   `num_posicionamento` INT NOT NULL,
   `situacao` SMALLINT NOT NULL,
+  `data_cadastro` DATE NOT NULL,
+  `data_atualizacao` DATE NULL,
   `Configuracao_id` INT NOT NULL,
   `Laboratorio_id` INT NOT NULL,
   PRIMARY KEY (`num_patrimonio`),

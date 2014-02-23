@@ -12,8 +12,7 @@
   ?>
 
 
-<body>
-  <div id="wrapper">
+
     <!-- Barra Lateral -->
 
     <?php 

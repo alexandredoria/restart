@@ -68,7 +68,7 @@
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-6">
-                    <i class="fa fa-tasks fa-5x"></i>
+                    <i class="glyphicon glyphicon-tasks fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
                     <p class="announcement-heading">3</p>
@@ -196,6 +196,8 @@
     <script src="js/morris/chart-data-morris.js"></script>
     <script src="js/tablesorter/jquery.tablesorter.js"></script>
     <script src="js/tablesorter/tables.js"></script>
+
+    
 
   </body>
 </html>

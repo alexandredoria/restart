@@ -63,7 +63,7 @@
               <button type="submit" class="btn btn-default">Entrar</button>
               <br><br>
               <div class="input-group">
-                <a>Esqueceu sua senha?</a>
+                <a href="recuperarSenha.php">Esqueceu sua senha?</a>
               </div>  
               </form>              
             </div>

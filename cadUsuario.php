@@ -15,8 +15,6 @@ session_start();
 
   include 'classes/usuario.class.php';
   ?>
-<body>
-  <div id="wrapper">
     <!-- Barra Lateral -->
 
     <?php 

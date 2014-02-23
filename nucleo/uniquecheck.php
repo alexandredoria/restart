@@ -7,10 +7,10 @@
 			$verifica->checkCategoria($nome);
 		}
 		if (isset($_GET['nome_prod'])) {
-			require '../classes/produto.classes.php';
+			require '../classes/Patrimonio.classes.php';
 			$nome		= $_GET['nome_prod'];
-			$verifica	= new Produto;
-			$verifica->checkProduto($nome);
+			$verifica	= new Patrimonio;
+			$verifica->checkPatrimonio($nome);
 		}
 		if (isset($_GET['login'])) {
 			require '../classes/usuario.classes.php';

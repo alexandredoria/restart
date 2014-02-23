@@ -52,7 +52,7 @@ function ajaxEdit (location, form, value) {
 			dados		= conteudo[0].split('*');
 			campos		= conteudo[1].split('*');
 			switch (location) {
-				case 'produto':
+				case 'Patrimonio':
 					var oposto = (dados[6] == 'ON') ? '#OFF' : '#ON';
 					if ($(oposto).is(':checked')) {
 						$(oposto).prop('checked', false);
@@ -117,7 +117,7 @@ function cleanFormCSS (form_id, texto) {
 		break;
 
 		case 'formProd':
-			var word = ' Produto';
+			var word = ' Patrimonio';
 			if ($('#OFF').is(':checked')) {
 				$('#OFF').prop('checked', false);
 			}

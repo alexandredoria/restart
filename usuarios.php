@@ -144,19 +144,19 @@ function toggle(source) {
                             <td ><input type='checkbox'   name='foo' value='".$row['matricula']."'></td>
 
                             <td>
-                              <a title='Ver usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_verPatrimonio' class='abre-verModal'>                              
+                              <a title='Ver usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_verUsuario' class='abre-verModal'>                              
                                  <i class='glyphicon glyphicon-search'></i>
                                </a>
                             </td>
 
                             <td>
-                              <a title='Editar usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_editPatrimonio' class='abre-editarModal'>                              
+                              <a title='Editar usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_editUsuario' class='abre-editarModal'>                              
                                  <i class='glyphicon glyphicon-pencil'></i>
                                </a>
                             </td>
 
                             <td>
-                              <a title='Excluir usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excPatrimonio' class='abre-excluirModal'>                              
+                              <a title='Excluir usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuario' class='abre-excluirModal'>                              
                                  <i class='glyphicon glyphicon-remove'></i>
                                </a>
                             </td>

@@ -12,9 +12,9 @@
 					unset($module);
 				break;
 				
-				case 'produto':
-					require '../class/produto.class.php';
-					$module = new Produto;
+				case 'Patrimonio':
+					require '../class/Patrimonio.class.php';
+					$module = new Patrimonio;
 					echo $module->obterDados('nome', $id) . "*" . $module->obterDados('unidade', $id) . "*" . $module->obterDados('categorias_id', $id) . "*" . $module->obterDados('preco_custo', $id) . "*" . $module->obterDados('preco_venda', $id) . "*" . $module->obterDados('anotacoes', $id) . "*" . $module->obterDados('status', $id);
 					echo "||nome_prod*unid*categ_prod*custo*venda*notes*ativo";
 					unset($module);

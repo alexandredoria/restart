@@ -80,12 +80,12 @@ class Categoria extends DB {
 				echo
 				"<div id='growl_box' class='bad'>
 					<p>Não foi possível remover a categoria.
-					<br><span>Lembre-se que para remover, a categoria não pode alocar produtos.<span></p>
+					<br><span>Lembre-se que para remover, a categoria não pode alocar Patrimonios.<span></p>
 				</div>";
 			}
 		}
 		else {
-			$erromsg = ($this->db->error == "Cannot delete or update a parent row: a foreign key constraint fails (`coveg`.`produtos`, CONSTRAINT `fk_produtos_categorias` FOREIGN KEY (`categorias_id`) REFERENCES `categorias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)") ? "A categoria não pôde ser removida.<br><span>Não é possível remover categorias que estão alocando produtos.</span>" : $this->db->error ;
+			$erromsg = ($this->db->error == "Cannot delete or update a parent row: a foreign key constraint fails (`coveg`.`Patrimonios`, CONSTRAINT `fk_Patrimonios_categorias` FOREIGN KEY (`categorias_id`) REFERENCES `categorias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)") ? "A categoria não pôde ser removida.<br><span>Não é possível remover categorias que estão alocando Patrimonios.</span>" : $this->db->error ;
 			echo "<div id='growl_box' class='bad'><p>" . $erromsg . "</p></div>";
 		}
 		echo "<script>showGrowl();</script>";
@@ -117,7 +117,7 @@ class Categoria extends DB {
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
 				foreach ($rows as $i => $value) {
-					if ($count = $this->db->query("SELECT COUNT(id) FROM produtos WHERE categorias_id = " . $value['id'])) {
+					if ($count = $this->db->query("SELECT COUNT(id) FROM Patrimonios WHERE categorias_id = " . $value['id'])) {
 						$num = $count->fetch_row();
 						$rows[$i]['count'] = $num[0];
 					}

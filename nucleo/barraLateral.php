@@ -24,13 +24,13 @@
                 }
               ?>
              
-             <li <?php if (($pageTitle == "Ocorrências") || ($pageTitle == "Ocorrências &middot; Visão Geral")) echo "class='active'"; ?>><a href="ocorrencias.php"><i class="fa fa-tasks"></i> Ocorrências</a></li>
+             <li <?php if (($pageTitle == "Ocorrências") || ($pageTitle == "Ocorrências &middot; Visão Geral")) echo "class='active'"; ?>><a href="ocorrencias.php"><i class="glyphicon glyphicon-tasks"></i> Ocorrências</a></li>
             
             
              <?php 
                 if (($_SESSION['tipo_usuario'] == 1) ||($_SESSION['tipo_usuario'] == 2)) { 
-                  echo ((($pageTitle == "Patrimônio") || ($pageTitle == "Patrimônios &middot; Visão Geral")) ? "<li class='active'" : "<li>");
-                  echo "<a href='patrimonio.php'><i class='fa fa-edit'></i> Patrimônio</a></li>";
+                 echo ((($pageTitle == "Patrimônios &middot; Visão Geral") || ($pageTitle == "Cadastrar patrimônio")) ? "<li class='active'>" : "<li>");
+                  echo "<a href='patrimonios.php'><i class='glyphicon glyphicon-edit'></i> Patrimônios</a></li>"; 
                 }  
               ?>  
             </li>
@@ -101,9 +101,7 @@
           </ul>
         </div><!-- /.navbar-collapse -->
       </nav>
-<body>
 
-    <div id="wrapper">
       <noscript id="noscript" class="container col-lg-12">
         Para uma melhor experiência no Restart, ative o JavaScript no seu navegador.
       </noscript>

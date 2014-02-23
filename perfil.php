@@ -12,8 +12,7 @@
   include 'classes/usuario.class.php';
   ?>
 
-<body>
-  <div id="wrapper">
+
     <!-- Barra Lateral -->
 
     <?php 
@@ -58,10 +57,7 @@
 
   $user = new Usuario;
   
-    ?>
-
-    <div id="page-wrapper">
-
+    ?><div id="page-wrapper">
       <div class="row">
         <div class="col-lg-12">
           <h1>Atualizar perfil</h1>

@@ -118,7 +118,7 @@ class Cliente extends DB {
 				echo
 				"<div id='growl_box' class='bad'>
 					<p>Não foi possível remover o cliente.
-					<br><span>Lembre-se: usuários que cadastraram vendas ou produtos não podem ser removidos.<span></p>
+					<br><span>Lembre-se: usuários que cadastraram vendas ou Patrimonios não podem ser removidos.<span></p>
 				</div>";
 			}
 		}
