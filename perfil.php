@@ -85,7 +85,29 @@
                 <label> Desejo continuar com a mesma senha</label>
             </div>           
             
-            
+<script src="js/jquery.validate.js"></script>
+<script>
+$( "form" ).validate({
+  rules: {
+     confirmsenha: {
+      equalTo: "#novasenha"
+    }
+  },
+  messages: {
+	  equalTo: "As senhas conferem"
+  },
+  
+  
+});
+</script>
+<script>
+$("#senhaRadio").click(function () {
+	$("div.form-inline").find('label.error').remove();
+	$("div.form-inline").find('input').removeClass('valid error');
+});
+
+
+</script>          
               <div class="form-inline">
                 <label>
                   <div class="radio">
