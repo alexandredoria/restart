@@ -196,7 +196,7 @@ class Configuracao extends DB {
 			unset($result);
 		}
 		elseif (($termo == 'bo0bi3s') || $termo == ' ') {
-			$result = $this->listarConfiguracaos();
+			$result = $this->listarConfiguracoes();
 			if (is_array($result)) {
 				foreach ($result as $row) {
 					echo "
@@ -225,7 +225,7 @@ class Configuracao extends DB {
 	 * Gera um array com as informações dos Configuracao cadastrados
 	 * @return array $rows Dados dos Configuracao
 	 */
-	public function listarConfiguracaos() {
+	public function listarConfiguracoes() {
 		// Executa a query dos Configuracao e se não houver erros realiza as ações
 		if ($result	= $this->db->query("SELECT * FROM configuracao ORDER BY 'num_configuracao'")) {
 			// Verifica se algum resultado foi retornado

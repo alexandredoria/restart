@@ -105,10 +105,11 @@ session_start();
                 <select style="font-weight:bold" id="num_posicionamento" name="lab" name="num_posicionamento" class="form-control">
                   <?php
                     $list = new Laboratorio;
-                    $result = $list->listarLaboratorio();
+                    $result = $list->listarLaboratorios();
                     foreach ($result as $row) {
-                      echo "<option value='" . $row['id'] . "'> Lab 0" . $row['id'] . "</option>";
-                    }
+                      
+                      echo "<option value='" . $row['qtd_bens'] . "'> Lab 0" . $row['qtd_bens'] . "</option>";
+                    } 
                     unset($list);
                   ?>
                 </select> 
@@ -134,7 +135,7 @@ session_start();
                 <select style="font-weight:bold" id="lab" name="lab" class="form-control">
                   <?php
                     $list = new Laboratorio;
-                    $result = $list->listarLaboratorio();
+                    $result = $list->listarLaboratorios();
                     foreach ($result as $row) {
                       echo "<option value='" . $row['id'] . "'> Lab 0" . $row['id'] . "</option>";
                     }
@@ -157,7 +158,7 @@ session_start();
                  <select style="font-weight:bold" id="config" name="config" class="form-control">
                   <?php
                     $list = new Configuracao;
-                    $result = $list->listarConfiguracao();
+                    $result = $list->listarConfiguracoes();
                     foreach ($result as $row) {
                       echo "<option value='" . $row['id'] . "'> Lab 0" . $row['id'] . "</option>";
                     }
