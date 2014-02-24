@@ -227,11 +227,11 @@ class Configuracao extends DB {
 	 */
 	public function listarConfiguracoes() {
 		// Executa a query dos Configuracao e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM configuracao ORDER BY 'num_configuracao'")) {
+		if ($result	= $this->db->query("SELECT * FROM configuracao ORDER BY 'id'")) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows				= $result->fetch_all(MYSQLI_ASSOC);
-				$count				= $this->db->query("SELECT COUNT(num_configuracao) FROM Configuracao");
+				$count				= $this->db->query("SELECT COUNT(id) FROM configuracao");
 				$count				= $count->fetch_row();
 				//$rows[0]['itens']	= $count[0];
 				//$rows[0]['limite']	= $limite;

@@ -24,6 +24,17 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `restart`.`Laboratorio`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restart`.`Laboratorio` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `qtd_bens` INT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `restart`.`Imagem_HD`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restart`.`Imagem_HD` (
@@ -41,12 +52,12 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `restart`.`Configuracao` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `fabricante` VARCHAR(45) NOT NULL,
-  `modelo_equipamento` VARCHAR(45) NULL,
+  `modelo_equipamento` VARCHAR(45) NOT NULL,
   `modelo_processador` VARCHAR(45) NULL,
   `capacidade_ram` VARCHAR(20) NULL,
   `capacidade_hd` VARCHAR(20) NULL,
   `vencimento_garantia` DATE NOT NULL,
-  `Imagem_HD_id` INT NOT NULL,
+  `Imagem_HD_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Configuracao_Imagem_HD1_idx` (`Imagem_HD_id` ASC),
   CONSTRAINT `fk_Configuracao_Imagem_HD1`
@@ -54,16 +65,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Configuracao` (
     REFERENCES `restart`.`Imagem_HD` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `restart`.`Laboratorio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restart`.`Laboratorio` (
-  `id` INT NOT NULL,
-  `qtd_bens` INT NULL,
-  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -77,19 +78,19 @@ CREATE TABLE IF NOT EXISTS `restart`.`Patrimonio` (
   `situacao` SMALLINT NOT NULL,
   `data_cadastro` DATE NOT NULL,
   `data_atualizacao` DATE NULL,
-  `Configuracao_id` INT NOT NULL,
   `Laboratorio_id` INT NOT NULL,
+  `Configuracao_id` INT NOT NULL,
   PRIMARY KEY (`num_patrimonio`),
-  INDEX `fk_Patrimonio_Configuracao1_idx` (`Configuracao_id` ASC),
   INDEX `fk_Patrimonio_Laboratorio1_idx` (`Laboratorio_id` ASC),
-  CONSTRAINT `fk_Patrimonio_Configuracao1`
-    FOREIGN KEY (`Configuracao_id`)
-    REFERENCES `restart`.`Configuracao` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `fk_Patrimonio_Configuracao1_idx` (`Configuracao_id` ASC),
   CONSTRAINT `fk_Patrimonio_Laboratorio1`
     FOREIGN KEY (`Laboratorio_id`)
     REFERENCES `restart`.`Laboratorio` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Patrimonio_Configuracao1`
+    FOREIGN KEY (`Configuracao_id`)
+    REFERENCES `restart`.`Configuracao` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -212,6 +213,16 @@ CREATE TABLE IF NOT EXISTS `restart`.`Licenca` (
     REFERENCES `restart`.`Patrimonio` (`num_patrimonio`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `restart`.`Categoria`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restart`.`Categoria` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 

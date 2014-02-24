@@ -31,12 +31,27 @@ function toggle(source) {
   for (var i=0, n=checkboxes.length;i<n;i++) {
     checkboxes[i].checked = source.checked;
     
+  }$("#exc").toggle('show');
+}
+
+function untoggle() {
+  checkboxes = document.getElementsByName('foo');
+  var count = 0;
+  for (var i=0, n=checkboxes.length;i<n;i++) {
+    if(checkboxes[i].checked){
+      count++;
+    }
+    
   }
+  if (count == 0){
+    $("#toggle").prop("checked", false);
+  } if (count == n){
+    $("#toggle").prop("checked", true);
+
+  } 
  
 
 }
-
-
 
 
 

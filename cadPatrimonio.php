@@ -17,6 +17,7 @@ session_start();
   include 'classes/patrimonio.class.php';
   include 'classes/laboratorio.class.php';
   include 'classes/configuracao.class.php';
+  include 'classes/categoria.class.php';
   ?>
     <!-- Barra Lateral -->
 
@@ -26,7 +27,7 @@ session_start();
       // Verifica se algum form foi enviado
     if (!empty($_POST)) {
       // Verifica se as variáveis relacionadas ao cadastro/edição existem
-      if (isset( $_POST['num_patrimonio'], $_POST['num_posicionamento'], $_POST['situacao'], $_POST['lab'], $_POST['tipo'], $_POST['config'])) {
+      if (isset( $_POST['num_patrimonio'], $_POST['tipo'], $_POST['num_posicionamento'], $_POST['situacao'], $_POST['lab'],  $_POST['config'])) {
         $num_patrimonio = $_POST['num_patrimonio'];
         $num_posicionamento = $_POST['num_posicionamento'];
         $situacao = $_POST['situacao'];
@@ -91,7 +92,7 @@ session_start();
       
      
         <form role="form" id="formPatrimonio" name="formPatrimonio" action="cadPatrimonio.php" method="post">
-          <input type="hidden" name="acao" value="add">
+          
         
         <div class="row">
           <div class="col-lg-3">            
@@ -100,49 +101,7 @@ session_start();
               <div class="form-group">
                 <input class="form-control" id="num_patrimonio" style="text-align: right;" name="num_patrimonio" required autocomplete="off">
               </div>
-              <label>Número de posição</label>
-              <div class="form-group">
-                <select style="font-weight:bold" id="num_posicionamento" name="lab" name="num_posicionamento" class="form-control">
-                  <?php
-                    $list = new Laboratorio;
-                    $result = $list->listarLaboratorios();
-                    foreach ($result as $row) {
-                      
-                      echo "<option value='" . $row['qtd_bens'] . "'> Lab 0" . $row['qtd_bens'] . "</option>";
-                    } 
-                    unset($list);
-                  ?>
-                </select> 
-              </div>  
-              <label>Situação</label>
-              <div class="form-group">
-                <select style="font-weight:bold" id="situacao" name="situacao" class="form-control">
-                    <option value="1">Ativo</option>
-                    <option value="2">Desativado</option>
-                    
-                </select>
-              </div>
-                            
               
-
-
-               
-          </div>
-           <div class="col-lg-3">            
-              
-              <label>Laboratório</label>
-              <div class="form-group">
-                <select style="font-weight:bold" id="lab" name="lab" class="form-control">
-                  <?php
-                    $list = new Laboratorio;
-                    $result = $list->listarLaboratorios();
-                    foreach ($result as $row) {
-                      echo "<option value='" . $row['id'] . "'> Lab 0" . $row['id'] . "</option>";
-                    }
-                    unset($list);
-                  ?>
-                </select>       
-              </div>
               <label>Tipo</label>
               <div class="form-group">
                 <select style="font-weight:bold" id="tipo" name="tipo" class="form-control">
@@ -160,12 +119,47 @@ session_start();
                     $list = new Configuracao;
                     $result = $list->listarConfiguracoes();
                     foreach ($result as $row) {
-                      echo "<option value='" . $row['id'] . "'> Lab 0" . $row['id'] . "</option>";
+                      echo "<option value='" . $row['id'] . "'> " . $row['id'] . "</option>";
                     }
                     unset($list);
                   ?>
                 </select>
-              </div> 
+              </div>
+
+              
+                            
+              
+
+
+               
+          </div>
+           <div class="col-lg-3">            
+              
+              <label>Laboratório</label>
+              <div class="form-group">
+                <select style="font-weight:bold" id="lab" name="lab" class="form-control">
+                  <?php
+                    $list = new Laboratorio;
+                    $result = $list->listarLaboratorios();
+                    foreach ($result as $row) {
+                      echo "<option value='" . $row['id'] . "'> " . $row['nome'] . "</option>";
+                    }
+                    unset($list);
+                  ?>
+                </select>       
+              </div>
+               <label>Número de posição</label>
+              <div class="form-group">
+                <input class="form-control" id="num_posicionamento" style="text-align: right;" name="num_posicionammento" required autocomplete="off">
+              </div>
+              <label>Situação</label>
+              <div class="form-group">
+                <select style="font-weight:bold" id="situacao" name="situacao" class="form-control">
+                    <option value="1">Ativo</option>
+                    <option value="2">Desativado</option>
+                    
+                </select>
+              </div>
 
           </div>
            <div class="col-lg-6">            
