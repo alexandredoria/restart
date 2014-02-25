@@ -1,6 +1,6 @@
-INSERT INTO `restart`.`usuario` (`matricula`, `nome`, `sobrenome`, `email`, `senha`, `tipo_usuario`, `data_cadastro`, `data_atualizacao`, `telefone_residencial`, `telefone_celular`) VALUES ('2011', 'Alexandre', 'Dória', 'alex@email.com', '$2Cw51.ICu1Nw', '1', '2014-02-12', NULL, NULL, NULL);
+INSERT INTO `restart`.`usuario` (`matricula`, `nome`, `sobrenome`, `email`, `senha`, `tipo_usuario`, `data_cadastro`, `data_atualizacao`, `telefone_residencial`, `telefone_celular`) VALUES ('2010', 'Alexandre', 'Dória', 'alex@email.com', '$2Cw51.ICu1Nw', '1', '2014-02-12', NULL, NULL, NULL);
 
-INSERT INTO `restart`.`usuario` (`matricula`, `nome`, `sobrenome`, `email`, `senha`, `tipo_usuario`, `data_cadastro`, `data_atualizacao`, `telefone_residencial`, `telefone_celular`) VALUES ('', 'Márcio', 'Correia', 'marcio@email.com', '$2Cw51.ICu1Nw', '2', '2014-02-12', NULL, NULL, NULL); 
+INSERT INTO `restart`.`usuario` (`matricula`, `nome`, `sobrenome`, `email`, `senha`, `tipo_usuario`, `data_cadastro`, `data_atualizacao`, `telefone_residencial`, `telefone_celular`) VALUES ('2011', 'Márcio', 'Correia', 'marcio@email.com', '$2Cw51.ICu1Nw', '2', '2014-02-12', NULL, NULL, NULL); 
 
 INSERT INTO `restart`.`imagem_hd` (`id`, `nome_arquivo`, `data_criacao`, `data_atualizacao`) VALUES (NULL, 'C:\\wamp\\www\\restart', '2014-02-17', NULL);
 
