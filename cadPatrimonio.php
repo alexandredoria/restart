@@ -17,7 +17,7 @@ session_start();
   include 'classes/patrimonio.class.php';
   include 'classes/laboratorio.class.php';
   include 'classes/configuracao.class.php';
-  include 'classes/categoria.class.php';
+  
   ?>
     <!-- Barra Lateral -->
 
@@ -39,8 +39,12 @@ session_start();
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'add') {
           $addPat  = new Patrimonio;
+<<<<<<< HEAD
           //$result   = $addPat->cadastrarPatrimonio( $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
           $result   = $addPat->cadastrarPatrimonio( '45678', 2, 5, 2, 1, 2);
+=======
+          $result   = $addPat->cadastrarPatrimonio($num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
+>>>>>>> f23c03615023c6784c5d4b10575355d4a8a3c859
           if (is_bool($result)) {
             echo "<!-- Modal -->
                   <div class='modal fade bs-modal-sm' id='modal_cadPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_cadPatrimonioLabel' aria-hidden='true'>
@@ -105,17 +109,20 @@ session_start();
               
               <label>Tipo</label>
               <div class="form-group">
-                <select style="font-weight:bold" id="tipo" name="tipo" class="form-control">
+                <select style="font-weight:bold" id="tipo" name="tipo" class="form-control" required>
+                  <option value="0"></option>
                     <option value="1">Monitor</option>
                     <option value="2">Gabinete</option>
-                    <option value="3  ">Mesa</option>
-                    <option value="3  ">Cadeira</option>
+                    <option value="3">Mesa</option>
+                    <option value="3">Cadeira</option>
                 </select>
               </div>
              
               <label>Configuração</label>
+              
               <div class="form-group">
                  <select style="font-weight:bold" id="config" name="config" class="form-control">
+                  <option value="0"></option>
                   <?php
                     $list = new Configuracao;
                     $result = $list->listarConfiguracoes();
@@ -127,11 +134,6 @@ session_start();
                 </select>
               </div>
 
-              
-                            
-              
-
-
                
           </div>
            <div class="col-lg-3">            
@@ -139,6 +141,7 @@ session_start();
               <label>Laboratório</label>
               <div class="form-group">
                 <select style="font-weight:bold" id="lab" name="lab" class="form-control">
+                  <option value="0"></option>
                   <?php
                     $list = new Laboratorio;
                     $result = $list->listarLaboratorios();
@@ -156,6 +159,7 @@ session_start();
               <label>Situação</label>
               <div class="form-group">
                 <select style="font-weight:bold" id="situacao" name="situacao" class="form-control">
+
                     <option value="1">Ativo</option>
                     <option value="2">Desativado</option>
                     

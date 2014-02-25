@@ -39,14 +39,14 @@ class Configuracao extends DB {
 	 * @param int $user ID do funcionario que cadastrou
 	 * @return boolean Se foi possível cadastrar ou não a categoria
 	 */
-	public function cadastrarConfiguracao($num_configuracao, $tipo, $num_posicionamento, $situacao, $lab, $config) {
-		$num_configuracao	= $this->db->real_escape_string(trim($num_configuracao));
-		if ($check = $this->db->query("SELECT num_configuracao FROM configuracao WHERE num_configuracao = '$num_configuracao'")) {
-			if ($check->num_rows) return "O número de configuração \"$num_configuracao\"  já está cadastrado no sistema.";
+	public function cadastrarConfiguracao($id, $tipo, $num_posicionamento, $situacao, $lab, $config) {
+		$id	= $this->db->real_escape_string(trim($id));
+		if ($check = $this->db->query("SELECT id FROM configuracao WHERE id = '$id'")) {
+			if ($check->num_rows) return "O número de configuração \"$id\"  já está cadastrado no sistema.";
 			else {
 				$data_cadastro = date('Y-m-d');
-				$insert = $this->db->prepare("INSERT INTO Configuracao (num_configuracao, tipo, num_posicionamento, situacao, data_cadastro, Laboratorio_id, Configuracao_id) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
-				$insert->bind_param('siiisii', $num_configuracao, $tipo, $num_posicionamento, $situacao, $data_cadastro, $lab, $config);
+				$insert = $this->db->prepare("INSERT INTO Configuracao (id, tipo, num_posicionamento, situacao, data_cadastro, Laboratorio_id, Configuracao_id) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
+				$insert->bind_param('siiisii', $id, $tipo, $num_posicionamento, $situacao, $data_cadastro, $lab, $config);
 				if ($insert->execute()) { return true; }
 				else { return ($this->db->error); }
 			} // Não está em uso
@@ -92,9 +92,9 @@ class Configuracao extends DB {
 	 * @param int $id Número de ID do Configuracao a ser excluída
 	 * @return string Mensagem de retorno
 	 */
-	public function deletarConfiguracao($num_configuracao) {
+	public function deletarConfiguracao($id) {
 		
-		if ($update = $this->db->query("DELETE FROM configuracao WHERE num_configuracao = '$num_configuracao'")) {
+		if ($update = $this->db->query("DELETE FROM configuracao WHERE id = '$id'")) {
 			if ($this->db->affected_rows) {
 				echo "<!-- Modal -->
 					<div class='modal fade bs-modal-sm' id='modal_excConfiguracao2' tabindex='-1' role='dialog' aria-labelledby='modal_excConfiguracao2' aria-hidden='true'>
@@ -154,8 +154,8 @@ class Configuracao extends DB {
 	 * @param string $field Campo da tabela que se deseja obter
 	 * @return string $string Valor obtido
 	 */
-	public function obterDados($campo, $num_configuracao) {
-		if ($result = $this->db->query("SELECT `$campo` FROM configuracao WHERE num_configuracao = '$num_configuracao'")) {
+	public function obterDados($campo, $id) {
+		if ($result = $this->db->query("SELECT `$campo` FROM configuracao WHERE id = '$id'")) {
 			if ($result->num_rows) {
 				while ($string = $result->fetch_array()){
 					$valor = $string[$campo];

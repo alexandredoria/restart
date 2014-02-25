@@ -38,9 +38,7 @@ class Usuario extends DB {
 	 * @param string $telefone_celular Telefone celular do usuario
 	 **/
 	public function cadastrarUsuario($nome, $matricula, $senha, $tipo_usuario) {
-
-		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim(strtoupper($matricula))) : NULL ;
-		
+		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim(strtoupper($matricula))) : NULL ;		
 		if ($check = $this->db->query("SELECT matricula FROM usuario WHERE matricula = '$matricula'")) {
 			if ($check->num_rows) return "A matricula \"$matricula\" já está cadastrada no sistema.";
 			else {
