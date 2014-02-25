@@ -5,6 +5,7 @@
     header("Location: ../restart");
     exit;
   } 
+<<<<<<< HEAD
   $pageTitle  = "Atualizar perfil";  
   include 'nucleo/cabecario.php';
   include 'classes/usuario.class.php';
@@ -32,6 +33,48 @@
         unset($editUser);
       }   
     }      
+=======
+  $pageTitle  = "Atualizar perfil";
+  include 'nucleo/cabecario.php';
+  include 'classes/usuario.class.php';
+  include("nucleo/barraLateral.php");
+      
+      // Verifica se algum form foi enviado
+    if (!empty($_POST)) {
+      // Verifica se as variáveis relacionadas ao cadastro/edição existem
+      if (isset($_POST['nome'])) {
+        
+        include_once 'nucleo/funcoes.php';
+
+        $nome   = $_POST['nome'];
+        $sobrenome   = $_POST['sobrenome'];
+        $email    = $_POST['email'];
+        
+        if ($_POST['senhaRadio'] == 0) { 
+            $senha    = $_POST['antigasenha'];//A senha já está criptografada
+          } else if ($_POST['senhaRadio'] == 1) { 
+              $senha    = $_POST['novasenha'];
+              $senha = ((strlen($senha) != 60) && (strlen($senha) != 0)) ? criptografar_senha($senha) : $senha ;
+          }
+        
+
+        $telefone_residencial    = $_POST['telefone_residencial'];
+        $telefone_celular    = $_POST['telefone_celular'];
+
+        
+        
+        
+        // Verifica se será realizado EDIÇÃO
+        if ($_POST['acao'] == 'atualiza') {
+          
+
+          $editUser = new Usuario;
+          $editUser->editarUsuario($_SESSION['matricula'], $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular);
+          unset($editUser);
+          
+        }   
+      }      
+>>>>>>> PHPMailer
   }
   $user = new Usuario;
 ?>
