@@ -153,7 +153,7 @@ $(document).on("click", ".abre-excluirModal", function () {
                         echo "
                             <td ><input type='checkbox'   name='foo' value='".$row['num_patrimonio']."'></td>
                             <td>
-                              <a title='Ver patrimônio' data-toggle='modal' data-id='".$row['num_patrimonio']."' href='#modal_verPatrimonio' class='abre-verModal'>                              
+                              <a title='Ver patrimônio' href='verPatrimonio.php?p=".$row['num_patrimonio']."'>                              
                                  <i class='glyphicon glyphicon-search'></i>
                                </a>
                             </td>

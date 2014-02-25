@@ -19,7 +19,7 @@
             
               <?php 
                 if ($_SESSION['tipo_usuario'] == 1) {
-                  echo ((($pageTitle == "Cadastrar usuário") || ($pageTitle == "Usuários &middot; Visão Geral")) ? "<li class='active'>" : "<li>");
+                  echo ((($pageTitle == "Cadastrar usuário") || ($pageTitle == "Usuários &middot; Visão Geral") || ($pageTitle == "Alterar usuário")) ? "<li class='active'>" : "<li>");
                   echo "<a href='usuarios.php'><i class='glyphicon glyphicon-user'></i> Usuários</a></li>"; 
                 }
               ?>

@@ -74,7 +74,7 @@ class Usuario extends DB {
 	 * @param string $telefone_celular Telefone celular do usuario
 	 * @return string Mensagem de retorno
 	 */
-	public function editarUsuario($matricula, $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular) {
+	public function atualizarPerfil($matricula, $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular) {
 		if ($check = $this->db->query("SELECT email FROM usuario WHERE email = '$email' and matricula != '$matricula'")) {
 			if ($check->num_rows) return "O email digitado pertence a outro usuário.";
 			else {
@@ -171,6 +171,77 @@ class Usuario extends DB {
 			}
 		}
 	}	
+
+	public function alterarUsuario($matriculaAntiga, $nome, $matricula, $tipo_usuario) {
+		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim(strtoupper($matricula))) : NULL ;		
+		if ($check = $this->db->query("SELECT matricula FROM usuario WHERE matricula != '$matricula'")) {
+			if ($check->num_rows) return "A matricula $matricula pertence a outro usuário.";
+			else {
+				$nome		= $this->db->real_escape_string(trim($nome));
+				$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, matricula = ?, tipo_usuario = ? WHERE matricula = ?");
+				$edit->bind_param('ssis', $nome, $matricula, $tipo_usuario, $matriculaAntiga);
+				
+				/**if ($edit->execute()) { return true; }
+					else { return ($this->db->error); }**/
+				
+				if ($edit->execute()) {
+					if ($this->db->affected_rows) {
+						//Dados diferentes
+						echo
+						"<!-- Modal -->
+	                  <div class='modal fade bs-modal-sm' id='modal_altUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_altUsuario2' aria-hidden='true'>
+	                    <div class='modal-dialog modal-sm'>
+	                      <div class='modal-content panel-success'>
+	                        <div class='modal-header panel-heading'>
+	                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+	                          <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário atualizado!</h4>
+	                        </div>
+	                        
+	                      </div>
+	                    </div>
+	                  </div>
+	                  <script>$('#modal_altUsuario').modal('show');</script>
+	                  <meta http-equiv='refresh' content='2'>";
+					} else {
+						//Mesmos dados
+						echo
+						"<!-- Modal -->
+	                  <div class='modal fade bs-modal-sm' id='modal_altUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_altUsuario2' aria-hidden='true'>
+	                    <div class='modal-dialog modal-sm'>
+	                      <div class='modal-content panel-success'>
+	                        <div class='modal-header panel-heading'>
+	                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+	                          <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário atualizado!</h4>
+	                        </div>
+	                        
+	                      </div>
+	                    </div>
+	                  </div>
+	                  <script>$('#modal_altUsuario').modal('show');</script>
+	                  <meta http-equiv='refresh' content='2'>";
+					}
+				} else { 
+					echo
+					"<!-- Modal -->
+		              <div class='modal fade' id='modal_erroBD' tabindex='-1' role='dialog' aria-labelledby='modal_erroBD' aria-hidden='true'>
+		                <div class='modal-dialog'>
+		                  <div class='modal-content panel-danger'>
+		                    <div class='modal-header panel-heading'>
+		                      <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+		                      <h4 class='modal-title' id='modal_cadUsuarioLabel'>Erro encontrado</h4>
+		                    </div>
+		                    <div class='modal-body'>
+		                      <p>". $this->db->error."</p>
+		                    </div>
+		                  </div>
+		                </div>
+		              </div>
+		              <script>$('#modal_erroBD').modal('show');</script>";
+		        }	
+			}
+		}
+	}	
+
 
 	/**
 	 * Deleta um usuário existente

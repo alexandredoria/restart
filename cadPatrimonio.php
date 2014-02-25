@@ -1,6 +1,5 @@
-  
 <?php
-session_start();
+  session_start();
   if (empty($_SESSION)) {
     header("Location: ../restart");
     exit;
@@ -17,12 +16,7 @@ session_start();
   include 'classes/patrimonio.class.php';
   include 'classes/laboratorio.class.php';
   include 'classes/configuracao.class.php';
-  
-  ?>
-    <!-- Barra Lateral -->
-
-    <?php 
-      include("nucleo/barraLateral.php");
+  include("nucleo/barraLateral.php");
       
       // Verifica se algum form foi enviado
     if (!empty($_POST)) {

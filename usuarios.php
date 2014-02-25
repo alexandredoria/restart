@@ -159,13 +159,13 @@ function untoggle() {
                             <td ><input type='checkbox'   name='foo' value='".$row['matricula']."'></td>
 
                             <td>
-                              <a title='Ver usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_verUsuario' class='abre-verModal'>                              
+                              <a title='Ver usuário' href='verUsuario.php?m=".$row['matricula']."' >                              
                                  <i class='glyphicon glyphicon-search'></i>
                                </a>
                             </td>
 
                             <td>
-                              <a title='Editar usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_editUsuario' class='abre-editarModal'>                              
+                              <a title='Editar usuário' href='alterarUsuario.php?m=".$row['matricula']."' >                              
                                  <i class='glyphicon glyphicon-pencil'></i>
                                </a>
                             </td>

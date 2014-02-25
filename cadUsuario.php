@@ -9,69 +9,66 @@ session_start();
     exit;
 
   }
-  $pageTitle  = "Cadastrar usuário";
-  
-  include 'nucleo/cabecario.php';
-
-  include 'classes/usuario.class.php';
+    $pageTitle  = "Cadastrar usuário";  
+    include 'nucleo/cabecario.php';
+    include 'classes/usuario.class.php';
   ?>
     <!-- Barra Lateral -->
 
     <?php 
       include("nucleo/barraLateral.php");
-      
       // Verifica se algum form foi enviado
-    if (!empty($_POST)) {
-      // Verifica se as variáveis relacionadas ao cadastro/edição existem
-      if (isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'])) {
-        $nome    = $_POST['nome']; 
-        $matricula    = $_POST['matricula'];
-        $tipo_usuario    = $_POST['tipo_usuario'];
+      if (!empty($_POST)) {
+        // Verifica se as variáveis relacionadas ao cadastro/edição existem
+        if (isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'])) {
+          $nome    = $_POST['nome']; 
+          $matricula    = $_POST['matricula'];
+          $tipo_usuario    = $_POST['tipo_usuario'];
+          
+          include_once 'nucleo/funcoes.php';
+          // Verifica se será realizado um CADASTRO ou EDIÇÃO
+          if ($_POST['acao'] == 'add') {
+            $senha = "123";
+            $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
+            $addUser  = new Usuario;
+            $result   = $addUser->cadastrarUsuario( $nome, $matricula, $senha, $tipo_usuario);
+            if (is_bool($result)) {
+              echo "<!-- Modal -->
+                    <div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+                      <div class='modal-dialog modal-sm'>
+                        <div class='modal-content panel-success'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário cadastrado com sucesso!</h4>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>";
+            }
+            else {
+              echo "<!-- Modal -->
+                    <div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+                      <div class='modal-dialog'>
+                        <div class='modal-content panel-danger'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível cadastrar o usuário</h4>
+                          </div>
+                          <div class='modal-body'>
+                            <p>".$result."</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>";
+            }
+            unset($addUser);
+            echo "<script>$('#modal_cadUsuario').modal('show');</script>";
+          }
         
-        include_once 'nucleo/funcoes.php';
-        // Verifica se será realizado um CADASTRO ou EDIÇÃO
-        if ($_POST['acao'] == 'add') {
-          $senha = "123";
-          $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
-          $addUser  = new Usuario;
-          $result   = $addUser->cadastrarUsuario( $nome, $matricula, $senha, $tipo_usuario);
-          if (is_bool($result)) {
-            echo "<!-- Modal -->
-                  <div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
-                    <div class='modal-dialog modal-sm'>
-                      <div class='modal-content panel-success'>
-                        <div class='modal-header panel-heading'>
-                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                          <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário cadastrado com sucesso!</h4>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>";
-          }
-          else {
-            echo "<!-- Modal -->
-                  <div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
-                    <div class='modal-dialog'>
-                      <div class='modal-content panel-danger'>
-                        <div class='modal-header panel-heading'>
-                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                          <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível cadastrar o usuário</h4>
-                        </div>
-                        <div class='modal-body'>
-                          <p>".$result."</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>";
-          }
-          unset($addUser);
-          echo "<script>$('#modal_cadUsuario').modal('show');</script>";
         }
-      
+        
       }
-      
-    }
     ?>
     <div id="page-wrapper">
 
