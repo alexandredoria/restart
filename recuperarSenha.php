@@ -28,52 +28,44 @@
            <?php
               if (!empty($_POST)) {
                 if (isset($_POST['usuario'])) {
-                  include_once 'classes/usuario.class.php';
+                  require 'C:\wamp\www\restart\PHPMailer\PHPMailerAutoload.php';
                   
-                  $usuario = $_POST['usuario'];
+                  $mail = new PHPMailer;
 
-                   
-                  $query  = new Usuario;
-                  $result = $query->obterDados('matricula', $usuario); 
-                  $email = $query->obterDados('email', $usuario);
-                  $nome = $query->obterDados('nome', $usuario);
-                  $sobrenome = $query->obterDados('sobrenome', $usuario);
+                  $mail->isSMTP();                                      // Set mailer to use SMTP
+                  $mail->Host = 'smtp.gmail.com';  // Specify main and backup server
+                  $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                  $mail->Username = 'noreply.restart@gmail.com';                            // SMTP username
+                  $mail->Password = 'restart00';                           // SMTP password
+                  $mail->SMTPSecure = 'ssl';                            // Enable encryption, 'ssl' also accepted
+                  $mail->Port = 465 ;
+                  $mail->ErrorInfo;
 
-                  if (is_bool($result)) {
-                    
-                   require_once "C:\wamp\bin\php\php5.4.16\pear\Mail\Mail-1.2.0\Mail.php";
+                  //$mail->From = 'noreply.restart@gmail.com';
+                  //$mail->FromName = 'Projeto Restart';
+                  $mail->addAddress('alexandredoria.01@hotmail.com');  // Add a recipient
+                  //$mail->addAddress('alexandre');               // Name is optional
+                  //$mail->addReplyTo('alexandredoria.01@hotmail.com', 'Alexandre Dória');
+                  //$mail->addCC('alexandredoria.01@gmail.com');
+                  //$mail->addBCC('alexandredoria.01@hotmail.com');
 
-                    $from = 'Projeto Restart <noreply.restart@gmail.com>';
-                    //$from = '<noreply.restart@gmail.com>';
-                    $to = '$nome $sobrenome <$email>';
-                    //$to = '<$email>';
-                    $subject = 'Hi!';
-                    $body = "Hi,\n\nHow are you?";
+                  //$mail->WordWrap = 50;                                 // Set word wrap to 50 characters
+                  //$mail->addAttachment('C:\wamp\www\restart\index.php');         // Add attachments
+                  //$mail->addAttachment('C:\wamp\www\restart\logo.png', 'logo.png');    // Optional name
+                  $mail->isHTML(true);                                  // Set email format to HTML
+                  $mail->SMTPDebug = 1;
 
-                    $headers = array(
-                        'From' => $from,
-                        'To' => $to,
-                        'Subject' => $subject
-                    );
+                  $mail->Subject = 'Here is the subject';
+                  $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+                  //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-                    $smtp = Mail::factory('smtp', array(
-                            'host' => 'ssl://smtp.gmail.com',
-                            'port' => '465',
-                            'auth' => true,
-                            'username' => 'noreply.restart@gmail.com',
-                            'password' => 'restart00'
-                        ));
-
-                    $mail = $smtp->send($to, $headers, $body);
-
-                    if (PEAR::isError($mail)) {
-                        echo('<p>' . $mail->getMessage() . '</p>');
-                    } else {
-                        echo('<p>Message successfully sent!</p>');
-                    }
-                    
+                  if(!$mail->send()) {
+                     echo 'Message could not be sent.';
+                     echo 'Mailer Error: ' . $mail->ErrorInfo;
+                     exit;
                   }
-                  unset($query);
+
+                  echo 'Message has been sent';
                 }
               }
             ?>

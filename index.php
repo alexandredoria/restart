@@ -1,11 +1,3 @@
-
-<?php
-  session_start();
-  if (isset($_SESSION)) {
-    header("Location: painel.php");
-    exit;
-  } 
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
