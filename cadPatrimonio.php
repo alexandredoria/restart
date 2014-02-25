@@ -39,7 +39,8 @@ session_start();
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'add') {
           $addPat  = new Patrimonio;
-          $result   = $addPat->cadastrarPatrimonio( $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
+          //$result   = $addPat->cadastrarPatrimonio( $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
+          $result   = $addPat->cadastrarPatrimonio( '45678', 2, 5, 2, 1, 2);
           if (is_bool($result)) {
             echo "<!-- Modal -->
                   <div class='modal fade bs-modal-sm' id='modal_cadPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_cadPatrimonioLabel' aria-hidden='true'>
