@@ -23,43 +23,37 @@ $(document).ready(function() {
         $cbs = $('input[name="foo"]').click(function() {
             $submit.toggle( $cbs.is(":checked") );
         });
+	
 });
 
 function toggle(source) {
-  checkboxes = document.getElementsByName('foo');
+  checkboxes = document.getElementsByName('foo[]');
   
   for (var i=0, n=checkboxes.length;i<n;i++) {
     checkboxes[i].checked = source.checked;
     
-  }$("#exc").toggle('show');
-}
-
-
-
-
-
-function untoggle() {
-  checkboxes = document.getElementsByName('foo');
-  var count = 0;
-  for (var i=0, n=checkboxes.length;i<n;i++) {
-    if(checkboxes[i].checked){
-      count++;
-    }
-    
   }
-  if (count == 0){
-    $("#toggle").prop("checked", false);
-  } if (count == n){
-    $("#toggle").prop("checked", true);
-
-  } 
- 
-
+  
+  
+  $("#exc").toggle('show');
 }
-
-
-
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
       <!-- Barra Lateral -->
@@ -121,7 +115,7 @@ function untoggle() {
                 </td>
                 <td>
                   &nbsp;&nbsp;
-                  <button type="button" id="exc" class="btn btn-primary">
+                  <button type="button" id="exc" class="btn btn-primary" onclick="getCheckboxValues(this); return false;">
                     <i class='glyphicon glyphicon-remove' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal' ></i> Excluir
                   </button>
                 </td>
@@ -161,7 +155,24 @@ function untoggle() {
                         if($row['data_atualizacao']===null){echo "<tr id='fooTr'class='danger'>";} else echo "<tr id='fooTr'>";
                         echo "
                             <td ><input type='checkbox'   name='foo[]' id='foo[]' value='".$row['matricula']."'></td>
-                             
+							
+							   <script>
+									function getCheckboxValues() {
+  										var values = [];
+  										var vehicles = document.getElementsByName('foo[]');
+
+  										for (var i=0, iLen=vehicles.length; i<iLen; i++) {
+    										if (vehicles[i].checked) {
+     											 values.push(vehicles[i].value);
+   											 }
+ 											 }
+  										// Do something with values
+  										alert('Deseja excluir as seguintes matrículas: ' + values.join(', '));
+  										return values;
+										}
+
+								</script>
+                           
 
                             <td>
                               <a title='Ver usuário' href='verUsuario.php?m=".$row['matricula']."' >                              
