@@ -6,17 +6,9 @@
     exit;
   } 
   $pageTitle  = "Atualizar perfil";
-  
   include 'nucleo/cabecario.php';
-
   include 'classes/usuario.class.php';
-  ?>
-
-
-    <!-- Barra Lateral -->
-
-    <?php 
-      include("nucleo/barraLateral.php");
+  include("nucleo/barraLateral.php");
       
       // Verifica se algum form foi enviado
     if (!empty($_POST)) {
