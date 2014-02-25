@@ -34,6 +34,10 @@ function toggle(source) {
   }$("#exc").toggle('show');
 }
 
+
+
+
+
 function untoggle() {
   checkboxes = document.getElementsByName('foo');
   var count = 0;
@@ -118,7 +122,7 @@ function untoggle() {
                 <td>
                   &nbsp;&nbsp;
                   <button type="button" id="exc" class="btn btn-primary">
-                    <i class='glyphicon glyphicon-remove'></i> Excluir
+                    <i class='glyphicon glyphicon-remove' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal' ></i> Excluir
                   </button>
                 </td>
               </tr>
@@ -156,7 +160,8 @@ function untoggle() {
                         }
                         if($row['data_atualizacao']===null){echo "<tr id='fooTr'class='danger'>";} else echo "<tr id='fooTr'>";
                         echo "
-                            <td ><input type='checkbox'   name='foo' value='".$row['matricula']."'></td>
+                            <td ><input type='checkbox'   name='foo[]' id='foo[]' value='".$row['matricula']."'></td>
+                             
 
                             <td>
                               <a title='Ver usuário' href='verUsuario.php?m=".$row['matricula']."' >                              
@@ -171,7 +176,7 @@ function untoggle() {
                             </td>
 
                             <td>
-                              <a title='Excluir usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuario' class='abre-excluirModal'>                              
+                              <a title='Excluir usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal'>                              
                                  <i class='glyphicon glyphicon-remove'></i>
                                </a>
                             </td>
@@ -209,26 +214,26 @@ function untoggle() {
         </div><!-- /.row -->
 
         <!-- Button trigger modal -->
-        <div class='modal fade' id='modal_excUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioLabel' aria-hidden='true'>
-  <div class='modal-dialog'>
-    <div class='modal-content panel-danger'>
-      <div class='modal-header panel-heading'>
-        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-        <h4 class='modal-title' id='modal_cadUsuarioLabel'>O usuário será excluído</h4>
-      </div>
-      <div class='modal-body'>
-        Você realmente deseja executar essa operação?
-      </div>
-       <div class="modal-footer">
-        <form role="form" id="confirm" action="usuarios.php" method="post">
-            
-          <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-          <button type="submit" class="btn btn-danger">Sim</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+        <div class='modal fade' id='modal_excUsuarioSimples' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioSimplesLabel' aria-hidden='true'>
+          <div class='modal-dialog'>
+            <div class='modal-content panel-danger'>
+              <div class='modal-header panel-heading'>
+                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                <h4 class='modal-title' id='modal_cadUsuarioLabel'>O usuário será excluído</h4>
+              </div>
+              <div class='modal-body'>
+                Você realmente deseja executar essa operação?
+              </div>
+               <div class="modal-footer">
+                <form role="form" id="confirm" action="usuarios.php" method="post">
+                    
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                  <button type="submit" class="btn btn-danger">Sim</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
 
