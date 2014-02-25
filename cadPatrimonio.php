@@ -29,22 +29,22 @@ session_start();
       // Verifica se as variáveis relacionadas ao cadastro/edição existem
       if (isset( $_POST['num_patrimonio'], $_POST['tipo'], $_POST['num_posicionamento'], $_POST['situacao'], $_POST['lab'],  $_POST['config'])) {
         $num_patrimonio = $_POST['num_patrimonio'];
+        $tipo = $_POST['tipo'];
         $num_posicionamento = $_POST['num_posicionamento'];
         $situacao = $_POST['situacao'];
         $lab = $_POST['lab'];
-        $tipo = $_POST['tipo'];
         $config  = $_POST['config'];
         
         
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'add') {
           $addPat  = new Patrimonio;
-<<<<<<< HEAD
+
           //$result   = $addPat->cadastrarPatrimonio( $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
-          $result   = $addPat->cadastrarPatrimonio( '45678', 2, 5, 2, 1, 2);
-=======
+
+
           $result   = $addPat->cadastrarPatrimonio($num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
->>>>>>> f23c03615023c6784c5d4b10575355d4a8a3c859
+
           if (is_bool($result)) {
             echo "<!-- Modal -->
                   <div class='modal fade bs-modal-sm' id='modal_cadPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_cadPatrimonioLabel' aria-hidden='true'>
@@ -154,7 +154,7 @@ session_start();
               </div>
                <label>Número de posição</label>
               <div class="form-group">
-                <input class="form-control" id="num_posicionamento" style="text-align: right;" name="num_posicionammento" required autocomplete="off">
+                <input class="form-control" id="num_posicionamento" style="text-align: right;" name="num_posicionamento" required autocomplete="off">
               </div>
               <label>Situação</label>
               <div class="form-group">
