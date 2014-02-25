@@ -40,12 +40,12 @@ class Patrimonio extends DB {
 	 * @return boolean Se foi possível cadastrar ou não a categoria
 	 */
 	public function cadastrarPatrimonio($num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config) {
-		$num_patrimonio	= $this->db->real_escape_string(trim($num_patrimonio));
+		
 		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
 			if ($check->num_rows) return "O número de patrimônio \"$num_patrimonio\"  já está cadastrado no sistema.";
 			else {
 				$data_cadastro = date('Y-m-d');
-				$insert = $this->db->prepare("INSERT INTO Patrimonio (num_patrimonio, tipo, num_posicionamento, situacao, data_cadastro, Laboratorio_id, Configuracao_id) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
+				$insert = $this->db->prepare("INSERT INTO patrimonio (num_patrimonio, tipo, num_posicionamento, situacao, data_cadastro, Laboratorio_id, Configuracao_id) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
 				$insert->bind_param('siiisii', $num_patrimonio, $tipo, $num_posicionamento, $situacao, $data_cadastro, $lab, $config);
 				if ($insert->execute()) { return true; }
 				else { return ($this->db->error); }
@@ -238,7 +238,7 @@ class Patrimonio extends DB {
 				$result->free(); // Libera a variável de consulta da memória
 				return $rows;
 			}
-			else return 'Nenhum Patrimonio foi encontrado.';
+			else return 'Nenhum Configuracao foi encontrado.';//Nenhum Patrimonio foi encontrado.';
 		}
 		else return ($this->db->error);
 	}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Classe de manipulação do módulo categorias.
+ * Classe de manipulação do módulo categoria.
  *
  * @package		COVEG - Controle de Vendas Globo
  * @author		Claudson Martins <claudson.m@gmail.com>
@@ -14,7 +14,7 @@ class Categoria extends DB {
 	private $db;
 	
 	/**
-	 * Cria uma nova instancia da classe categorias, fazendo a conexão com o banco
+	 * Cria uma nova instancia da classe categoria, fazendo a conexão com o banco
 	 * @return object Variável objeto contendo as funcionalidades do MySQLi
 	 */
 	public function __construct(){
@@ -35,7 +35,7 @@ class Categoria extends DB {
 	 */
 	public function cadastrarCategoria($string) {
 		$categoria	= $this->db->real_escape_string(trim($string));
-		$insert		= $this->db->prepare("INSERT INTO categorias (nome) VALUES (?)");
+		$insert		= $this->db->prepare("INSERT INTO categoria (nome) VALUES (?)");
 		$insert->bind_param('s',$categoria);
 		if ($insert->execute()) { return true; }
 		else { return false; }
@@ -47,7 +47,7 @@ class Categoria extends DB {
 	 * @return string Mensagem de retorno	
 	 */
 	public function editarCategoria($id, $nome) {
-		if ($edit = $this->db->query("UPDATE categorias SET nome = '$nome' WHERE id = $id")) {
+		if ($edit = $this->db->query("UPDATE categoria SET nome = '$nome' WHERE id = $id")) {
 			if ($this->db->affected_rows) {
 				echo "<div id='growl_box' class='good'><p>Categoria editada.</p></div>";
 			}
@@ -55,7 +55,7 @@ class Categoria extends DB {
 				echo
 				"<div id='growl_box' class='bad'>
 					<p>Não foi possível editar a categoria.
-					<br><span>Lembre-se que categorias devem possuir um nome exclusivo<span></p>
+					<br><span>Lembre-se que categoria devem possuir um nome exclusivo<span></p>
 				</div>";
 			}
 		}
@@ -72,7 +72,7 @@ class Categoria extends DB {
 	 */
 	public function deletarCategoria($id) {
 		$del_matricula		= $this->db->real_escape_string(trim($id));
-		if ($update = $this->db->query("DELETE FROM categorias WHERE id = $del_matricula")) {
+		if ($update = $this->db->query("DELETE FROM categoria WHERE id = $del_matricula")) {
 			if ($this->db->affected_rows) {
 				echo "<div id='growl_box' class='good'><p>Categoria removida.</p></div>";
 			}
@@ -85,7 +85,7 @@ class Categoria extends DB {
 			}
 		}
 		else {
-			$erromsg = ($this->db->error == "Cannot delete or update a parent row: a foreign key constraint fails (`coveg`.`Patrimonios`, CONSTRAINT `fk_Patrimonios_categorias` FOREIGN KEY (`categorias_id`) REFERENCES `categorias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)") ? "A categoria não pôde ser removida.<br><span>Não é possível remover categorias que estão alocando Patrimonios.</span>" : $this->db->error ;
+			$erromsg = ($this->db->error == "Cannot delete or update a parent row: a foreign key constraint fails (`coveg`.`Patrimonios`, CONSTRAINT `fk_Patrimonios_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)") ? "A categoria não pôde ser removida.<br><span>Não é possível remover categoria que estão alocando Patrimonios.</span>" : $this->db->error ;
 			echo "<div id='growl_box' class='bad'><p>" . $erromsg . "</p></div>";
 		}
 		echo "<script>showGrowl();</script>";
@@ -97,7 +97,7 @@ class Categoria extends DB {
 	 * @return string $string Nome da categoria
 	 */
 	public function obterNome($id) {
-		if ($valor = $this->db->query("SELECT nome FROM categorias WHERE id = $id")) {
+		if ($valor = $this->db->query("SELECT nome FROM categoria WHERE id = $id")) {
 			if ($valor->num_rows) {
 				$string = $valor->fetch_assoc();
 				return (array_shift($string));
@@ -107,17 +107,17 @@ class Categoria extends DB {
 	}
 
 	/**
-	 * Gera um array com as informações das categorias cadastradas
-	 * @return array $rows Dados das categorias
+	 * Gera um array com as informações das categoria cadastradas
+	 * @return array $rows Dados das categoria
 	 */
 	public function listarCategoria() {
-		// Executa a query das categorias e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM categorias ORDER BY id ASC")) {
+		// Executa a query das categoria e se não houver erros realiza as ações
+		if ($result	= $this->db->query("SELECT * FROM categoria ORDER BY id ASC")) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
 				foreach ($rows as $i => $value) {
-					if ($count = $this->db->query("SELECT COUNT(id) FROM Patrimonios WHERE categorias_id = " . $value['id'])) {
+					if ($count = $this->db->query("SELECT COUNT(id) FROM Patrimonios WHERE categoria_id = " . $value['id'])) {
 						$num = $count->fetch_row();
 						$rows[$i]['count'] = $num[0];
 					}
@@ -137,7 +137,7 @@ class Categoria extends DB {
 	 */
 	public function checkCategoria($valor){
 		$categoria		= $this->db->real_escape_string(trim($valor));
-		if ($check = $this->db->query("SELECT nome FROM categorias WHERE nome = '$categoria'")) {
+		if ($check = $this->db->query("SELECT nome FROM categoria WHERE nome = '$categoria'")) {
 			if ($check->num_rows) echo "false"; // Nome está em uso
 			else echo "true"; // Não está em uso
 			$check->free();
