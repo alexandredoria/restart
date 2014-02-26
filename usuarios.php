@@ -54,6 +54,8 @@ function toggle(source) {
 
 
 
+
+
   
 
       <!-- Barra Lateral -->
@@ -115,9 +117,10 @@ function toggle(source) {
                 </td>
                 <td>
                   &nbsp;&nbsp;
+                  <a data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal'>
                   <button type="button" id="exc" class="btn btn-primary" onclick="getCheckboxValues(this); return false;">
-                    <i class='glyphicon glyphicon-remove' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal' ></i> Excluir
-                  </button>
+                    <i class='glyphicon glyphicon-remove' ></i> Excluir 
+                  </button> </a>
                 </td>
               </tr>
             </table> 
@@ -155,25 +158,7 @@ function toggle(source) {
                         if($row['data_atualizacao']===null){echo "<tr id='fooTr'class='danger'>";} else echo "<tr id='fooTr'>";
                         echo "
                             <td ><input type='checkbox'   name='foo[]' id='foo[]' value='".$row['matricula']."'></td>
-							
-							   <script>
-									function getCheckboxValues() {
-  										var values = [];
-  										var vehicles = document.getElementsByName('foo[]');
-
-  										for (var i=0, iLen=vehicles.length; i<iLen; i++) {
-    										if (vehicles[i].checked) {
-     											 values.push(vehicles[i].value);
-   											 }
- 											 }
-  										// Do something with values
-  										alert('Deseja excluir as seguintes matrículas: ' + values.join(', '));
-  										return values;
-										}
-
-								</script>
-                           
-
+					
                             <td>
                               <a title='Ver usuário' href='verUsuario.php?m=".$row['matricula']."' >                              
                                  <i class='glyphicon glyphicon-search'></i>
@@ -234,6 +219,33 @@ function toggle(source) {
               </div>
               <div class='modal-body'>
                 Você realmente deseja executar essa operação?
+                <div id="linhas"> 
+				<?php
+					echo" <script>
+							function getCheckboxValues() {
+ 							var values = [];
+  							var matriculas = document.getElementsByName('foo[]');
+  							for (var i=0, iLen=matriculas.length; i<iLen; i++) {
+  								if (matriculas[i].checked) {
+       									values[i]= matriculas[i].value;
+   	 								}
+ 								    }
+  	 
+ 								for (var i=0, iLen=matriculas.length; i<iLen; i++) {
+ 
+    						 				alert(values[i]);
+   	   								 		}
+  											
+								return values;
+  								}
+
+							</script>";
+				
+				
+				
+                ?>
+                
+              </div>
               </div>
                <div class="modal-footer">
                 <form role="form" id="confirm" action="usuarios.php" method="post">
