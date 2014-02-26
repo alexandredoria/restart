@@ -23,43 +23,39 @@ $(document).ready(function() {
         $cbs = $('input[name="foo"]').click(function() {
             $submit.toggle( $cbs.is(":checked") );
         });
+	
 });
 
 function toggle(source) {
-  checkboxes = document.getElementsByName('foo');
+  checkboxes = document.getElementsByName('foo[]');
   
   for (var i=0, n=checkboxes.length;i<n;i++) {
     checkboxes[i].checked = source.checked;
     
-  }$("#exc").toggle('show');
-}
-
-
-
-
-
-function untoggle() {
-  checkboxes = document.getElementsByName('foo');
-  var count = 0;
-  for (var i=0, n=checkboxes.length;i<n;i++) {
-    if(checkboxes[i].checked){
-      count++;
-    }
-    
   }
-  if (count == 0){
-    $("#toggle").prop("checked", false);
-  } if (count == n){
-    $("#toggle").prop("checked", true);
-
-  } 
- 
-
+  
+  
+  $("#exc").toggle('show');
 }
-
-
-
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
       <!-- Barra Lateral -->
@@ -121,9 +117,10 @@ function untoggle() {
                 </td>
                 <td>
                   &nbsp;&nbsp;
-                  <button type="button" id="exc" class="btn btn-primary">
-                    <i class='glyphicon glyphicon-remove' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal' ></i> Excluir
-                  </button>
+                  <a data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal'>
+                  <button type="button" id="exc" class="btn btn-primary" onclick="getCheckboxValues(this); return false;">
+                    <i class='glyphicon glyphicon-remove' ></i> Excluir 
+                  </button> </a>
                 </td>
               </tr>
             </table> 
@@ -161,8 +158,7 @@ function untoggle() {
                         if($row['data_atualizacao']===null){echo "<tr id='fooTr'class='danger'>";} else echo "<tr id='fooTr'>";
                         echo "
                             <td ><input type='checkbox'   name='foo[]' id='foo[]' value='".$row['matricula']."'></td>
-                             
-
+					
                             <td>
                               <a title='Ver usuário' href='verUsuario.php?m=".$row['matricula']."' >                              
                                  <i class='glyphicon glyphicon-search'></i>
@@ -222,7 +218,34 @@ function untoggle() {
                 <h4 class='modal-title' id='modal_cadUsuarioLabel'>O usuário será excluído</h4>
               </div>
               <div class='modal-body'>
-                Você realmente deseja executar essa operação?
+                Você realmente deseja excluir a(s) seguinte(s) matrícula(s)?
+                <div id="linhas"> 
+				<?php
+					echo" <script>
+							function getCheckboxValues() {
+ 							var values = [];
+  							var matriculas = document.getElementsByName('foo[]');
+  							for (var i=0, iLen=matriculas.length; i<iLen; i++) {
+  								if (matriculas[i].checked) {
+       									values[i]= matriculas[i].value;
+   	 								}
+ 								    }
+  	                            $('#linhas').html('');
+ 								for (i=0;i<values.length; i++){
+									        
+   											$('#linhas').append(values[i]+'<br>');
+											}
+  											
+								
+  								}
+
+							</script>";
+				
+				
+				
+                ?>
+                
+              </div>
               </div>
                <div class="modal-footer">
                 <form role="form" id="confirm" action="usuarios.php" method="post">
