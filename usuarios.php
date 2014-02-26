@@ -218,7 +218,7 @@ function toggle(source) {
                 <h4 class='modal-title' id='modal_cadUsuarioLabel'>O usuário será excluído</h4>
               </div>
               <div class='modal-body'>
-                Você realmente deseja executar essa operação?
+                Você realmente deseja excluir a(s) seguinte(s) matrícula(s)?
                 <div id="linhas"> 
 				<?php
 					echo" <script>
@@ -230,13 +230,13 @@ function toggle(source) {
        									values[i]= matriculas[i].value;
    	 								}
  								    }
-  	 
- 								for (var i=0, iLen=matriculas.length; i<iLen; i++) {
- 
-    						 				alert(values[i]);
-   	   								 		}
+  	                            $('#linhas').html('');
+ 								for (i=0;i<values.length; i++){
+									        
+   											$('#linhas').append(values[i]+'<br>');
+											}
   											
-								return values;
+								
   								}
 
 							</script>";
