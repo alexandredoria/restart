@@ -193,19 +193,34 @@
 
 <script language="JavaScript">
   $(document).ready(function() {
+
+	  
+	    
     var $submit = $("#exc").hide(),
     $cbs = $('input[name="foo[]"').click(function() {
       $submit.toggle( $cbs.is(":checked") );
+	 var count=0;
+	checkboxes = document.getElementsByName('foo[]');
+	for (var i=0, n=checkboxes.length;i<n;i++) {
+      if(checkboxes[i].checked)
+	  {
+		  count = count+1;} 
+     	}
+	  if (count!=checkboxes.length) { $("#toggle").prop('checked',false);}	
+	  else{ $("#toggle").prop('checked',true);}
     });
+
+		
+	
   });
 
   function toggle(source) {
+	
     checkboxes = document.getElementsByName('foo[]');
     for (var i=0, n=checkboxes.length;i<n;i++) {
-      checkboxes[i].checked = source.checked;    
-    }  
-    $("#exc").toggle('show');
-  }
+      checkboxes[i].checked = source.checked; 
+	}$("#exc").toggle('show');
+	}
   
   window.addEventListener("DOMContentLoaded", function () {
     var confirm = document.getElementById("confirm");
@@ -218,6 +233,8 @@
      var matUser = $(this).data('id');
      $(".modal-footer #matUsuario").val( matUser );
 });
+
+
 
 
 </script>
