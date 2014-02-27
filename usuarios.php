@@ -24,19 +24,22 @@
       $del_matricula   = $_POST['matUsuario'];
     } else if (isset($_POST['checkbox'])){
       $del_matricula = $_POST['checkbox'];
-      $sql.= "('".implode ("','", array($_POST['checkbox']))."')";
+      $sql = implode ("','", array($_POST['checkbox']));
       $del_matricula = $sql;
+    }
       $delUser  = new Usuario;
-      $delUser->deletarUsuario(array ($del_matricula));
+      $delUser->deletarUsuario($del_matricula);
       unset($delUser);
-    }*/
+*/
+
+    
     //MODELO SIMPLES
-    /*if (isset($_POST['matUsuario'])) {
+    if (isset($_POST['matUsuario'])) {
       $del_matricula   = $_POST['matUsuario'];
        $delUser  = new Usuario;
       $delUser->deletarUsuario($del_matricula);
       unset($delUser);
-    } */ 
+    } 
   }
 ?>
 <div id="page-wrapper">
@@ -64,7 +67,7 @@
         </tr>
         <tr>
           <td>
-            &nbsp;&nbsp;<input type='checkbox' id="toggle" onClick="toggle(this)">&nbsp;&nbsp;&nbsp;Exibição:&nbsp;
+            &nbsp;&nbsp;<input type='checkbox' id="toggle" name="toggle" onClick="toggle(this)">&nbsp;&nbsp;&nbsp;Exibição:&nbsp;
           </td>  
           <td>
             <form role="form" action="usuarios.php" method="POST">
@@ -87,7 +90,7 @@
         </tr>
       </table> 
       <div class="table-responsive">
-        <table id="" class="table table-striped table-hover">
+        <table id="" class="table table-striped table-hover ">
           <p>
             <tr>
               <th></th>
@@ -175,10 +178,11 @@
 					      function getCheckboxValues() {
  					        var values = [];
   					      var matriculas = document.getElementsByName('foo[]');
-  					      
+  					      var cont = 0;
                   for (var i=0, iLen=matriculas.length; i<iLen; i++) {
   					        if (matriculas[i].checked) {
        						    values[i]= matriculas[i].value;
+                      cont++;
    	 					      }
  							    }
   	              $('#linhas').html('');
@@ -191,7 +195,7 @@
           </div>
           </div>
           <div class="modal-footer">
-            <form id="confirm">
+            <form id="confirm" method="post" action="usuarios.php">
               <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
               <button id="submit-modal" class="btn btn-danger">Sim</button>
 

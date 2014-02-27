@@ -13,20 +13,12 @@
   include 'nucleo/cabecario.php';  
   include 'classes/patrimonio.class.php';  
   include("nucleo/barraLateral.php");
+  if (isset($_POST['filtro'])){
+      $filtro = $_POST['filtro'];
+  } else {
+    $filtro = 0;
+  }
   if (!empty($_POST)) {
-    switch (isset($_POST['filtro'])) {
-      case "todos":;
-      case "gabinetes":;
-      case "monitores":;
-      case "estabilizadores":;
-      case "nobreaks":; 
-      case "mesas":;
-      case "cadeiras":; 
-      case "arcondicionadores":; 
-      case "armarios":; 
-      case "projetores":;
-    }
-
     if (isset($_POST['IdPatrimonio'])) {
       $num_patrimonio   = $_POST['IdPatrimonio'];
       $objPatrimonio  = new Patrimonio;
@@ -62,18 +54,20 @@
             &nbsp;&nbsp;<input type='checkbox' id="toggle" onClick="toggle(this)">&nbsp;&nbsp;&nbsp;Exibição:&nbsp;
           </td>  
           <td>
+            <form role="form" action="patrimonios.php" method="POST">
             <select style="font-weight:bold" id="filtro" name="filtro" class="form-control" onchange="this.form.submit()">
-              <option value="todos">Todos</option>
-              <option value="gabinetes">Gabinetes</option>
-              <option value="monitores">Monitores</option>
-              <option value="estabilizadores">Estabilizadores</option>
-              <option value="nobreaks">Nobreaks</option>
-              <option value="mesas">Mesas</option>              
-              <option value="cadeiras">Cadeiras</option>
-              <option value="arcondicionadores">Ar condicionadores</option>
-              <option value="armarios">Armários</option>
-              <option value="projetores">Projetores</option>
+              <option <?php if ($filtro == 0 ){echo "selected";}?> value="0">Todos</option>
+              <option <?php if ($filtro == 1 ){echo "selected";}?> value="1">Gabinetes</option>
+              <option <?php if ($filtro == 2 ){echo "selected";}?> value="2">Monitores</option>
+              <option <?php if ($filtro == 3 ){echo "selected";}?> value="3">Estabilizadores</option>
+              <option <?php if ($filtro == 4 ){echo "selected";}?> value="4">Nobreaks</option>
+              <option <?php if ($filtro == 5 ){echo "selected";}?> value="5">Mesas</option>              
+              <option <?php if ($filtro == 6 ){echo "selected";}?> value="6">Cadeiras</option>
+              <option <?php if ($filtro == 7 ){echo "selected";}?> value="7">Ar-condicionadores</option>
+              <option <?php if ($filtro == 8 ){echo "selected";}?> value="8">Armários</option>
+              <option <?php if ($filtro == 9 ){echo "selected";}?> value="9">Projetores</option>
             </select>
+          </form>
           </td>
           <td>
             &nbsp;&nbsp;
@@ -93,23 +87,38 @@
               <th colspan="3">Operações</th>
               <th>Registro</th>
               <th>Tipo</th>
+              <th>Laboratório</th>
               <th>Posição</th>
               <th>Situação</th>
               <th>Configuração</th>
-              <th>Laboratório</th>
+              
               <th>Data de cadastro</th>
               <th>Data de atualização</th>
             </tr>
             <tbody>
               <?php
                 $listaPatrimonio    = new Patrimonio;
-                $result     = $listaPatrimonio->listarPatrimonios();
+                $result     = $listaPatrimonio->listarPatrimonios($filtro);
                 if (is_array($result)) {
                   foreach ($result as $row) {
                     if ($row['tipo'] == 1){
-                      $tipo = "Monitor";
-                    } if ( $row['tipo'] == 2){
                       $tipo = "Gabinete";
+                    } if ( $row['tipo'] == 2){
+                      $tipo = "Monitor";
+                    } if ( $row['tipo'] == 3){
+                      $tipo = "Estabilizador";
+                    } if ( $row['tipo'] == 4){
+                      $tipo = "Nobreak";
+                    } if ( $row['tipo'] == 5){
+                      $tipo = "Mesa";
+                    } if ( $row['tipo'] == 6){
+                      $tipo = "Cadeira";
+                    } if ( $row['tipo'] == 7){
+                      $tipo = "Ar-condicionador";
+                    } if ( $row['tipo'] == 8){
+                      $tipo = "Armário";
+                    } if ( $row['tipo'] == 9){
+                      $tipo = "Projetor";
                     }
                     if ($row['situacao'] == '1'){
                       $situacao = "Ativo";
@@ -125,7 +134,7 @@
                           </a>
                         </td>
                         <td>
-                          <a title='Editar patrimônio' data-toggle='modal' data-id='".$row['num_patrimonio']."' href='#modal_editPatrimonio' class='abre-editarModal'>                              
+                          <a title='Editar patrimônio'  href='alterarPatrimonio.php?p=".$row['num_patrimonio']."'>                           
                             <i class='glyphicon glyphicon-pencil'></i>
                           </a>
                         </td>
@@ -136,10 +145,11 @@
                         </td>
                         <td>" . $row['num_patrimonio'] . "</td>
                         <td>" . $tipo . "</td>
+                         <td>" . $row['Laboratorio_id'] . "</td>
                         <td>" . $row['num_posicionamento'] . "</td>
                         <td>" . $situacao . "</td>
                         <td>" . $row['Configuracao_id'] . "</td>
-                        <td>" . $row['Laboratorio_id'] . "</td>
+                       
                         <td>"; if ($row['data_cadastro']===null){echo "";} else {echo date('d/m/Y', strtotime($row['data_cadastro']));} echo "</td>
                         <td>"; if ($row['data_atualizacao']===null){echo date('d/m/Y', strtotime($row['data_cadastro']));} else {echo date('d/m/Y', strtotime($row['data_atualizacao']));} echo "</td>
                       </tr>"; 

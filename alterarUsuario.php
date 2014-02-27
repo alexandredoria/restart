@@ -1,4 +1,4 @@
-''  
+
 <?php
   session_start();
   if (empty($_SESSION)) {
@@ -12,7 +12,9 @@
   include 'nucleo/cabecario.php';
   include 'classes/usuario.class.php';
   include 'nucleo/barraLateral.php';
-  $matriculaAntiga = $_GET['m'];    
+  if (isset($_GET['m'])){
+    $matriculaAntiga = $_GET['m'];    
+   } 
   // Verifica se algum form foi enviado
   if (!empty($_POST)) {
     // Verifica se as variáveis relacionadas ao cadastro/edição existem

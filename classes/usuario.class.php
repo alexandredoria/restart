@@ -248,12 +248,15 @@ class Usuario extends DB {
 	 * @param int $matricula Número de ID do usuário a ser excluída
 	 * @return string Mensagem de retorno
 	 */
-	//MODELO SIMPLES public function deletarUsuario(array $matricula) {
-	public function deletarUsuario($matricula) {
+	//MODELO SIMPLES 
+	public function deletarUsuario($del_matricula) {
+	//public function deletarUsuario(array $matricula) {
+		//$matricula 	= explode(',', $matricula);
 		$del_matricula		= $this->db->real_escape_string(trim(strtoupper($matricula)));
 
-		//MODELO SIMPLES if ($update = $this->db->query("DELETE FROM usuario WHERE matricula IN ('".$matricula."')")) {
-		if ($update = $this->db->query("DELETE FROM usuario WHERE matricula = '$matricula'")) {
+		//MODELO MULTIPLO if ($update = $this->db->query("DELETE FROM usuario WHERE matricula IN ('".$del_matricula."')")) {
+		//MODELO SIMPLES
+			if ($update = $this->db->query("DELETE FROM usuario WHERE matricula = '$matricula'")) {
 			if ($this->db->affected_rows) {
 				echo "<!-- Modal -->
 					<div class='modal fade bs-modal-sm' id='modal_excUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuario2' aria-hidden='true'>
