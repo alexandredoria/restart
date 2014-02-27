@@ -248,9 +248,12 @@ class Usuario extends DB {
 	 * @param int $matricula Número de ID do usuário a ser excluída
 	 * @return string Mensagem de retorno
 	 */
+	//MODELO SIMPLES public function deletarUsuario(array $matricula) {
 	public function deletarUsuario($matricula) {
 		$del_matricula		= $this->db->real_escape_string(trim(strtoupper($matricula)));
-		if ($update = $this->db->query("DELETE FROM usuario WHERE matricula = '$del_matricula'")) {
+
+		//MODELO SIMPLES if ($update = $this->db->query("DELETE FROM usuario WHERE matricula IN ('".$matricula."')")) {
+		if ($update = $this->db->query("DELETE FROM usuario WHERE matricula = '$matricula'")) {
 			if ($this->db->affected_rows) {
 				echo "<!-- Modal -->
 					<div class='modal fade bs-modal-sm' id='modal_excUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuario2' aria-hidden='true'>
@@ -389,9 +392,9 @@ class Usuario extends DB {
 	public function listarUsuarios($matricula, $filtro){
 		// Executa a query dos usuários e se não houver erros realiza as ações
 		if ($filtro != 0 ){
-			$result = $this->db->query("SELECT * FROM usuario WHERE matricula != '".$matricula."' AND tipo_usuario = '".$filtro."' ORDER BY data_cadastro DESC ");
+			$result = $this->db->query("SELECT * FROM usuario WHERE matricula != '".$matricula."' AND tipo_usuario = '".$filtro."' ORDER BY matricula ASC ");
 		} else {
-			$result	= $this->db->query("SELECT * FROM usuario WHERE matricula != '".$matricula."' ORDER BY data_cadastro DESC ");
+			$result	= $this->db->query("SELECT * FROM usuario WHERE matricula != '".$matricula."' ORDER BY matricula ASC ");
 		}
 		if ($result) {
 			// Verifica se algum resultado foi retornado

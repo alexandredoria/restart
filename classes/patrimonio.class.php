@@ -225,20 +225,25 @@ class Patrimonio extends DB {
 	 * Gera um array com as informações dos Patrimonio cadastrados
 	 * @return array $rows Dados dos Patrimonio
 	 */
-	public function listarPatrimonios() {
+	public function listarPatrimonios($filtro) {
+		if ($filtro != 0 ){
+			$result = $this->db->query("SELECT * FROM patrimonio WHERE tipo = '".$filtro."' ORDER BY 'num_patrimonio' DESC ");
+		} else {
+			$result	= $this->db->query("SELECT * FROM patrimonio ORDER BY 'num_patrimonio' DESC ");
+		}
 		// Executa a query dos Patrimonio e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM patrimonio ORDER BY 'num_patrimonio'")) {
+		if ($result) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows				= $result->fetch_all(MYSQLI_ASSOC);
-				$count				= $this->db->query("SELECT COUNT(num_patrimonio) FROM Patrimonio");
+				$count				= $this->db->query("SELECT COUNT(num_patrimonio) FROM atrimonio");
 				$count				= $count->fetch_row();
 				//$rows[0]['itens']	= $count[0];
 				//$rows[0]['limite']	= $limite;
 				$result->free(); // Libera a variável de consulta da memória
 				return $rows;
 			}
-			else return 'Nenhum Configuracao foi encontrado.';//Nenhum Patrimonio foi encontrado.';
+			else return 'Nenhum patrimônio foi encontrado.';//Nenhum Patrimonio foi encontrado.';
 		}
 		else return ($this->db->error);
 	}

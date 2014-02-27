@@ -15,16 +15,28 @@
   include("nucleo/barraLateral.php");
   if (isset($_POST['filtro'])){
       $filtro = $_POST['filtro'];
-    } else {$filtro = 0;}
+  } else {
+    $filtro = 0;
+  }
   if (!empty($_POST)) {
-    
-    
-    if (isset($_POST['matUsuario'])) {
+    //MODELO COM ARRAY
+    /*if (isset($_POST['matUsuario'])) {
       $del_matricula   = $_POST['matUsuario'];
+    } else if (isset($_POST['checkbox'])){
+      $del_matricula = $_POST['checkbox'];
+      $sql.= "('".implode ("','", array($_POST['checkbox']))."')";
+      $del_matricula = $sql;
       $delUser  = new Usuario;
+      $delUser->deletarUsuario(array ($del_matricula));
+      unset($delUser);
+    }*/
+    //MODELO SIMPLES
+    /*if (isset($_POST['matUsuario'])) {
+      $del_matricula   = $_POST['matUsuario'];
+       $delUser  = new Usuario;
       $delUser->deletarUsuario($del_matricula);
       unset($delUser);
-    }
+    } */ 
   }
 ?>
 <div id="page-wrapper">
@@ -66,7 +78,7 @@
           </td>
           <td>
             &nbsp;&nbsp;
-            <a data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal'>
+            <a data-toggle='modal' href='#modal_excUsuarioMultiplos' class='abre-excluirModal'>
               <button type="button" id="exc" class="btn btn-primary" onclick="getCheckboxValues(this); return false;">
                 <i class='glyphicon glyphicon-remove'></i> Excluir 
               </button>
@@ -115,7 +127,7 @@
                           </td>
                           <td>
                             <a title='Excluir usuário' data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal'>                              
-                              <i class='glyphicon glyphicon-remove'></i>
+                               <i class='glyphicon glyphicon-remove'></i>
                             </a>
                           </td>
                           <td>" . $row['matricula'] . "</td>
@@ -147,15 +159,15 @@
       </div>
     </div><!-- /.row -->
     
-    <div class='modal fade' id='modal_excUsuarioSimples' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioSimplesLabel' aria-hidden='true'>
+    <div class='modal fade' id='modal_excUsuarioMultiplos' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioMultiplosLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content panel-danger'>
           <div class='modal-header panel-heading'>
             <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-            <h4 class='modal-title' id='modal_excUsuarioLabel'>O usuário será excluído</h4>
+            <h4 class='modal-title' id='modal_excUsuarioLabel'>Os usuários serão excluídos</h4>
           </div>
           <div class='modal-body'>
-            Você realmente deseja excluir a(s) seguinte(s) matrícula(s)?
+            Você realmente deseja excluir as contas relacionada às seguintes matrículas?
           <div id="linhas"> 
 				  <?php
 					  echo
@@ -163,7 +175,8 @@
 					      function getCheckboxValues() {
  					        var values = [];
   					      var matriculas = document.getElementsByName('foo[]');
-  					      for (var i=0, iLen=matriculas.length; i<iLen; i++) {
+  					      
+                  for (var i=0, iLen=matriculas.length; i<iLen; i++) {
   					        if (matriculas[i].checked) {
        						    values[i]= matriculas[i].value;
    	 					      }
@@ -179,6 +192,28 @@
           </div>
           <div class="modal-footer">
             <form id="confirm">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+              <button id="submit-modal" class="btn btn-danger">Sim</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+     <div class='modal fade' id='modal_excUsuarioSimples' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioSimplesLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content panel-danger'>
+          <div class='modal-header panel-heading'>
+            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+            <h4 class='modal-title' id='modal_excUsuarioLabel'>O usuário será excluído</h4>
+          </div>
+          <div class='modal-body'>
+            Você realmente deseja excluir a conta relacionada à matrícula?
+          </div>
+          <div class="modal-footer">
+            <form id="confirm" method="post" action="usuarios.php">
               <input type="hidden" name="matUsuario" id="matUsuario" value=""/>
               <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
               <button id="submit-modal" class="btn btn-danger">Sim</button>
@@ -194,7 +229,7 @@
 <script language="JavaScript">
   $(document).ready(function() {
     var $submit = $("#exc").hide(),
-    $cbs = $('input[name="foo"]').click(function() {
+    $cbs = $('input[name="foo[]"').click(function() {
       $submit.toggle( $cbs.is(":checked") );
     });
   });
@@ -216,7 +251,7 @@
 
   $(document).on("click", ".abre-excluirModal", function () {
      var matUser = $(this).data('id');
-     $(".modal-footer #matUsuario").val( matUser );
+     $(".modal-footer #matUsuario").val(matUser);
 });
 
 
