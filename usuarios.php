@@ -194,7 +194,7 @@
 <script language="JavaScript">
   $(document).ready(function() {
     var $submit = $("#exc").hide(),
-    $cbs = $('input[name="foo"]').click(function() {
+    $cbs = $('input[name="foo[]"').click(function() {
       $submit.toggle( $cbs.is(":checked") );
     });
   });
