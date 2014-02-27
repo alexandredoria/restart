@@ -189,8 +189,8 @@ class Usuario extends DB {
 						//Dados diferentes
 						echo
 						"<!-- Modal -->
-	                  <div class='modal fade bs-modal-sm' id='modal_altUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_altUsuario2' aria-hidden='true'>
-	                    <div class='modal-dialog modal-sm'>
+	                  		<div class='modal fade bs-modal-sm' id='modal_altUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_altUsuario2' aria-hidden='true'>
+	                    		<div class='modal-dialog modal-sm'>
 	                      <div class='modal-content panel-success'>
 	                        <div class='modal-header panel-heading'>
 	                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -198,8 +198,8 @@ class Usuario extends DB {
 	                        </div>
 	                        
 	                      </div>
-	                    </div>
-	                  </div>
+		                    	</div>
+		                  	</div>
 	                  <script>$('#modal_altUsuario').modal('show');</script>
 	                  <meta http-equiv='refresh' content='2'>";
 					} else {
@@ -452,7 +452,22 @@ class Usuario extends DB {
 		}	
 	}
 
+	public function filtrarUsuarios($tipo){
+		// Executa a query dos usuários e se não houver erros realiza as ações
+		if ($result	= $this->db->query("SELECT * FROM usuario WHERE tipo_usuario = '".$tipo."' ORDER BY matricula ASC ")) {
+			// Verifica se algum resultado foi retornado
+			if ($result->num_rows) {
+				$rows = $result->fetch_all(MYSQLI_ASSOC);
+				return $rows;
+			}
+			else return 'Nenhum usuário foi encontrado.';
+			$result->free(); // Libera a variável de consulta da memória
+		}
+		else return ($this->db->error);
+	}
+    	//Do real escaping here
 
+    	
 
 	/**
 	 * Realiza o LogOut dos usuarios no sistema

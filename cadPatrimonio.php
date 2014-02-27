@@ -28,21 +28,11 @@
         $situacao = $_POST['situacao'];
         $lab = $_POST['lab'];
         $config  = $_POST['config'];
-        
-        
         // Verifica se será realizado um CADASTRO ou EDIÇÃO
         if ($_POST['acao'] == 'add') {
           $addPat  = new Patrimonio;
-<<<<<<< HEAD
-
           //$result   = $addPat->cadastrarPatrimonio( $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
-
-
           $result   = $addPat->cadastrarPatrimonio($num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
-
-=======
-          $result   = $addPat->cadastrarPatrimonio( $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
->>>>>>> PHPMailer
           if (is_bool($result)) {
             echo "<!-- Modal -->
                   <div class='modal fade bs-modal-sm' id='modal_cadPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_cadPatrimonioLabel' aria-hidden='true'>

@@ -41,11 +41,11 @@
                   $mail->Port = 465 ;
                   $mail->ErrorInfo;
 
-                  //$mail->From = 'noreply.restart@gmail.com';
-                  //$mail->FromName = 'Projeto Restart';
+                  $mail->From = 'noreply.restart@gmail.com';
+                  $mail->FromName = 'Projeto Restart';
                   $mail->addAddress('alexandredoria.01@hotmail.com');  // Add a recipient
                   //$mail->addAddress('alexandre');               // Name is optional
-                  //$mail->addReplyTo('alexandredoria.01@hotmail.com', 'Alexandre Dória');
+                  $mail->addReplyTo('alexandredoria.01@hotmail.com', 'Alexandre Dória');
                   //$mail->addCC('alexandredoria.01@gmail.com');
                   //$mail->addBCC('alexandredoria.01@hotmail.com');
 
@@ -57,7 +57,7 @@
 
                   $mail->Subject = 'Here is the subject';
                   $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-                  //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+                  $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
                   if(!$mail->send()) {
                      echo 'Message could not be sent.';
