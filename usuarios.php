@@ -13,14 +13,12 @@
   include 'nucleo/cabecario.php';
   include 'classes/usuario.class.php';  
   include("nucleo/barraLateral.php");
-  if (!empty($_POST)) {
-    if (isset($_POST['filtro'])) {
+  if (isset($_POST['filtro'])){
       $filtro = $_POST['filtro'];
-      $search = new Usuario;
-      $search->filtrarUsuarios($filtro);
-      unset($search);
-    }
-
+    } else {$filtro = 0;}
+  if (!empty($_POST)) {
+    
+    
     if (isset($_POST['matUsuario'])) {
       $del_matricula   = $_POST['matUsuario'];
       $delUser  = new Usuario;
@@ -57,11 +55,12 @@
             &nbsp;&nbsp;<input type='checkbox' id="toggle" onClick="toggle(this)">&nbsp;&nbsp;&nbsp;Exibição:&nbsp;
           </td>  
           <td>
-            <form role="form" id="confirm" action="usuarios.php" method="post">
+            <form role="form" action="usuarios.php" method="POST">
+
             <select style="font-weight:bold" id="filtro" name="filtro" class="form-control" onchange="this.form.submit();">
-              <option <?php if (isset($_POST['filtro']) == '') print 'selected'; ?> value="">Todos</option>
-              <option <?php if (isset($_POST['filtro']) == '2') print 'selected '; ?> value="2">Bolsistas</option>
-              <option <?php if (isset($_POST['filtro']) == '3') print 'selected '; ?> value="3">Professores</option>
+              <option <?php if ($filtro == 0 ){echo "selected";}?> value="0">Todos</option>
+              <option <?php if ($filtro == 2 ){echo "selected";}?> value="2">Bolsistas</option>
+              <option <?php if ($filtro == 3 ){echo "selected";}?> value="3">Professores</option>
             </select>
           </form>
           </td>
@@ -91,8 +90,9 @@
             </tr>
             <tbody>
               <?php
+                
                 $listaUser    = new Usuario;
-                $result     = $listaUser->listarUsuarios($_SESSION['matricula']);
+                $result     = $listaUser->listarUsuarios($_SESSION['matricula'], $filtro);
                 if (is_array($result)) {
                   foreach ($result as $row) {
                     if ($row['tipo_usuario'] == 2){
