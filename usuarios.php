@@ -37,8 +37,39 @@
     if (isset($_POST['matUsuario'])) {
       $del_matricula   = $_POST['matUsuario'];
        $delUser  = new Usuario;
-      $delUser->deletarUsuario($del_matricula);
+       $result = $delUser->deletarUsuario($del_matricula);
+        if (is_bool($result)) {
+              echo "<!-- Modal -->
+                    <div class='modal fade bs-modal-sm' id='modal_excUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioLabel' aria-hidden='true'>
+                      <div class='modal-dialog modal-sm'>
+                        <div class='modal-content panel-success'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_excUsuarioLabel'>Usuário excluído!</h4>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>";
+            }
+            else {
+              echo "<!-- Modal -->
+                    <div class='modal fade' id='modal_excUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioLabel' aria-hidden='true'>
+                      <div class='modal-dialog'>
+                        <div class='modal-content panel-danger'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_excUsuarioLabel'>Não foi possível excluir o usuário</h4>
+                          </div>
+                          <div class='modal-body'>
+                            <p>".$result."</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>";
+            }
       unset($delUser);
+       echo "<script>$('#modal_excUsuario').modal('show');</script>";
     } 
   }
 ?>
