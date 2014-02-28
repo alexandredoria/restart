@@ -237,7 +237,7 @@
     </div>
 
 
-     <div class='modal fade' id='modal_excUsuarioSimples' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioSimplesLabel' aria-hidden='true'>
+    <div class='modal fade' id='modal_excUsuarioSimples' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioSimplesLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content panel-danger'>
           <div class='modal-header panel-heading'>
@@ -264,7 +264,7 @@
 <script language="JavaScript">
   $(document).ready(function() {
     var $submit = $("#exc").hide(),
-    $cbs = $('input[name="foo[]"').click(function() {
+    $cbs = $('input[name="foo[]"]').click(function() {
       $submit.toggle( $cbs.is(":checked") );
     });
   });

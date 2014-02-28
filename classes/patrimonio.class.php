@@ -88,56 +88,10 @@ class Patrimonio extends DB {
 	 */
 	public function deletarPatrimonio($num_patrimonio) {
 		
-		if ($update = $this->db->query("DELETE FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
-			if ($this->db->affected_rows) {
-				echo "<!-- Modal -->
-					<div class='modal fade bs-modal-sm' id='modal_excPatrimonio2' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimonio2' aria-hidden='true'>
-					  <div class='modal-dialog modal-sm'>
-					    <div class='modal-content panel-success'>
-					      <div class='modal-header panel-heading'>
-					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					        <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Patrimônio removido!</h4>
-					      </div>
-					      
-					    </div>
-					  </div>
-					</div>";
-			}
-			else {
-				echo "<!-- Modal -->
-					<div class='modal fade' id='modal_excPatrimonio2' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimonio2' aria-hidden='true'>
-					  <div class='modal-dialog'>
-					    <div class='modal-content panel-danger'>
-					      <div class='modal-header panel-heading'>
-					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					        <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Não foi possível remover o patrimônio</h4>
-					      </div>
-					      <div class='modal-body'>
-					        <p>Lembre-se: patrimônios envolvidos em ocorrências não podem ser removidos.</p>
-					      </div>
-					    </div>
-					  </div>
-					</div>";
-			}
-			echo "<script>$('#modal_excPatrimonio2').modal('show');</script>";
-		}
-		else {
-			echo "<!-- Modal -->
-					<div class='modal fade' id='modal_erroBD' tabindex='-1' role='dialog' aria-labelledby='modal_erroBD' aria-hidden='true'>
-					  <div class='modal-dialog'>
-					    <div class='modal-content panel-danger'>
-					      <div class='modal-header panel-heading'>
-					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					        <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Erro encontrado</h4>
-					      </div>
-					      <div class='modal-body'>
-					        <p>". $this->db->error."</p>
-					      </div>
-					    </div>
-					  </div>
-					</div>";
-					echo "<script>$('#modal_erroBD').modal('show');</script>";
-		}
+		$delete = $this->db->prepare("DELETE FROM patrimonio WHERE num_patrimonio = ?");
+		$delete->bind_param('s', $num_patrimonio);
+		if ($delete->execute()) { return true; }
+				else { return ($this->db->error); }
 		
 	}
 

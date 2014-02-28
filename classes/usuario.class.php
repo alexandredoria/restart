@@ -148,8 +148,7 @@ class Usuario extends DB {
 		//$matricula 	= explode(',', $matricula);
 		$del_matricula		= $this->db->real_escape_string(trim(strtoupper($del_matricula)));
 
-		//MODELO MULTIPLO if ($update = $this->db->query("DELETE FROM usuario WHERE matricula IN ('".$del_matricula."')")) {
-		//MODELO SIMPLES
+		//$delete = $this->db->prepare("DELETE FROM usuario WHERE matricula IN ('".$del_matricula."')");
 		$delete = $this->db->prepare("DELETE FROM usuario WHERE matricula = ?");
 		$delete->bind_param('s', $del_matricula);
 		if ($delete->execute()) { return true; }
