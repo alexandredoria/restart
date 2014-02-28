@@ -102,7 +102,7 @@
           </td>
           <td>
             &nbsp;&nbsp;
-            <a data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excPatrimonioSimples' class='abre-excluirModal'>
+            <a data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excPatrimonioMultiplos' class='abre-excluirModal'>
               <button type="button" id="exc" class="btn btn-primary" onclick="getCheckboxValues(this); return false;">
                 <i class='glyphicon glyphicon-remove'></i> Excluir
               </button>
@@ -213,18 +213,18 @@
             <h4 class='modal-title' id='modal_excUsuarioLabel'>Os usuários serão excluídos</h4>
           </div>
           <div class='modal-body'>
-            Você realmente deseja excluir as contas relacionada às seguintes matrículas?
+            Você realmente deseja excluiros seguintes patrimônios?
           <div id="linhas"> 
           <?php
             echo
               "<script>
                 function getCheckboxValues() {
                   var values = [];
-                  var matriculas = document.getElementsByName('foo[]');
+                  var patrimonios = document.getElementsByName('foo[]');
                   var cont = 0;
-                  for (var i=0, iLen=matriculas.length; i<iLen; i++) {
-                    if (matriculas[i].checked) {
-                      values[i]= matriculas[i].value;
+                  for (var i=0, iLen=patrimonios.length; i<iLen; i++) {
+                    if (patrimonios[i].checked) {
+                      values[i]= patrimonios[i].value;
                       cont++;
                     }
                   }
