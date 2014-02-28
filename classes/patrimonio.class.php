@@ -66,69 +66,18 @@ class Patrimonio extends DB {
 	 * @param int $user ID do funcionario que editou
 	 * @return string Mensagem de retorno
 	 */
-	public function alterarPatrimonio($num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config) {
-		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio != '$num_patrimonio'")) {
-			if ($check->num_rows) return "O patrimônio $num_patrimonio já está cadastrado no sistema.";
+	public function alterarPatrimonio($numPatAntigo, $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config) {
+		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
+			if (($check->num_rows) > 1) return "O patrimônio $num_patrimonio já está cadastrado no sistema.";
 			else{
 				$data_atualizacao = date('Y-m-d');
-				$edit = $this->db->query("UPDATE patrimonio SET  tipo = ?, num_posicionamento = ?, situacao = ?, Laboratorio_id = ?, Configuracao_id = ?, data_atualizacao = ? WHERE num_patrimonio = ?");
-				$edit->bind_param('iiiiiss', $tipo, $num_posicionamento, $situacao, $lab, $config, $data_atualizacao, $num_patrimonio);
-				if ($edit->execute()) {
-					if ($this->db->affected_rows) {
-						//Dados diferentes
-						echo
-						"<!-- Modal -->
-	                  <div class='modal fade bs-modal-sm' id='modal_editPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_editPatrimonio2' aria-hidden='true'>
-	                    <div class='modal-dialog modal-sm'>
-	                      <div class='modal-content panel-success'>
-	                        <div class='modal-header panel-heading'>
-	                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-	                          <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Patrimônio atualizado!</h4>
-	                        </div>
-	                        
-	                      </div>
-	                    </div>
-	                  </div>
-	                  <script>$('#modal_editPatrimonio').modal('show');</script>
-	                  <meta http-equiv='refresh' content='2'>";
-					} else {
-						//Mesmos dados
-						echo
-						"<!-- Modal -->
-	                  <div class='modal fade bs-modal-sm' id='modal_editPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_editPatrimonio2' aria-hidden='true'>
-	                    <div class='modal-dialog modal-sm'>
-	                      <div class='modal-content panel-success'>
-	                        <div class='modal-header panel-heading'>
-	                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-	                          <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Patrimônio atualizado!</h4>
-	                        </div>
-	                        
-	                      </div>
-	                    </div>
-	                  </div>
-	                  <script>$('#modal_editPatrimonio').modal('show');</script>
-	                  <meta http-equiv='refresh' content='2'>";
-					}
-				} else { 
-					echo
-					"<!-- Modal -->
-		              <div class='modal fade' id='modal_erroBD' tabindex='-1' role='dialog' aria-labelledby='modal_erroBD' aria-hidden='true'>
-		                <div class='modal-dialog'>
-		                  <div class='modal-content panel-danger'>
-		                    <div class='modal-header panel-heading'>
-		                      <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-		                      <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Erro encontrado</h4>
-		                    </div>
-		                    <div class='modal-body'>
-		                      <p>". $this->db->error."</p>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-		              <script>$('#modal_erroBD').modal('show');</script>";
-		        }
+				$edit = $this->db->prepare("UPDATE patrimonio SET num_patrimonio = ?, tipo = ?, num_posicionamento = ?, situacao = ?, Laboratorio_id = ?, Configuracao_id = ?, data_atualizacao = ? WHERE num_patrimonio = ?");
+				$edit->bind_param('siiiiiss', $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config, $data_atualizacao, $numPatAntigo);
+				if ($edit->execute()) { return true; }
+				else { return ($this->db->error); }
 		        
 		    }
+		    $check->free();
 		}
 	}
 

@@ -11,7 +11,7 @@ session_start();
   }
     $pageTitle  = "Cadastrar usuário";  
     include 'nucleo/cabecario.php';
-    include 'classes/usuario.class.php';
+    
   ?>
     <!-- Barra Lateral -->
 

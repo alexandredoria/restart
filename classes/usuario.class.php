@@ -89,69 +89,17 @@ class Usuario extends DB {
 
 				$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, senha = ?, telefone_residencial = ?, telefone_celular = ?, data_atualizacao = ? WHERE matricula = ?");
 				$edit->bind_param('ssssssss', $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular, $data_atualizacao, $matricula);
-				
-				/**if ($edit->execute()) { return true; }
-					else { return ($this->db->error); }**/
-				
-				if ($edit->execute()) {
-					if ($this->db->affected_rows) {
-						//Dados diferentes
-						echo
-						"<!-- Modal -->
-	                  <div class='modal fade bs-modal-sm' id='modal_editUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_editUsuario2' aria-hidden='true'>
-	                    <div class='modal-dialog modal-sm'>
-	                      <div class='modal-content panel-success'>
-	                        <div class='modal-header panel-heading'>
-	                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-	                          <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário atualizado!</h4>
-	                        </div>
-	                        
-	                      </div>
-	                    </div>
-	                  </div>
-	                  <script>$('#modal_editUsuario').modal('show');</script>
-	                  <meta http-equiv='refresh' content='2'>";
-					} else {
-						//Mesmos dados
-						echo
-						"<!-- Modal -->
-	                  <div class='modal fade bs-modal-sm' id='modal_editUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_editUsuario2' aria-hidden='true'>
-	                    <div class='modal-dialog modal-sm'>
-	                      <div class='modal-content panel-success'>
-	                        <div class='modal-header panel-heading'>
-	                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-	                          <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário atualizado!</h4>
-	                        </div>
-	                        
-	                      </div>
-	                    </div>
-	                  </div>
-	                  <script>$('#modal_editUsuario').modal('show');</script>
-	                  <meta http-equiv='refresh' content='2'>";
-					}
-				} else { 
-					echo
-					"<!-- Modal -->
-		              <div class='modal fade' id='modal_erroBD' tabindex='-1' role='dialog' aria-labelledby='modal_erroBD' aria-hidden='true'>
-		                <div class='modal-dialog'>
-		                  <div class='modal-content panel-danger'>
-		                    <div class='modal-header panel-heading'>
-		                      <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-		                      <h4 class='modal-title' id='modal_cadUsuarioLabel'>Erro encontrado</h4>
-		                    </div>
-		                    <div class='modal-body'>
-		                      <p>". $this->db->error."</p>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-		              <script>$('#modal_erroBD').modal('show');</script>";
-		        }
-					
-          
-          
+		 				
+				if ($edit->execute()) { return true; }
+					else { return ($this->db->error); }	
 
-				if ($matricula = $this->db->query("SELECT * FROM usuario WHERE matricula = '$matricula'")) {
+				
+			}
+		}
+	}	
+
+	public function carregarSessao($matricula) { 
+		if ($matricula = $this->db->query("SELECT * FROM usuario WHERE matricula = '$matricula'")) {
 					$dados = array();
 					while ($info = $matricula->fetch_assoc()) {
 						$dados['nome']	= $info['nome'];
@@ -168,14 +116,12 @@ class Usuario extends DB {
 					$_SESSION['sobrenome']	= $dados['sobrenome'];
 					$_SESSION['tipo_usuario']	= $dados['tipo_usuario'];				
 				}	
-			}
-		}
 	}	
 
 	public function alterarUsuario($matriculaAntiga, $nome, $matricula, $tipo_usuario) {
 		$matricula		= (!empty($matricula)) ? $this->db->real_escape_string(trim(strtoupper($matricula))) : NULL ;		
-		if ($check = $this->db->query("SELECT matricula FROM usuario WHERE matricula != '$matricula'")) {
-			if ($check->num_rows) return "A matricula $matricula pertence a outro usuário.";
+		if ($check = $this->db->query("SELECT matricula FROM usuario WHERE matricula = '$matricula'")) {
+			if (($check->num_rows) > 1) return "A matricula \"$matricula\" já está cadastrada no sistema.";
 			else {
 				$nome		= $this->db->real_escape_string(trim($nome));
 				$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, matricula = ?, tipo_usuario = ? WHERE matricula = ?");
@@ -184,62 +130,10 @@ class Usuario extends DB {
 				/**if ($edit->execute()) { return true; }
 					else { return ($this->db->error); }**/
 				
-				if ($edit->execute()) {
-					if ($this->db->affected_rows) {
-						//Dados diferentes
-						echo
-						"<!-- Modal -->
-	                  		<div class='modal fade bs-modal-sm' id='modal_altUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_altUsuario2' aria-hidden='true'>
-	                    		<div class='modal-dialog modal-sm'>
-	                      <div class='modal-content panel-success'>
-	                        <div class='modal-header panel-heading'>
-	                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-	                          <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário atualizado!</h4>
-	                        </div>
-	                        
-	                      </div>
-		                    	</div>
-		                  	</div>
-	                  <script>$('#modal_altUsuario').modal('show');</script>
-	                  <meta http-equiv='refresh' content='2'>";
-					} else {
-						//Mesmos dados
-						echo
-						"<!-- Modal -->
-	                  <div class='modal fade bs-modal-sm' id='modal_altUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_altUsuario2' aria-hidden='true'>
-	                    <div class='modal-dialog modal-sm'>
-	                      <div class='modal-content panel-success'>
-	                        <div class='modal-header panel-heading'>
-	                          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-	                          <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário atualizado!</h4>
-	                        </div>
-	                        
-	                      </div>
-	                    </div>
-	                  </div>
-	                  <script>$('#modal_altUsuario').modal('show');</script>
-	                  <meta http-equiv='refresh' content='2'>";
-					}
-				} else { 
-					echo
-					"<!-- Modal -->
-		              <div class='modal fade' id='modal_erroBD' tabindex='-1' role='dialog' aria-labelledby='modal_erroBD' aria-hidden='true'>
-		                <div class='modal-dialog'>
-		                  <div class='modal-content panel-danger'>
-		                    <div class='modal-header panel-heading'>
-		                      <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-		                      <h4 class='modal-title' id='modal_cadUsuarioLabel'>Erro encontrado</h4>
-		                    </div>
-		                    <div class='modal-body'>
-		                      <p>". $this->db->error."</p>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-		              <script>$('#modal_erroBD').modal('show');</script>";
-		        }	
+				if ($edit->execute()) { return true; }
+				else { return ($this->db->error); }
 			}
-		}
+		}$check->free();
 	}	
 
 
@@ -252,11 +146,11 @@ class Usuario extends DB {
 	public function deletarUsuario($del_matricula) {
 	//public function deletarUsuario(array $matricula) {
 		//$matricula 	= explode(',', $matricula);
-		$del_matricula		= $this->db->real_escape_string(trim(strtoupper($matricula)));
+		$del_matricula		= $this->db->real_escape_string(trim(strtoupper($del_matricula)));
 
 		//MODELO MULTIPLO if ($update = $this->db->query("DELETE FROM usuario WHERE matricula IN ('".$del_matricula."')")) {
 		//MODELO SIMPLES
-			if ($update = $this->db->query("DELETE FROM usuario WHERE matricula = '$matricula'")) {
+			if ($update = $this->db->query("DELETE FROM usuario WHERE matricula = '$del_matricula'")) {
 			if ($this->db->affected_rows) {
 				echo "<!-- Modal -->
 					<div class='modal fade bs-modal-sm' id='modal_excUsuario2' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuario2' aria-hidden='true'>

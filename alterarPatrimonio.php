@@ -9,30 +9,62 @@
   }
   $pageTitle  = "Alterar patrimônio";  
   include 'nucleo/cabecario.php';
-    include 'classes/usuario.class.php';
+    
   include 'classes/patrimonio.class.php';
   include 'classes/laboratorio.class.php';
   include 'classes/configuracao.class.php';
   include 'nucleo/barraLateral.php';
 
-    $numPatAntigo = $_GET['p'];    
+  $numPatAntigo = $_GET['p'];    
  
   // Verifica se algum form foi enviado
-  if (!empty($_POST)) {
+  if (!empty($_GET)) {
     // Verifica se as variáveis relacionadas ao cadastro/edição existem
-    if (isset($_POST['num_patrimonio'], $_POST['tipo'], $_POST['num_posicionamento'], $_POST['situacao'], $_POST['lab'], $_POST['config'])) {
+    if (isset($_GET['num_patrimonio'], $_GET['tipo'], $_GET['num_posicionamento'], $_GET['situacao'], $_GET['lab'], $_GET['config'])) {
       
-      $num_patrimonio   = $_POST['num_patrimonio'];
-      $tipo    = $_POST['tipo'];
-      $num_posicionamento   = $_POST['num_posicionamento'];
-      $situacao    = $_POST['situacao'];
-      $lab    = $_POST['lab'];
-      $config = $_POST['config'];
+      $num_patrimonio   = $_GET['num_patrimonio'];
+      $tipo    = $_GET['tipo'];
+      $num_posicionamento   = $_GET['num_posicionamento'];
+      $situacao    = $_GET['situacao'];
+      $lab    = $_GET['lab'];
+      $config = $_GET['config'];
       // Verifica se será realizado EDIÇÃO
-      if ($_POST['acao'] == 'atualiza') {
+      if ($_GET['acao'] == 'atualiza') {
         $editPat = new Patrimonio;
-        $editPat->alterarPatrimonio($num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
+        $result = $editPat->alterarPatrimonio($numPatAntigo, $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
+         if (is_bool($result)) {
+              echo "<!-- Modal -->
+                    <div class='modal fade bs-modal-sm' id='modal_editPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_editPatrimonioLabel' aria-hidden='true'>
+                      <div class='modal-dialog modal-sm'>
+                        <div class='modal-content panel-success'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_editPatrimonioLabel'>Patrimônio atualizado!</h4>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>";
+            }
+            else {
+              echo "<!-- Modal -->
+                    <div class='modal fade' id='modal_editPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_editPatrimonioLabel' aria-hidden='true'>
+                      <div class='modal-dialog'>
+                        <div class='modal-content panel-danger'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_editPatrimonioLabel'>Não foi possível alterar o patrimônio</h4>
+                          </div>
+                          <div class='modal-body'>
+                            <p>".$result."</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>";
+            }
         unset($editPat);
+         echo "<script>$('#modal_editPatrimonio').modal('show');</script>";
+          $numPatAntigo = $num_patrimonio;; 
       }   
     }      
   }
@@ -52,12 +84,13 @@
       </div><!-- /.row -->
       
      
-        <form role="form" id="formPatrimonio" name="formPatrimonio" action="alterarPatrimonio.php" method="post">
+        <form role="form" id="formPatrimonio" name="formPatrimonio" action="alterarPatrimonio.php" method="get">
           
         
         <div class="row">
           <div class="col-lg-3">            
-              <input type="hidden" name="acao" value="add">
+            <input type="hidden" name="acao" value="atualiza">
+            <input type="hidden" name="p" value="<?php echo $numPatAntigo;?>">
               <label>Número de patrimônio</label>
               <div class="form-group">
                 <input class="form-control" id="num_patrimonio" value="<?php echo $pat->obterDados('num_patrimonio', $numPatAntigo);?>" style="text-align: right;" name="num_patrimonio" required autocomplete="off">
@@ -65,22 +98,22 @@
               
               <label>Tipo</label>
               <div class="form-group">
-                <select style="font-weight:bold" id="tipo" name="tipo"  value="<?php echo $pat->obterDados('tipo', $numPatAntigo);?>"  class="form-control">
-                    <option value="1">Gabinete</option>
-                    <option value="2">Monitor</option>
-                    <option value="3">Estabilizador</option>
-                    <option value="4">Nobreak</option>
-                    <option value="5">Mesa</option>              
-                    <option value="6">Cadeira</option>
-                    <option value="7">Ar-condicionador</option>
-                    <option value="8">Armário</option>
-                    <option value="9">Projetor</option>
+                <select style="font-weight:bold" id="tipo" name="tipo"  value="<?php $tipo = $pat->obterDados('tipo', $numPatAntigo);?>"  class="form-control">
+                    <option <?php if ($tipo == 1 ){echo "selected";}?> value="1">Gabinete</option>
+                    <option <?php if ($tipo == 2 ){echo "selected";}?> value="2">Monitor</option>
+                    <option <?php if ($tipo == 3 ){echo "selected";}?> value="3">Estabilizador</option>
+                    <option <?php if ($tipo == 4 ){echo "selected";}?> value="4">Nobreak</option>
+                    <option <?php if ($tipo == 5 ){echo "selected";}?> value="5">Mesa</option>              
+                    <option <?php if ($tipo == 6 ){echo "selected";}?> value="6">Cadeira</option>
+                    <option <?php if ($tipo == 7 ){echo "selected";}?> value="7">Ar-condicionador</option>
+                    <option <?php if ($tipo == 8 ){echo "selected";}?> value="8">Armário</option>
+                    <option <?php if ($tipo == 9 ){echo "selected";}?> value="9">Projetor</option>
                 </select>
               </div>
              
               <label>Configuração</label>
               <div class="form-group">
-                 <select style="font-weight:bold" id="config" value="<?php echo $pat->obterDados('Configuracao_id', $numPatAntigo);?>" name="config" class="form-control">
+                 <select style="font-weight:bold" id="config" value="<?php $config = $pat->obterDados('Configuracao_id', $numPatAntigo);?>" name="config" class="form-control">
                   <?php
                     $list = new Configuracao;
                     $result = $list->listarConfiguracoes();
@@ -132,7 +165,7 @@
           <div class="col-lg-3"></div>
           <div class="col-lg-3"  align="right">
             <button type="submit" class="btn btn-default">Alterar</button>
-            <button type="reset" class="btn btn-default">Limpar</button>                     
+            <button type="reset" class="btn btn-default">Desfazer</button>                     
           </div>          
           
           <div class="col-lg-6"></div>

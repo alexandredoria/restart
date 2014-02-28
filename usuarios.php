@@ -11,7 +11,7 @@
   }
   $pageTitle  = "Usuários &middot; Visão Geral"; 
   include 'nucleo/cabecario.php';
-  include 'classes/usuario.class.php';  
+    
   include("nucleo/barraLateral.php");
   if (isset($_POST['filtro'])){
       $filtro = $_POST['filtro'];
