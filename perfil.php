@@ -1,42 +1,5 @@
 <?php
-<<<<<<< HEAD
-  session_start();
-  if (empty($_SESSION)) {
-    header("Location: ../restart");
-    exit;
-  } 
-<<<<<<< HEAD
 
-  $pageTitle  = "Atualizar perfil";  
-  include 'nucleo/cabecario.php';
-  include 'classes/usuario.class.php';
-  include("nucleo/barraLateral.php");
-  
-  if (!empty($_POST)) {
-    // Verifica se as variáveis relacionadas ao cadastro/edição existem
-    if (isset($_POST['nome'])) {
-      include_once 'nucleo/funcoes.php';
-      $nome   = $_POST['nome'];
-      $sobrenome   = $_POST['sobrenome'];
-      $email    = $_POST['email'];
-      if ($_POST['senhaRadio'] == 0) { 
-        $senha    = $_POST['antigasenha'];//A senha já está criptografada
-      } else if ($_POST['senhaRadio'] == 1) { 
-        $senha    = $_POST['novasenha'];
-        $senha = ((strlen($senha) != 60) && (strlen($senha) != 0)) ? criptografar_senha($senha) : $senha ;
-      }
-      $telefone_residencial    = $_POST['telefone_residencial'];
-      $telefone_celular    = $_POST['telefone_celular'];
-      // Verifica se será realizado EDIÇÃO
-      if ($_POST['acao'] == 'atualiza') {
-        $editUser = new Usuario;
-        $editUser->atualizarPerfil($_SESSION['matricula'], $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular);
-        unset($editUser);
-      }   
-    }      
-=======
-=======
->>>>>>> origin/Teste
   $pageTitle  = "Atualizar perfil";
   
   include 'nucleo/cabecario.php';
@@ -80,7 +43,7 @@
                         <div class='modal-content panel-success'>
                           <div class='modal-header panel-heading'>
                             <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                            <h4 class='modal-title' id='modal_editPerfilLabel'>Usuário atualizado!</h4>
+                            <h4 class='modal-title' id='modal_editPerfilLabel'>Perfil atualizado!</h4>
                           </div>
                           
                         </div>
@@ -94,7 +57,7 @@
                         <div class='modal-content panel-danger'>
                           <div class='modal-header panel-heading'>
                             <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                            <h4 class='modal-title' id='modal_editPerfilLabel'>Não foi possível atualizar seu perfil!</h4>
+                            <h4 class='modal-title' id='modal_editPerfilLabel'>Não foi possível atualizar seu perfil</h4>
                           </div>
                           <div class='modal-body'>
                             <p>".$result."</p>
@@ -108,7 +71,7 @@
           
         }   
       }      
->>>>>>> 1688df5e7b4ad1f1ffa1b94561b6b99e3f566f58
+
   }
 
   $user = new Usuario;
