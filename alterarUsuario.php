@@ -1,4 +1,4 @@
-
+''  
 <?php
   session_start();
   if (empty($_SESSION)) {
@@ -12,16 +12,15 @@
   include 'nucleo/cabecario.php';
   include 'classes/usuario.class.php';
   include 'nucleo/barraLateral.php';
-  if (isset($_GET['m'])){
-    $matriculaAntiga = $_GET['m'];    
-   } 
+  if (isset($_GET['m'])){$matriculaAntiga = $_GET['m'];} else {$matriculaAntiga = $_POST['m'];}
   // Verifica se algum form foi enviado
   if (!empty($_POST)) {
     // Verifica se as variáveis relacionadas ao cadastro/edição existem
     if (isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'])) {
+      $matricula   = $_POST['matricula'];
       $nome   = $_POST['nome'];
-      $sobrenome   = $_POST['sobrenome'];
-      $email    = $_POST['email'];
+      $tipo_usuario    = $_POST['tipo_usuario'];
+
       // Verifica se será realizado EDIÇÃO
       if ($_POST['acao'] == 'atualiza') {
         $editUser = new Usuario;
@@ -44,6 +43,7 @@
     </div>
   </div><!-- /.row -->     
   <form role="form" id="formUsuario" name="formUsuario" action="alterarUsuario.php" method="post">
+    <input type="hidden" name="m" value="<?php echo $matriculaAntiga;?>" />
     <div class="row">
       <div class="col-lg-4">            
         <input type="hidden" name="acao" value="add">
@@ -78,66 +78,9 @@
 </div><!-- /#page-wrapper -->
 </div><!-- /#wrapper -->
 
-
-<script src="js/inputmask.js"></script>
 <script src="js/jquery.validate.js"></script>
-<SCRIPT LANGUAGE="JavaScript">
-
-  function Disab (val) {
-
-    if(document.getElementById('senhaRadio').checked) {
-      document.getElementById('novasenha').disabled = true;
-      document.getElementById('confirma').disabled = true;
-      document.getElementById('novasenha').value = "";
-      document.getElementById('confirma').value = "";
-      
-
-    }
-
-    else {  
-      document.getElementById('novasenha').disabled = false;
-      document.getElementById('confirma').disabled = false;
-    }
-
-    }
-
-    if(document.getElementById('senhaRadio').checked) {
-      document.getElementById('novasenha').disabled = true;
-      document.getElementById('confirma').disabled = true;
-      document.getElementById('novasenha').value = "";
-      document.getElementById('confirma').value = "";
-    }
-
-    else {  
-      document.getElementById('novasenha').disabled = false;
-      document.getElementById('confirma').disabled = false;
-    }
-
-
-    $( "form" ).validate({
-      rules: {
-         confirmsenha: {
-          equalTo: "#novasenha"
-        }
-      },
-      messages: {
-        equalTo: "As senhas conferem"
-      },
-      
-      
-    });
-
-    $("#senhaRadio").click(function () {
-      $("div.form-inline").find('label.error').remove();
-      $("div.form-inline").find('input').removeClass('valid error');
-    });
-
-    </script> 
-
-
-
- <?php 
-unset($user);
+<?php 
+  unset($user);
 ?>
 </body>
 </html>
