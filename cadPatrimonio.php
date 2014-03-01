@@ -12,7 +12,7 @@
   
   include 'nucleo/cabecario.php';
 
-  include 'classes/usuario.class.php';
+  
   include 'classes/patrimonio.class.php';
   include 'classes/laboratorio.class.php';
   include 'classes/configuracao.class.php';

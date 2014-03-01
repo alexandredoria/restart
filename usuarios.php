@@ -11,7 +11,7 @@
   }
   $pageTitle  = "Usuários &middot; Visão Geral"; 
   include 'nucleo/cabecario.php';
-  include 'classes/usuario.class.php';  
+    
   include("nucleo/barraLateral.php");
   if (isset($_POST['filtro'])){
       $filtro = $_POST['filtro'];
@@ -37,8 +37,39 @@
     if (isset($_POST['matUsuario'])) {
       $del_matricula   = $_POST['matUsuario'];
        $delUser  = new Usuario;
-      $delUser->deletarUsuario($del_matricula);
+       $result = $delUser->deletarUsuario($del_matricula);
+        if (is_bool($result)) {
+              echo "<!-- Modal -->
+                    <div class='modal fade bs-modal-sm' id='modal_excUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioLabel' aria-hidden='true'>
+                      <div class='modal-dialog modal-sm'>
+                        <div class='modal-content panel-success'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_excUsuarioLabel'>Usuário excluído!</h4>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>";
+            }
+            else {
+              echo "<!-- Modal -->
+                    <div class='modal fade' id='modal_excUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioLabel' aria-hidden='true'>
+                      <div class='modal-dialog'>
+                        <div class='modal-content panel-danger'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_excUsuarioLabel'>Não foi possível excluir o usuário</h4>
+                          </div>
+                          <div class='modal-body'>
+                            <p>".$result."</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>";
+            }
       unset($delUser);
+       echo "<script>$('#modal_excUsuario').modal('show');</script>";
     } 
   }
 ?>
@@ -206,7 +237,7 @@
     </div>
 
 
-     <div class='modal fade' id='modal_excUsuarioSimples' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioSimplesLabel' aria-hidden='true'>
+    <div class='modal fade' id='modal_excUsuarioSimples' tabindex='-1' role='dialog' aria-labelledby='modal_excUsuarioSimplesLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content panel-danger'>
           <div class='modal-header panel-heading'>
@@ -233,7 +264,7 @@
 <script language="JavaScript">
   $(document).ready(function() {
     var $submit = $("#exc").hide(),
-    $cbs = $('input[name="foo[]"').click(function() {
+    $cbs = $('input[name="foo[]"]').click(function() {
       $submit.toggle( $cbs.is(":checked") );
     });
   });

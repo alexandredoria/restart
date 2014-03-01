@@ -22,8 +22,39 @@
     if (isset($_POST['IdPatrimonio'])) {
       $num_patrimonio   = $_POST['IdPatrimonio'];
       $objPatrimonio  = new Patrimonio;
-      $objPatrimonio->deletarPatrimonio($num_patrimonio);
+      $result = $objPatrimonio->deletarPatrimonio($num_patrimonio);
+      if (is_bool($result)) {
+              echo "<!-- Modal -->
+                    <div class='modal fade bs-modal-sm' id='modal_excPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimonioLabel' aria-hidden='true'>
+                      <div class='modal-dialog modal-sm'>
+                        <div class='modal-content panel-success'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_excPatrimonioLabel'>Patrimonio excluído!</h4>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>";
+            }
+            else {
+              echo "<!-- Modal -->
+                    <div class='modal fade' id='modal_excPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimonioLabel' aria-hidden='true'>
+                      <div class='modal-dialog'>
+                        <div class='modal-content panel-danger'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_excPatrimonioLabel'>Não foi possível excluir o patrimônio</h4>
+                          </div>
+                          <div class='modal-body'>
+                            <p>".$result."</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>";
+            }
       unset($objPatrimonio);
+      echo "<script>$('#modal_excPatrimonio').modal('show');</script>";
     }
   }
 ?>
@@ -71,7 +102,7 @@
           </td>
           <td>
             &nbsp;&nbsp;
-            <a data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excUsuarioSimples' class='abre-excluirModal'>
+            <a data-toggle='modal' data-id='".$row['matricula']."' href='#modal_excPatrimonioMultiplos' class='abre-excluirModal'>
               <button type="button" id="exc" class="btn btn-primary" onclick="getCheckboxValues(this); return false;">
                 <i class='glyphicon glyphicon-remove'></i> Excluir
               </button>
@@ -127,7 +158,7 @@
                     }
                     if($row['situacao'] == 2){echo "<tr id='fooTr'class='danger'>";} else echo "<tr id='fooTr'>";
                       echo "
-                        <td ><input type='checkbox'   name='foo' value='".$row['num_patrimonio']."'></td>
+                        <td ><input type='checkbox'   name='foo[]' id='foo[]' value='".$row['num_patrimonio']."'></td>
                         <td>
                           <a title='Ver patrimônio' href='verPatrimonio.php?p=".$row['num_patrimonio']."'>                              
                             <i class='glyphicon glyphicon-search'></i>
@@ -139,7 +170,7 @@
                           </a>
                         </td>
                         <td>
-                          <a title='Excluir patrimônio' data-toggle='modal' data-id='".$row['num_patrimonio']."' href='#modal_excPatrimonio' class='abre-excluirModal'>                              
+                          <a title='Excluir patrimônio' data-toggle='modal' data-id='".$row['num_patrimonio']."' href='#modal_excPatrimonioSimples' class='abre-excluirModal'>                              
                             <i class='glyphicon glyphicon-remove'></i>
                           </a>
                         </td>
@@ -174,58 +205,103 @@
     </div>
   </div><!-- /.row -->
   
-  <div class='modal fade' id='modal_excPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimonioLabel' aria-hidden='true'>
-    <div class='modal-dialog'>
-      <div class='modal-content panel-danger'>
-        <div class='modal-header panel-heading'>
-          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-          <h4 class='modal-title' id='modal_cadPatrimonioLabel'>O patrimônio será excluído</h4>
-        </div>
-        <form role="form" id="confirm" action="patrimonios.php" method="post">
+  <div class='modal fade' id='modal_excPatrimoniosMultiplos' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimoniosMultiplosLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content panel-danger'>
+          <div class='modal-header panel-heading'>
+            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+            <h4 class='modal-title' id='modal_excUsuarioLabel'>Os usuários serão excluídos</h4>
+          </div>
           <div class='modal-body'>
-            Você realmente deseja executar essa operação?
-            <input type="hidden" name="IdPatrimonio" id="IdPatrimonio" value=""/>
+            Você realmente deseja excluiros seguintes patrimônios?
+          <div id="linhas"> 
+          <?php
+            echo
+              "<script>
+                function getCheckboxValues() {
+                  var values = [];
+                  var patrimonios = document.getElementsByName('foo[]');
+                  var cont = 0;
+                  for (var i=0, iLen=patrimonios.length; i<iLen; i++) {
+                    if (patrimonios[i].checked) {
+                      values[i]= patrimonios[i].value;
+                      cont++;
+                    }
+                  }
+                  $('#linhas').html('');
+                  for (i=0;i<values.length; i++){
+                    $('#linhas').append(values[i]+'<br>');
+                  }
+                }
+              </script>";
+          ?>        
+          </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-          <button type="submit" class="btn btn-danger">Sim</button>
-        </form>
+            <form id="confirm" method="post" action="patrimonios.php">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+              <button id="submit-modal" class="btn btn-danger">Sim</button>
+
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
 
+    <div class='modal fade' id='modal_excPatrimonioSimples' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimoniosSimplesLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content panel-danger'>
+          <div class='modal-header panel-heading'>
+            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+            <h4 class='modal-title' id='modal_excUsuarioLabel'>O usuário será excluído</h4>
+          </div>
+          <div class='modal-body'>
+            Você realmente deseja excluir a conta relacionada à matrícula?
+          </div>
+          <div class="modal-footer">
+            <form id="confirm" method="post" action="patrimonios.php">
+              <input type="hidden" name="IdPatrimonio" id="IdPatrimonio" value=""/>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+              <button id="submit-modal" class="btn btn-danger">Sim</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
       </div><!-- /#page-wrapper -->
 
     </div><!-- /#wrapper -->
 
-  <script language="JavaScript">
-
-$(document).ready(function() {
-
+<script language="JavaScript">
+  $(document).ready(function() {
     var $submit = $("#exc").hide(),
-        $cbs = $('input[name="foo"]').click(function() {
-            $submit.toggle( $cbs.is(":checked") );
-        });
-});
+    $cbs = $('input[name="foo[]"]').click(function() {
+      $submit.toggle( $cbs.is(":checked") );
+    });
+  });
 
-function toggle(source) {
-  checkboxes = document.getElementsByName('foo');
-  
-  for (var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked;
-    
+  function toggle(source) {
+    checkboxes = document.getElementsByName('foo[]');
+    for (var i=0, n=checkboxes.length;i<n;i++) {
+      checkboxes[i].checked = source.checked;    
+    }  
+    $("#exc").toggle('show');
   }
- 
+  
+  window.addEventListener("DOMContentLoaded", function () {
+    var confirm = document.getElementById("confirm");
+    document.getElementById("submit-modal").addEventListener("click", function () {
+      confirm.submit();
+    });
+  });
 
-}
-
-$(document).on("click", ".abre-excluirModal", function () {
-     var IdPat = $(this).data('id');
-     $(".modal-body #IdPatrimonio").val( IdPat );
+  $(document).on("click", ".abre-excluirModal", function () {
+     var idPat = $(this).data('id');
+     $(".modal-footer #IdPatrimonio").val(idPat);
 });
 
 

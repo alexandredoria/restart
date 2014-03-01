@@ -11,7 +11,7 @@
   $pageTitle  = "Nome do usuário";
   
   include 'nucleo/cabecario.php';
-  include 'classes/usuario.class.php';  
+    
   include 'nucleo/barraLateral.php';
 ?>
  <div id="page-wrapper">

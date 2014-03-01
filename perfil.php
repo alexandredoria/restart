@@ -9,7 +9,7 @@
   
   include 'nucleo/cabecario.php';
 
-  include 'classes/usuario.class.php';
+  
   ?>
 
 
@@ -48,8 +48,39 @@
           
 
           $editUser = new Usuario;
-          $editUser->editarUsuario($_SESSION['matricula'], $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular);
+          $result = $editUser->atualizarPerfil($_SESSION['matricula'], $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular);
+           if (is_bool($result)) {
+              echo "<!-- Modal -->
+                    <div class='modal fade bs-modal-sm' id='modal_editPerfil' tabindex='-1' role='dialog' aria-labelledby='modal_editPerfilLabel' aria-hidden='true'>
+                      <div class='modal-dialog modal-sm'>
+                        <div class='modal-content panel-success'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_editPerfilLabel'>Usuário atualizado!</h4>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div> <meta http-equiv='refresh' content='2'>";
+            }
+            else {
+              echo "<!-- Modal -->
+                    <div class='modal fade' id='modal_editPerfil' tabindex='-1' role='dialog' aria-labelledby='modal_editPerfilLabel' aria-hidden='true'>
+                      <div class='modal-dialog'>
+                        <div class='modal-content panel-danger'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_editPerfilLabel'>Não foi possível atualizar seu perfil!</h4>
+                          </div>
+                          <div class='modal-body'>
+                            <p>".$result."</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>";
+            }
           unset($editUser);
+          echo "<script>$('#modal_editPerfil').modal('show');</script>";
           
         }   
       }      

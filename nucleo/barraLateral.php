@@ -1,3 +1,8 @@
+<?php 
+  include ("./classes/usuario.class.php");
+  $sessao = new Usuario;
+  $sessao->carregarSessao($_SESSION['matricula']);
+?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Marca e alterdação agrupados para uma melhor vizualização mobile -->
         <div class="navbar-header">

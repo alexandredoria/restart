@@ -8,7 +8,7 @@
   $pageTitle  = "Restart";
   
   include 'nucleo/cabecario.php';
-  include 'classes/usuario.class.php';
+  
   if ($_SESSION['tipo_usuario'] != 1) {
     $expUser  = new Usuario;
     $expUser->expirarUsuario($_SESSION['matricula']);           
