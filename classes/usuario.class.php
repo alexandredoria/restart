@@ -386,9 +386,14 @@ class Usuario extends DB {
 	 * Gera um array com as informações dos usuários cadastrados
 	 * @return array $rows Dados dos usuários
 	 */
-	public function listarUsuarios($matricula){
+	public function listarUsuarios($matricula, $filtro){
 		// Executa a query dos usuários e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM usuario WHERE matricula != '".$matricula."' ORDER BY matricula ASC ")) {
+		if ($filtro != 0 ){
+			$result = $this->db->query("SELECT * FROM usuario WHERE matricula != '".$matricula."' AND tipo_usuario = '".$filtro."' ORDER BY data_cadastro DESC ");
+		} else {
+			$result	= $this->db->query("SELECT * FROM usuario WHERE matricula != '".$matricula."' ORDER BY data_cadastro DESC ");
+		}
+		if ($result) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -399,6 +404,9 @@ class Usuario extends DB {
 		}
 		else return ($this->db->error);
 	}
+
+	
+    	//Do real escaping here
 
 	/**
 	 * TODO Auto-generated comment.
@@ -452,20 +460,7 @@ class Usuario extends DB {
 		}	
 	}
 
-	public function filtrarUsuarios($tipo){
-		// Executa a query dos usuários e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM usuario WHERE tipo_usuario = '".$tipo."' ORDER BY matricula ASC ")) {
-			// Verifica se algum resultado foi retornado
-			if ($result->num_rows) {
-				$rows = $result->fetch_all(MYSQLI_ASSOC);
-				return $rows;
-			}
-			else return 'Nenhum usuário foi encontrado.';
-			$result->free(); // Libera a variável de consulta da memória
-		}
-		else return ($this->db->error);
-	}
-    	//Do real escaping here
+	
 
     	
 
