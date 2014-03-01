@@ -263,11 +263,9 @@
 	  
 	    
     var $submit = $("#exc").hide(),
-<<<<<<< HEAD
-    $cbs = $('input[name="foo[]"').click(function() {
-=======
+
     $cbs = $('input[name="foo[]"]').click(function() {
->>>>>>> origin/Teste
+
       $submit.toggle( $cbs.is(":checked") );
 	 var count=0;
 	checkboxes = document.getElementsByName('foo[]');
