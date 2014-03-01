@@ -1,24 +1,18 @@
 <?php
-  session_start();
-  if (empty($_SESSION)) {
-    header("Location: ../restart");
-    exit;
-  }  else if ($_SESSION['tipo_usuario'] != "1"){
-    header("Location: ../restart/painel.php");
-    exit;
-  }
+  
   $pageTitle  = "Alterar patrimônio";  
   include 'nucleo/cabecario.php';
-    
+  include 'nucleo/barraLateral.php';
   include 'classes/patrimonio.class.php';
   include 'classes/laboratorio.class.php';
   include 'classes/configuracao.class.php';
-  include 'nucleo/barraLateral.php';
 
-
+  if (($_SESSION['tipo_usuario'] != "1") && ($_SESSION['tipo_usuario'] != "2")){
+    header("Location: ../restart/painel.php");
+    exit;
+  }
   if (isset($_GET['p'])){$numPatAntigo = $_GET['p'];}    
 
- 
   // Verifica se algum form foi enviado
   if (!empty($_GET)) {
     // Verifica se as variáveis relacionadas ao cadastro/edição existem

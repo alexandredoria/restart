@@ -1,18 +1,14 @@
   
-<?php
-  session_start();
-  if (empty($_SESSION)) {
-    header("Location: ../restart");
-    exit;
-  } else if ($_SESSION['tipo_usuario'] != "1"){
+<?php 
+  $pageTitle  = "Usuários &middot; Visão Geral"; 
+  include 'nucleo/cabecario.php';    
+  include("nucleo/barraLateral.php");
+  
+  if ($_SESSION['tipo_usuario'] != 1){
     header("Location: ../restart/painel.php");
     exit;
 
   }
-  $pageTitle  = "Usuários &middot; Visão Geral"; 
-  include 'nucleo/cabecario.php';
-    
-  include("nucleo/barraLateral.php");
   if (isset($_POST['filtro'])){
       $filtro = $_POST['filtro'];
   } else {

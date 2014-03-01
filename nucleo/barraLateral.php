@@ -3,10 +3,7 @@
   include ("./classes/usuario.class.php");
   $sessao = new Usuario;
   $sessao->carregarSessao($_SESSION['matricula']);
-  if (empty($_SESSION)) {
-    header("Location: ../restart");
-    exit;
-  }
+  
 ?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Marca e alterdação agrupados para uma melhor vizualização mobile -->
@@ -48,14 +45,14 @@
 
           <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown messages-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Mensagens <span class="badge">7</span> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> Notificações <span class="badge">3</span> <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li class="dropdown-header">7 Novas mensagens</li>
+                <li class="dropdown-header">3 Novas notificações</li>
                 <li class="message-preview">
                   <a href="#">
                     <span class="avatar"><img src="http://placehold.it/50x50"></span>
-                    <span class="name">Walter Branco:</span>
-                    <span class="message">Olá, eu queria te perguntar uma coisa...</span>
+                    <span class="name">Marcelo Cunha:</span>
+                    <span class="message">Computador não funciona...</span>
                     <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
                   </a>
                 </li>
@@ -78,10 +75,10 @@
                   </a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="#">Ver Caixa de entrada <span class="badge">7</span></a></li>
+                <li><a href="#">Ver todas <span class="badge">3</span></a></li>
               </ul>
             </li>
-            <li class="dropdown alerts-dropdown">
+            <!-- <li class="dropdown alerts-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> Alertas <span class="badge">3</span> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Padrão <span class="label label-default">Padrão</span></a></li>
@@ -93,12 +90,11 @@
                 <li class="divider"></li>
                 <li><a href="#">Ver Todos</a></li>
               </ul>
-            </li>
+            </li> -->
             <li class="dropdown user-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['nome']." "; if(isset($_SESSION['sobrenome'])){echo $_SESSION['sobrenome'];} ?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="perfil.php"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
-                <li><a href="#"><i class="fa fa-envelope"></i> Caixa de Entrada <span class="badge">7</span></a></li>
                 <?php 
                 if ($_SESSION['tipo_usuario'] == 1) { 
                   echo "<li><a href='configuracoes.php'><i class='fa fa-gear'></i> Configurações</a></li>";
@@ -115,7 +111,4 @@
       <noscript id="noscript" class="container col-lg-12">
         Para uma melhor experiência no Restart, ative o JavaScript no seu navegador.
       </noscript>
-        
-      
-      
-
+    

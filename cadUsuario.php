@@ -1,22 +1,14 @@
   
 <?php
-session_start();
-  if (empty($_SESSION)) {
-    header("Location: ../restart");
-    exit;
-  } else if ($_SESSION['tipo_usuario'] != "1"){
-    header("Location: ../restart/painel.php");
+    $pageTitle  = "Cadastrar usuário";  
+    include 'nucleo/cabecario.php';
+    include("nucleo/barraLateral.php");
+    if ($_SESSION['tipo_usuario'] != "1"){
+      header("Location: ../restart/painel.php");
     exit;
 
   }
-    $pageTitle  = "Cadastrar usuário";  
-    include 'nucleo/cabecario.php';
-    
-  ?>
-    <!-- Barra Lateral -->
 
-    <?php 
-      include("nucleo/barraLateral.php");
       // Verifica se algum form foi enviado
       if (!empty($_POST)) {
         // Verifica se as variáveis relacionadas ao cadastro/edição existem

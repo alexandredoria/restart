@@ -1,4 +1,3 @@
-''  
 <?php
   $pageTitle  = "Atualizar perfil";
   
@@ -84,10 +83,10 @@
           </ol>
         </div>
       </div><!-- /.row -->
-      
+      <form role="form" class="validatedForm"  id="perfil" action="perfil.php" method="post">
       <div class="row">
         <div class="col-lg-6">
-          <form role="form" id="perfil" action="perfil.php" method="post">
+          
             <input type="hidden" name="acao" value="atualiza">
             <div class="form-group">
               <label>Nome</label>
@@ -101,31 +100,7 @@
                 <input type="radio" name="senhaRadio" id="senhaRadio" value="0" onClick="Disab(this.value)" checked>
                 <input type="hidden" id="antigasenha" name="antigasenha" value="<?php echo $user->obterDados('senha', $_SESSION['matricula']);?>">
                 <label> Desejo continuar com a mesma senha</label>
-            </div>           
-            
-<script src="js/jquery.validate.js"></script>
-<script>
-$( "form" ).validate({
-  rules: {
-     confirmsenha: {
-      equalTo: "#novasenha"
-    }
-  },
-  messages: {
-	  equalTo: "As senhas conferem"
-  },
-  
-  
-});
-</script>
-<script>
-$("#senhaRadio").click(function () {
-	$("div.form-inline").find('label.error').remove();
-	$("div.form-inline").find('input').removeClass('valid error');
-});
-
-
-</script>          
+            </div>                   
               <div class="form-inline">
                 <label>
                   <div class="radio">
@@ -154,11 +129,12 @@ $("#senhaRadio").click(function () {
 
             <div class="form-group" align="right"><br>
               <button type="submit" class="btn btn-default">Atualizar</button>
-              <button type="reset" class="btn btn-default">Limpar</button>    
+              <button type="reset" class="btn btn-default">Desfazer</button>    
             </div>
-          </form>
+          
         </div>
       </div><!-- /.row -->
+      </form>
 
 <?php 
 unset($user);
@@ -168,6 +144,28 @@ unset($user);
   </div><!-- /#wrapper -->
   <script src="js/inputmask.js"></script>
   <script src="js/jquery.validate.js"></script>
+  <script>
+jQuery('.validatedForm').validate({
+      rules : {
+        
+        confirmsenha : {
+        
+          equalTo : "#novasenha"
+        }
+      }
+    });
+
+$('submit-button').click(function(){
+    console.log($('.validatedForm').valid());
+});
+
+$("#senhaRadio").click(function () {
+  $("div.form-inline").find('label.error').remove();
+  $("div.form-inline").find('input').removeClass('valid error');
+});
+
+
+</script>
   <SCRIPT LANGUAGE="JavaScript">
 
 function Disab (val) {

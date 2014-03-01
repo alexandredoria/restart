@@ -1,17 +1,13 @@
 ''  
 <?php
-  session_start();
-  if (empty($_SESSION)) {
-    header("Location: ../restart");
-    exit;
-  }  else if ($_SESSION['tipo_usuario'] != "1"){
+  
+  $pageTitle  = "Alterar usuário";  
+  include 'nucleo/cabecario.php';
+  include 'nucleo/barraLateral.php';
+  if ($_SESSION['tipo_usuario'] != "1"){
     header("Location: ../restart/painel.php");
     exit;
   }
-  $pageTitle  = "Alterar usuário";  
-  include 'nucleo/cabecario.php';
-  
-  include 'nucleo/barraLateral.php';
 
   if (isset($_GET['m'])){$matriculaAntiga = $_GET['m'];} else {$matriculaAntiga = $_POST['m'];}
 
