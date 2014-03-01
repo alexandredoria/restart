@@ -1,25 +1,18 @@
 <?php
-  session_start();
-  if (empty($_SESSION)) {
-    header("Location: ../restart");
-    exit;
-  }
-
-  $pageTitle  = "Restart";
-  
-  include 'nucleo/cabecario.php';
-  
-  if ($_SESSION['tipo_usuario'] != 1) {
-    $expUser  = new Usuario;
-    $expUser->expirarUsuario($_SESSION['matricula']);           
-    unset($expUser);
+    $pageTitle  = "Restart";
+    include 'nucleo/cabecario.php';
+    include("nucleo/barraLateral.php");
+    if ($_SESSION['tipo_usuario'] != 1) {
+      $expUser  = new Usuario;
+      $expUser->expirarUsuario($_SESSION['matricula']);           
+      unset($expUser);
   }
 ?>
 
       
       <!-- Barra Lateral -->
       <?php 
-        include("nucleo/barraLateral.php");
+
       ?>
 
       <div id="page-wrapper">

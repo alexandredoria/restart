@@ -1,23 +1,10 @@
 ''  
 <?php
-  session_start();
-  if (empty($_SESSION)) {
-    header("Location: ../restart");
-    exit;
-  } 
   $pageTitle  = "Atualizar perfil";
   
   include 'nucleo/cabecario.php';
-
-  
-  ?>
-
-
-    <!-- Barra Lateral -->
-
-    <?php 
-      include("nucleo/barraLateral.php");
-      
+  include("nucleo/barraLateral.php");
+     
       // Verifica se algum form foi enviado
     if (!empty($_POST)) {
       // Verifica se as variáveis relacionadas ao cadastro/edição existem
@@ -180,6 +167,7 @@ unset($user);
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
   <script src="js/inputmask.js"></script>
+  <script src="js/jquery.validate.js"></script>
   <SCRIPT LANGUAGE="JavaScript">
 
 function Disab (val) {

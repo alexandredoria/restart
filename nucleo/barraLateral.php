@@ -1,7 +1,12 @@
 <?php 
+  session_start();
   include ("./classes/usuario.class.php");
   $sessao = new Usuario;
   $sessao->carregarSessao($_SESSION['matricula']);
+  if (empty($_SESSION)) {
+    header("Location: ../restart");
+    exit;
+  }
 ?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Marca e alterdação agrupados para uma melhor vizualização mobile -->
