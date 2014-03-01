@@ -15,11 +15,9 @@
   include 'classes/configuracao.class.php';
   include 'nucleo/barraLateral.php';
 
-<<<<<<< HEAD
+
   if (isset($_GET['p'])){$numPatAntigo = $_GET['p'];}    
-=======
-  $numPatAntigo = $_GET['p'];    
->>>>>>> edc613bd5e3c3e26f6ea1c8c7b7294525ee2d3ba
+
  
   // Verifica se algum form foi enviado
   if (!empty($_GET)) {

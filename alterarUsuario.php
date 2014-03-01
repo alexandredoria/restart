@@ -12,28 +12,18 @@
   include 'nucleo/cabecario.php';
   
   include 'nucleo/barraLateral.php';
-<<<<<<< HEAD
+
   if (isset($_GET['m'])){$matriculaAntiga = $_GET['m'];} else {$matriculaAntiga = $_POST['m'];}
-=======
-  
-    $matriculaAntiga = $_GET['m'];    
-   
->>>>>>> edc613bd5e3c3e26f6ea1c8c7b7294525ee2d3ba
+
   // Verifica se algum form foi enviado
   if (!empty($_GET)) {
     // Verifica se as variáveis relacionadas ao cadastro/edição existem
-<<<<<<< HEAD
-    if (isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'])) {
-      $matricula   = $_POST['matricula'];
-      $nome   = $_POST['nome'];
-      $tipo_usuario    = $_POST['tipo_usuario'];
 
-=======
     if (isset($_GET['nome'], $_GET['matricula'], $_GET['tipo_usuario'])) {
       $nome   = $_GET['nome'];
       $matricula    = $_GET['matricula'];
       $tipo_usuario    = $_GET['tipo_usuario'];
->>>>>>> edc613bd5e3c3e26f6ea1c8c7b7294525ee2d3ba
+
       // Verifica se será realizado EDIÇÃO
       if ($_GET['acao'] == 'atualiza') {
         $editUser = new Usuario;
@@ -86,12 +76,8 @@
         </ol>
     </div>
   </div><!-- /.row -->     
-<<<<<<< HEAD
-  <form role="form" id="formUsuario" name="formUsuario" action="alterarUsuario.php" method="post">
-    <input type="hidden" name="m" value="<?php echo $matriculaAntiga;?>" />
-=======
   <form role="form" id="formUsuario" name="formUsuario" action="alterarUsuario.php" method="get">
->>>>>>> edc613bd5e3c3e26f6ea1c8c7b7294525ee2d3ba
+
     <div class="row">
       <div class="col-lg-4">            
         <input type="hidden" name="acao" value="atualiza">
