@@ -12,7 +12,7 @@
   
   include 'nucleo/cabecario.php';
   include 'nucleo/barraLateral.php';
-  include 'classes/usuario.class.php';  
+    
   include 'classes/patrimonio.class.php';  
 ?>
  <div id="page-wrapper">

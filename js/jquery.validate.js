@@ -4,7 +4,7 @@
  * http://bassistance.de/jquery-plugins/jquery-plugin-validation/
  * http://docs.jquery.com/Plugins/Validation
  *
- * Copyright 2013 Jörn Zaefferer
+ * Copyright 2013 JÃ¶rn Zaefferer
  * Released under the MIT license:
  *   http://www.opensource.org/licenses/mit-license.php
  */
@@ -279,18 +279,18 @@ $.extend($.validator, {
 	},
 
 	messages: {
-		required: "",
+		required: "Preencha este campo.",
 		remote: "Please fix this field.",
-		email: "Please enter a valid email address.",
+		email: "Insira um endereço de email válido.",
 		url: "Please enter a valid URL.",
 		date: "Please enter a valid date.",
 		dateISO: "Please enter a valid date (ISO).",
 		number: "Please enter a valid number.",
 		digits: "Please enter only digits.",
 		creditcard: "Please enter a valid credit card number.",
-		equalTo: "Senhas diferentes",
+		equalTo: "Senhas diferentes.",
 		maxlength: $.validator.format("Please enter no more than {0} characters."),
-		minlength: $.validator.format("Please enter at least {0} characters."),
+		minlength: $.validator.format("<br>Please enter at least {0} characters."),
 		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
 		range: $.validator.format("Please enter a value between {0} and {1}."),
 		max: $.validator.format("Please enter a value less than or equal to {0}."),

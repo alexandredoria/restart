@@ -66,25 +66,19 @@ class Patrimonio extends DB {
 	 * @param int $user ID do funcionario que editou
 	 * @return string Mensagem de retorno
 	 */
-	public function editarPatrimonio($id, $nome, $und, $categ, $custo, $venda, $obs, $status) {
-		$nome	= $this->db->real_escape_string(trim($nome));
-		$obs	= $this->db->real_escape_string(trim($obs));
-		if ($edit = $this->db->query("UPDATE Patrimonio SET nome = '$nome', unidade = '$und', categorias_id = '$categ', preco_custo = '$custo', preco_venda = '$venda', anotacoes = '$obs', status = '$status' WHERE id = $id")) {
-			if ($this->db->affected_rows) {
-				echo "<div id='growl_box' class='good'><p>Patrimonio editado.</p></div>";
-			}
-			else {
-				echo
-				"<div id='growl_box' class='bad'>
-					<p>Não foi possível editar o Patrimonio.
-					<br><span>Lembre-se que Patrimonio devem possuir um nome exclusivo<span></p>
-				</div>";
-			}
+	public function alterarPatrimonio($numPatAntigo, $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config) {
+		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
+			if (($check->num_rows) > 1) return "O patrimônio $num_patrimonio já está cadastrado no sistema.";
+			else{
+				$data_atualizacao = date('Y-m-d');
+				$edit = $this->db->prepare("UPDATE patrimonio SET num_patrimonio = ?, tipo = ?, num_posicionamento = ?, situacao = ?, Laboratorio_id = ?, Configuracao_id = ?, data_atualizacao = ? WHERE num_patrimonio = ?");
+				$edit->bind_param('siiiiiss', $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config, $data_atualizacao, $numPatAntigo);
+				if ($edit->execute()) { return true; }
+				else { return ($this->db->error); }
+		        
+		    }
+		    $check->free();
 		}
-		else {
-			echo "<div id='growl_box' class='bad'><p>" . $this->db->error . "</p></div>";
-		}
-		echo "<script>showGrowl();</script>";
 	}
 
 	/**
@@ -94,56 +88,10 @@ class Patrimonio extends DB {
 	 */
 	public function deletarPatrimonio($num_patrimonio) {
 		
-		if ($update = $this->db->query("DELETE FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
-			if ($this->db->affected_rows) {
-				echo "<!-- Modal -->
-					<div class='modal fade bs-modal-sm' id='modal_excPatrimonio2' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimonio2' aria-hidden='true'>
-					  <div class='modal-dialog modal-sm'>
-					    <div class='modal-content panel-success'>
-					      <div class='modal-header panel-heading'>
-					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					        <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Patrimônio removido!</h4>
-					      </div>
-					      
-					    </div>
-					  </div>
-					</div>";
-			}
-			else {
-				echo "<!-- Modal -->
-					<div class='modal fade' id='modal_excPatrimonio2' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimonio2' aria-hidden='true'>
-					  <div class='modal-dialog'>
-					    <div class='modal-content panel-danger'>
-					      <div class='modal-header panel-heading'>
-					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					        <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Não foi possível remover o patrimônio</h4>
-					      </div>
-					      <div class='modal-body'>
-					        <p>Lembre-se: patrimônios envolvidos em ocorrências não podem ser removidos.</p>
-					      </div>
-					    </div>
-					  </div>
-					</div>";
-			}
-			echo "<script>$('#modal_excPatrimonio2').modal('show');</script>";
-		}
-		else {
-			echo "<!-- Modal -->
-					<div class='modal fade' id='modal_erroBD' tabindex='-1' role='dialog' aria-labelledby='modal_erroBD' aria-hidden='true'>
-					  <div class='modal-dialog'>
-					    <div class='modal-content panel-danger'>
-					      <div class='modal-header panel-heading'>
-					        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					        <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Erro encontrado</h4>
-					      </div>
-					      <div class='modal-body'>
-					        <p>". $this->db->error."</p>
-					      </div>
-					    </div>
-					  </div>
-					</div>";
-					echo "<script>$('#modal_erroBD').modal('show');</script>";
-		}
+		$delete = $this->db->prepare("DELETE FROM patrimonio WHERE num_patrimonio = ?");
+		$delete->bind_param('s', $num_patrimonio);
+		if ($delete->execute()) { return true; }
+				else { return ($this->db->error); }
 		
 	}
 
@@ -225,20 +173,25 @@ class Patrimonio extends DB {
 	 * Gera um array com as informações dos Patrimonio cadastrados
 	 * @return array $rows Dados dos Patrimonio
 	 */
-	public function listarPatrimonios() {
+	public function listarPatrimonios($filtro) {
+		if ($filtro != 0 ){
+			$result = $this->db->query("SELECT * FROM patrimonio WHERE tipo = '".$filtro."' ORDER BY 'num_patrimonio' DESC ");
+		} else {
+			$result	= $this->db->query("SELECT * FROM patrimonio ORDER BY 'num_patrimonio' DESC ");
+		}
 		// Executa a query dos Patrimonio e se não houver erros realiza as ações
-		if ($result	= $this->db->query("SELECT * FROM patrimonio ORDER BY 'num_patrimonio'")) {
+		if ($result) {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows				= $result->fetch_all(MYSQLI_ASSOC);
-				$count				= $this->db->query("SELECT COUNT(num_patrimonio) FROM Patrimonio");
-				$count				= $count->fetch_row();
+				//$count				= $this->db->query("SELECT COUNT(num_patrimonio) FROM atrimonio");
+				//$count				= $count->fetch_row();
 				//$rows[0]['itens']	= $count[0];
 				//$rows[0]['limite']	= $limite;
 				$result->free(); // Libera a variável de consulta da memória
 				return $rows;
 			}
-			else return 'Nenhum Configuracao foi encontrado.';//Nenhum Patrimonio foi encontrado.';
+			else return 'Nenhum patrimônio foi encontrado.';//Nenhum Patrimonio foi encontrado.';
 		}
 		else return ($this->db->error);
 	}

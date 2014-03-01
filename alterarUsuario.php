@@ -1,30 +1,61 @@
 ''  
 <?php
-  session_start();
-  if (empty($_SESSION)) {
-    header("Location: ../restart");
-    exit;
-  }  else if ($_SESSION['tipo_usuario'] != "1"){
+  
+  $pageTitle  = "Alterar usuário";  
+  include 'nucleo/cabecario.php';
+  include 'nucleo/barraLateral.php';
+  if ($_SESSION['tipo_usuario'] != "1"){
     header("Location: ../restart/painel.php");
     exit;
   }
-  $pageTitle  = "Alterar usuário";  
-  include 'nucleo/cabecario.php';
-  include 'classes/usuario.class.php';
-  include 'nucleo/barraLateral.php';
-  $matriculaAntiga = $_GET['m'];    
+
+  if (isset($_GET['m'])){$matriculaAntiga = $_GET['m'];} else {$matriculaAntiga = $_POST['m'];}
+
   // Verifica se algum form foi enviado
-  if (!empty($_POST)) {
+  if (!empty($_GET)) {
     // Verifica se as variáveis relacionadas ao cadastro/edição existem
-    if (isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'])) {
-      $nome   = $_POST['nome'];
-      $sobrenome   = $_POST['sobrenome'];
-      $email    = $_POST['email'];
+
+    if (isset($_GET['nome'], $_GET['matricula'], $_GET['tipo_usuario'])) {
+      $nome   = $_GET['nome'];
+      $matricula    = $_GET['matricula'];
+      $tipo_usuario    = $_GET['tipo_usuario'];
+
       // Verifica se será realizado EDIÇÃO
-      if ($_POST['acao'] == 'atualiza') {
+      if ($_GET['acao'] == 'atualiza') {
         $editUser = new Usuario;
-        $editUser->alterarUsuario($matriculaAntiga, $nome, $matricula, $tipo_usuario);
+        $result = $editUser->alterarUsuario($matriculaAntiga, $nome, $matricula, $tipo_usuario);
+        if (is_bool($result)) {
+              echo "<!-- Modal -->
+                    <div class='modal fade bs-modal-sm' id='modal_editUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_editUsuarioLabel' aria-hidden='true'>
+                      <div class='modal-dialog modal-sm'>
+                        <div class='modal-content panel-success'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_editUsuarioLabel'>Usuário atualizado!</h4>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>";
+            }
+            else {
+              echo "<!-- Modal -->
+                    <div class='modal fade' id='modal_editUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_editUsuarioLabel' aria-hidden='true'>
+                      <div class='modal-dialog'>
+                        <div class='modal-content panel-danger'>
+                          <div class='modal-header panel-heading'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='modal_editUsuarioLabel'>Não foi possível alterar o usuário</h4>
+                          </div>
+                          <div class='modal-body'>
+                            <p>".$result."</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>";
+            }
         unset($editUser);
+         echo "<script>$('#modal_editUsuario').modal('show');</script>";
       }   
     }      
   }
@@ -41,10 +72,12 @@
         </ol>
     </div>
   </div><!-- /.row -->     
-  <form role="form" id="formUsuario" name="formUsuario" action="alterarUsuario.php" method="post">
+  <form role="form" id="formUsuario" name="formUsuario" action="alterarUsuario.php" method="get">
+
     <div class="row">
       <div class="col-lg-4">            
-        <input type="hidden" name="acao" value="add">
+        <input type="hidden" name="acao" value="atualiza">
+        <input type="hidden" name="m" value="<?php echo $matriculaAntiga;?>">
         <div class="form-group">
           <label>Nome</label>
           <input class="form-control" id="nome" name="nome" value="<?php echo $user->obterDados('nome', $matriculaAntiga);?>" <?php if ($_SESSION['tipo_usuario'] == $tipo_usuario){echo "disabled";}?> required autocomplete="off">
@@ -56,10 +89,10 @@
         <label>Tipo de usuário</label>
         <div class="form-group">
           <label class="radio-inline">
-            <input type="radio" name="tipo_usuario" id="tipo_usuario2"  <?php if ($_SESSION['tipo_usuario'] == $tipo_usuario){echo "disabled";}?> value="2" required autocomplete="off"> Bolsista
+            <input type="radio" name="tipo_usuario" id="tipo_usuario2"  <?php if ($tipo_usuario == 2 ){echo "checked='checked'";}?> <?php if ($_SESSION['tipo_usuario'] == $tipo_usuario){echo "disabled";}?> value="2" required autocomplete="off"> Bolsista
           </label>
           <label class="radio-inline">
-            <input type="radio" name="tipo_usuario" id="tipo_usuario3"  <?php if ($_SESSION['tipo_usuario'] == $tipo_usuario){echo "disabled";}?> value="3" required autocomplete="off"> Professor
+            <input type="radio" name="tipo_usuario" id="tipo_usuario3" <?php if ($tipo_usuario == 3 ){echo "checked='checked'";}?> <?php if ($_SESSION['tipo_usuario'] == $tipo_usuario){echo "disabled";}?> value="3" required autocomplete="off"> Professor
           </label>
         </div>            
       </div>
@@ -67,7 +100,7 @@
     <div class="row">
       <div class="col-lg-4"  align="right">
         <button type="submit" <?php if ($_SESSION['tipo_usuario'] == $tipo_usuario){echo "disabled";}?> class="btn btn-default">Alterar</button>
-        <button type="reset" class="btn btn-default">Limpar</button>                     
+        <button type="reset" class="btn btn-default">Desfazer</button>                     
       </div>          
       <div class="col-lg-4"></div>
       <div class="col-lg-4"></div>
@@ -76,66 +109,9 @@
 </div><!-- /#page-wrapper -->
 </div><!-- /#wrapper -->
 
-
-<script src="js/inputmask.js"></script>
 <script src="js/jquery.validate.js"></script>
-<SCRIPT LANGUAGE="JavaScript">
-
-  function Disab (val) {
-
-    if(document.getElementById('senhaRadio').checked) {
-      document.getElementById('novasenha').disabled = true;
-      document.getElementById('confirma').disabled = true;
-      document.getElementById('novasenha').value = "";
-      document.getElementById('confirma').value = "";
-      
-
-    }
-
-    else {  
-      document.getElementById('novasenha').disabled = false;
-      document.getElementById('confirma').disabled = false;
-    }
-
-    }
-
-    if(document.getElementById('senhaRadio').checked) {
-      document.getElementById('novasenha').disabled = true;
-      document.getElementById('confirma').disabled = true;
-      document.getElementById('novasenha').value = "";
-      document.getElementById('confirma').value = "";
-    }
-
-    else {  
-      document.getElementById('novasenha').disabled = false;
-      document.getElementById('confirma').disabled = false;
-    }
-
-
-    $( "form" ).validate({
-      rules: {
-         confirmsenha: {
-          equalTo: "#novasenha"
-        }
-      },
-      messages: {
-        equalTo: "As senhas conferem"
-      },
-      
-      
-    });
-
-    $("#senhaRadio").click(function () {
-      $("div.form-inline").find('label.error').remove();
-      $("div.form-inline").find('input').removeClass('valid error');
-    });
-
-    </script> 
-
-
-
- <?php 
-unset($user);
+<?php 
+  unset($user);
 ?>
 </body>
 </html>
