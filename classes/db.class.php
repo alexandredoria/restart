@@ -4,6 +4,7 @@
 	*
 	*
 	*/
+	
 	class DB{
 		/**
 		 * @param string $serverDB Nome do servidor

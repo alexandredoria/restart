@@ -47,7 +47,7 @@ class Laboratorio extends DB {
 				$nome = (!empty($nome)) ? $this->db->real_escape_string(trim($nome)) : NULL ;
 				$senha		= (!empty($senha)) ? $senha : NULL ;
 				$tipo_laboratorio		= (!empty($tipo_laboratorio)) ? $tipo_laboratorio : NULL ;
-				$data_cadastro = date('Y-m-d');
+				$data_cadastro = date("Y-m-d H:i:s", time());  
 				$sobrenome = "";
 				$insert = $this->db->prepare("INSERT INTO laboratorio ( nome, sobrenome, id, senha, tipo_laboratorio, data_cadastro) VALUES ( ?, ?, ?, ?, ?, ?)");	
 				$insert->bind_param('ssssis', $nome, $sobrenome, $id, $senha, $tipo_laboratorio, $data_cadastro);
@@ -87,7 +87,7 @@ class Laboratorio extends DB {
 				$telefone_residencial		= $this->db->real_escape_string(trim($telefone_residencial));
 				$telefone_celular		= $this->db->real_escape_string(trim($telefone_celular));
 
-				$data_atualizacao = date('Y-m-d');
+				$data_atualizacao = date("Y-m-d H:i:s", time());  
 
 				$edit		= $this->db->prepare("UPDATE laboratorio SET nome = ?, sobrenome = ?, email = ?, senha = ?, telefone_residencial = ?, telefone_celular = ?, data_atualizacao = ? WHERE id = ?");
 				$edit->bind_param('ssssssss', $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular, $data_atualizacao, $id);

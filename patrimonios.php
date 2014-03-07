@@ -1,9 +1,12 @@
   
-<?php  
-  $pageTitle  = "Patrimônios &middot; Visão Geral"; 
+<?php 
+include 'classes/usuario.class.php';
+include 'classes/ocorrencia.class.php';
+include 'classes/patrimonio.class.php';
+$pageTitle  = "Patrimônios &middot; Visão Geral"; 
   include 'nucleo/cabecario.php';  
   include("nucleo/barraLateral.php");
-  include 'classes/patrimonio.class.php';  
+    
   if (($_SESSION['tipo_usuario'] != "1") && ($_SESSION['tipo_usuario'] != "2")){
     header("Location: ../restart/painel.php");
     exit;
@@ -44,6 +47,7 @@
                           </div>
                           <div class='modal-body'>
                             <p>".$result."</p>
+<br><br><p><b>Contate à COLINF</b></p>
                           </div>
                         </div>
                       </div>
@@ -172,7 +176,7 @@
                         </td>
                         <td>" . $row['num_patrimonio'] . "</td>
                         <td>" . $tipo . "</td>
-                         <td>" . $row['Laboratorio_id'] . "</td>
+                         <td>" . $row['id_laboratorio'] . "</td>
                         <td>" . $row['num_posicionamento'] . "</td>
                         <td>" . $situacao . "</td>
                         <td>" . $row['Configuracao_id'] . "</td>

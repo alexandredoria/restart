@@ -45,7 +45,8 @@ class Usuario extends DB {
 				$nome = (!empty($nome)) ? $this->db->real_escape_string(trim($nome)) : NULL ;
 				$senha		= (!empty($senha)) ? $senha : NULL ;
 				$tipo_usuario		= (!empty($tipo_usuario)) ? $tipo_usuario : NULL ;
-				$data_cadastro = date('Y-m-d');
+				date_default_timezone_set("America/Bahia");	
+				$data_cadastro = date("Y-m-d H:i:s", time());  
 				$sobrenome = "";
 				$insert = $this->db->prepare("INSERT INTO usuario ( nome, sobrenome, matricula, senha, tipo_usuario, data_cadastro) VALUES ( ?, ?, ?, ?, ?, ?)");	
 				$insert->bind_param('ssssis', $nome, $sobrenome, $matricula, $senha, $tipo_usuario, $data_cadastro);
@@ -85,7 +86,8 @@ class Usuario extends DB {
 				$telefone_residencial		= $this->db->real_escape_string(trim($telefone_residencial));
 				$telefone_celular		= $this->db->real_escape_string(trim($telefone_celular));
 
-				$data_atualizacao = date('Y-m-d');
+				date_default_timezone_set("America/Bahia");	
+				$data_atualizacao = date("Y-m-d H:i:s", time());  
 
 				$edit		= $this->db->prepare("UPDATE usuario SET nome = ?, sobrenome = ?, email = ?, senha = ?, telefone_residencial = ?, telefone_celular = ?, data_atualizacao = ? WHERE matricula = ?");
 				$edit->bind_param('ssssssss', $nome, $sobrenome, $email, $senha, $telefone_residencial, $telefone_celular, $data_atualizacao, $matricula);

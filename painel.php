@@ -1,5 +1,7 @@
 <?php
-    $pageTitle  = "Restart";
+include 'classes/usuario.class.php';
+include 'classes/ocorrencia.class.php';
+$pageTitle  = "Restart";
     include 'nucleo/cabecario.php';
     include("nucleo/barraLateral.php");
     if ($_SESSION['tipo_usuario'] != 1) {

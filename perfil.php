@@ -1,6 +1,7 @@
 <?php
-
-  $pageTitle  = "Atualizar perfil";
+  include 'classes/usuario.class.php';
+include 'classes/ocorrencia.class.php';
+$pageTitle  = "Atualizar perfil";
   
   include 'nucleo/cabecario.php';
   include("nucleo/barraLateral.php");
@@ -61,6 +62,7 @@
                           </div>
                           <div class='modal-body'>
                             <p>".$result."</p>
+                          <br><br><p><b>Contate à COLINF</b></p>
                           </div>
                         </div>
                       </div>
@@ -76,7 +78,8 @@
 
   $user = new Usuario;
   
-    ?><div id="page-wrapper">
+    ?>
+    <div id="page-wrapper">
       <div class="row">
         <div class="col-lg-12">
           <h1>Atualizar perfil</h1>
@@ -88,6 +91,7 @@
       <form role="form" class="validatedForm"  id="perfil" action="perfil.php" method="post">
       <div class="row">
         <div class="col-lg-6">
+             
           
             <input type="hidden" name="acao" value="atualiza">
             <div class="form-group">
@@ -111,7 +115,24 @@
                     <input class="form-control" type="password" maxlength="10" id="novasenha" placeholder="Nova senha" name="novasenha" required autocomplete="off">
                     <input class="form-control" type="password" maxlength="10" placeholder="Confirma" id="confirma" name="confirmsenha" required autocomplete="off">
                 </label>
-              </div>                      
+              </div> 
+
+            <div class="form-group">
+              <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-new thumbnail" style="width: 170px; height: 150px;">
+                  <img data-src="http://placehold.it/200x150/" alt="">
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 170px; max-height: 150px;"></div>
+                <div>
+                  <span class="btn btn-default btn-file">
+                    <span class="fileinput-new">Selecionar uma imagem</span>
+                    <span class="fileinput-exists">Mudar</span>
+                    <input type="file" name="imagem">
+                  </span>
+                  <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+                </div>
+              </div>
+            </div>                      
           
         </div>
         <div class="col-lg-6">
@@ -198,6 +219,8 @@ else {
   document.getElementById('novasenha').disabled = false;
   document.getElementById('confirma').disabled = false;
 }
+
+$('.fileinput').fileinput();
 
 </script>
   <?php ?>

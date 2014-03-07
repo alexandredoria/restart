@@ -1,7 +1,7 @@
-''  
 <?php
-  
-  $pageTitle  = "Alterar usuário";  
+  include 'classes/usuario.class.php';
+include 'classes/ocorrencia.class.php';
+$pageTitle  = "Alterar usuário";  
   include 'nucleo/cabecario.php';
   include 'nucleo/barraLateral.php';
   if ($_SESSION['tipo_usuario'] != "1"){
@@ -49,6 +49,7 @@
                           </div>
                           <div class='modal-body'>
                             <p>".$result."</p>
+<br><br><p><b>Contate à COLINF</b></p>
                           </div>
                         </div>
                       </div>

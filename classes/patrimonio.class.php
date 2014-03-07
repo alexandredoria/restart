@@ -7,6 +7,7 @@
  */
 require_once 'db.class.php';
 class Patrimonio extends DB {
+
 	/**
 	 * @param object $db Variável objeto que faz a conexão com o banco de dados
 	 */
@@ -39,13 +40,15 @@ class Patrimonio extends DB {
 	 * @param int $user ID do funcionario que cadastrou
 	 * @return boolean Se foi possível cadastrar ou não a categoria
 	 */
+
 	public function cadastrarPatrimonio($num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config) {
-		
+	date_default_timezone_set("America/Bahia");	
 		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
 			if ($check->num_rows) return "O número de patrimônio \"$num_patrimonio\"  já está cadastrado no sistema.";
 			else {
-				$data_cadastro = date('Y-m-d');
-				$insert = $this->db->prepare("INSERT INTO patrimonio (num_patrimonio, tipo, num_posicionamento, situacao, data_cadastro, Laboratorio_id, Configuracao_id) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
+				date_default_timezone_set("America/Bahia");	
+				$data_cadastro = date("Y-m-d H:i:s", time());  
+				$insert = $this->db->prepare("INSERT INTO patrimonio (num_patrimonio, tipo, num_posicionamento, situacao, data_cadastro, id_laboratorio, Configuracao_id) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
 				$insert->bind_param('siiisii', $num_patrimonio, $tipo, $num_posicionamento, $situacao, $data_cadastro, $lab, $config);
 				if ($insert->execute()) { return true; }
 				else { return ($this->db->error); }
@@ -53,6 +56,8 @@ class Patrimonio extends DB {
 			$check->free();
 		}	
 	}
+
+	/**/
 
 	/**
 	 * Edita um Patrimonio
@@ -70,8 +75,9 @@ class Patrimonio extends DB {
 		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
 			if (($check->num_rows) > 1) return "O patrimônio $num_patrimonio já está cadastrado no sistema.";
 			else{
-				$data_atualizacao = date('Y-m-d');
-				$edit = $this->db->prepare("UPDATE patrimonio SET num_patrimonio = ?, tipo = ?, num_posicionamento = ?, situacao = ?, Laboratorio_id = ?, Configuracao_id = ?, data_atualizacao = ? WHERE num_patrimonio = ?");
+				date_default_timezone_set("America/Bahia");	
+				$data_atualizacao = date("Y-m-d H:i:s", time());  
+				$edit = $this->db->prepare("UPDATE patrimonio SET num_patrimonio = ?, tipo = ?, num_posicionamento = ?, situacao = ?, id_laboratorio = ?, Configuracao_id = ?, data_atualizacao = ? WHERE num_patrimonio = ?");
 				$edit->bind_param('siiiiiss', $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config, $data_atualizacao, $numPatAntigo);
 				if ($edit->execute()) { return true; }
 				else { return ($this->db->error); }
@@ -196,11 +202,10 @@ class Patrimonio extends DB {
 		else return ($this->db->error);
 	}
 
-	public function checkPatrimonio($nome) {
-		$prod	= $this->db->real_escape_string(trim($nome));
-		if ($check = $this->db->query("SELECT nome FROM Patrimonio WHERE nome = '$prod'")) {
-			if ($check->num_rows) echo "false"; // Nome está em uso
-			else echo "true"; // Não está em uso
+	public function checkPatrimonio($num_patrimonio) {
+		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
+			if ($check->num_rows) return true; // Nome está em uso
+			else false; // Não está em uso
 			$check->free();
 		}
 	}

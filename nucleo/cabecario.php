@@ -23,15 +23,30 @@
     	
     	<!-- Add custom CSS here -->
     	<link href="css/sb-admin.css" rel="stylesheet">
+        <link href="css/datepicker.css" rel="stylesheet">
+        <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
+        
+        
+        
+        
         
 	</head>
 
 		<!-- JavaScript -->
     <script src="js/jquery-2.0.3.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/jasny-bootstrap.min.js"></script>
+
+    <script src="js/locales/bootstrap-datepicker.pt-BR.js"></script>
 
     <body>
   <div id="wrapper">
 
     
-    
+    <STYLE type="text/css">
+        a:link {text-decoration: none;}
+a:active {text-decoration: none;}
+a:visited {text-decoration: none;}
+a:hover {text-decoration: none;}
+</STYLE>
