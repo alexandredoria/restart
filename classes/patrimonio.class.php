@@ -7,12 +7,10 @@
  */
 require_once 'db.class.php';
 class Patrimonio extends DB {
-
 	/**
 	 * @param object $db Variável objeto que faz a conexão com o banco de dados
 	 */
 	private $db;
-
 	/**
 	 * Cria uma nova instancia da classe Patrimonio, fazendo a conexão com o banco
 	 * @return object Variável objeto contendo as funcionalidades do MySQLi
@@ -20,14 +18,12 @@ class Patrimonio extends DB {
 	public function __construct(){
 		$this->db = parent::conectaDB();
 	}
-
 	/**
 	 * Destroi a instancia da classe, encenrrando a conexão com o banco
 	 */
 	public function __destruct(){
 		$this->db->close();
 	}
-
 	/**
 	 * Cadastra um novo Patrimonio
 	 * @param string $nome Nome do Patrimonio
@@ -40,25 +36,22 @@ class Patrimonio extends DB {
 	 * @param int $user ID do funcionario que cadastrou
 	 * @return boolean Se foi possível cadastrar ou não a categoria
 	 */
-
-	public function cadastrarPatrimonio($num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config) {
-	date_default_timezone_set("America/Bahia");	
+	public function cadastrarPatrimonio($num_patrimonio, $num_posicionamento, $situacao, $categoria, $equipamento, $laboratorio) {
+	date_default_timezone_set("America/Bahia");
 		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
 			if ($check->num_rows) return "O número de patrimônio \"$num_patrimonio\"  já está cadastrado no sistema.";
 			else {
-				date_default_timezone_set("America/Bahia");	
-				$data_cadastro = date("Y-m-d H:i:s", time());  
-				$insert = $this->db->prepare("INSERT INTO patrimonio (num_patrimonio, tipo, num_posicionamento, situacao, data_cadastro, id_laboratorio, Configuracao_id) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
-				$insert->bind_param('siiisii', $num_patrimonio, $tipo, $num_posicionamento, $situacao, $data_cadastro, $lab, $config);
+				date_default_timezone_set("America/Bahia");
+				$data_cadastro = date("Y-m-d H:i:s", time());
+				$insert = $this->db->prepare("INSERT INTO patrimonio (num_patrimonio, Equipamento_id, Categoria_id, Laboratorio_id, num_posicionamento, situacao, data_cadastro) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
+				$insert->bind_param('siiiiis', $num_patrimonio, $equipamento, $categoria, $laboratorio, $num_posicionamento, $situacao, $data_cadastro);
 				if ($insert->execute()) { return true; }
 				else { return ($this->db->error); }
 			} // Não está em uso
 			$check->free();
-		}	
+		}
 	}
-
 	/**/
-
 	/**
 	 * Edita um Patrimonio
 	 * @param string $nome Nome do Patrimonio
@@ -71,37 +64,31 @@ class Patrimonio extends DB {
 	 * @param int $user ID do funcionario que editou
 	 * @return string Mensagem de retorno
 	 */
-	public function alterarPatrimonio($numPatAntigo, $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config) {
+	public function alterarPatrimonio($numPatAntigo, $num_patrimonio, $Categoria_id, $num_posicionamento, $situacao, $lab, $config) {
 		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
 			if (($check->num_rows) > 1) return "O patrimônio $num_patrimonio já está cadastrado no sistema.";
 			else{
-				date_default_timezone_set("America/Bahia");	
-				$data_atualizacao = date("Y-m-d H:i:s", time());  
-				$edit = $this->db->prepare("UPDATE patrimonio SET num_patrimonio = ?, tipo = ?, num_posicionamento = ?, situacao = ?, id_laboratorio = ?, Configuracao_id = ?, data_atualizacao = ? WHERE num_patrimonio = ?");
-				$edit->bind_param('siiiiiss', $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config, $data_atualizacao, $numPatAntigo);
+				date_default_timezone_set("America/Bahia");
+				$data_atualizacao = date("Y-m-d H:i:s", time());
+				$edit = $this->db->prepare("UPDATE patrimonio SET num_patrimonio = ?, Categoria_id = ?, num_posicionamento = ?, situacao = ?, Laboratorio_id = ?, Configuracao_id = ?, data_atualizacao = ? WHERE num_patrimonio = ?");
+				$edit->bind_param('siiiiiss', $num_patrimonio, $Categoria_id, $num_posicionamento, $situacao, $lab, $config, $data_atualizacao, $numPatAntigo);
 				if ($edit->execute()) { return true; }
 				else { return ($this->db->error); }
-		        
 		    }
 		    $check->free();
 		}
 	}
-
 	/**
 	 * Deleta um Patrimonio existente
 	 * @param int $id Número de ID do Patrimonio a ser excluída
 	 * @return string Mensagem de retorno
 	 */
 	public function deletarPatrimonio($num_patrimonio) {
-		
 		$delete = $this->db->prepare("DELETE FROM patrimonio WHERE num_patrimonio = ?");
 		$delete->bind_param('s', $num_patrimonio);
 		if ($delete->execute()) { return true; }
 				else { return ($this->db->error); }
-		
 	}
-
-
 	/**
 	 * Obtém o dado desejado de um Patrimonio
 	 * @param int $id Número de ID do produt
@@ -116,10 +103,8 @@ class Patrimonio extends DB {
 				}
 				return $valor;
 			}$result->free();
-			
 		}else return ($this->db->error);
 	}
-
 	/**
 	 * Realiza a busca de um Patrimonio na base de dados
 	 * @param string $termo O que se deseja encontrar
@@ -139,7 +124,7 @@ class Patrimonio extends DB {
 							<td>" . $row['preco_custo'] . "</td>
 							<td>" . $row['preco_venda'] . "</td>
 							<td>
-								<a class='btn_white' data-reveal-id='formPatrimonios' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Patrimonio', 'formProd', " . $row['id'] . ")\">Editar</a> 
+								<a class='btn_white' data-reveal-id='formPatrimonios' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Patrimonio', 'formProd', " . $row['id'] . ")\">Editar</a>
 								<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
 							</td></tr>";
 					}
@@ -160,7 +145,7 @@ class Patrimonio extends DB {
 						<td>" . $row['preco_custo'] . "</td>
 						<td>" . $row['preco_venda'] . "</td>
 						<td>
-							<a class='btn_white' data-reveal-id='formPatrimonios' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Patrimonio', 'formProd', " . $row['id'] . ")\">Editar</a> 
+							<a class='btn_white' data-reveal-id='formPatrimonios' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Patrimonio', 'formProd', " . $row['id'] . ")\">Editar</a>
 							<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
 						</td></tr>";
 				}
@@ -168,22 +153,21 @@ class Patrimonio extends DB {
 			unset($result);
 		}
 	}
-
 	/**
 	 * TODO Auto-generated comment.
 	 */
 	public function relatorioPatrimonio() {
 	}
-
 	/**
 	 * Gera um array com as informações dos Patrimonio cadastrados
 	 * @return array $rows Dados dos Patrimonio
 	 */
 	public function listarPatrimonios($filtro) {
+		$sql = "SELECT p.*, c.`nome` AS nome_categoria, l.`nome` AS nome_laboratorio, e.`modelo` AS modelo_equipamento FROM patrimonio AS p INNER JOIN `categoria` AS c ON p.`Categoria_id` = c.`id` INNER JOIN `equipamento` AS e ON p.`Equipamento_id` = e.`id` INNER JOIN `laboratorio` AS l ON p.`Laboratorio_id` = l.`id`";
 		if ($filtro != 0 ){
-			$result = $this->db->query("SELECT * FROM patrimonio WHERE tipo = '".$filtro."' ORDER BY 'num_patrimonio' DESC ");
+			$result = $this->db->query($sql." WHERE p.`Categoria_id` = '".$filtro."' ORDER BY 'num_patrimonio' DESC ");
 		} else {
-			$result	= $this->db->query("SELECT * FROM patrimonio ORDER BY 'num_patrimonio' DESC ");
+			$result	= $this->db->query($sql." ORDER BY 'num_patrimonio' DESC ");
 		}
 		// Executa a query dos Patrimonio e se não houver erros realiza as ações
 		if ($result) {
@@ -201,7 +185,6 @@ class Patrimonio extends DB {
 		}
 		else return ($this->db->error);
 	}
-
 	public function checkPatrimonio($num_patrimonio) {
 		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
 			if ($check->num_rows) return true; // Nome está em uso

@@ -1,7 +1,4 @@
 <?php
-
-
-
 $html = '
 <h1>mPDF</h1>
 <h2>Tables</h2>
@@ -9,9 +6,7 @@ $html = '
 <p>The CSS properties for tables and cells is increased over that in html2fpdf. It includes recognition of THEAD, TFOOT and TH.<br />See below for other facilities such as autosizing, and rotation.</p>
 <table border="1">
 <tbody><tr><td>Row 1</td><td>This is data</td><td>This is data</td></tr>
-
 <tr><td>Row 2</td>
-
 <td style="background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;">
 <p>This is data p</p>
 This is data out of p
@@ -24,8 +19,6 @@ This is data out of div
 <div style="font-weight:bold;">This is data div (bold)</div>
 This is data out of div
 </td>
-
-
 <td><p>More data</p><p style="font-size:12pt;">This is large text</p></td></tr>
 <tr><td><p>Row 3</p></td><td><p>This is long data</p></td><td>This is data</td></tr>
 <tr><td><p>Row 4 &lt;td&gt; cell</p></td><td>This is data</td><td><p>This is data</p></td></tr>
@@ -34,7 +27,6 @@ This is data out of div
 <tr><td>Row 7</td><td>Also data</td><td>Also data</td></tr>
 <tr><td>Row 8</td><td>Also data</td><td>Also data</td></tr>
 </tbody></table>
-
 <p>This table has padding-left and -right set to 5mm i.e. padding within the cells. Also border colour and style, font family and size are set by <acronym>CSS</acronym>.</p>
 <table align="right" style="border: 1px solid #880000; font-family: Mono; font-size: 7pt; " class="widecells">
 <tbody><tr><td>Row 1</td><td>This is data</td><td>This is data</td></tr>
@@ -46,15 +38,12 @@ This is data out of div
 <tr><td>Row 7</td><td>Also data</td><td>Also data</td></tr>
 <tr><td>Row 8</td><td>Also data</td><td>Also data</td></tr>
 </tbody></table>
-
 <p>This table has padding-top and -bottom set to 3mm i.e. padding within the cells. Also background-, border colour and style, font family and size are set by in-line <acronym>CSS</acronym>.</p>
 <table style="border: 1px solid #880000; background-color: #BBCCDD; font-family: Mono; font-size: 7pt; " class="tallcells">
 <tbody><tr><td>Row 1</td><td>This is data</td><td>This is data</td></tr>
 <tr><td>Row 2</td><td><p>This is data p</p></td><td><p>More data</p></td></tr>
 <tr><td><p>Row 3</p></td><td><p>This is long data</p></td><td>This is data</td></tr>
 </tbody></table>
-
-
 <h3 style="margin-top: 20pt; margin-collapse:collapse;">Table Styles</h3>
 <p>The style sheet used for these examples shows some of the table styles I use on my website. The property \'topntail\' defined by a border-type definition e.g. "1px solid #880000" puts a border at the top and bottom of the table, and also below a header row (thead) if defined. Note also that &lt;thead&gt; will automatically turn on the header-repeat i.e. reproduce the header row at the top of each page.</p>
 <p>bpmTopic Class</p>
@@ -112,9 +101,7 @@ This is data out of div
 <td>Also data</td>
 </tr>
 </tbody></table>
-
 <p>&nbsp;</p>
-
 <p>bpmTopic<b>C</b> Class (centered) Odd and Even rows</p>
 <table class="bpmTopicC"><thead>
 <tr class="headerrow"><th>Col/Row Header</th>
@@ -170,9 +157,7 @@ This is data out of div
 <td>Also data</td>
 </tr>
 </tbody></table>
-
 <p>&nbsp;</p>
-
 <p>bpmTopnTail Class </p>
 <table class="bpmTopnTail"><thead></thead><tbody>
 <tr>
@@ -284,9 +269,7 @@ This is data out of div
 <td>Also data</td>
 </tr>
 </tbody></table>
-
 <p>&nbsp;</p>
-
 <p>TopnTail Class</p>
 <table class="bpmTopnTail"><thead>
 <tr class="headerrow"><th>Col and Row Header</th>
@@ -332,9 +315,7 @@ This is data out of div
 <td colspan="2" class="pmhTopCenter">Also data merged and centered</td>
 </tr>
 </tbody></table>
-
 <p>&nbsp;</p>
-
 <h4>Lists in a Table</h4>
 <table class="bpmTopnTail"><thead>
 <tr class="headerrow"><th>Col and Row Header</th>
@@ -398,8 +379,6 @@ Unordered list:
 </tr>
 </tbody></table>
 <p>&nbsp;</p>
-
-
 <h4>Automatic Column Width</h4>
 <table class="bpmTopnTail"><tbody>
 <tr>
@@ -413,8 +392,6 @@ Suspendisse potenti</td>
 <td>Ut magna ipsum, tempus in, condimentum at, rutrum et, nisl. Vestibulum interdum luctus sapien. Quisque viverra. Etiam id libero at magna pellentesque aliquet. Nulla sit amet ipsum id enim tempus dictum. Maecenas consectetuer eros quis massa. Mauris semper velit vehicula purus. Duis lacus. Aenean pretium consectetuer mauris. Ut purus sem, consequat ut, fermentum sit amet, ornare sit amet, ipsum. Donec non nunc. Maecenas fringilla. Curabitur libero. In dui massa, malesuada sit amet, hendrerit vitae, viverra nec, tortor. Donec varius. Ut ut dolor et tellus adipiscing adipiscing.</td>
 </tr>
 </tbody></table>
-
-
 <h4>ColSpan & Rowspan</h4>
 <table class="bpmTopnTail"><tbody>
 <tr>
@@ -430,9 +407,6 @@ Donec mattis, nisi id euismod auctor, neque metus pellentesque risus, at eleifen
 Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel aliquam quam odio et sapien.</td>
 </tr>
 </tbody></table>
-
-
-
 <h4>Table Header & Footer Rows</h4>
 <p>A table using a header row should repeat the header row across pages:</p>
 <p>bpmTopic<b>C</b> Class</p>
@@ -535,12 +509,9 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 <tr><th>Another Row header</th><td>Also data</td><td>Also data</td></tr>
 </tbody></table>
 <p>&nbsp;</p>
-
 <h3>Autosizing Tables</h3>
 <p>Periodic Table of elements. Tables are set by default to reduce font size if complete words will not fit inside each cell, to a maximum of 1/1.4 * the set font-size. This value can be changed by setting $mpdf->shrink_tables_to_fit=1.8 or using html attribute &lt;table autosize="1.8"&gt;.</p>
-
 <h5>Periodic Table</h5>
-
 <table style="border:1px solid #000000;" cellPadding="9"><thead>
 <tr><th>1A</th><th>2A</th><th>3B</th><th>4B</th><th>5B</th><th>6B</th><th>7B</th><th>8B</th><th>8B</th><th>8B</th><th>1B</th><th>2B</th><th>3A</th><th>4A</th><th>5A</th><th>6A</th><th>7A</th><th>8A</th></tr></thead><tbody>
 <tr>
@@ -679,12 +650,9 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 <td></td>
 </tr>
 </tbody></table>
-
 <pagebreak />
-
 <h3>Rotating Tables</h3>
 <p>This is set to rotate -90 degrees (counterclockwise).</p>
-
 <h5>Periodic Table</h5>
 <p>
 <table rotate="-90" class="bpmClearC"><thead>
@@ -828,10 +796,8 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 </tr>
 </tbody></table>
 <p>&nbsp;</p>
-
 <pagebreak />
 <h3>Rotated text in Table Cells</h3>
-
 <h5>Periodic Table</h5>
 <table>
 <thead>
@@ -854,7 +820,6 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 <th>Element type 8A</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>H</td>
@@ -987,31 +952,21 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 </tr>
 </tbody></table>
 <p>&nbsp;</p>
-
 ';
-
 //==============================================================
 //==============================================================
 //==============================================================
 include("../mpdf.php");
-
-$mpdf=new mPDF('c','A4','','',32,25,27,25,16,13); 
-
+$mpdf=new mPDF('c','A4','','',32,25,27,25,16,13);
 $mpdf->SetDisplayMode('fullpage');
-
 $mpdf->list_indent_first_level = 0;	// 1 or 0 - whether to indent the first level of a list
-
 // LOAD a stylesheet
 $stylesheet = file_get_contents('mpdfstyletables.css');
 $mpdf->WriteHTML($stylesheet,1);	// The parameter 1 tells that this is css/style only and no body/html/text
-
 $mpdf->WriteHTML($html,2);
-
 $mpdf->Output('mpdf.pdf','I');
 exit;
 //==============================================================
 //==============================================================
 //==============================================================
-
-
 ?>

@@ -1,17 +1,12 @@
 <?php
-
 //==============================================================
 //==============================================================
 define("_JPGRAPH_PATH", '../../jpgraph_5/jpgraph/'); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
-
 define('_MPDF_URI','../'); 	// must be  a relative or absolute URI - not a file system path
 //==============================================================
 //==============================================================
-
-
 ini_set("memory_limit","64M");
-
 $html = '
 <html><head>
 	<meta http-equiv="Content-Language" content="en-GB">
@@ -19,33 +14,27 @@ $html = '
 	<style>
 		body { font-family:"Times New Roman"; font-size:10pt; }
 		p.littlewomen { margin: 0; font-family: sans-serif; text-align: justify; }
-
 		h1, h2, h3, h4, h5, h6 { font-family: DejaVuSansCondensed; }
 		table {font-family: DejaVuSansCondensed; font-size: 9pt; line-height: 1.2;
-			vertical-align: top; 
+			vertical-align: top;
 			margin-top: 2pt; margin-bottom: 5pt;
 			border-collapse: collapse;  }
-
 		thead {	font-weight: bold; vertical-align: bottom; }
-
-		th {	font-weight: bold; 
-			text-align:left; 
-			padding-left: 2mm; 
-			padding-right: 2mm; 
-			padding-top: 0.5mm; 
-			padding-bottom: 0.5mm; 
-		 }
-
-		td {	padding-left: 2mm; 
-			text-align:left; 
-			padding-right: 2mm; 
-			padding-top: 0.5mm; 
+		th {	font-weight: bold;
+			text-align:left;
+			padding-left: 2mm;
+			padding-right: 2mm;
+			padding-top: 0.5mm;
 			padding-bottom: 0.5mm;
 		 }
-
+		td {	padding-left: 2mm;
+			text-align:left;
+			padding-right: 2mm;
+			padding-top: 0.5mm;
+			padding-bottom: 0.5mm;
+		 }
 		th p { text-align: left; margin:0pt;  }
 		td p { text-align: left; margin:0pt;  }
-
 		table.widecells td {
 			padding-left: 5mm;
 			padding-right: 5mm;
@@ -53,11 +42,10 @@ $html = '
 		table.tallcells td {
 			padding-top: 3mm;
 			padding-bottom: 3mm;
-		}	.sub td { vertical-align:top; border-top:0px; border-bottom:0px; padding:2px; padding-right:8px; 
+		}	.sub td { vertical-align:top; border-top:0px; border-bottom:0px; padding:2px; padding-right:8px;
 			margin:0; font-size:9pt; }
 		.sub { align:center; border:#888888 1px solid; }
 		thead td { font-weight: bold; }
-
 		table.nested {
 			border-collapse: separate;
 			border: 4px solid #880000;
@@ -110,10 +98,8 @@ $html = '
 		}
 		.headerrow td, .headerrow th { background-gradient: linear #b7cebd #f5f8f5 0 1 0 0.2;  }
 		.footerrow td, .footerrow th { background-gradient: linear #b7cebd #f5f8f5 0 1 0 0.2;  }
-
-		.evenrow td, .evenrow th { background-color: #f5f8f5; } 
-		.oddrow td, .oddrow th { background-color: #e3ece4; } 
-
+		.evenrow td, .evenrow th { background-color: #f5f8f5; }
+		.oddrow td, .oddrow th { background-color: #e3ece4; }
 		.bpmTopic {	background-color: #e3ece4; }
 		.bpmTopicC { background-color: #e3ece4; }
 		.bpmNoLines { background-color: #e3ece4; }
@@ -124,13 +110,11 @@ $html = '
 		.bpmTopnTailC { background-color: #e3ece4; topntail: 0.02cm solid #495b4a;}
 		.bpmTopnTailClear { topntail: 0.02cm solid #495b4a; }
 		.bpmTopnTailClearC { topntail: 0.02cm solid #495b4a; }
-
 		.bpmTopicC td, .bpmTopicC td p { text-align: center; }
 		.bpmNoLinesC td, .bpmNoLinesC td p { text-align: center; }
 		.bpmClearC td, .bpmClearC td p { text-align: center; }
 		.bpmTopnTailC td, .bpmTopnTailC td p { text-align: center;  }
 		.bpmTopnTailClearC td, .bpmTopnTailClearC td p {  text-align: center;  }
-
 		.pmhMiddleCenter { text-align:center; vertical-align:middle; }
 		.pmhMiddleRight {	text-align:right; vertical-align:middle; }
 		.pmhBottomCenter { text-align:center; vertical-align:bottom; }
@@ -140,7 +124,6 @@ $html = '
 		.pmhTopLeft {	text-align:left; vertical-align:top; }
 		.pmhBottomLeft {	text-align:left; vertical-align:bottom; }
 		.pmhMiddleLeft {	text-align:left; vertical-align:middle; }
-
 		.bpmTopic td, .bpmTopic th  {	border-top: 1px solid #FFFFFF; }
 		.bpmTopicC td, .bpmTopicC th  {	border-top: 1px solid #FFFFFF; }
 		.bpmTopnTail td, .bpmTopnTail th  {	border-top: 1px solid #FFFFFF; }
@@ -150,9 +133,8 @@ $html = '
 		.listc{ list-style-type: upper-alpha; text-indent: 25mm; }
 		.listd{ list-style-type: lower-alpha; color: teal; line-height: 2; }
 		.liste{ list-style-type: disc; }
-
 		.roundgradient {
-			border:0.05mm solid #220044; 
+			border:0.05mm solid #220044;
 			background-color: #f0f2ff;
 			background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;
 			border-radius: 10mm / 10mm;
@@ -160,15 +142,14 @@ $html = '
 			padding: 3.3mm;
 		}
 		.phpcode {
-			border:1px solid #555555; 
-			background-color: #DDDDDD; 
-			padding: 1em; 
-			font-size:8pt; 
+			border:1px solid #555555;
+			background-color: #DDDDDD;
+			padding: 1em;
+			font-size:8pt;
 			font-family: lucidaconsole, mono;
 		}
 	</style>
 </head><body>
-
 <!-- DEFINE HEADERS & FOOTERS -->
 <htmlpageheader name="myHTMLHeaderOdd">
 <div style="font-family:sans-serif; background-color:#BBEEFF" align="center"><b>mPDF Example File</b></div>
@@ -182,114 +163,75 @@ $html = '
 <htmlpagefooter name="myHTMLFooterEven" style="display:none">
 <div style="font-family:sans-serif; background-color:#FFCCFF" align="center"><b><i>{PAGENO}/{nbpg}</i></b></div>
 </htmlpagefooter>
-
 <pagefooter name="myFooter2Odd" content-left="" content-center="mPDF Example File" content-right="{PAGENO}/{nbpg}" footer-style="font-family:sans-serif; font-size:9pt; font-weight:bold; color:#000088;" footer-style-right="font-weight: bold;" line="on" />
-
 <pagefooter name="myFooter2Even" content-left="{PAGENO}/{nbpg}" content-center="mPDF Example File" content-right="{DATE j-m-Y}" footer-style="font-family:sans-serif; font-size:10pt; color:#880000;" footer-style-left="font-weight:bold;" line="on" />
-
-
 <!-- FRONT COVER -->
 <div style="position: absolute; left:0; right: 0; top: 0; bottom: 0;">
 <img src="clematis.jpg" style="width: 210mm; height: 297mm; margin: 0;" />
 </div>
-
 <div style="position: absolute; left:32mm; right: 25mm; top: 70mm; width: 58%; margin-right: auto; margin-left:auto; ">
 <div style="padding: 1em; font-family: Arial; font-weight: bold; font-size: 28pt; border: 3px solid #000044; border-radius: 5mm; background-clip: border-box; color: #000044; background-color: #FFFFFF;">
 mPDF Example File
 </div>
 </div>
-
 <pagebreak />
-
 <p>The front cover can also be produced like this:</p>
 <!-- EXAMPLE PHP CODE -->
 <div class="phpcode">'. nl2br(htmlspecialchars('/* ALTERNATIVE PHP METHOD */
 $mpdf->Image(\'clematis.jpg\',0,0,210,297,\'jpg\',\'\',true, false);
 // the last "false" allows a full page picture
-
 $mpdf->y = 70;
 $mpdf->Shaded_box(\'mPDF Example File\', \'Trebuchet\', \'\', 28, \'70%\', \'DF\', 3, \'#FFFFFF\', \'#000044\', 10);
 ')) .'</div>
 <!-- END EXAMPLE PHP CODE -->
-
-
 <!-- TABLES OF CONTENTS -->
-<tocpagebreak toc-preHTML="&lt;h2&gt;CONTENTS&lt;/h2&gt;" links="1" toc-bookmarkText="Contents" resetpagenum="1" pagenumstyle="1" 
+<tocpagebreak toc-preHTML="&lt;h2&gt;CONTENTS&lt;/h2&gt;" links="1" toc-bookmarkText="Contents" resetpagenum="1" pagenumstyle="1"
 odd-header-name="html_myHTMLHeaderOdd" odd-header-value="1" even-header-name="html_myHTMLHeaderEven" even-header-value="1" odd-footer-name="myFooter2Odd" odd-footer-value="1" even-footer-name="myFooter2Even" even-footer-value="1" />
-
 <tocpagebreak name="Figures" toc-preHTML="&lt;h2&gt;FIGURES&lt;/h2&gt;" links="1" toc-bookmarkText="Figures" />
-
 <tocpagebreak name="Tables" toc-preHTML="&lt;h2&gt;TABLES&lt;/h2&gt;" links="1"  toc-bookmarkText="Tables" />
-
-
-
 <!-- SECTION 1 -->
 <h1>(H1) mPDF</h1>
 <h2>(H2) Section 1<bookmark content="Section 1" level="0" /></h2>
 <h3>(H3) HTML Markup<bookmark content="HTML Markup" level="1" /><tocentry name="" content="HTML Markup" level="0" /><indexentry content="HTML Markup"  /></h3>
-
 <tocentry name="" content="HTML Markup" level="1" />
 <tocentry name="" content="HTML Markup" level="2" />
-
 <h4>Heading 4</h4>
 <h5>Heading 5</h5>
 <h6>Heading 6</h6>
 <p>P: Nulla felis erat, imperdiet eu, ullamcorper non, nonummy quis, elit. Suspendisse potenti. Ut a eros at ligula vehicula pretium. Maecenas feugiat pede vel risus. Nulla et lectus. Fusce eleifend neque sit amet erat. Integer consectetuer nulla non orci. Morbi feugiat pulvinar dolor. Cras odio. Donec mattis, nisi id euismod auctor, neque metus pellentesque risus, at eleifend lacus sapien et risus. Phasellus metus. Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel aliquam quam odio et sapien. Mauris ante pede, auctor ac, suscipit quis, malesuada sed, nulla. Integer sit amet odio sit amet lectus luctus euismod. Donec et nulla. Sed quis orci. </p>
-
 <hr />
-
 <div>DIV: Proin aliquet lorem id felis. Curabitur vel libero at mauris nonummy tincidunt. Donec imperdiet. Vestibulum sem sem, lacinia vel, molestie et, laoreet eget, urna. Curabitur viverra faucibus pede. Morbi lobortis. Donec dapibus. Donec tempus. Ut arcu enim, rhoncus ac, venenatis eu, porttitor mollis, dui. Sed vitae risus. In elementum sem placerat dui. Nam tristique eros in nisl. Nulla cursus sapien non quam porta porttitor. Quisque dictum ipsum ornare tortor. Fusce ornare tempus enim. </div>
 <div>DIV: Proin aliquet lorem id felis. Curabitur vel libero at mauris nonummy tincidunt. Donec imperdiet. Vestibulum sem sem, lacinia vel, molestie et, laoreet eget, urna. Curabitur viverra faucibus pede. Morbi lobortis. Donec dapibus. Donec tempus. Ut arcu enim, rhoncus ac, venenatis eu, porttitor mollis, dui. Sed vitae risus. In elementum sem placerat dui. Nam tristique eros in nisl. Nulla cursus sapien non quam porta porttitor. Quisque dictum ipsum ornare tortor. Fusce ornare tempus enim. </div>
-
 <blockquote>Blockquote: Maecenas arcu justo, malesuada eu, dapibus ac, adipiscing vitae, turpis. Fusce mollis. Aliquam egestas. In purus dolor, facilisis at, fermentum nec, molestie et, metus. Maecenas arcu justo, malesuada eu, dapibus ac, adipiscing vitae, turpis. Fusce mollis. Aliquam egestas. In purus dolor, facilisis at, fermentum nec, molestie et, metus.</blockquote>
-
 <address>Address: Vestibulum feugiat, orci at imperdiet tincidunt, mauris erat facilisis urna, sagittis ultricies dui nisl et lectus. Sed lacinia, lectus vitae dictum sodales, elit ipsum ultrices orci, non euismod arcu diam non metus.</address>
-
-<pre>PRE: Cum sociis natoque penatibus et magnis dis parturient montes, 
-nascetur ridiculus mus. In suscipit turpis vitae odio. Integer convallis 
-dui at metus. Fusce magna. Sed sed lectus vitae enim tempor cursus. Cras 
-sed, posuere et, urna. Quisque ut leo. Aliquam interdum hendrerit tortor. 
-Vestibulum elit. Vestibulum et arcu at diam mattis commodo. Nam ipsum sem, 
+<pre>PRE: Cum sociis natoque penatibus et magnis dis parturient montes,
+nascetur ridiculus mus. In suscipit turpis vitae odio. Integer convallis
+dui at metus. Fusce magna. Sed sed lectus vitae enim tempor cursus. Cras
+sed, posuere et, urna. Quisque ut leo. Aliquam interdum hendrerit tortor.
+Vestibulum elit. Vestibulum et arcu at diam mattis commodo. Nam ipsum sem,
 ultricies at, rutrum sit amet, posuere nec, velit. Sed molestie mollis dui.</pre>
-
 <div><a href="http://mpdf.bpm1.com/manual/">Hyperlink (&lt;a&gt;)</a></div>
-
 <div>Styles - <tt>tt(teletype)</tt> <i>italic</i> <b>bold</b> <big>big</big> <small>small</small> <em>emphasis</em> <strong>strong</strong> <br />new lines<br>
 <code>code</code> <samp>sample</samp> <kbd>keyboard</kbd> <var>variable</var> <cite>citation</cite> <abbr>abbr.</abbr> <acronym>ACRONYM</acronym> <sup>sup</sup> <sub>sub</sub> <strike>strike</strike> <s>strike-s</s> <u>underline</u> <del>delete</del> <ins>insert</ins> <q>To be or not to be</q> <font face="sans-serif" color="#880000" size="5">font changing face, size and color</font>
 </div>
-
 <p style="font-size:15pt; color:#440066">Paragraph using the in-line style to determine the font-size (15pt) and colour</p>
-
-
 <h3>Testing BIG, SMALL, UNDERLINE, STRIKETHROUGH, FONT color, ACRONYM, SUPERSCRIPT and SUBSCRIPT</h3>
 <p>This is <s>strikethrough</s> in <b><s>block</s></b> and <small>small <s>strikethrough</s> in <i>small span</i></small> and <big>big <s>strikethrough</s> in big span</big> and then <u>underline and <s>strikethrough and <sup>sup</sup></s></u> but out of span again but <font color="#000088">blue</font> font and <acronym>ACRONYM</acronym> text</p>
-
-<p>This is a <font color="#008800">green reference<sup>32-47</sup></font> and <u>underlined reference<sup>32-47</sup></u> then reference<sub>32-47</sub> and <u>underlined reference<sub>32-47</sub></u> then <s>Strikethrough reference<sup>32-47</sup></s> and <s>strikethrough reference<sub>32-47</sub></s></p> 
-
-<p><big>Repeated in <u>BIG</u>: This is reference<sup>32-47</sup> and <u>underlined reference<sup>32-47</sup></u> then reference<sub>32-47</sub> and <u>underlined reference<sub>32-47</sub></u> but out of span again but <font color="#000088">blue</font> font and <acronym>ACRONYM</acronym> text</big></p> 
-
+<p>This is a <font color="#008800">green reference<sup>32-47</sup></font> and <u>underlined reference<sup>32-47</sup></u> then reference<sub>32-47</sub> and <u>underlined reference<sub>32-47</sub></u> then <s>Strikethrough reference<sup>32-47</sup></s> and <s>strikethrough reference<sub>32-47</sub></s></p>
+<p><big>Repeated in <u>BIG</u>: This is reference<sup>32-47</sup> and <u>underlined reference<sup>32-47</sup></u> then reference<sub>32-47</sub> and <u>underlined reference<sub>32-47</sub></u> but out of span again but <font color="#000088">blue</font> font and <acronym>ACRONYM</acronym> text</big></p>
 <p><small>Repeated in small: This is reference<sup>32-47</sup> and <u>underlined reference<sup>32-47</sup></u> then reference<sub>32-47</sub> and <u>underlined reference<sub>32-47</sub></u> but out of span again but <font color="#000088">blue</font> font and <acronym>ACRONYM</acronym> text</small></p>
-
 <p>The above repeated, but starting with a paragraph with font-size specified (7pt)</p>
-
 <p style="font-size:7pt;">This is <s>strikethrough</s> in block and <small>small <s>strikethrough</s> in small span</small> and then <u>underline</u> but out of span again but <font color="#000088">blue</font> font and <acronym>ACRONYM</acronym> text</p>
-
 <p style="font-size:7pt;">This is <s>strikethrough</s> in block and <big>big <s>strikethrough</s> in big span</big> and then <u>underline</u> but out of span again but <font color="#000088">blue</font> font and <acronym>ACRONYM</acronym> text</p>
-
 <p style="font-size:7pt;">This is reference<sup>32-47</sup> and <u>underlined reference<sup>32-47</sup></u> then reference<sub>32-47</sub> and <u>underlined reference<sub>32-47</sub></u> then <s>Strikethrough reference<sup>32-47</sup></s> and <s>strikethrough reference<sub>32-47</sub></s></p>
-
 <p><small>This tests <u>underline</u> and <s>strikethrough</s> when they are <s><u>used together</u></s> as they both use text-decoration</small></p>
-
-
-<p><small>Repeated in small: This is reference<sup>32-47</sup> and <u>underlined reference<sup>32-47</sup></u> then reference<sub>32-47</sub> and <u>underlined reference<sub>32-47</sub></u> but out of span again but <font color="#000088">blue</font> font and <acronym>ACRONYM</acronym> text</small></p> 
-
+<p><small>Repeated in small: This is reference<sup>32-47</sup> and <u>underlined reference<sup>32-47</sup></u> then reference<sub>32-47</sub> and <u>underlined reference<sub>32-47</sub></u> but out of span again but <font color="#000088">blue</font> font and <acronym>ACRONYM</acronym> text</small></p>
 <p style="font-size:7pt;"><big>Repeated in BIG but with font-size set to 7pt by in-line css: This is reference<sup>32-47</sup> and <u>underlined reference<sup>32-47</sup></u> then reference<sub>32-47</sub> and <u>underlined reference<sub>32-47</sub></u> but out of span again but <font color="#000088">blue</font> font and <acronym>ACRONYM</acronym> text</big></p>
-
 <ol>
 <li>Item <b><u>1</u></b></li>
 <li>Item 2<sup>32</sup></li>
 <li><small>Item</small> 3</li>
-<li>Praesent pharetra nulla in turpis. Sed ipsum nulla, sodales nec, vulputate in, scelerisque vitae, magna. Sed egestas justo nec ipsum. Nulla facilisi. Praesent sit amet pede quis metus aliquet vulputate. Donec luctus. Cras euismod tellus vel leo. 
+<li>Praesent pharetra nulla in turpis. Sed ipsum nulla, sodales nec, vulputate in, scelerisque vitae, magna. Sed egestas justo nec ipsum. Nulla facilisi. Praesent sit amet pede quis metus aliquet vulputate. Donec luctus. Cras euismod tellus vel leo.
 <ul>
 <li>Praesent pharetra nulla in turpis. Sed ipsum nulla, sodales nec, vulputate in, scelerisque vitae, magna. Sed egestas justo nec ipsum. Nulla facilisi. Praesent sit amet pede quis metus aliquet vulputate. Donec luctus. Cras euismod tellus vel leo. </li>
 <li>Subitem 2
@@ -303,7 +245,6 @@ Level 3 subitem
 </li>
 <li>Item 5</li>
 </ol>
-
 <p>Sed bibendum. Nunc eleifend ornare velit. Sed consectetuer urna in erat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Mauris sodales semper metus. Maecenas justo libero, pretium at, malesuada eu, mollis et, arcu. Ut suscipit pede in nulla. Praesent elementum, dolor ac fringilla posuere, elit libero rutrum massa, vel tincidunt dui tellus a ante. Sed aliquet euismod dolor. Vestibulum sed dui. Duis lobortis hendrerit quam. Donec tempus orci ut libero. Pellentesque suscipit malesuada nisi. </p>
 <tocentry name="Tables" content="Basic table" level="0" />
 <table border="1" cellpadding="5">
@@ -336,28 +277,15 @@ Level 3 subitem
 </tr>
 </tbody>
 </table>
-
 This paragraph has border-radius and background-gradient set. Minimum padding is recommended as 1/3rd of the border-radius. Or can use $mpdf->autoPadding.
 <p class="roundgradient">Sed bibendum. Nunc eleifend ornare velit. Sed consectetuer urna in erat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Mauris sodales semper metus. Maecenas justo libero, pretium at, malesuada eu, mollis et, arcu. Ut suscipit pede in nulla. Praesent elementum, dolor ac fringilla posuere, elit libero rutrum massa, vel tincidunt dui tellus a ante. Sed aliquet euismod dolor. Vestibulum sed dui. Duis lobortis hendrerit quam. Donec tempus orci ut libero. Pellentesque suscipit malesuada nisi. </p>
-
-
-
 <!-- HYPHENATION -->
 <pagebreak />
 <h3>Hyphenation<bookmark content="Hyphenation" level="1" /><tocentry name="" content="Hyphenation" level="0" /><indexentry content="Hyphenation"  /></h3>
-
 <h4>Little Women - Chapter One - Playing Pilgrims</h4>
 <columns column-count="4" vAlign="J" column-gap="7" />
-
 <p class="littlewomen"> Christmas won\'t be Christmas without any presents,  grumbled Jo, lying on the rug.</p><p class="littlewomen"> It\'s so dreadful to be poor!  sighed Meg, looking down at her old dress.</p><p class="littlewomen"> I don\'t think it\'s fair for some girls to have plenty of pretty things, and other girls nothing at all,  added little Amy, with an injured sniff.</p><p class="littlewomen"> We\'ve got Father and Mother, and each other,  said Beth contentedly from her corner.</p><p class="littlewomen">The four young faces on which the firelight shone brightened at the cheerful words, but darkened again as Jo said sadly,  We haven\'t got Father, and shall not have him for a long time.  She didn\'t say  perhaps never,  but each silently added it, thinking of Father far away, where the fighting was.</p><p class="littlewomen">Nobody spoke for a minute; then Meg said in an altered tone,  You know the reason Mother proposed not having any presents this Christmas was because it is going to be a hard winter for everyone; and she thinks we ought not to spend money for pleasure, when our men are suffering so in the army. We can\'t do much, but we can make our little sacrifices, and ought to do it gladly. But I am afraid I don\'t  And Meg shook her head, as she thought regretfully of all the pretty things she wanted.</p><p class="littlewomen"> But I don\'t think the little we should spend would do any good. We\'ve each got a dollar, and the army wouldn\'t be much helped by our giving that. I agree not to expect anything from Mother or you, but I do want to buy UNDINE AND SINTRAM for myself. I\'ve wanted it so long,  said Jo, who was a bookworm.</p><p class="littlewomen"> I planned to spend mine in new music,  said Beth, with a little sigh, which no one heard but the hearth brush and kettle holder.</p><p class="littlewomen"> I shall get a nice box of Faber\'s drawing pencils. I really need them,  said Amy decidedly.</p><p class="littlewomen"> Mother didn\'t say anything about our money, and she won\'t wish us to give up everything. Let\'s each buy what we want, and have a little fun. I\'m sure we work hard enough to earn it,  cried Jo, examining the heels of her shoes in a gentlemanly manner.</p><p class="littlewomen"> I know I do&mdash;teaching those tiresome children nearly all day, when I\'m longing to enjoy myself at home,  began Meg, in the complaining tone again.</p><p class="littlewomen"> You don\'t have half such a hard time as I do,  said Jo.  How would you like to be shut up for hours with a nervous, fussy old lady, who keeps you trotting, is never satisfied, and worries you till you you\'re ready to fly out the window or cry? </p><p class="littlewomen"> It\'s naughty to fret, but I do think washing dishes and keeping things tidy is the worst work in the world.  It makes me cross, and my hands get so stiff, I can\'t practice well at all.  And Beth looked at her rough hands with a sigh that any one could hear that time.</p><p class="littlewomen"> I don\'t believe any of you suffer as I do,  cried Amy,  for you don\'t have to go to school with impertinent girls, who plague you if you don\'t know your lessons, and laugh at your dresses, and label your father if he isn\'t rich, and insult you when your nose isn\'t nice. </p><p class="littlewomen"> If you mean libel, I\'d say so, and not talk about labels, as if Papa was a pickle bottle,  advised Jo, laughing.</p><p class="littlewomen"> I know what I mean, and you needn\'t be satirical about it. It\'s proper to use good words, and improve your vocabulary,  returned Amy, with dignity.</p><p class="littlewomen"> Don\'t peck at one another, children. Don\'t you wish we had the money Papa lost when we were little, Jo? Dear me! How happy and good we\'d be, if we had no worries!  said Meg, who could remember better times.</p><p class="littlewomen"> You said the other day you thought we were a deal happier than the King children, for they were fighting and fretting all the time, in spite of their money. </p><p class="littlewomen"> So I did, Beth. Well, I think we are. For though we do have to work, we make fun of ourselves, and are a pretty jolly set, as Jo would say. </p><p class="littlewomen"> Jo does use such slang words!   observed Amy, with a reproving look at the long figure stretched on the rug.</p><p class="littlewomen">Jo immediately sat up, put her hands in her pockets, and began to whistle.</p><p class="littlewomen"> Don\'t, Jo. It\'s so boyish! </p><p class="littlewomen"> That\'s why I do it. </p><p class="littlewomen"> I detest rude, unladylike girls! </p><p class="littlewomen"> I hate affected, niminy-piminy chits! </p><p class="littlewomen"> Birds in their little nests agree,  sang Beth, the peacemaker, with such a funny face that both sharp voices softened to a laugh, and the  pecking  ended for that time.</p><p class="littlewomen"> Really, girls, you are both to be blamed,  said Meg, beginning to lecture in her elder-sisterly fashion. You are old enough to leave off boyish tricks, and to behave better, Josephine. It didn\'t matter so much when you were a little girl, but now you are so tall, and turn up your hair, you should remember that you are a young lady. </p><p class="littlewomen"> I\'m not!  And if turning up my hair makes me one, I\'ll wear it in two tails till I\'m twenty,  cried Jo, pulling off her net, and shaking down a chestnut mane.   I hate to think I\'ve got to grow up, and be Miss March, and wear long gowns, and look as prim as a China Aster! It\'s bad enough to be a girl, anyway, when I like boy\'s games and work and manners! I can\'t get over my disappointment in not being a boy. And it\'s worse than ever now, for I\'m dying to go and fight with Papa. And I can only stay home and knit, like a poky old woman! </p><p class="littlewomen">And Jo shook the blue army sock till the needles rattled like castanets, and her ball bounded across the room.</p><p class="littlewomen"> Poor Jo! It\'s too bad, but it can\'t be helped. So you must try to be contented with making your name boyish, and playing brother to us girls,  said Beth, stroking the rough head with a hand that all the dish washing and dusting in the world could not make ungentle in its touch.</p><p class="littlewomen"> As for you, Amy,  continued Meg,  you are altogether to particular and prim. Your airs are funny now, but you\'ll grow up an affected little goose, if you don\'t take care. I I like your nice manners and refined ways of speaking, when you don\'t try to be elegant. But your absurd words are as bad as Jo\'s slang. </p><p class="littlewomen"> If Jo is a tomboy and Amy a goose, what am I, please?  asked Beth, ready to share the lecture.</p><p class="littlewomen"> You\'re a dear, and nothing else,  answered Meg warmly, and no one contradicted her, for the \'Mouse\' was the pet of the family.</p>
-
 <columns column-count="1" />
-
-
-
-
-
-
 <!-- LISTS -->
 <pagebreak />
 <h3>Lists<bookmark content="Lists" level="1" /><tocentry name="" content="Lists" level="0" /><indexentry content="Lists"  /></h3>
@@ -453,7 +381,6 @@ This paragraph has border-radius and background-gradient set. Minimum padding is
 <li>Text here lorem ipsum ibisque totum.</li>
 </ol>
 </div>
-
 <!-- TABLES -->
 <pagebreak />
 <h3>Tables<bookmark content="Tables" level="1" /><tocentry name="" content="Tables" level="0" /><tocentry name="Tables" content="Tables - general" level="0" /><indexentry content="Tables"  /></h3>
@@ -474,18 +401,14 @@ This is data out of div
 <div style="font-weight:bold;">This is data div (bold)</div>
 This is data out of div
 </td>
-
 <td>Also data</td></tr>
 </tbody></table>
-
 <p>This table has padding-top and -bottom set to 3mm i.e. padding within the cells. Also background-, border colour and style, font family and size are set by in-line <acronym>CSS</acronym>.</p>
 <table style="border: 1px solid #880000; background-color: #BBCCDD; font-family: Mono; font-size: 7pt; " class="tallcells">
 <tbody><tr><td>Row 1</td><td>This is data</td><td>This is data</td></tr>
 <tr><td>Row 2</td><td><p>This is data p</p></td><td><p>More data</p></td></tr>
 <tr><td><p>Row 3</p></td><td><p>This is long data</p></td><td>This is data</td></tr>
 </tbody></table>
-
-
 <h4>Tables<bookmark content="Table styles" level="2" /><tocentry name="Tables" content="Table styles" level="0" /><indexentry content="Table:styles"  /></h4>
 <p>The style sheet used for these examples shows some of the table styles I use on my website. The property \'topntail\' defined by a border-type definition e.g. "1px solid #880000" puts a border at the top and bottom of the table, and also below a header row (thead) if defined. Note also that &lt;thead&gt; will automatically turn on the header-repeat i.e. reproduce the header row at the top of each page.</p>
 <p>bpmTopic Class</p>
@@ -543,9 +466,7 @@ This is data out of div
 <td>Also data</td>
 </tr>
 </tbody></table>
-
 <p>&nbsp;</p>
-
 <p>bpmTopic<b>C</b> Class (centered) Odd and Even rows</p>
 <table class="bpmTopicC"><thead>
 <tr class="headerrow"><th>Col/Row Header</th>
@@ -601,9 +522,7 @@ This is data out of div
 <td>Also data</td>
 </tr>
 </tbody></table>
-
 <p>&nbsp;</p>
-
 <p>bpmTopnTail Class </p>
 <table class="bpmTopnTail"><thead></thead><tbody>
 <tr>
@@ -715,9 +634,7 @@ This is data out of div
 <td>Also data</td>
 </tr>
 </tbody></table>
-
 <p>&nbsp;</p>
-
 <p>TopnTail Class</p>
 <table class="bpmTopnTail"><thead>
 <tr class="headerrow"><th>Col and Row Header</th>
@@ -763,9 +680,7 @@ This is data out of div
 <td colspan="2" class="pmhTopCenter">Also data merged and centered</td>
 </tr>
 </tbody></table>
-
 <p>&nbsp;</p>
-
 <h4>Lists in a Table<bookmark content="Lists in a table" level="2" /><tocentry name="Tables" content="Lists in a table" level="0" /><indexentry content="Table:lists inside"  /></h4>
 <table class="bpmTopnTail"><thead>
 <tr class="headerrow"><th>Col and Row Header</th>
@@ -829,8 +744,6 @@ Unordered list:
 </tr>
 </tbody></table>
 <p>&nbsp;</p>
-
-
 <h4>Automatic Column Width<bookmark content="Automatic Column Width" level="2" /><tocentry name="Tables" content="Automatic column width" level="0" /><indexentry content="Table:automatic column width"  /></h4>
 <table class="bpmTopnTail"><tbody>
 <tr>
@@ -844,8 +757,6 @@ Suspendisse potenti</td>
 <td>Ut magna ipsum, tempus in, condimentum at, rutrum et, nisl. Vestibulum interdum luctus sapien. Quisque viverra. Etiam id libero at magna pellentesque aliquet. Nulla sit amet ipsum id enim tempus dictum. Maecenas consectetuer eros quis massa. Mauris semper velit vehicula purus. Duis lacus. Aenean pretium consectetuer mauris. Ut purus sem, consequat ut, fermentum sit amet, ornare sit amet, ipsum. Donec non nunc. Maecenas fringilla. Curabitur libero. In dui massa, malesuada sit amet, hendrerit vitae, viverra nec, tortor. Donec varius. Ut ut dolor et tellus adipiscing adipiscing.</td>
 </tr>
 </tbody></table>
-
-
 <h4>Column span<bookmark content="Column span" level="2" /><tocentry name="Tables" content="Column span" level="0" /><indexentry content="Table:column span"  /></h4>
 <table class="bpmTopnTail"><tbody>
 <tr>
@@ -862,9 +773,6 @@ Donec mattis, nisi id euismod auctor, neque metus pellentesque risus, at eleifen
 Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel aliquam quam odio et sapien.</td>
 </tr>
 </tbody></table>
-
-
-
 <h4>Header & Footer Rows<bookmark content="Header Rows" level="2" /><tocentry name="Tables" content="Header rows" level="0" /><indexentry content="Table:header rows"  /></h4>
 <p>A table using a header or footer row should repeat the header/footer row across pages:</p>
 <p>bpmTopic<b>C</b> Class</p>
@@ -971,12 +879,9 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 <tr><th>Another Row header</th><td>Also data</td><td>Also data</td></tr>
 </tbody></table>
 <p>&nbsp;</p>
-
 <h4>Autosizing Tables<bookmark content="Autosizing Tables" level="2" /><tocentry name="Tables" content="Autosizing tables" level="0" /><indexentry content="Table:autosizing"  /></h4>
 <p>Periodic Table of elements. Tables are set by default to reduce font size if complete words will not fit inside each cell, to a maximum of 1/1.4 * the set font-size. This value can be changed by setting $mpdf->shrink_tables_to_fit=1.8 or using html attribute &lt;table autosize="1.8"&gt;.</p>
-
 <h5>Periodic Table</h5>
-
 <table style="border:1px solid #000000;" cellPadding="14"><thead>
 <tr><th>1A</th><th>2A</th><th>3B</th><th>4B</th><th>5B</th><th>6B</th><th>7B</th><th>8B</th><th>8B</th><th>8B</th><th>1B</th><th>2B</th><th>3A</th><th>4A</th><th>5A</th><th>6A</th><th>7A</th><th>8A</th></tr></thead><tbody>
 <tr>
@@ -1017,12 +922,9 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 <td>Es </td><td>Fm </td><td>Md </td><td>No </td><td>Lr </td><td></td>
 </tr>
 </tbody></table>
-
 <pagebreak />
-
 <h4>Rotated Tables<bookmark content="Rotated Tables" level="2" /><tocentry name="Tables" content="Rotated table" level="0" /><indexentry content="Table:rotated"  /></h4>
 <p>This is set to rotate -90 degrees (counterclockwise).</p>
-
 <h5>Periodic Table</h5>
 <p>
 <table rotate="-90" class="bpmClearC"><thead>
@@ -1069,10 +971,8 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 </tr>
 </tbody></table>
 <p>&nbsp;</p>
-
 <pagebreak />
 <h4>Rotated text in Tables<bookmark content="Rotated text in Tables" level="2" /><tocentry name="Tables" content="Rotated text in table" level="0" /><indexentry content="Table:rotated text"  /></h4>
-
 <h5>Periodic Table</h5>
 <table>
 <thead>
@@ -1083,7 +983,6 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 <th>Element type 3A</th><th>Element type 4A</th><th>Element type 5A</th><th>Element type 6A</th><th>7A</th><th>Element type 8A</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>H</td><td colspan="15"></td><td></td><td>He </td>
@@ -1121,19 +1020,11 @@ Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel a
 <td>Fm </td><td>Md </td><td>No </td><td>Lr </td><td></td>
 </tr>
 </tbody></table>
-
-
 <pagebreak />
-
-
-
 <h4>Nested Tables<bookmark content="Nested Tables" level="2" /><tocentry name="Tables" content="Nested tables" level="0" /><indexentry content="Table:nested"  /></h4>
-
 <div style="border: 2px solid #000088; background-color: #DDDDFF; padding: 2mm;">
 Text before table
-
 <div style="border: 2px solid #008888; background-color: #DCAFCF; padding: 2mm;">
-
 <table cellSpacing="2" rotate="-90" align="center" autosize="1.5" class="nested" style="page-break-inside: avoid; ">
 <tbody>
 <tr>
@@ -1291,13 +1182,8 @@ Text before table
 <td>This is data</td>
 </tr>
 </tbody></table>
-
 </div>
-
-
-
 <p>Text before table</p>
-
 <table cellSpacing="2" class="outer2" autosize="3" style="page-break-inside:avoid">
 <tbody>
 <tr>
@@ -1462,11 +1348,7 @@ Text before table
 <td>This is data</td>
 </tr>
 </tbody></table>
-
-
 </div>
-
-
 <!-- FORMS -->
 <pagebreak />
 <h3>Forms<bookmark content="Forms" level="1" /><tocentry name="" content="Forms" level="0" /><indexentry content="Forms" /></h3>
@@ -1479,117 +1361,86 @@ Etiam id libero at magna pellentesque aliquet. Nulla sit amet ipsum id enim temp
 <select size="1" name="status"><option value="A">Active</option><option value="W" >New item from auto_manager: pending validation</option><option value="I" selected="selected">Incomplete record - pending</option><option value="X" >Flagged for Deletion</option> </select> followed by text
 <br /><br />
 <b>Input Radio</b>
-<input type="radio" name="recommended" value="0" > No &nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="recommended" value="1" > Keep &nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="recommended" value="2"  checked="checked" > Choice 
+<input type="radio" name="recommended" value="0" > No &nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="recommended" value="1" > Keep &nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="recommended" value="2"  checked="checked" > Choice
 <br /><br />
 <b>Input Text</b>
-<input type="text" size="190" name="doi" value="10.1258/jrsm.100.5.211"> 
+<input type="text" size="190" name="doi" value="10.1258/jrsm.100.5.211">
 <br /><br />
 <b>Input Password</b>
-<input type="password" size="40" name="password" value="secret"> 
+<input type="password" size="40" name="password" value="secret">
 <br /><br />
 <input type="checkbox" name="QPC" value="ON" > Checkboxes<br>
 <input type="checkbox" name="QPA" value="ON" > Not selected<br>
 <input type="checkbox" name="QPA" value="ON" disabled="disabled"> Disabled<br>
 <input type="checkbox" name="QLY" value="ON" checked="checked" > Selected
 <br /><br />
-<input type="submit" name="submit" value="Submit" /> 
-<input type="image" name="submit" src="goto.gif" /> 
+<input type="submit" name="submit" value="Submit" />
+<input type="image" name="submit" src="goto.gif" />
 <input type="button" name="submit" value="Button" />
 <input type="reset" name="submit" value="Reset" />
 <br /><br />
 </form>
-
-
 <!-- ANNOTATIONS -->
 <pagebreak />
 <h3>Annotations<bookmark content="Annotations" level="1" /><tocentry name="" content="Annotations" level="0" /><indexentry content="Annotations"  /></h3>
 <p>Praesent pharetra nulla in turpis. Sed ipsum nulla, sodales nec, vulputate in, scelerisque vitae, magna. Sed egestas justo nec ipsum. Nulla facilisi. Praesent sit amet pede quis metus aliquet vulputate.<annotation content="This is an annotation'."\n".'in the middle of the text" subject="My Subject" icon="Comment" color="#FE88EF" author="Ian Back" /> Donec luctus. Cras euismod tellus vel leo. Cras tellus. Fusce aliquet. Curabitur tincidunt viverra ligula. Fusce eget erat. Donec pede. Vestibulum id felis. Phasellus tincidunt ligula non pede. Morbi turpis. In vitae dui non erat placerat malesuada. Mauris adipiscing congue ante. Proin at erat. Aliquam mattis. </p>
 <p>P: Nulla felis erat, imperdiet eu, ullamcorper non, nonummy quis, elit. Suspendisse potenti. Ut a eros at ligula vehicula pretium. Maecenas feugiat pede vel risus. Nulla et lectus. <i>Fusce</i><annotation content="Fusce is a funny word!" subject="Idle Comments" icon="Note" author="Ian Back" pos-x="198" /> eleifend neque sit amet erat. Integer consectetuer nulla non orci. Morbi feugiat pulvinar dolor. Cras odio. Donec mattis, nisi id euismod auctor, neque metus pellentesque risus, at eleifend lacus sapien et risus. Phasellus metus. Phasellus feugiat, lectus ac aliquam molestie, leo lacus tincidunt turpis, vel aliquam quam odio et sapien. Mauris ante pede, auctor ac, suscipit quis, malesuada sed, nulla. Integer sit amet odio sit amet lectus luctus euismod. Donec et nulla. Sed quis orci. </p>
-
-
 <!-- FULL IMAGES & BARCODE -->
 <pagebreak />
 <h3>Full Images & Barcode<bookmark content="Full Images &amp; Barcode" level="1" /><tocentry name="Figures" content="Full size image & Barcode" level="0" /><indexentry content="Image:full-size"  /><tocentry name="" content="Barcode" level="0" /><indexentry content="Barcode"  /></h3>
 <p>On the first and last page of this document, an image is reproduced full page size by placing it inside a DIV element with CSS "position:absolute". In all other situations, images are constrained to the width and height of the printable page (i.e. inside the margins). The image on the back page has CSS "opacity:0.5".</p>
-
-
 <!-- EXAMPLE PHP CODE -->
 <div class="phpcode">'. nl2br(htmlspecialchars('/* ALTERNATIVE PHP METHOD */
-$mpdf->SetAlpha(0.5); 
+$mpdf->SetAlpha(0.5);
 $mpdf->Image(\'clematis.jpg\',0,0,210,297,\'jpg\',\'\',true, false);
 // the last "false" allows a full page picture
 $mpdf->SetAlpha(1);
 ')) .'</div>
 <!-- END EXAMPLE PHP CODE -->
-
 <p>The back cover also has an ISBN barcode</p>
-
 <!-- EXAMPLE PHP CODE -->
 <div class="phpcode">'. nl2br(htmlspecialchars('/* ALTERNATIVE PHP METHOD */
-$mpdf->writeBarcode(\'978-0-9542246-0-8\', 1, 130, 230, 1,0, 3,3,4,4);	
+$mpdf->writeBarcode(\'978-0-9542246-0-8\', 1, 130, 230, 1,0, 3,3,4,4);
 ')) .'</div>
 <!-- END EXAMPLE PHP CODE -->
-
 <p>But next is inserted the Index, which can also be done like this:</p>
-
 <!-- EXAMPLE PHP CODE -->
 <div class="phpcode">'. nl2br(htmlspecialchars('/* ALTERNATIVE PHP METHOD */
-$mpdf->AddPage(\'\',NEXT-ODD\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',-1,-1,-1,-1);	
+$mpdf->AddPage(\'\',NEXT-ODD\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',\'\',-1,-1,-1,-1);
 $mpdf->WriteHTML(\'<h2>Index<bookmark content="Index" /></h2>\');
 $mpdf->WriteHTML(\'<indexinsert cols="2" font="serif" div-font="sans-serif" links="on" />\');
 ')) .'</div>
 <!-- END EXAMPLE PHP CODE -->
-
-
-
 <!-- INDEX -->
 <pagebreak type="NEXT-ODD" odd-header-value="-1" even-header-value="-1" odd-footer-value="-1" even-footer-value="-1"  />
 <h2>Index<bookmark content="Index" /></h2>
 <indexinsert cols="2" font="serif" div-font="sans-serif" links="on" />
-
-
-
 <!-- BACK COVER & BARCODE -->
 <pagebreak type="NEXT-EVEN" />
 <div style="position: absolute; left:0; right: 0; top: 0; bottom: 0;">
 <img src="clematis.jpg" style="width: 210mm; height: 297mm; margin: 0; opacity: 0.5;" />
 </div>
-
 <div style="position: absolute; right: 35mm; bottom: 35mm; ">
 <barcode code="978-0-9542246-0" type="ISBN" style="padding: 2.5mm; border: 0.1mm solid #000000;" height="0.66" text="1" />
 </div>
-
-
-
 </body></html>';
-
 //==============================================================
 //==============================================================
 //==============================================================
-
 include("../mpdf.php");
-
-$mpdf=new mPDF('s','A4','','',25,15,21,22,10,10); 
-
+$mpdf=new mPDF('s','A4','','',25,15,21,22,10,10);
 $mpdf->StartProgressBarOutput();
-
 $mpdf->mirrorMargins = 1;
 $mpdf->SetDisplayMode('fullpage','two');
 $mpdf->list_number_suffix = ')';
 $mpdf->hyphenate = true;
-
 $mpdf->debug  = true;
-
 $mpdf->WriteHTML($html);
-
 $mpdf->Output();
-
 exit;
 //==============================================================
 //==============================================================
 //==============================================================
 //==============================================================
 //==============================================================
-
-
 ?>

@@ -1,17 +1,14 @@
-  
+
 <?php
-  
   include 'classes/usuario.class.php';
+include 'classes/log.class.php';
 include 'classes/ocorrencia.class.php';
 $pageTitle  = "Patrimônio 34567";
-  
   include 'nucleo/cabecario.php';
   include 'nucleo/barraLateral.php';
-    
-  include 'classes/patrimonio.class.php';  
+  include 'classes/patrimonio.class.php';
 ?>
  <div id="page-wrapper">
-
       <div class="row">
         <div class="col-lg-12">
           <h1> Patrimônio 34567</h1>
@@ -22,6 +19,6 @@ $pageTitle  = "Patrimônio 34567";
         </div>
       </div><!-- /.row -->
     </div><!-- /#page-wrapper -->
-  </div><!-- /#wrapper -->  
+  </div><!-- /#wrapper -->
 </body>
 </html>

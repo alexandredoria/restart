@@ -1,14 +1,20 @@
-  
-<?php
-  include 'todasClasses.php';
-  if (isset($_GET['m'])){$matricula = $_GET['m'];}    
-  $usuario = new Usuario;
 
+<?php
+  include 'classes/usuario.class.php';
+include 'classes/log.class.php';
+include 'classes/ocorrencia.class.php';
+  if (isset($_GET['m'])){$matricula = $_GET['m'];}
+  $usuario = new Usuario;
   $nome  = $usuario->obterDados('nome', $matricula);
   $sobrenome  = $usuario->obterDados('sobrenome', $matricula);
-  
+  $situacao  = $usuario->obterDados('situacao', $matricula);
+  if ($situacao == 1){
+    $situacao = "Usuário ativo";
+  } else {
+    $situacao = "Usuário desativado";
+  }
 $pageTitle  = $nome." ".$sobrenome;
-  include 'nucleo/cabecario.php';    
+  include 'nucleo/cabecario.php';
   include 'nucleo/barraLateral.php';
   if ($usuario->obterDados('tipo_usuario', $matricula) == 1){
     $tipo = "Coordenador";
@@ -16,11 +22,9 @@ $pageTitle  = $nome." ".$sobrenome;
     $tipo = "Bolsista";
   } else if ($usuario->obterDados('tipo_usuario', $matricula) == 3){
     $tipo = "Professor";
-  } 
-
+  }
       echo "
       <div id='page-wrapper'>
-
       <div class='row'>
         <div class='col-lg-12'>
           <h1> ".$nome." ".$sobrenome."</h1>
@@ -30,19 +34,16 @@ $pageTitle  = $nome." ".$sobrenome;
           </ol>
         </div>
       </div><!-- /.row -->
-
       <div class='row'>
         <div class='col-lg-12'>
-          
-        </div>    
+        </div>
       </div><!-- /.row -->
       <br>
       <div class='row'>
-          
           <div class='col-lg-4'>
             <div class='panel panel-primary'>
               <div class='panel-heading'>
-                <h3 class='panel-title'><i class='fa fa-clock-o'></i> Atividades recentes</h3>
+                <h3 class='panel-title'><i class='glyphicon glyphicon-time'></i> Atividades recentes</h3>
               </div>
               <div class='panel-body'>
                 <div class='list-group'>
@@ -72,7 +73,7 @@ $pageTitle  = $nome." ".$sobrenome;
           <div class='col-lg-4'>
             <div class='media'>
             <a class='pull-left'>
-              <img class='media-object' src='http://placehold.it/50x50' alt='...'>
+              <img class='media-object' style='width: 50px; height: 50px;' src='img/".$usuario->obterDados('avatar', $matricula)."' alt='".$nome." ".$sobrenome."'>
             </a>
             <div class='media-body'>
               <h4 class='media-heading'>".$tipo."</h4>
@@ -80,28 +81,24 @@ $pageTitle  = $nome." ".$sobrenome;
             </div>
             <br>
             <div class='form-group'>
-              <label>Usuário ativo</label>          
-            </div> 
+              <label>".$situacao."</label>
+            </div>
             <div class='form-group'>
               <i class='glyphicon glyphicon-envelope'></i> ".$usuario->obterDados('email', $matricula)."
             </div>
              <div class='form-group'>
-              <i class='glyphicon glyphicon-phone'></i> ".truncate($usuario->obterDados('telefone_celular', $matricula), 2, 12)."
+              <i class='glyphicon glyphicon-phone'></i> "; if ($tipo != 'Coordenador') { echo truncate($usuario->obterDados('telefone_celular', $matricula), 2, 12);} else {echo $usuario->obterDados('telefone_celular', $matricula);} echo "
             </div>
             <div class='form-group'>
-              <i class='glyphicon glyphicon-earphone'></i> ".truncate($usuario->obterDados('telefone_residencial', $matricula), 2, 12)."
+              <i class='glyphicon glyphicon-earphone'></i> "; if ($tipo != 'Coordenador') { echo truncate($usuario->obterDados('telefone_celular', $matricula), 2, 12);} else {echo $usuario->obterDados('telefone_celular', $matricula);} echo "
             </div>
-            
           </div>
           </div>
           <div class='col-lg-4'>
           </div>
        </div><!-- /.row -->
-
     </div><!-- /#page-wrapper -->";
-
 ?>
- 
-  </div><!-- /#wrapper -->  
+  </div><!-- /#wrapper -->
 </body>
 </html>

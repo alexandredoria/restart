@@ -1,20 +1,19 @@
 <?php
   include 'classes/usuario.class.php';
+include 'classes/log.class.php';
 include 'classes/ocorrencia.class.php';
 $pageTitle  = "Cadastrar patrimônio";
-  include 'nucleo/cabecario.php';  
+  include 'nucleo/cabecario.php';
   include("nucleo/barraLateral.php");
   include 'classes/patrimonio.class.php';
-
   include 'classes/equipamento.class.php';
-  
   if (($_SESSION['tipo_usuario'] != "1") && ($_SESSION['tipo_usuario'] != "2")){
     header("Location: ../restart/painel.php");
     exit;
   }
-      
       // Verifica se algum form foi enviado
     if (!empty($_POST)) {
+$LOG = new LOG;
       // Verifica se as variáveis relacionadas ao cadastro/edição existem
       if (isset( $_POST['num_patrimonio'], $_POST['tipo'], $_POST['num_posicionamento'], $_POST['situacao'], $_POST['lab'],  $_POST['config'])) {
         $num_patrimonio = $_POST['num_patrimonio'];
@@ -37,10 +36,10 @@ $pageTitle  = "Cadastrar patrimônio";
                           <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
                           <h4 class='modal-title' id='modal_cadPatrimonioLabel'>Patrimônio cadastrado com sucesso!</h4>
                         </div>
-                        
                       </div>
                     </div>
                   </div>";
+                  $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'ADD_EQU', 1);
           }
           else {
             echo "<!-- Modal -->
@@ -53,22 +52,20 @@ $pageTitle  = "Cadastrar patrimônio";
                         </div>
                         <div class='modal-body'>
                           <p>".$result."</p>
-<br><br><p><b>Contate à COLINF</b></p>
+                          <br><br><p><b>Contate à COLINF</b></p>
                         </div>
                       </div>
                     </div>
                   </div>";
+            $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'ADD_EQU', 0);
           }
           unset($addPat);
           echo "<script>$('#modal_cadPatrimonio').modal('show');</script>";
         }
-      
       }
-      
     }
     ?>
     <div id="page-wrapper">
-
       <div class="row">
         <div class="col-lg-12">
           <h1> Cadastrar patrimônio</h1>
@@ -78,35 +75,28 @@ $pageTitle  = "Cadastrar patrimônio";
           </ol>
         </div>
       </div><!-- /.row -->
-      
-     
         <form role="form" id="formPatrimonio" name="formPatrimonio" action="cadPatrimonio.php" method="post">
-          
-        
         <div class="row">
-          <div class="col-lg-3">            
+          <div class="col-lg-3">
               <input type="hidden" name="acao" value="add">
               <label>Número de patrimônio</label>
               <div class="form-group">
                 <input class="form-control" id="num_patrimonio" style="text-align: right;" name="num_patrimonio" required autocomplete="off">
               </div>
-              
               <label>Tipo</label>
               <div class="form-group">
                 <select style="font-weight:bold" id="tipo" name="tipo" class="form-control">
-                    
                     <option value="1">Gabinete</option>
                     <option value="2">Monitor</option>
                     <option value="3">Estabilizador</option>
                     <option value="4">Nobreak</option>
-                    <option value="5">Mesa</option>              
+                    <option value="5">Mesa</option>
                     <option value="6">Cadeira</option>
                     <option value="7">Ar-condicionador</option>
                     <option value="8">Armário</option>
                     <option value="9">Projetor</option>
                 </select>
               </div>
-             
               <label>Configuração</label>
               <div class="form-group">
                  <select style="font-weight:bold" id="config" name="config" class="form-control">
@@ -120,19 +110,16 @@ $pageTitle  = "Cadastrar patrimônio";
                   ?>
                 </select>
               </div>
-               
           </div>
-           <div class="col-lg-3">            
-              
+           <div class="col-lg-3">
               <label>Laboratório</label>
               <div class="form-group">
                 <select style="font-weight:bold" id="lab" name="lab" class="form-control">
-                    
                     <option value="1">Lab 01</option>
                     <option value="2">Lab 02</option>
                     <option value="3">Lab 03</option>
                     <option value="4">Lab 04</option>
-                    <option value="5">Lab 05</option>              
+                    <option value="5">Lab 05</option>
                     <option value="6">Lab 06</option>
                     <option value="7">Lab 07</option>
                     <option value="8">Lab 08</option>
@@ -147,30 +134,22 @@ $pageTitle  = "Cadastrar patrimônio";
                 <select style="font-weight:bold" id="situacao" name="situacao" class="form-control">
                     <option value="1">Ativo</option>
                     <option value="2">Desativado</option>
-                    
                 </select>
               </div>
-
           </div>
-           <div class="col-lg-6">            
+           <div class="col-lg-6">
           </div>
         </div><!-- /.row -->
-       
        <br>
-
-
         <div class="row">
           <div class="col-lg-3"></div>
           <div class="col-lg-3"  align="right">
             <button type="submit" class="btn btn-default">Enviar</button>
-            <button type="reset" class="btn btn-default">Limpar</button>                     
-          </div>          
-          
+            <button type="reset" class="btn btn-default">Limpar</button>
+          </div>
           <div class="col-lg-6"></div>
         </div><!-- /.row -->
-
         </form>
-
         <script>
           // Numeric only control handler
           jQuery.fn.ForceNumericOnly =
@@ -184,7 +163,7 @@ $pageTitle  = "Cadastrar patrimônio";
                       // allow backspace, tab, delete, arrows, numbers and keypad numbers ONLY
                       // home, end, period, and numpad decimal
                       return (
-                          key == 8 || 
+                          key == 8 ||
                           key == 9 ||
                           key == 46 ||
                           key == 110 ||
@@ -197,11 +176,8 @@ $pageTitle  = "Cadastrar patrimônio";
           };
           $("#num_patrimonio").ForceNumericOnly();
           $("#num_posicionamento").ForceNumericOnly();
-
         </script>
-     
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
-  
 </body>
 </html>

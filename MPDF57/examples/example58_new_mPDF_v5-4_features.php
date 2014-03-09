@@ -1,24 +1,18 @@
 <?php
-
 ini_set("memory_limit","64M");
-
 include("../mpdf.php");
-
-$mpdf=new mPDF(''); 
-
-
+$mpdf=new mPDF('');
 //==============================================================
-
 $html = '
 <style>
 .gradient {
-	border:0.1mm solid #220044; 
+	border:0.1mm solid #220044;
 	background-color: #f0f2ff;
 	background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;
 	box-shadow: 0.3em 0.3em #888888;
 }
 .rounded {
-	border:0.1mm solid #220044; 
+	border:0.1mm solid #220044;
 	background-color: #f0f2ff;
 	background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;
 	border-radius: 2mm;
@@ -31,17 +25,17 @@ h4 {
 	margin-top: 0;
 }
 div.text {
-	padding:0.8em; 
+	padding:0.8em;
 	margin-bottom: 0.7em;
 }
 p { margin: 0.25em 0; }
 .code {
 	font-family: monospace;
 	font-size: 9pt;
-	background-color: #d5d5d5; 
+	background-color: #d5d5d5;
 	margin: 1em 1cm;
 	padding: 0 0.3cm;
-	border:0.2mm solid #000088; 
+	border:0.2mm solid #000088;
 	box-shadow: 0.3em 0.3em #888888;
 }
 table {
@@ -87,14 +81,14 @@ a.reddashed {
 	text-decoration: none;
 	border: 1px dashed #880000;
 }
-.shadowtitle { 
-	height: 8mm; 
-	background-color: #EEDDFF; 
-	background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;  
-	padding: 0.8em; 
+.shadowtitle {
+	height: 8mm;
+	background-color: #EEDDFF;
+	background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;
+	padding: 0.8em;
 	padding-left: 3em;
 	font-family:sans;
-	font-size: 26pt; 
+	font-size: 26pt;
 	font-weight: bold;
 	border: 0.2mm solid white;
 	border-radius: 0.2em;
@@ -102,15 +96,15 @@ a.reddashed {
 	color: #AAAACC;
 	text-shadow: 0.03em 0.03em #666, 0.05em 0.05em rgba(127,127,127,0.5), -0.015em -0.015em white;
 }
-h3 { 
-	margin: 3em 0 2em -15mm; 
-	background-color: #EEDDFF; 
-	background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;  
-	padding: 0.5em; 
+h3 {
+	margin: 3em 0 2em -15mm;
+	background-color: #EEDDFF;
+	background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;
+	padding: 0.5em;
 	padding-left: 3em;
 	width: 50%;
 	font-family:sans;
-	font-size: 16pt; 
+	font-size: 16pt;
 	font-weight: bold;
 	border-left: none;
 	border-radius: 0 2em 2em 0;
@@ -126,15 +120,9 @@ table.zebra tbody tr:nth-child(2n+1) td { background-color: rgba(255,255,127,0.6
 table.zebra tbody tr:nth-child(2n+1) th { background-color: rgba(255,255,127,0.6); }
 table.zebra thead tr { background-color: #FFBBFF; }
 table.zebra tfoot tr { background-color: #BBFFFF; }
-
-
 </style>
 <body>
-
-
 <div class="shadowtitle">New Features in mPDF v5.4</div>
-
-
 <h3>Bookmark styles<bookmark content="Bookmark styles" level="0" /></h3>
 <div>
 <p>Bookmarks can be styled by adding code as below to your script. You can define a colour (array of RGB) and/or a font-style (B, I, or BI) for each level (starting at 0). Results may depend on the PDF Reader you are using.</p>
@@ -146,10 +134,9 @@ $this->bookmarkStyles = array(<br />
 );
 </p>
 </div>
-
 <h3>Embedded SVG code<bookmark content="Embedded SVG code" level="0" /></h3>
 <p>SVG Images can be embedded in your HTML code. This is formally part of the XHTML specification and is supported by IE9+ and most other browsers.</p>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 400 200" width="400" height="200"> 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 400 200" width="400" height="200">
   <circle cx="130" cy="100" r="80" stroke="black" stroke-width="1" fill="red" />
   <circle cx="200" cy="100" r="80" stroke="black" stroke-width="1" fill="blue" />
 </svg>
@@ -159,8 +146,6 @@ $this->bookmarkStyles = array(<br />
 &nbsp;  &lt;circle cx="130" cy="50" r="40" stroke="black" stroke-width="1" fill="blue" /&gt;<br />
 &lt;/svg&gt;
 </p>
-
-
 <h3>Improved CSS support<bookmark content="Improved CSS support" level="0" /></h3>
 <div class="gradient text">
 <p><span class="css">border-radius</span> is now supported on fixed/absolute-positioned block elements.</p>
@@ -170,18 +155,14 @@ $this->bookmarkStyles = array(<br />
 <p><span class="css">page-break-after: left|right|always</span> is supported on all block-style elements and tables</p>
 <p><span class="css">text-transform: capitalize|uppercase|lowercase</span> is supported in table cells</p>
 </div>
-
-
 <div class="gradient text">
 <h4>Zebra stripes in Tables<bookmark content="Zebra stripes" level="1" /></h4>
 <div>
 <p><span class="css">:nth-child()</span> selector can be used in tables (on TR, TD or TH) to stripe rows or columns. Both the <i>a</i>n+<i>b</i> and odd/even forms are supported e.g.</p>
-
 <p class="code">
 tr:nth-child(2n+1) { background-color: rgba(255,255,127,0.6); }  <i>or</i><br />
 tr:nth-child(odd) { background-color: rgba(255,255,127,0.6); }
 </p>
-
 <table class="zebra" align="center">
 <tbody>
 <tr>
@@ -227,7 +208,6 @@ tr:nth-child(odd) { background-color: rgba(255,255,127,0.6); }
 <td class="cost">8089.00</td>
 </tr>
 </tbody></table>
-
 <p><b>Note:</b> mPDF does NOT correctly apply specificity to all CSS. The following stylesheet:</p>
 <p class="code">
 table.zebra tbody tr:nth-child(2n+1) td { background-color: yellow; }<br />
@@ -239,20 +219,13 @@ In mPDF the td:nth-child(odd) trumps the plain td, so the column colour wins out
 table.zebra tbody tr:nth-child(2n+1) td:nth-child(1n+0) { background-color: yellow; }
 </p>
 <p>The :nth-child(1n+0) selector just selects every td cell.</p>
-
 </div>
 </div>
-
-
 <div class="gradient text">
 <p><span class="css">border</span> can now be defined on in-line elements eg SPAN</p>
 <ul><li style="font-family: arial;">Cum sociis natoque <u class="doubleu">penatibus</u> et <a class="reddashed" href="#">magnis dis parturient</a> montes</li></ul>
 <p><b>Note:</b> Remember that in mPDF, inside table cells, properties set on block elements are set when possible as in-line properties - so a P element inside a table with border set, will appear with a border around the text line as though it had been set on SPAN </p>
 </div>
-
-
-
-
 <div class="gradient text">
 <h4>Shadows<bookmark content="Shadows" level="1" /></h4>
 <p><span class="css">box-shadow</span> can be defined on any block-level element (P, DIV etc). It follows the CSS3 recommendation, but <i>inset</i> is not supported.</p>
@@ -262,13 +235,9 @@ table.zebra tbody tr:nth-child(2n+1) td:nth-child(1n+0) { background-color: yell
 &lt;div style="box-shadow: 0.3em 0.3em #888888;"&gt;
 </p>
 </div>
-
-
 <h3>Other Enhancements<bookmark content="Other Enhancements" level="0" /></h3>
-
 <h4>Column Totals (Tables)<bookmark content="Column totals" level="1" /></h4>
 <p>{colsum} placed in the footer of a table will automatically display the sum of that column. If the table breaks across more than one page, the sum of the values on that page will be displayed. A number following the colsum e.g. {colsum2} will force that number of decimal places to be displayed.</p>
-
 <table class="zebra" align="center">
 <caption class="tablecaption" align="bottom">Table caption goes here</caption>
 <thead>
@@ -340,7 +309,6 @@ table.zebra tbody tr:nth-child(2n+1) td:nth-child(1n+0) { background-color: yell
 </tr>
 </tbody></table>
 <br />
-
 <h4>Table <span style="font-variant: small-caps">caption</span><bookmark content="Table caption" level="1" /></h4>
 <p>The caption element for tables is partially supported (see example above).</p>
 <p class="code">
@@ -358,10 +326,7 @@ table.zebra tbody tr:nth-child(2n+1) td:nth-child(1n+0) { background-color: yell
 	<li>if table page-break-after: always, the caption will follow the pagebreak</li>
 </ul></li>
 </ul>
-
-
 <h4>Core fonts in non-core font document<bookmark content="Core fonts" level="1" /></h4>
-
 <p>Core fonts, which do not need to be embedded in a PDF, can now be included in a document which uses non-core fonts. The pseudo font-family names: <span style="font-family: chelvetica">chelvetica</span>, <span style="font-family: ctimes">ctimes</span> and <span style="font-family: ccourier">ccourier</span> should be used.</p>
 <p class="code">
 &lt;div style="font-family: chelvetica"&gt;
@@ -378,17 +343,10 @@ $this->fonttrans = array(<br />
 ...
 </p>
 <br />
-
 <h4>Javascript in Forms<bookmark content="Javascript in Forms" level="1" /></h4>
-
 <p>Javascript used in (active) forms has been altered to reflect the Adobe Acrobat specification for Javascript in PDF documents.</p>
 <p>textarea and input (text-types) now accept javascript as: onKeystroke, onValidate, onCalculate and onFormat. onChange is depracated but is not ignored; it works as though for onCalculate. (PS Select still accepts onChange)</p>
-
-
 <br />
-
-
-
 <h4>Overlapping Rows in Tables<bookmark content="Overlapping Table Rows" level="1" /></h4>
 <p> Support for overlapping rowspans in tables has been improved (although probably not foolproof!)</p>
 <table style="border-collapse: separate; border-spacing: 3.5mm;">
@@ -404,11 +362,7 @@ $this->fonttrans = array(<br />
 <td style="width: 30mm; height: 30mm; background-color: rgb(75,155,215)">&nbsp;</td>
 </tr>
 </table>
-
 <br />
-
-
-
 <h3>Circular Text<bookmark content="Circular Text" level="0" /></h3>
 <p>Circular Text can be included in a PDF document as a custom HTML tag (or a function)</p>
 <ul>
@@ -421,20 +375,12 @@ $this->fonttrans = array(<br />
 <li>Circular Text is displayed as though an in-line element</li>
 </ul>
 <p>NB If $mpdf->useKerning is true then automatic kerning will be used on Circular Text.</p>
-
 <p class="code">
 &lt;textcircle r="30mm" top-text="Circular Text Circular Text" style="color: blue; font-size: 34pt; font-style: italic" /&gt;<br /><br />
 &lt;textcircle r="30mm" space-width="120" char-width="150" top-text="&amp;bull; Circular Text &amp;bull;" bottom-text="Circular Text" style="background-color: #FFAAAA; border:1px solid red; padding: 0.3em; margin: 0.3em; color: #000000; font-size: 21pt; font-weight:bold; font-family: Arial" /&gt;
 </p>
-
 <textcircle r="30mm" top-text="Circular Text Circular Text" style="color: blue; font-size: 34pt; font-style: italic" />
-
 <textcircle r="30mm" space-width="120" char-width="150" top-text="&bull; Circular Text &bull;" bottom-text="Circular Text" style="background-color: #FFAAAA; border:1px solid red; padding: 0.3em; margin: 0.3em; color: #000000; font-size: 21pt; font-weight:bold; font-family: Arial" />
-
-
-
-
-
 <h3 style="page-break-before: left;">Spread tables<bookmark content="Spread Tables" level="0" /></h3>
 <div class="gradient text">
 Setting the CSS property "overflow: visible" on a table now has the effect of cancelling resizing, and allowing tables to split columns across multiple pages.
@@ -443,10 +389,7 @@ The maximum width for a column (or group of columns set by colspan) is the page 
 <br />
 <input type="button" name="javascriptButton" value="Show 2 pages" onClick="TwoPages()" />
 <input type="button" name="javascriptButton2" value="Show 1 page" onClick="OnePage()" />
-
-
 <br /><br />
-
 <table cellPadding="9" style="font-size: 16pt;">
 <caption class="tablecaption">Periodic Table (table caption)</caption>
 <thead>
@@ -481,47 +424,37 @@ The maximum width for a column (or group of columns set by colspan) is the page 
 <td></td><td></td><td></td><td></td><td></td>
 </tr>
 </tbody></table>
-
 <br /><br />
-
 <div class="gradient text">
 <h4>Limitations of Spread tables<bookmark content="Limitations" level="1" /></h4>
 Spread tables cannot be used with: keep-headings-with-table ($mpdf->use_kwt), table rotate, table page-break-inside:avoid, columns,
-CJK (chinese-japanese-korean) or RTL (right-to-left) languages. 
+CJK (chinese-japanese-korean) or RTL (right-to-left) languages.
 They will also cause problems with $mpdf->forcePortraitHeaders or $mpdf->forcePortraitMargins.<br />
 Warning: If a table row is too tall to fit on a page, mPDF will crash with an error message.<br />
 If the width settings within the table cause conflicts, it will override some of these settings.
 </div>
 <br />
-
-
 ';
-
 //==============================================================
 if ($_REQUEST['html']) { echo $html; exit; }
-if ($_REQUEST['source']) { 
+if ($_REQUEST['source']) {
 	$file = __FILE__;
 	header("Content-Type: text/plain");
 	header("Content-Length: ". filesize($file));
 	header("Content-Disposition: attachment; filename='".$file."'");
 	readfile($file);
-	exit; 
+	exit;
 }
-
 //==============================================================
 $mpdf->useActiveForms = true;
-
 $mpdf->bookmarkStyles = array(
 	0 => array('color'=> array(0,64,128), 'style'=>'B'),
 	1 => array('color'=> array(128,0,0), 'style'=>''),
 	2 => array('color'=> array(0,128,0), 'style'=>'I'),
 );
-
 $mpdf->useKerning=true;	// set this to improve appearance of Circular text
 				// must be set before the font is first loaded
-
 $mpdf->WriteHTML($html);
-
 // JAVASCRIPT FOR WHOLE DOCUMENT
 $mpdf->SetJS('
 function TwoPages() {
@@ -533,15 +466,10 @@ function OnePage() {
 	this.zoom = 100;
 }
 ');
-
 // OUTPUT
 $mpdf->Output(); exit;
-
-
 //==============================================================
 //==============================================================
 //==============================================================
 //==============================================================
-
-
 ?>

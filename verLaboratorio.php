@@ -1,4 +1,4 @@
-  
+
 <?php
   session_start();
   if (empty($_SESSION)) {
@@ -9,15 +9,13 @@
     exit;
   }
   include 'classes/usuario.class.php';
+include 'classes/log.class.php';
 include 'classes/ocorrencia.class.php';
 $pageTitle  = "Nome do usuário";
-  
   include 'nucleo/cabecario.php';
-    
   include 'nucleo/barraLateral.php';
 ?>
  <div id="page-wrapper">
-
       <div class="row">
         <div class="col-lg-12">
           <h1> Nome de usuário</h1>
@@ -28,6 +26,6 @@ $pageTitle  = "Nome do usuário";
         </div>
       </div><!-- /.row -->
     </div><!-- /#page-wrapper -->
-  </div><!-- /#wrapper -->  
+  </div><!-- /#wrapper -->
 </body>
 </html>

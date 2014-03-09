@@ -1,6 +1,4 @@
 <?php
-
-
 $html = '
 <html>
 <head>
@@ -12,11 +10,11 @@ body {font-family: sans-serif;
 h5, p {	margin: 0pt;
 }
 table.items {
-	font-size: 9pt; 
+	font-size: 9pt;
 	border-collapse: collapse;
-	border: 3px solid #880000; 
+	border: 3px solid #880000;
 }
-td { vertical-align: top; 
+td { vertical-align: top;
 }
 table thead td { background-color: #EEEEEE;
 	text-align: center;
@@ -38,21 +36,17 @@ table tfoot td { background-color: #AAFFEE;
 </style>
 </head>
 <body>
-
 <!--mpdf
 <htmlpagefooter name="myfooter">
 <div style="border-top: 1px solid #000000; font-size: 9pt; text-align: center; padding-top: 3mm; ">
 Page {PAGENO} of {nb}
 </div>
 </htmlpagefooter>
-
 <sethtmlpagefooter name="myfooter" value="on" />
 mpdf-->
-
 <h1>mPDF</h1>
 <h2>Barcodes</h2>
 <p>NB <b>Quiet zones</b> - The barcode object includes space to the right/left or top/bottom only when the specification states a \'quiet zone\' or \'light margin\'. All the examples below also have CSS property set on the barcode object i.e. padding: 1.5mm; </p>
-
 <h3>EAN-13 Barcodes (EAN-2 and EAN-5)</h3>
 <p>NB EAN-13, UPC-A, UPC-E, and EAN-8 may all include an additional bar code(EAN-2 and EAN-5) to the right of the main bar code (see below).</p>
 <p>A nominal height and width for these barcodes is defined by the specification. \'size\' will scale both the height and width. Values between 0.8 and 2 are allowed (i.e. 80% to 200% of the nominal size). \'height\' can also be varied as a factor of 1; this is applied after the scaling factor used for \'size\'.</p>
@@ -83,7 +77,6 @@ mpdf-->
 </tr>
 </tbody>
 </table>
-
 <h3>EAN-8, UPC-A and UPC-E Barcodes</h3>
 <p>UPC-A, UPC-E, EAN-13, and EAN-8 may all include an additional bar code(EAN-2 and EAN-5) to the right of the main bar code (see below).</p>
 <p>A nominal height and width for these barcodes is defined by the specification. \'size\' will scale both the height and width. Values between 0.8 and 2 are allowed (i.e. 80% to 200% of the nominal size). \'height\' can also be varied as a factor of 1; this is applied after the scaling factor used for \'size\'.</p>
@@ -114,7 +107,6 @@ mpdf-->
 </tr>
 </tbody>
 </table>
-
 <h3>EAN-2 and EAN-5 supplements, and combined forms</h3>
 <p>UPC-A, UPC-E, EAN-13, and EAN-8 may all include an additional bar code(EAN-2 and EAN-5) to the right of the main bar code.</p>
 <table class="items" width="100%" cellpadding="8" border="1">
@@ -197,7 +189,6 @@ mpdf-->
 </tr>
 </tbody>
 </table>
-
 <h3>Postcode Barcodes</h3>
 <p>These all have sizes fixed by their specification. Although they can be altered using \'size\' it is not recommended. \'height\' is ignored.</p>
 <table class="items" width="100%" cellpadding="8" border="1">
@@ -237,8 +228,6 @@ mpdf-->
 </tr>
 </tbody>
 </table>
-
-
 <h3>Variable width Barcodes</h3>
 <p>These barcodes are all of variable length depending on the code entered. There is no recommended maximum size for any of these specs, but all recommend a minimum X-dimension (width of narrowest bar) as 7.5mil (=0.19mm). The default used here is twice the minimum i.e. X-dim = 0.38mm.</p>
 <p>The specifications give a minimum height of 15% of the barcode length (which can be variable). The bar height in mPDF is set to a default value of 10mm. </p>
@@ -267,13 +256,11 @@ mpdf-->
 <td>CODE 128 C. Valid characters: [0-9]. Must be an even number of digits. Checksum digit: automatic.</td>
 <td class="barcodecell"><barcode code="0123456789" type="C128C" class="barcode" /></td>
 </tr>
-
 <tr>
 <td align="center">EAN128C [A/B/C]</td>
 <td>EAN128 (A, B, and C). Specified variant of Code 128, utilising an FNC1 start code. Also known as UCC/EAN-128 or GS1-128. Valid characters: [cf. Code 128]. Checksum digit: automatic.</td>
 <td class="barcodecell"><barcode code="0112345678912343" type="EAN128C" class="barcode" /></td>
 </tr>
-
 <tr>
 <td align="center">C39</td>
 <td>CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9. Valid characters: [0-9 A-Z \'-\' . Space $/+%]</td>
@@ -294,7 +281,6 @@ mpdf-->
 <td>CODE 39 EXTENDED + CHECKSUM. Checksum digit: automatic.</td>
 <td class="barcodecell"><barcode code="CODE 39 E+" type="C39E+" class="barcode" /></td>
 </tr>
-
 <tr>
 <td align="center">S25</td>
 <td>Standard 2 of 5. Valid characters: [0-9]</td>
@@ -325,13 +311,11 @@ mpdf-->
 <td>Interleaved 2 of 5 + CHECKSUM with bearer bars. Valid characters: [0-9]. Checksum digit: automatic.</td>
 <td class="barcodecell"><barcode code="1234567" type="I25B+" class="barcode" /></td>
 </tr>
-
 <tr>
 <td align="center">C93</td>
 <td>CODE 93 - USS-93 (extended). Valid characters: [ASCII-characters between 0..127]. Checksum digits: automatic.</td>
 <td class="barcodecell"><barcode code="39OR93" type="C93" class="barcode" /></td>
 </tr>
-
 <tr>
 <td align="center">MSI</td>
 <td>MSI. Modified Plessey. Valid characters: [0-9]</td>
@@ -342,24 +326,19 @@ mpdf-->
 <td>MSI + CHECKSUM (module 11). Checksum digit: automatic.</td>
 <td class="barcodecell"><barcode code="0123456789" type="MSI+" class="barcode" /></td>
 </tr>
-
 <tr>
 <td align="center">CODABAR</td>
 <td>CODABAR. Valid characters: [0-9 \'-\' $:/.+ ABCD] ABCD are used as stop and start characters e.g. A34698735B</td>
 <td class="barcodecell"><barcode code="A34698735B" type="CODABAR" class="barcode" /></td>
 </tr>
-
 <tr>
 <td align="center">CODE11</td>
 <td>CODE 11. Valid characters: [0-9 and \'-\']. Checksum digits: 1 (or 2 if length of code is > 10 characters) - automatic.</td>
 <td class="barcodecell"><barcode code="123-456-789" type="CODE11" class="barcode" /></td>
 </tr>
-
-
 </tbody>
 </table>
-
-<!-- QR-CODE 
+<!-- QR-CODE
 <h3>2D Code (QR-code)</h3>
 <p>A nominal height and width for these barcodes is set as 25mm. \'size\' will scale both the height and width.</p>
 <table class="items" width="100%" cellpadding="8" border="1">
@@ -379,10 +358,7 @@ mpdf-->
 </tbody>
 </table>
 -->
-
-
 <br />
-
 <div>
 <h5>Useful links</h5>
 <p><a href="http://www.adams1.com">http://www.adams1.com</a></p>
@@ -395,43 +371,31 @@ mpdf-->
 <p><a href="http://www.outputlinks.com/sites/AFP/ibm_bcocafaq.pdf">http://www.outputlinks.com/sites/AFP/ibm_bcocafaq.pdf</a></p>
 <p><a href="https://ribbs.usps.gov/intelligentmail_mailpieces/documents/tech_guides/USPSIMB_Tech_Resource_Guide.pdf">https://ribbs.usps.gov/intelligentmail_mailpieces/documents/tech_guides/USPSIMB_Tech_Resource_Guide.pdf (Intelligent Mail)</a></p>
 <p><a href="http://www.mailsorttechnical.com/downloads_mailsort_user_guide.cfm">http://www.mailsorttechnical.com/downloads_mailsort_user_guide.cfm</a></p>
-
 <p><a href="http://www.mailsorttechnical.com/docs/mug_jun_2009/MUG_10_2008_Mailsort_700.pdf">http://www.mailsorttechnical.com/docs/mug_jun_2009/MUG_10_2008_Mailsort_700.pdf</a>  page 20</p>
- 
-
 </div>
-
 <pagebreak />
 <div>
 <h3>Human-readable text</h3>
 Human-readable text is only produced as part of the barcode object in EAN-13, ISBN, ISSN, EAN-8, UPC-A and UPC-E. Here is an example to add text to a barcode:
 </div>
-
 <div style="border:1px solid #555555; background-color: #DDDDDD; padding: 1em; font-size:8pt; font-family: lucidaconsole, mono;">
-
 &lt;div style="position:fixed; right: 50mm; top: 60mm; border: 0.2mm solid #000000; text-align: center; padding: 0.5mm; padding-top: 2mm;"&gt;<br />
 &lt;barcode code="00034698735346987355" type="EAN128C" /&gt;&lt;br /&gt;<br />
 &lt;div style="font-family: ocrb;"&gt;(00) 0346987 35346987 355&lt;/div&gt;<br />
 &lt;/div&gt;
-
 </div>
-
 <div style="position:fixed; right: 50mm; top: 60mm; border: 0.2mm solid #000000; text-align: center; padding: 0.5mm; padding-top: 2mm;">
 <barcode code="00034698735346987355" type="EAN128C" /><br />
 <div style="font-family: ocrb;">(00) 0346987 35346987 355</div>
 </div>
-
 </body>
 </html>
 ';
 //==============================================================
 //==============================================================
 include("../mpdf.php");
-
-$mpdf=new mPDF('','','','',20,15,25,25,10,10); 
+$mpdf=new mPDF('','','','',20,15,25,25,10,10);
 $mpdf->WriteHTML($html);
-$mpdf->Output(); 
-
+$mpdf->Output();
 exit;
-
 ?>

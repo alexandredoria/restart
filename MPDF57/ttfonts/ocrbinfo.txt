@@ -1,26 +1,22 @@
 Mostly-free OCR B
- 
 This font is used in UPC bar code symbols, including the ISBN symbols on
 most published books.
-
 A freely distributable version seems to be sorely needed.  Until now, it's
 been very difficult to find the font in computer-usable format except by
 paying a high fee to a commercial font vendor.  Even many serious commercial
 publishers have so much trouble getting it right that they just go ahead and
 use Helvetica instead, or even (shudder) Arial.  Since the OCR B font is
-required by an international standard, it seems like it ought to be free. 
+required by an international standard, it seems like it ought to be free.
 So here it is.  The font in this package is not a "ripped", pirated, or
 shadily reverse engineered version; every effort has been made to ensure
 that it genuinely derives from free sources and all the creators involved
 have actually intended it for free public use.
-
 Converted by Matthew Skala from Metafont format to Postscript and TrueType
 formats, July 28, 2006, using mftrace 1.2.4 by Paul Vojta, which is
 available from
    http://www.xs4all.nl/~hanwen/mftrace/
 and Autotrace 0.31.1 available from
    http://autotrace.sourceforge.net/
-
 The Metafont files (not included - see notes below) were coded by Norbert
 Schwarz in the 1980s, based on German standards documents.  He has attached
 a notice, notably not actually claiming any copyright - see the file
@@ -35,7 +31,6 @@ Canada, is that in fact typefaces per se cannot be subject to copyright
 claims, so the software embodiment is the only thing subject to copyright
 and Schwarz's release makes it available for whatever "non commercial use"
 means.
-
 To avoid muddying the waters further, any copyright claims by Matthew Skala
 on these files are hereby released to the public domain.  I'd like for these
 fonts to be freely usable even in marginally commercial applications, such
@@ -48,13 +43,11 @@ without human editing!  I'd also like for these fonts (the fonts themselves
 as opposed to documents made with them) not to be sold, not even indirectly
 by those Web sites that advertise "free downloads" but make it difficult to
 actually download fonts without paying a fee.
-
 NOTE:  This ZIP archive is a stripped-down version containing just the
 essential files for using the main OCR B font on most systems.  If you want
 the much larger complete package, which contains Metafont sources and several
 variant fonts (reverse-video, outline, and slanted), look for a ZIP archive
 called ocrb-complete.zip wherever you found this one.
-
 Matthew Skala
 mskala@ansuz.sooke.bc.ca
 http://ansuz.sooke.bc.ca/

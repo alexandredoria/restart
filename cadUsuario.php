@@ -1,24 +1,23 @@
-  
+
 <?php
     include 'classes/usuario.class.php';
+include 'classes/log.class.php';
 include 'classes/ocorrencia.class.php';
-$pageTitle  = "Cadastrar usuário";  
+$pageTitle  = "Cadastrar usuário";
     include 'nucleo/cabecario.php';
     include("nucleo/barraLateral.php");
     if ($_SESSION['tipo_usuario'] != "1"){
       header("Location: ../restart/painel.php");
     exit;
-
   }
-
       // Verifica se algum form foi enviado
       if (!empty($_POST)) {
+$LOG = new LOG;
         // Verifica se as variáveis relacionadas ao cadastro/edição existem
         if (isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'])) {
-          $nome    = $_POST['nome']; 
+          $nome    = $_POST['nome'];
           $matricula    = $_POST['matricula'];
           $tipo_usuario    = $_POST['tipo_usuario'];
-          
           include_once 'nucleo/funcoes.php';
           // Verifica se será realizado um CADASTRO ou EDIÇÃO
           if ($_POST['acao'] == 'add') {
@@ -35,10 +34,10 @@ $pageTitle  = "Cadastrar usuário";
                             <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
                             <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário cadastrado com sucesso!</h4>
                           </div>
-                          
                         </div>
                       </div>
                     </div>";
+              $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'ADD_USU', 1);
             }
             else {
               echo "<!-- Modal -->
@@ -51,22 +50,20 @@ $pageTitle  = "Cadastrar usuário";
                           </div>
                           <div class='modal-body'>
                             <p>".$result."</p>
-<br><br><p><b>Contate à COLINF</b></p>
+                            <br><br><p><b>Contate à COLINF</b></p>
                           </div>
                         </div>
                       </div>
                     </div>";
+              $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'ADD_USU', 0);
             }
             unset($addUser);
             echo "<script>$('#modal_cadUsuario').modal('show');</script>";
           }
-        
         }
-        
       }
     ?>
     <div id="page-wrapper">
-
       <div class="row">
         <div class="col-lg-12">
           <h1> Cadastrar usuário</h1>
@@ -76,23 +73,19 @@ $pageTitle  = "Cadastrar usuário";
           </ol>
         </div>
       </div><!-- /.row -->
-      
       <div id="steps">
         <form role="form" id="formUsuario" name="formUsuario" action="cadUsuario.php" method="post">
-        
         <div class="row">
-          <div class="col-lg-4">            
+          <div class="col-lg-4">
               <input type="hidden" name="acao" value="add">
               <div class="form-group">
                 <label>Nome</label>
                 <input class="form-control" id="nome" name="nome" required autocomplete="off">
               </div>
-
               <div class="form-group">
                 <label>Matricula</label>
                 <input class="form-control" id="matricula" name="matricula" required autocomplete="off">
               </div>
-
               <label>Tipo de usuário</label>
               <div class="form-group">
                 <label class="radio-inline">
@@ -101,23 +94,20 @@ $pageTitle  = "Cadastrar usuário";
                 <label class="radio-inline">
                   <input type="radio" name="tipo_usuario" id="tipo_usuario3" value="3" required autocomplete="off"> Professor
                 </label>
-              </div>            
+              </div>
           </div>
         </div><!-- /.row -->
-
         <div class="row">
           <div class="col-lg-4"  align="right">
             <button type="submit" class="btn btn-default">Enviar</button>
-            <button type="reset" class="btn btn-default">Limpar</button>                     
-          </div>          
+            <button type="reset" class="btn btn-default">Limpar</button>
+          </div>
           <div class="col-lg-4"></div>
           <div class="col-lg-4"></div>
         </div><!-- /.row -->
-
         </form>
       </div><!-- /#STEPS -->
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
-  
 </body>
 </html>

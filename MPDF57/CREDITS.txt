@@ -1,5 +1,4 @@
 
-
 /*******************************************************************************
 * Software: FPDF                                                               *
 * Version:  1.53                                                               *
@@ -9,16 +8,13 @@
 *                                                                              *
 * You may use and modify this software as you wish.                            *
 *******************************************************************************/
-
 /*******************************************************************************
 * HTML2FPDF is a php script to read a HTML text and generate a PDF file.       *
 * Copyright (C) 2004-2005 Renato Coelho                                        *
 *	                          					       *
 * html2fpdf.php, htmltoolkit.php                                               *
 *******************************************************************************/
-
 CREDITS From HTML2FPDF:
-
 -Olivier Plathey for the fpdf.php class [http://www.fpdf.org]
 -Damon Kohler for the Flowing Block script [mailto:damonkohler@yahoo.com]
 -Clément Lavoillotte for HTML-oriented FPDF idea
@@ -32,9 +28,6 @@ CREDITS From HTML2FPDF:
 -Seb for the _SetTextRendering() and SetTextOutline() functions [mailto:captainseb@wanadoo.fr]
 -MorphSoft for the colornames list idea
 -W3SCHOOLS for HTML-related reference info [http://www.w3schools.com/]
-
-
-
 /****************************************************************************
 * Software: FPDF_Protection                                                 *
 * Version:  1.02                                                            *
@@ -45,7 +38,6 @@ CREDITS From HTML2FPDF:
 * You may use and modify this software as you wish as stated in original    *
 * FPDF package.                                                             *
 ****************************************************************************/
-
 /****************************************************************************
 //  FPDI - Version 1.2
 //
@@ -63,24 +55,21 @@ CREDITS From HTML2FPDF:
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 ****************************************************************************/
-
 /****************************************************************************
    * @copyright Khaled Al-Shamaa 2008
    * @link http://www.ar-php.org
    * @author Khaled Al-Shamaa <khaled@ar-php.org>
    * @desc   Set of PHP5 / UTF-8 Classes developed to enhance Arabic web
-   *         applications by providing set of tools includes stem-based searching, 
+   *         applications by providing set of tools includes stem-based searching,
    *         translitiration, soundex, Hijri calendar, charset detection and
-   *         converter, spell numbers, keyboard language, Muslim prayer time, 
+   *         converter, spell numbers, keyboard language, Muslim prayer time,
    *         auto-summarization, and more...
    * @package Arabic
-   *    
+   *
    * @version 1.8 released in Feb 15, 2009
-   * 
+   *
    * @license LGPL
 ****************************************************************************/
-
-
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
 License as published by the Free Software Foundation;
@@ -89,4 +78,3 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 Lesser General Public License for more details.
 [http://www.opensource.org/licenses/lgpl-license.php]
-

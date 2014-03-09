@@ -1,25 +1,19 @@
 <?php
-
 class wmf {
-
 var $mpdf = null;
 var $gdiObjectArray;
-
 function wmf(&$mpdf) {
 	$this->mpdf = $mpdf;
 }
-
-
 function _getWMFimage($data) {
 	$k = _MPDFK;
-
 		$this->gdiObjectArray = array();
 		$a=unpack('stest',"\1\0");
 		if ($a['test']!=1)
-		return array(0, 'Error parsing WMF image - Big-endian architecture not supported'); 
+		return array(0, 'Error parsing WMF image - Big-endian architecture not supported');
 		// check for Aldus placeable metafile header
 		$key = unpack('Lmagic', substr($data, 0, 4));
-		$p = 18;  // WMF header 
+		$p = 18;  // WMF header
 		if ($key['magic'] == (int)0x9AC6CDD7) { $p +=22; } // Aldus header
 		// define some state variables
 		$wo=null; // window origin
@@ -63,7 +57,6 @@ function _getWMFimage($data) {
 					$pen['type'] = 'P';
 					$this->_AddGDIObject($pen);
 					break;
-
 				// MUST create other GDI objects even if we don't handle them
 				case 0x06fe: // CreateBitmap
 				case 0x02fd: // CreateBitmapIndirect
@@ -94,12 +87,12 @@ function _getWMFimage($data) {
 							$nullBrush = false;
 							if ($obj['style'] == 1) { $nullBrush = true; }
 							else {
-								$wmfdata .= $this->mpdf->SetFColor($this->mpdf->ConvertColor('rgb('.$obj['r'].','.$obj['g'].','.$obj['b'].')'), true)."\n";	
+								$wmfdata .= $this->mpdf->SetFColor($this->mpdf->ConvertColor('rgb('.$obj['r'].','.$obj['g'].','.$obj['b'].')'), true)."\n";
 							}
 							break;
 						case 'P':
 							$nullPen = false;
-							$dashArray = array(); 
+							$dashArray = array();
 							// dash parameters are custom
 							switch ($obj['style']) {
 								case 0: // PS_SOLID
@@ -143,7 +136,6 @@ function _getWMFimage($data) {
 					for ($i = $numpoints; $i > 0; $i--) {
 						$px = $coords[2*$i];
 						$py = $coords[2*$i+1];
-
 						if ($i < $numpoints) { $wmfdata .= $this->_LineTo($px, $py); }
 					   else { $wmfdata .= $this->_MoveTo($px, $py); }
 					}
@@ -175,7 +167,6 @@ function _getWMFimage($data) {
 						}
 						$adjustment += $numpoints * 2;
 					}
-
 					if ($nullPen) {
 						if ($nullBrush) { $op = 'n'; } // no op
 						else { $op = 'f'; } // fill
@@ -192,21 +183,15 @@ function _getWMFimage($data) {
 					break;
 			}
 		}
-
-
 	return array(1,$wmfdata,$wo,$we);
 }
-
-
 function _MoveTo($x, $y) {
 	return "$x $y m\n";
 }
-
 // a line must have been started using _MoveTo() first
 function _LineTo($x, $y) {
 	return "$x $y l\n";
 }
-
 function _AddGDIObject($obj) {
 	// find next available slot
 	$idx = 0;
@@ -221,16 +206,11 @@ function _AddGDIObject($obj) {
 	}
 	$this->gdiObjectArray[$idx] = $obj;
 }
-
 function _GetGDIObject($idx) {
 	return $this->gdiObjectArray[$idx];
 }
-
 function _DeleteGDIObject($idx) {
 	unset($this->gdiObjectArray[$idx]);
 }
-
-
 }
-
 ?>

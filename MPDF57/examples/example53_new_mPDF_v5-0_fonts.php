@@ -1,7 +1,5 @@
 <?php
 ini_set("memory_limit","128M");
-
-
 $html = '
 <style>
 body {
@@ -9,7 +7,7 @@ body {
 	font-size: 10pt;
 }
 h4 {
-	font-variant: small-caps; 
+	font-variant: small-caps;
 }
 h5 {
 	margin-bottom: 0;
@@ -22,16 +20,13 @@ dl {
 <h1></a>mPDF</h1>
 <h2>Fonts in mPDF Version 5.x</h2>
 <p style="color: red"><b>Note:</b> This example will only display correctly if you have all the fonts installed in mPDF</p>
-
 <p>mPDF version 5 supports Truetype fonts, reading and embedding directly from the .ttf font files. Fonts must follow the Truetype specification and use Unicode mapping to the characters. Truetype collections (.ttc files) and Opentype files (.otf) in Truetype format are also supported.</p>
-
 <h4>Easy to add new fonts</h4>
 <ol>
 <li>Upload the Truetype font file to the fonts directory (/ttfonts)</li>
 <li>Define the font file details in the configuration file (config_fonts.php)</li>
 <li>Access the font by specifying it in your HTML code as the CSS font-family</li>
 </ol>
-
 <div>These are some examples of Windows fonts:</div>
 <div style="border:0.2mm solid #000088; padding: 1em; background-color: #EEEEEE;">
 <div style="font-family: Arial">Arial - The quick, sly fox jumped over the lazy brown dog.</div>
@@ -42,11 +37,8 @@ dl {
 <div style="font-family: \'Lucida Console\'">Lucidaconsole - The quick, sly fox jumped over the lazy brown dog.</div>
 <div style="font-family: Tahoma">Tahoma - The quick, sly fox jumped over the lazy brown dog.</div>
 </div>
-
 <h4>Full Unicode support</h4>
-
 <p>The DejaVu fonts distributed with mPDF contain an extensive set of characters, but it is easy to add fonts to access uncommon characters.</p>
-
 <div style="border:0.2mm solid #000088; padding: 1em; background-color: #EEEEEE;">
 <dl>
 <dt>Georgian (DejaVuSansCondensed)</dt>
@@ -72,30 +64,20 @@ dl {
 </dl>
 </div>
 The online manual lists a number of open-source fonts available to cover uncommon characters: <a href="http://mpdf1.com/manual/index.php?tid=451">http://mpdf1.com/manual/index.php?tid=451</a>
-
 <pagebreak />
 <h2>Complex scripts</h2>
-
 <p>Although all characters may be displayed, there are various reasons why a script may not appear as expected.</p>
-
 <h4>Right-to-left languages (Hebrew, Arabic etc.)</h4>
 Arabic languages and Hebrew are written in a right-to-left direction (RTL). mPDF recognises both Arabic and Hebrew languages and reverses text direction automatically.
-
 <div style="border:0.2mm solid #000088; padding: 0.5em; background-color: #EEEEEE; font-size: 18pt; font-family:tahoma; text-align: center;">
 &#1571;&#1604;&#1587;&#1617;&#1604;&#1575;&#1605; &#1593;&#1604;&#1610;&#1603;&#1605; &nbsp; &nbsp; &#1513;&#1500;&#1493;&#1501;
 </div>
-
 Arabic languages (but not Hebrew) also change the form of the letter depending on its position in the text e.g. these are the initial, medial, final, and isolated forms of arabic letter \'ain\':
-
 <div style="font-family:xbriyaz; border:0.2mm solid #000088; padding: 0.5em; background-color: #EEEEEE; font-size: 18pt; text-align: center;"> &#x639; &#x640;&#x639; &#x640;&#x639;&#x640; &#x639;&#x640; </div>
 The isolated characters are contained in the Unicode block \'Arabic\' U+0600 - U+06FF.<br />
 The initial, medial and final forms are contained in Unicode Blocks \'Arabic Presentation Forms\' A and B (U+FB50 - U+FDFF, U+FE70 - U+FEFE). Note that quite a large number of fonts contain the isolated characters but not the presentation forms. Fonts used with mPDF must contain the \'Arabic Presentation Forms\' in order to display arabic text correctly. mPDF automatically converts letters to their initial/medial/final forms in several languages: arabic, persian/farsi, urdu, sindhi and pashto.
-
 <p>Arabic text is used for many different languages e.g. persian/farsi, urdu, pashto etc. These languages often contain letters unique to that language. \'Arabic\' fonts do not always contain the full set of arabic charcters necessary for all languages. </p>
-
 <p>Other RTL languages (using other alphabets) are reversed in order, but not otherwise processed, by mPDF e.g. Syriac, Thaana, N\'Ko, and Samaritan.</p>
-
-
 <h4>Indic languages</h4>
 Indic languages are also complex scripts which require some processing of characters before display. For example some vowels consist of 2 characters, to be placed before and after the adjacent consonant e.g.
 <div style="font-family:ind_ml_1_001; border:0.2mm solid #000088; padding: 0.5em; background-color: #EEEEEE; font-size: 18pt; text-align: center;">
@@ -105,7 +87,6 @@ Indic languages are also complex scripts which require some processing of charac
 <div style="font-family:ind_hi_1_001; border:0.2mm solid #000088; padding: 0.5em; background-color: #EEEEEE; font-size: 18pt; text-align: center;"> &#2346; + &#2401; = &#2346;&#2403;</div>
 <p style="margin-bottom: 0">mPDF can support some of these languages, but requires specially prepared font files that are unique to mPDF.<br />
 Supported languages: Bengali, Devan&#257;gar&#299;, Gujar&#257;ti, Gurmukhi, Kannada, Malayalam, Oriya, Tamil, Telugu</p>
-
 <div style="border:0.2mm solid #000088; padding: 0.5em; background-color: #EEEEEE; font-size: 18pt;">
   <span style="font-family:ind_bn_1_001;">&#2438;&#2488;&#2488;&#2494;&#2482;&#2494;&#2478;&#2497; &#2438;&#2482;&#2494;&#2439;&#2453;&#2497;&#2478; </span>
  <span style="font-family:ind_gu_1_001;">&#2728;&#2734;&#2744;&#2765;&#2724;&#2759; </span>
@@ -113,21 +94,14 @@ Supported languages: Bengali, Devan&#257;gar&#299;, Gujar&#257;ti, Gurmukhi, Kan
  <span style="font-family:ind_hi_1_001;">&#x0928;&#x092E;&#x0938;&#x094D;&#x0924;&#x0947; </span>
  <span style="font-family:ind_ta_1_001;">&#2997;&#2979;&#2965;&#3021;&#2965;&#2990;&#3021;! </span>
 </div>
-Complex scripts <b>not</b> supported: Khmer, Sinhala, Tibetan, Myanmar (Burmese), Balinese 
-
+Complex scripts <b>not</b> supported: Khmer, Sinhala, Tibetan, Myanmar (Burmese), Balinese
 <h4>Vertical writing</h4>
 <div>Vertical writing is not supported by mPDF (e.g. Mongolian and Phags-pa) although the individual characters can be displayed using suitable fonts.</div>
-
 <pagebreak />
-
 <h4>Combining diacritics</h4>
 <p>In Unicode, letters with diacritics (e.g. &#193;&#225;&#550;&#551;&#196;&#228;) are usually represented as a single character e.g. Unicode U+0196 is an A Umlaut. There are 4 blocks in Unicode of diacritics or \'marks\' which can be used to combine with adjacent letters: Combining Diacritical Marks (U+0300 - U+036F), Combining Diacritical Marks Supplement (U+1DC0 - U+1DFF), Combining Marks for Symbols(U+20D0 - U+20FF) and Combining Half Marks (U+FE20 - U+FE2F). </p>
-
-
 <p>Software applications use special positioning information stored in OpenType font files to resposition the diacritic/mark depending on the context. mPDF does not support this repositioning and is dependent on the font design and original placement of the diacritic:
 </p>
-
-
 <div style="border:0.2mm solid #000088; padding: 0.5em; background-color: #EEEEEE; font-size: 14pt;">
 <div style="font-family:\'Dejavu Sans Condensed\';">&#193; &#225; &#550; &#551; &#196; &#228; &iuml; (Precomposed characters: DejaVu Sans Condensed)</div>
 <div style="font-family:\'Dejavu Sans Condensed\';">A&#769; a&#769; A&#x307; a&#x307; A&#x308; a&#x308; i&#x308; (Using diacritics: DejaVu Sans Condensed)</div>
@@ -136,19 +110,13 @@ Complex scripts <b>not</b> supported: Khmer, Sinhala, Tibetan, Myanmar (Burmese)
 <div style="font-family:\'Courier new\';">A&#769; a&#769; A&#x307; a&#x307; A&#x308; a&#x308; i&#x308; (Courier New)</div>
 </div>
 <p><b>It is recommended to use precomposed characters whenever possible with mPDF.</b></p>
-
-
 <pagebreak />
-
 <h2>Unicode Supplementary Planes</h2>
 <p>The original Unicode allocated characters between x0000 and xFFFF (65,536 characters). This \'Basic Multilingual Plane\' supported most characters in common use, including a large number of Unified Chinese-Japanese-Korean characters (CJK). Later the Unicode standard was extended to 16 Planes. </p>
-
 <p>The first plane (plane 0), the Basic Multilingual Plane (BMP), is where most characters have been assigned so far.</p>
 <p>Plane 1, the Supplementary Multilingual Plane (SMP), is mostly used for historic scripts such as Linear B, but is also used for musical and mathematical symbols.</p>
 <p>Plane 2, the Supplementary Ideographic Plane (SIP), is used for about 40,000 Unified Han (CJK) Ideographs.</p>
-
 <p>mPDF version 5 supports fonts containing characters from all Unicode Planes. By choosing the correct font, almost every single character from Unicode 5 can be displayed in a PDF file.</p>
-
 <h4>Unicode Supplementary Multilingual Plane (SMP or Plane 1) U+10000 - U+1FFFF</h4>
 <h5>Gothic text</h5>
 <div>
@@ -160,9 +128,8 @@ This paragraph shows Gothic text. These characters lie in the Unicode Supplement
 </div>
 </div>
 <div>
-Font: MPH2BDamase (damase_v.2.ttf) available from: http://www.wazu.jp/gallery/views/View_MPH2BDamase.html 
+Font: MPH2BDamase (damase_v.2.ttf) available from: http://www.wazu.jp/gallery/views/View_MPH2BDamase.html
 </div>
-
 <h5>Egyptian Hieroglyphics</h5>
 <div>
 This paragraph shows Egyptian Hieroglyphics. These characters lie in the Unicode Supplementary Multilingual Plane U+13000 - U+1342F.
@@ -175,18 +142,12 @@ This paragraph shows Egyptian Hieroglyphics. These characters lie in the Unicode
 <div>
 Font: Aegyptus.otf available from: http://users.teilar.gr/~g1951d/
 </div>
-
 <p>SMP contains mainly ancient scripts - see <a href="http://mpdf1.com/manual/index.php?tid=451">http://mpdf1.com/manual/index.php?tid=451</a> for full list.</p>
-
 <p>mPDF uses a different method to embed fonts in the PDF file if they include characters from SMP or SIP, because the characters cannot be represented by a 4 character hex code 0000-FFFF. This method is less eficient than the default method, and it can be suppressed by adding the font name to the array \'BMPonly\' in the config_fonts.php configuration file. </p>
-
 <p>Note that the DejaVu fonts distributed with mPDF and (GNU)FreeSans and FreeSerif fonts do contain a few characters in the SMP plane, but most users will not require them and by default they have been added to the array \'BMPonly\'.</p>
-
 <pagebreak />
-
 <h4>CJK characters</h4>
 <p>Below are examples of all the CJK Unicode blocks contained in the Basic Multilingual Plane and Supplemental Ideographic Plane</p>
-
 <div style="border:0.2mm solid #000088; padding: 1em; background-color: #EEEEEE;">
 <h5>Plane 0 (BMP)</h5>
 <dl style="font-family:sun-exta;">
@@ -229,40 +190,28 @@ Font: Aegyptus.otf available from: http://users.teilar.gr/~g1951d/
 <dt>CJK Compatibility Ideographs</dt>
 <dd>&#63744; &#63745; &#63746; &#63747; &#63748; &#63749; &#63750; &#63752; &#63753; &#63754; &#63755; &#63756; &#63757; &#63758; &#63759; &#63760; &#63761; &#63762; &#63763; &#63764; &#63765; &#63766; &#63767; &#63768; &#63769; </dd>
 </dl>
-
 <h5>Plane 2 (SIP)</h5>
 <dl style="font-family:sun-exta;">
 <dt>CJK Unified Ideographs Extension B</dt>
 <dd>&#x20000; &#x20001; &#x20002; &#x20003; &#x20004; &#x20005; &#x20006; &#x20007; &#x20008; &#x20009; &#x2000A; &#x2000B; &#x2000C; &#x2000D; &#x2000E; &#x2000F; &#x20010; &#x20011; &#x20012; &#x20013; </dd>
-
 <dt>CJK Unified Ideographs Extension C</dt>
 <dd>&#x2A700; &#x2A701; &#x2A702; &#x2A703; &#x2A704; &#x2A705; &#x2A706; &#x2A707; &#x2A708; &#x2A709; &#x2A70A; &#x2A70B; &#x2A70C; &#x2A70D; &#x2A70E; &#x2A70F; &#x2A710; &#x2A711; &#x2A712; &#x2A713; </dd>
-
 <dt>CJK Compatibility Ideographs Supplement</dt>
 <dd>&#x2F800; &#x2F801; &#x2F802; &#x2F803; &#x2F804; &#x2F805; &#x2F806; &#x2F807; &#x2F808; &#x2F809; &#x2F80A; &#x2F80B; &#x2F80C; &#x2F80D; &#x2F80E; &#x2F80F; &#x2F810; &#x2F811; &#x2F812; &#x2F813; </dd>
 </dl>
-
 </div>
-
 <pagebreak />
-
 <h4>Using CJK fonts in mPDF</h4>
-
 <p>Fonts containing CJK characters are large files, typically 10-30MB. Adobe provides a free download of an \'Asian font pack\' allowing you to create PDF files without including (embedding) the font information in the file. This keeps the file size to a minimum and minimises resource usage on your website generating the PDF file. However, users will have to download the Adobe font packs to read the file, and other PDF software will not display the text correctly.</p>
-
 <p>mPDF allows you to embed subsets of CJK fonts keeping file size down, although there is increased memory usage to generate these files.</p>
-
 <p>Some CJK fonts are broken up into 2 files because of the size of the files. One freely available font with almost complete coverage of all CJK characters (in both BMP and SIP) is \'Sun\' available from Alan Wood\'s excellent website: <a href="http://www.alanwood.net/unicode/fonts-east-asian.html">http://www.alanwood.net/unicode/fonts-east-asian.html</a>. This comes as 2 files, Sun-ExtA and Sun-ExtB (both about 20MB in size) containing the characters from BMP and SIP respectively.
 </p>
-
 <p>mPDF allows you to treat these as one font by defining the second file as an SIP-extension of the first in the config_fonts.php configuration file. The following text includes random characters from the BMP and SIP mixed together:</p>
-
 <div style="border:0.2mm solid #000088; padding: 1em; background-color: #EEEEEE;">
 <div style="font-family:sun-extA;">
-&#40706; &#40712; &#40727; &#x2320f; &#x23225; &#40742; &#40743; &#x2322f; &#x23231; &#40761; &#40772; &#x23232; &#x23233; &#40773; &#40784; &#x23234; &#x23256; &#40787; &#40794; &#x23262; &#x23281; &#40802; &#40809; &#x23289; &#x2328a; 
+&#40706; &#40712; &#40727; &#x2320f; &#x23225; &#40742; &#40743; &#x2322f; &#x23231; &#40761; &#40772; &#x23232; &#x23233; &#40773; &#40784; &#x23234; &#x23256; &#40787; &#40794; &#x23262; &#x23281; &#40802; &#40809; &#x23289; &#x2328a;
 </div>
 </div>
-
 <p>This is the entry in the config_fonts.php configuration file:</p>
 <div style="border:0.2mm solid #000088; padding: 1em; background-color: #EEEEEE; font-family: \'Courier new\'; font-size: 8.5pt;">
 $this->fontdata = array(<br />
@@ -278,52 +227,39 @@ $this->fontdata = array(<br />
 ...<br />
 );
 </div>
-
-
 <p>This is the HTML code - note only the sun-exta font-family needs to be referenced:</p>
 <div style="border:0.2mm solid #000088; padding: 1em; background-color: #EEEEEE; font-family: \'Courier new\'; font-size: 8.5pt;">
 &lt;div style="font-family:sun-extA;"&gt;
-&amp;#40706; &amp;#40712; &amp;#40727; &amp;#x2320f; &amp;#x23225; &amp;#40742; &amp;#40743; &amp;#x2322f; &amp;#x23231; &amp;#40761; &amp;#40772; &amp;#x23232; &amp;#x23233; &amp;#40773; &amp;#40784; &amp;#x23234; &amp;#x23256; &amp;#40787; &amp;#40794; &amp;#x23262; &amp;#x23281; &amp;#40802; &amp;#40809; &amp;#x23289; &amp;#x2328a; 
+&amp;#40706; &amp;#40712; &amp;#40727; &amp;#x2320f; &amp;#x23225; &amp;#40742; &amp;#40743; &amp;#x2322f; &amp;#x23231; &amp;#40761; &amp;#40772; &amp;#x23232; &amp;#x23233; &amp;#40773; &amp;#40784; &amp;#x23234; &amp;#x23256; &amp;#40787; &amp;#40794; &amp;#x23262; &amp;#x23281; &amp;#40802; &amp;#40809; &amp;#x23289; &amp;#x2328a;
 &lt;/div&gt;
 </div>
-
 <p>NB You may also need to edit the value $this->useAdobeCJK=false in config.php or use new mPDF(\'-aCJK\'), and edit the config_cp.php configuration file.</p>
-
-
 <pagebreak />
-
 <h4>TrueType Collections</h4>
-
 <p>TrueType Collections (.ttc files) contain more than one font. mPDF treats each font separately by defining the TTCfontID array in the config_fonts.php configuration file. </p>
-
 <p>This example uses the Windows MingLiU fonts, which consist of 2 files containing 6 fonts (note that mingliub is not a Bold variant): </p>
-
 <p>Font collection file (mingliu.ttc) contains the following fonts:<br />
 [1] MingLiU (mingliu) Regular<br />
 [2] PMingLiU (pmingliu) Regular (Proportional)<br />
 [3] MingLiU_HKSCS (mingliu_hkscs) Regular<br />
 </p>
-
 <p>Font collection file (mingliub.ttc) contains the following fonts:<br />
 [1] MingLiU-ExtB (mingliu-extb) Regular<br />
 [2] PMingLiU-ExtB (pmingliu-extb) Regular (Proportional)<br />
 [3] MingLiU_HKSCS-ExtB (mingliu_hkscs-extb) Regular<br />
 </p>
-
 <p>The following text includes characters from both BMP and SIP:</p>
-
 <div style="border:0.2mm solid #000088; padding: 1em; background-color: #EEEEEE;">
 <div style="font-family:mingliu;">
-&#40706; &#40742; &#40772; &#40784; &#40802; &#40809; &#x23289; &#x2328a; 
+&#40706; &#40742; &#40772; &#40784; &#40802; &#40809; &#x23289; &#x2328a;
 </div>
 <div style="font-family:mingliu_hkscs;">
-&#40706; &#40742; &#40772; &#40784; &#40802; &#40809; &#x23289; &#x2328a; 
+&#40706; &#40742; &#40772; &#40784; &#40802; &#40809; &#x23289; &#x2328a;
 </div>
 <div style="font-family:pmingliu;">
-&#40706; &#40742; &#40772; &#40784; &#40802; &#40809; &#x23289; &#x2328a; 
+&#40706; &#40742; &#40772; &#40784; &#40802; &#40809; &#x23289; &#x2328a;
 </div>
 </div>
-
 <p>This is the entry in the config_fonts.php configuration file:</p>
 <div style="border:0.2mm solid #000088; padding: 1em; background-color: #EEEEEE; font-family: \'Courier new\'; font-size: 8.5pt;">
 $this->fontdata = array(<br />
@@ -335,7 +271,6 @@ $this->fontdata = array(<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; ),<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'sip-ext\' => \'mingliu-extb\',<br />
  &nbsp; &nbsp; &nbsp;  ),<br />
-
  &nbsp; &nbsp; &nbsp; "pmingliu" => array(<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'R\' => "mingliu.ttc",<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'TTCfontID\' => array (<br />
@@ -343,7 +278,6 @@ $this->fontdata = array(<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; ),<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'sip-ext\' => \'pmingliu-extb\',<br />
  &nbsp; &nbsp; &nbsp;  ),<br />
-
  &nbsp; &nbsp; &nbsp; "mingliu_hkscs" => array(<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'R\' => "mingliu.ttc",<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'TTCfontID\' => array (<br />
@@ -351,21 +285,18 @@ $this->fontdata = array(<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; ),<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'sip-ext\' => \'mingliu_hkscs-extb\',<br />
  &nbsp; &nbsp; &nbsp;  ),<br />
-
  &nbsp; &nbsp; &nbsp; "mingliu-extb" => array(<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'R\' => "mingliub.ttc",<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'TTCfontID\' => array (<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \'R\' => 1,<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; ),<br />
  &nbsp; &nbsp; &nbsp;  ),<br />
-
  &nbsp; &nbsp; &nbsp; "pmingliu-extb" => array(<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'R\' => "mingliub.ttc",<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'TTCfontID\' => array (<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \'R\' => 2,<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; ),<br />
  &nbsp; &nbsp; &nbsp;  ),<br />
-
  &nbsp; &nbsp; &nbsp; "mingliu_hkscs-extb" => array(<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'R\' => "mingliub.ttc",<br />
  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; \'TTCfontID\' => array (<br />
@@ -376,56 +307,44 @@ $this->fontdata = array(<br />
 ...<br />
 );
 </div>
-
-
 <p>This is the HTML code:</p>
 <div style="border:0.2mm solid #000088; padding: 1em; background-color: #EEEEEE; font-family: \'Courier new\'; font-size: 8.5pt;">
 &lt;div style="font-family:mingliu;"&gt;
-&amp;#40706; &amp;#40742; &amp;#40772; &amp;#40784; &amp;#40802; &amp;#40809; &amp;#x23289; &amp;#x2328a; 
+&amp;#40706; &amp;#40742; &amp;#40772; &amp;#40784; &amp;#40802; &amp;#40809; &amp;#x23289; &amp;#x2328a;
 &lt;/div&gt;
 <br />
 &lt;div style="font-family:mingliu_hkscs;"&gt;
-&amp;#40706; &amp;#40742; &amp;#40772; &amp;#40784; &amp;#40802; &amp;#40809; &amp;#x23289; &amp;#x2328a; 
+&amp;#40706; &amp;#40742; &amp;#40772; &amp;#40784; &amp;#40802; &amp;#40809; &amp;#x23289; &amp;#x2328a;
 &lt;/div&gt;
 <br />
 &lt;div style="font-family:pmingliu;"&gt;
-&amp;#40706; &amp;#40742; &amp;#40772; &amp;#40784; &amp;#40802; &amp;#40809; &amp;#x23289; &amp;#x2328a; 
+&amp;#40706; &amp;#40742; &amp;#40772; &amp;#40784; &amp;#40802; &amp;#40809; &amp;#x23289; &amp;#x2328a;
 &lt;/div&gt;
 </div>
-
-
 ';
-
 //==============================================================
 //==============================================================
 //==============================================================
 if ($_REQUEST['html']) { echo $html; exit; }
-if ($_REQUEST['source']) { 
+if ($_REQUEST['source']) {
 	$file = __FILE__;
 	header("Content-Type: text/plain");
 	header("Content-Length: ". filesize($file));
 	header("Content-Disposition: attachment; filename='".$file."'");
 	readfile($file);
-	exit; 
+	exit;
 }
 //==============================================================
 //==============================================================
 //==============================================================
 //==============================================================
 //==============================================================
-
 include("../mpdf.php");
-
-$mpdf=new mPDF(); 
-
+$mpdf=new mPDF();
 $mpdf->WriteHTML($html);
-
 $mpdf->Output();
 exit;
-
 //==============================================================
 //==============================================================
 //==============================================================
-
-
 ?>

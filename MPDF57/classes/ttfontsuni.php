@@ -1,5 +1,4 @@
 <?php
-
 /*******************************************************************************
 * TTFontFile class                                                             *
 *                                                                              *
@@ -10,34 +9,27 @@
 * Copyright (c) Ian Back, 2010                                                 *
 * This class is based on The ReportLab Open Source PDF library                 *
 * written in Python - http://www.reportlab.com/software/opensource/            *
-* together with ideas from the OpenOffice source code and others.              * 
+* together with ideas from the OpenOffice source code and others.              *
 * This header must be retained in any redistribution or                        *
 * modification of the file.                                                    *
 *                                                                              *
 *******************************************************************************/
-
 // Define the value used in the "head" table of a created TTF file
 // 0x74727565 "true" for Mac
 // 0x00010000 for Windows
 // Either seems to work for a font embedded in a PDF file
 // when read by Adobe Reader on a Windows PC(!)
 if (!defined('_TTF_MAC_HEADER')) define("_TTF_MAC_HEADER", false);
-
 // Recalculate correct metadata/profiles when making subset fonts (not SIP/SMP)
 // e.g. xMin, xMax, maxNContours
 if (!defined('_RECALC_PROFILE')) define("_RECALC_PROFILE", false);
-
 // TrueType Font Glyph operators
 define("GF_WORDS",(1 << 0));
 define("GF_SCALE",(1 << 3));
 define("GF_MORE",(1 << 5));
 define("GF_XYSCALE",(1 << 6));
 define("GF_TWOBYTWO",(1 << 7));
-
-
-
 class TTFontFile {
-
 var $unAGlyphs;	// mPDF 5.4.05
 var $panose;
 var $maxUni;
@@ -78,12 +70,9 @@ var $numTTCFonts;
 var $TTCFonts;
 var $maxUniChar;
 var $kerninfo;
-
 	function TTFontFile() {
 		$this->maxStrLenRead = 200000;	// Maximum size of glyf table to read in as string (otherwise reads each glyph from file)
 	}
-
-
 	function getMetrics($file, $TTCfontID=0, $debug=false, $BMPonly=false, $kerninfo=false, $unAGlyphs=false) {	// mPDF 5.4.05
 		$this->unAGlyphs = $unAGlyphs;	// mPDF 5.4.05
 		$this->filename = $file;
@@ -101,9 +90,9 @@ var $kerninfo;
 		$this->TTCFonts = array();
 		$this->version = $version = $this->read_ulong();
 		$this->panose = array();
-		if ($version==0x4F54544F) 
+		if ($version==0x4F54544F)
 			die("Postscript outlines are not supported");
-		if ($version==0x74746366 && !$TTCfontID) 
+		if ($version==0x74746366 && !$TTCfontID)
 			die("ERROR - You must define the TTCfontID for a TrueType Collection in config_fonts.php (". $file.")");
 		if (!in_array($version, array(0x00010000,0x74727565)) && !$TTCfontID)
 			die("Not a TrueType font: version=".$version);
@@ -119,17 +108,15 @@ var $kerninfo;
 			$this->version = $version = $this->read_ulong();	// TTFont version again now
 		}
 		$this->readTableDirectory($debug);
-		$this->extractInfo($debug, $BMPonly, $kerninfo); 
+		$this->extractInfo($debug, $BMPonly, $kerninfo);
 		fclose($this->fh);
 	}
-
-
 	function readTableDirectory($debug=false) {
 	    $this->numTables = $this->read_ushort();
             $this->searchRange = $this->read_ushort();
             $this->entrySelector = $this->read_ushort();
             $this->rangeShift = $this->read_ushort();
-            $this->tables = array();	
+            $this->tables = array();
             for ($i=0;$i<$this->numTables;$i++) {
                 $record = array();
                 $record['tag'] = $this->read_tag();
@@ -140,7 +127,6 @@ var $kerninfo;
 		}
 		if ($debug) $this->checksumTables();
 	}
-
 	function checksumTables() {
 		// Check the checksums for all tables
 		foreach($this->tables AS $t) {
@@ -154,12 +140,11 @@ var $kerninfo;
             		$checksum = $this->sub32($checksum, $adjustment);
 			}
             	$xchecksum = $t['checksum'];
-            	if ($xchecksum != $checksum) 
+            	if ($xchecksum != $checksum)
             	    die(sprintf('TTF file "%s": invalid checksum %s table: %s (expected %s)', $this->filename,dechex($checksum[0]).dechex($checksum[1]),$t['tag'],dechex($xchecksum[0]).dechex($xchecksum[1])));
 		  }
 		}
 	}
-
 	function sub32($x, $y) {
 		$xlo = $x[1];
 		$xhi = $x[0];
@@ -172,7 +157,6 @@ var $kerninfo;
 		$reshi = $reshi & 0xFFFF;
 		return array($reshi, $reslo);
 	}
-
 	function calcChecksum($data)  {
 		if (strlen($data) % 4) { $data .= str_repeat("\0",(4-(strlen($data) % 4))); }
 		$len = strlen($data);
@@ -186,129 +170,108 @@ var $kerninfo;
 		}
 		return array($hi, $lo);
 	}
-
 	function get_table_pos($tag) {
 		$offset = $this->tables[$tag]['offset'];
 		$length = $this->tables[$tag]['length'];
 		return array($offset, $length);
 	}
-
 	function seek($pos) {
 		$this->_pos = $pos;
 		fseek($this->fh,$this->_pos);
 	}
-
 	function skip($delta) {
 		$this->_pos = $this->_pos + $delta;
 		fseek($this->fh,$delta,SEEK_CUR);
 	}
-
 	function seek_table($tag, $offset_in_table = 0) {
 		$tpos = $this->get_table_pos($tag);
 		$this->_pos = $tpos[0] + $offset_in_table;
 		fseek($this->fh, $this->_pos);
 		return $this->_pos;
 	}
-
 	function read_tag() {
 		$this->_pos += 4;
 		return fread($this->fh,4);
 	}
-
 	function read_short() {
 		$this->_pos += 2;
 		$s = fread($this->fh,2);
 		$a = (ord($s[0])<<8) + ord($s[1]);
-		if ($a & (1 << 15) ) { 
-			$a = ($a - (1 << 16)); 
+		if ($a & (1 << 15) ) {
+			$a = ($a - (1 << 16));
 		}
 		return $a;
 	}
-
 	function unpack_short($s) {
 		$a = (ord($s[0])<<8) + ord($s[1]);
-		if ($a & (1 << 15) ) { 
-			$a = ($a - (1 << 16)); 
+		if ($a & (1 << 15) ) {
+			$a = ($a - (1 << 16));
 		}
 		return $a;
 	}
-
 	function read_ushort() {
 		$this->_pos += 2;
 		$s = fread($this->fh,2);
 		return (ord($s[0])<<8) + ord($s[1]);
 	}
-
 	function read_ulong() {
 		$this->_pos += 4;
 		$s = fread($this->fh,4);
 		// if large uInt32 as an integer, PHP converts it to -ve
 		return (ord($s[0])*16777216) + (ord($s[1])<<16) + (ord($s[2])<<8) + ord($s[3]); // 	16777216  = 1<<24
 	}
-
 	function get_ushort($pos) {
 		fseek($this->fh,$pos);
 		$s = fread($this->fh,2);
 		return (ord($s[0])<<8) + ord($s[1]);
 	}
-
 	function get_ulong($pos) {
 		fseek($this->fh,$pos);
 		$s = fread($this->fh,4);
 		// iF large uInt32 as an integer, PHP converts it to -ve
 		return (ord($s[0])*16777216) + (ord($s[1])<<16) + (ord($s[2])<<8) + ord($s[3]); // 	16777216  = 1<<24
 	}
-
 	function pack_short($val) {
-		if ($val<0) { 
+		if ($val<0) {
 			$val = abs($val);
 			$val = ~$val;
 			$val += 1;
 		}
-		return pack("n",$val); 
+		return pack("n",$val);
 	}
-
 	function splice($stream, $offset, $value) {
 		return substr($stream,0,$offset) . $value . substr($stream,$offset+strlen($value));
 	}
-
 	function _set_ushort($stream, $offset, $value) {
 		$up = pack("n", $value);
 		return $this->splice($stream, $offset, $up);
 	}
-
 	function _set_short($stream, $offset, $val) {
-		if ($val<0) { 
+		if ($val<0) {
 			$val = abs($val);
 			$val = ~$val;
 			$val += 1;
 		}
-		$up = pack("n",$val); 
+		$up = pack("n",$val);
 		return $this->splice($stream, $offset, $up);
 	}
-
 	function get_chunk($pos, $length) {
 		fseek($this->fh,$pos);
 		if ($length <1) { return ''; }
 		return (fread($this->fh,$length));
 	}
-
 	function get_table($tag) {
 		list($pos, $length) = $this->get_table_pos($tag);
 		if ($length == 0) { return ''; }
 		fseek($this->fh,$pos);
 		return (fread($this->fh,$length));
 	}
-
 	function add($tag, $data) {
 		if ($tag == 'head') {
 			$data = $this->splice($data, 8, "\0\0\0\0");
 		}
 		$this->otables[$tag] = $data;
 	}
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////
 	function getCTG($file, $TTCfontID=0, $debug=false, $unAGlyphs=false) {	// mPDF 5.4.05
 		$this->unAGlyphs = $unAGlyphs;	// mPDF 5.4.05
@@ -334,8 +297,6 @@ var $kerninfo;
 			$this->version = $version = $this->read_ulong();	// TTFont version again now
 		}
 		$this->readTableDirectory($debug);
-
-
 		// cmap - Character to glyph index mapping table
 		$cmap_offset = $this->seek_table("cmap");
 		$this->skip(2);
@@ -362,15 +323,12 @@ var $kerninfo;
 			}
 			$this->seek($save_pos );
 		}
-
 		$glyphToChar = array();
 		$charToGlyph = array();
 		$this->getCMAP4($unicode_cmap_offset, $glyphToChar, $charToGlyph );
-
 		fclose($this->fh);
 		return ($charToGlyph);
 	}
-
 /////////////////////////////////////////////////////////////////////////////////////////
 	function getTTCFonts($file) {
 		$this->filename = $file;
@@ -392,13 +350,8 @@ var $kerninfo;
 	            $this->TTCFonts[$i]['offset'] = $this->read_ulong();
 		}
 	}
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////
-
 /////////////////////////////////////////////////////////////////////////////////////////
-
 	function extractInfo($debug=false, $BMPonly=false, $kerninfo=false) {
 		$this->panose = array();
 		$this->sFamilyClass = 0;
@@ -474,28 +427,25 @@ var $kerninfo;
 			if ($names[2]) { $this->styleName = $names[2]; } else { $this->styleName = 'Regular'; }
 			if ($names[4]) { $this->fullName = $names[4]; } else { $this->fullName = $psName; }
 			if ($names[3]) { $this->uniqueFontID = $names[3]; } else { $this->uniqueFontID = $psName; }
-
 			if ($names[6]) { $this->fullName = $names[6]; }
-
 		///////////////////////////////////
 		// head - Font header table
 		///////////////////////////////////
 		$this->seek_table("head");
-		if ($debug) { 
+		if ($debug) {
 			$ver_maj = $this->read_ushort();
 			$ver_min = $this->read_ushort();
 			if ($ver_maj != 1)
 				die('Unknown head table version '. $ver_maj .'.'. $ver_min);
 			$this->fontRevision = $this->read_ushort() . $this->read_ushort();
-
 			$this->skip(4);
 			$magic = $this->read_ulong();
-			if ($magic != 0x5F0F3CF5) 
+			if ($magic != 0x5F0F3CF5)
 				die('Invalid head table magic ' .$magic);
 			$this->skip(2);
 		}
 		else {
-			$this->skip(18); 
+			$this->skip(18);
 		}
 		$this->unitsPerEm = $unitsPerEm = $this->read_ushort();
 		$scale = 1000 / $unitsPerEm;
@@ -510,7 +460,6 @@ var $kerninfo;
 		$glyphDataFormat = $this->read_ushort();
 		if ($glyphDataFormat != 0)
 			die('Unknown glyph data format '.$glyphDataFormat);
-
 		///////////////////////////////////
 		// hhea metrics table
 		///////////////////////////////////
@@ -523,7 +472,6 @@ var $kerninfo;
 			$this->ascent = ($hheaAscender *$scale);
 			$this->descent = ($hheaDescender *$scale);
 		}
-
 		///////////////////////////////////
 		// OS/2 - OS/2 and Windows metrics table
 		///////////////////////////////////
@@ -568,39 +516,35 @@ var $kerninfo;
 			$this->capHeight = $this->ascent;
 		}
 		$this->stemV = 50 + intval(pow(($usWeightClass / 65.0),2));
-
 		///////////////////////////////////
 		// post - PostScript table
 		///////////////////////////////////
 		$this->seek_table("post");
-		if ($debug) { 
+		if ($debug) {
 			$ver_maj = $this->read_ushort();
 			$ver_min = $this->read_ushort();
-			if ($ver_maj <1 || $ver_maj >4) 
+			if ($ver_maj <1 || $ver_maj >4)
 				die('Unknown post table version '.$ver_maj);
 		}
 		else {
-			$this->skip(4); 
+			$this->skip(4);
 		}
 		$this->italicAngle = $this->read_short() + $this->read_ushort() / 65536.0;
 		$this->underlinePosition = $this->read_short() * $scale;
 		$this->underlineThickness = $this->read_short() * $scale;
 		$isFixedPitch = $this->read_ulong();
-
 		$this->flags = 4;
-
-		if ($this->italicAngle!= 0) 
+		if ($this->italicAngle!= 0)
 			$this->flags = $this->flags | 64;
 		if ($usWeightClass >= 600)
 			$this->flags = $this->flags | 262144;
 		if ($isFixedPitch)
 			$this->flags = $this->flags | 1;
-
 		///////////////////////////////////
 		// hhea - Horizontal header table
 		///////////////////////////////////
 		$this->seek_table("hhea");
-		if ($debug) { 
+		if ($debug) {
 			$ver_maj = $this->read_ushort();
 			$ver_min = $this->read_ushort();
 			if ($ver_maj != 1)
@@ -608,31 +552,28 @@ var $kerninfo;
 			$this->skip(28);
 		}
 		else {
-			$this->skip(32); 
+			$this->skip(32);
 		}
 		$metricDataFormat = $this->read_ushort();
 		if ($metricDataFormat != 0)
 			die('Unknown horizontal metric data format '.$metricDataFormat);
 		$numberOfHMetrics = $this->read_ushort();
-		if ($numberOfHMetrics == 0) 
+		if ($numberOfHMetrics == 0)
 			die('Number of horizontal metrics is 0');
-
 		///////////////////////////////////
 		// maxp - Maximum profile table
 		///////////////////////////////////
 		$this->seek_table("maxp");
-		if ($debug) { 
+		if ($debug) {
 			$ver_maj = $this->read_ushort();
 			$ver_min = $this->read_ushort();
 			if ($ver_maj != 1)
 				die('Unknown maxp table version '.$ver_maj);
 		}
 		else {
-			$this->skip(4); 
+			$this->skip(4);
 		}
 		$numGlyphs = $this->read_ushort();
-
-
 		///////////////////////////////////
 		// cmap - Character to glyph index mapping table
 		///////////////////////////////////
@@ -664,8 +605,6 @@ var $kerninfo;
 		}
 		if (!$unicode_cmap_offset)
 			die('Font ('.$this->filename .') does not have cmap for Unicode (platform 3, encoding 1, format 4, or platform 0, any encoding, format 4)');
-
-
 		$sipset = false;
 		$smpset = false;
 		// Format 12 CMAP does characters above Unicode BMP i.e. some HKCS characters U+20000 and above
@@ -675,20 +614,18 @@ var $kerninfo;
 			$length = $this->read_ulong();
 			$limit = $unicode_cmap_offset + $length;
 			$this->skip(4);
-
 			$nGroups = $this->read_ulong();
-
 			$glyphToChar = array();
 			$charToGlyph = array();
-			for($i=0; $i<$nGroups ; $i++) { 
-				$startCharCode = $this->read_ulong(); 
-				$endCharCode = $this->read_ulong(); 
-				$startGlyphCode = $this->read_ulong(); 
+			for($i=0; $i<$nGroups ; $i++) {
+				$startCharCode = $this->read_ulong();
+				$endCharCode = $this->read_ulong();
+				$startGlyphCode = $this->read_ulong();
 				if (($endCharCode > 0x20000 && $endCharCode < 0x2A6DF) || ($endCharCode > 0x2F800 && $endCharCode < 0x2FA1F)) {
-					$sipset = true; 
+					$sipset = true;
 				}
 				else if ($endCharCode > 0x10000 && $endCharCode < 0x1FFFF) {
-					$smpset = true; 
+					$smpset = true;
 				}
 				$offset = 0;
 				for ($unichar=$startCharCode;$unichar<=$endCharCode;$unichar++) {
@@ -701,20 +638,16 @@ var $kerninfo;
 			}
 		}
 		else {
-
 			$glyphToChar = array();
 			$charToGlyph = array();
 			$this->getCMAP4($unicode_cmap_offset, $glyphToChar, $charToGlyph );
-
 		}
 		$this->sipset = $sipset ;
 		$this->smpset = $smpset ;
-
 		///////////////////////////////////
 		// hmtx - Horizontal metrics table
 		///////////////////////////////////
 		$this->getHMTX($numberOfHMetrics, $numGlyphs, $glyphToChar, $scale);
-
 		///////////////////////////////////
 		// kern - Kerning pair table
 		///////////////////////////////////
@@ -745,11 +678,7 @@ var $kerninfo;
 			}
 		}
 	}
-
-
 /////////////////////////////////////////////////////////////////////////////////////////
-
-
 	function makeSubset($file, &$subset, $TTCfontID=0, $debug=false, $unAGlyphs=false) {	// mPDF 5.4.05
 		$this->unAGlyphs = $unAGlyphs;	// mPDF 5.4.05
 		$this->filename = $file;
@@ -778,31 +707,26 @@ var $kerninfo;
 			$this->version = $version = $this->read_ulong();	// TTFont version again now
 		}
 		$this->readTableDirectory($debug);
-
 		///////////////////////////////////
 		// head - Font header table
 		///////////////////////////////////
 		$this->seek_table("head");
-		$this->skip(50); 
+		$this->skip(50);
 		$indexToLocFormat = $this->read_ushort();
 		$glyphDataFormat = $this->read_ushort();
-
 		///////////////////////////////////
 		// hhea - Horizontal header table
 		///////////////////////////////////
 		$this->seek_table("hhea");
-		$this->skip(32); 
+		$this->skip(32);
 		$metricDataFormat = $this->read_ushort();
 		$orignHmetrics = $numberOfHMetrics = $this->read_ushort();
-
 		///////////////////////////////////
 		// maxp - Maximum profile table
 		///////////////////////////////////
 		$this->seek_table("maxp");
 		$this->skip(4);
 		$numGlyphs = $this->read_ushort();
-
-
 		///////////////////////////////////
 		// cmap - Character to glyph index mapping table
 		///////////////////////////////////
@@ -824,70 +748,54 @@ var $kerninfo;
 			}
 			$this->seek($save_pos );
 		}
-
 		if (!$unicode_cmap_offset)
 			die('Font ('.$this->filename .') does not have Unicode cmap (platform 3, encoding 1, format 4, or platform 0 [any encoding] format 4)');
-
-
 		$glyphToChar = array();
 		$charToGlyph = array();
 		$this->getCMAP4($unicode_cmap_offset, $glyphToChar, $charToGlyph );
-
 		$this->charToGlyph = $charToGlyph;
-
-
 		///////////////////////////////////
 		// hmtx - Horizontal metrics table
 		///////////////////////////////////
 		$scale = 1;	// not used
 		$this->getHMTX($numberOfHMetrics, $numGlyphs, $glyphToChar, $scale);
-
 		///////////////////////////////////
 		// loca - Index to location
 		///////////////////////////////////
 		$this->getLOCA($indexToLocFormat, $numGlyphs);
-
 		$subsetglyphs = array(0=>0, 1=>1, 2=>2);
 		$subsetCharToGlyph = array();
 		foreach($subset AS $code) {
 			if (isset($this->charToGlyph[$code])) {
 				$subsetglyphs[$this->charToGlyph[$code]] = $code;	// Old Glyph ID => Unicode
 				$subsetCharToGlyph[$code] = $this->charToGlyph[$code];	// Unicode to old GlyphID
-
 			}
 			$this->maxUni = max($this->maxUni, $code);
 		}
-
 		list($start,$dummy) = $this->get_table_pos('glyf');
-
 		$glyphSet = array();
 		ksort($subsetglyphs);
 		$n = 0;
 		$fsLastCharIndex = 0;	// maximum Unicode index (character code) in this font, according to the cmap subtable for platform ID 3 and platform- specific encoding ID 0 or 1.
 		foreach($subsetglyphs AS $originalGlyphIdx => $uni) {
-			$fsLastCharIndex = max($fsLastCharIndex , $uni); 
+			$fsLastCharIndex = max($fsLastCharIndex , $uni);
 			$glyphSet[$originalGlyphIdx] = $n;	// old glyphID to new glyphID
 			$n++;
 		}
-
 		ksort($subsetCharToGlyph);
 		foreach($subsetCharToGlyph AS $uni => $originalGlyphIdx) {
 			$codeToGlyph[$uni] = $glyphSet[$originalGlyphIdx] ;
 		}
 		$this->codeToGlyph = $codeToGlyph;
-
 		ksort($subsetglyphs);
 		foreach($subsetglyphs AS $originalGlyphIdx => $uni) {
 			$this->getGlyphs($originalGlyphIdx, $start, $glyphSet, $subsetglyphs);
 		}
-
 		$numGlyphs = $numberOfHMetrics = count($subsetglyphs );
-
 		///////////////////////////////////
 		// name - table copied from the original
 		///////////////////////////////////
 		$this->add('name', $this->get_table('name'));
-
 		///////////////////////////////////
 		//tables copied from the original
 		///////////////////////////////////
@@ -895,7 +803,6 @@ var $kerninfo;
 		foreach($tags AS $tag) {
 			if (isset($this->tables[$tag])) { $this->add($tag, $this->get_table($tag)); }
 		}
-
 		///////////////////////////////////
 		// post - PostScript
 		///////////////////////////////////
@@ -904,7 +811,6 @@ var $kerninfo;
 			$post = "\x00\x03\x00\x00" . substr($opost,4,12) . "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
 			$this->add('post', $post);
 		}
-
 		///////////////////////////////////
 		// Sort CID2GID map into segments of contiguous codes
 		///////////////////////////////////
@@ -928,13 +834,10 @@ var $kerninfo;
 			$prevcid = $cid;
 			$prevglidx = $glidx;
 		}
-
-
-
 		///////////////////////////////////
 		// CMap table
 		///////////////////////////////////
-		// cmap - Character to glyph mapping 
+		// cmap - Character to glyph mapping
 		$segCount = count($range) + 1;	// + 1 Last segment has missing character 0xFFFF
 		$searchRange = 1;
 		$entrySelector = 0;
@@ -957,7 +860,6 @@ var $kerninfo;
 			$searchRange,
 			$entrySelector,
 			$rangeShift);
-
 		// endCode(s)
 		foreach($range AS $start=>$subrange) {
 			$endCode = $start + (count($subrange)-1);
@@ -965,23 +867,21 @@ var $kerninfo;
 		}
 		$cmap[] =	0xFFFF;	// endCode of last Segment
 		$cmap[] =	0;	// reservedPad
-
 		// startCode(s)
 		foreach($range AS $start=>$subrange) {
 			$cmap[] = $start;	// startCode(s)
 		}
 		$cmap[] =	0xFFFF;	// startCode of last Segment
-		// idDelta(s) 
+		// idDelta(s)
 		foreach($range AS $start=>$subrange) {
 			$idDelta = -($start-$subrange[0]);
 			$n += count($subrange);
 			$cmap[] = $idDelta;	// idDelta(s)
 		}
 		$cmap[] =	1;	// idDelta of last Segment
-		// idRangeOffset(s) 
+		// idRangeOffset(s)
 		foreach($range AS $subrange) {
 			$cmap[] = 0;	// idRangeOffset[segCount]  	Offset in bytes to glyph indexArray, or 0
-
 		}
 		$cmap[] =	0;	// idRangeOffset of last Segment
 		foreach($range AS $subrange) {
@@ -993,8 +893,6 @@ var $kerninfo;
 		$cmapstr = '';
 		foreach($cmap AS $cm) { $cmapstr .= pack("n",$cm); }
 		$this->add('cmap', $cmapstr);
-
-
 		///////////////////////////////////
 		// glyf - Glyph data
 		///////////////////////////////////
@@ -1002,7 +900,6 @@ var $kerninfo;
 		if ($glyfLength < $this->maxStrLenRead) {
 			$glyphData = $this->get_table('glyf');
 		}
-
 		$offsets = array();
 		$glyf = '';
 		$pos = 0;
@@ -1022,12 +919,10 @@ var $kerninfo;
 		$maxComponentElements = 0;	// number of glyphs referenced at top level
 		$maxComponentDepth = 0;		// levels of recursion, set to 0 if font has only simple glyphs
 		$this->glyphdata = array();
-
 		foreach($subsetglyphs AS $originalGlyphIdx => $uni) {
 			// hmtx - Horizontal Metrics
 			$hm = $this->getHMetric($orignHmetrics, $originalGlyphIdx);
 			$hmtxstr .= $hm;
-
 			$offsets[] = $pos;
 			$glyphPos = $this->glyphPos[$originalGlyphIdx];
 			$glyphLen = $this->glyphPos[$originalGlyphIdx + 1] - $glyphPos;
@@ -1038,7 +933,6 @@ var $kerninfo;
 				if ($glyphLen > 0) $data = $this->get_chunk($glyfOffset+$glyphPos,$glyphLen);
 				else $data = '';
 			}
-
 			if ($glyphLen > 0) {
 			  if (_RECALC_PROFILE) {
 				$xMin = $this->unpack_short(substr($data,2,2));
@@ -1049,7 +943,7 @@ var $kerninfo;
 				$yMinT = min($yMinT,$yMin);
 				$xMaxT = max($xMaxT,$xMax);
 				$yMaxT = max($yMaxT,$yMax);
-				$aw = $this->unpack_short(substr($hm,0,2)); 
+				$aw = $this->unpack_short(substr($hm,0,2));
 				$lsb = $this->unpack_short(substr($hm,2,2));
 				$advanceWidthMax = max($advanceWidthMax,$aw);
 				$minLeftSideBearing = min($minLeftSideBearing,$lsb);
@@ -1084,7 +978,6 @@ var $kerninfo;
 				$nContours = $up[1];
 				$this->glyphdata[$originalGlyphIdx]['nContours'] = $nContours;
 				$maxContours = max($maxContours, $nContours);
-
 				// Count number of points in simple glyph
 				$pos_in_glyph = 10 + ($nContours  * 2) - 2;	// Last endContourPoint
 				$up = unpack("n", substr($data,$pos_in_glyph,2));
@@ -1092,7 +985,6 @@ var $kerninfo;
 				$this->glyphdata[$originalGlyphIdx]['nPoints'] = $points;
 				$maxPoints = max($maxPoints, $points);
 			}
-
 			$glyf .= $data;
 			$pos += $glyphLen;
 			if ($pos % 4 != 0) {
@@ -1101,7 +993,6 @@ var $kerninfo;
 				$pos += $padding;
 			}
 		}
-
 		if (_RECALC_PROFILE) {
 		   foreach($this->glyphdata AS $originalGlyphIdx => $val) {
 			$maxdepth = $depth = -1;
@@ -1113,17 +1004,12 @@ var $kerninfo;
 			$maxComponentContours = max($maxComponentContours , $contours);
 		   }
 		}
-
-
 		$offsets[] = $pos;
 		$this->add('glyf', $glyf);
-
 		///////////////////////////////////
 		// hmtx - Horizontal Metrics
 		///////////////////////////////////
 		$this->add('hmtx', $hmtxstr);
-
-
 		///////////////////////////////////
 		// loca - Index to location
 		///////////////////////////////////
@@ -1137,7 +1023,6 @@ var $kerninfo;
 			foreach($offsets AS $offset) { $locastr .= pack("n",($offset/2)); }
 		}
 		$this->add('loca', $locastr);
-
 		///////////////////////////////////
 		// head - Font header
 		///////////////////////////////////
@@ -1151,21 +1036,18 @@ var $kerninfo;
 			$head[17] = chr($head[17] & ~(1 << 4)); 	// Unset Bit 4 (as hdmx/LTSH tables not included)
 		}
 		$this->add('head', $head);
-
-
 		///////////////////////////////////
 		// hhea - Horizontal Header
 		///////////////////////////////////
 		$hhea = $this->get_table('hhea');
 		$hhea = $this->_set_ushort($hhea, 34, $numberOfHMetrics);
 		if (_RECALC_PROFILE) {
-			$hhea = $this->_set_ushort($hhea, 10, $advanceWidthMax);	
-			$hhea = $this->_set_short($hhea, 12, $minLeftSideBearing);	
-			$hhea = $this->_set_short($hhea, 14, $minRightSideBearing);	
-			$hhea = $this->_set_short($hhea, 16, $xMaxExtent);	
+			$hhea = $this->_set_ushort($hhea, 10, $advanceWidthMax);
+			$hhea = $this->_set_short($hhea, 12, $minLeftSideBearing);
+			$hhea = $this->_set_short($hhea, 14, $minRightSideBearing);
+			$hhea = $this->_set_short($hhea, 16, $xMaxExtent);
 		}
 		$this->add('hhea', $hhea);
-
 		///////////////////////////////////
 		// maxp - Maximum Profile
 		///////////////////////////////////
@@ -1180,12 +1062,10 @@ var $kerninfo;
 			$maxp = $this->_set_ushort($maxp, 30, $maxComponentDepth);	// levels of recursion, set to 0 if font has only simple glyphs
 		}
 		$this->add('maxp', $maxp);
-
-
 		///////////////////////////////////
 		// OS/2 - OS/2
 		///////////////////////////////////
-		if (isset($this->tables['OS/2'])) { 
+		if (isset($this->tables['OS/2'])) {
 			$os2_offset = $this->seek_table("OS/2");
 			if (_RECALC_PROFILE) {
 				$fsSelection = $this->get_ushort($os2_offset+62);
@@ -1194,15 +1074,13 @@ var $kerninfo;
 					// Match name table's font subfamily string
 					// Clear bit#6 used for 'Regular' and optional
 			}
-
 			// NB Currently this method never subsets characters above BMP
-			// Could set nonBMP bit according to $this->maxUni 
+			// Could set nonBMP bit according to $this->maxUni
 			$nonBMP = $this->get_ushort($os2_offset+46);
 			$nonBMP = ($nonBMP & ~(1 << 9)); 	// Unset Bit 57 (indicates non-BMP) - for interactive forms
-
 			$os2 = $this->get_table('OS/2');
 			if (_RECALC_PROFILE) {
-				$os2 = $this->_set_ushort($os2, 62, $fsSelection);	
+				$os2 = $this->_set_ushort($os2, 62, $fsSelection);
 				$os2 = $this->_set_ushort($os2, 66, $fsLastCharIndex);
 				$os2 = $this->_set_ushort($os2, 42, 0x0000);	// ulCharRange (ulUnicodeRange) bits 24-31 | 16-23
 				$os2 = $this->_set_ushort($os2, 44, 0x0000);	// ulCharRange (Unicode ranges) bits  8-15 |  0-7
@@ -1214,10 +1092,8 @@ var $kerninfo;
 				$os2 = $this->_set_ushort($os2, 56, 0x0000);	// ulCharRange (Unicode ranges) bits  104-111 | 96-103
 			}
 			$os2 = $this->_set_ushort($os2, 46, $nonBMP);	// Unset Bit 57 (indicates non-BMP) - for interactive forms
-
 			$this->add('OS/2', $os2 );
 		}
-
 		fclose($this->fh);
 		// Put the TTF file together
 		$stm = '';
@@ -1225,9 +1101,7 @@ var $kerninfo;
 		//file_put_contents('testfont.ttf', $stm); exit;
 		return $stm ;
 	}
-
 //================================================================================
-
 	// Also does SMP
 	function makeSubsetSIP($file, &$subset, $TTCfontID=0, $debug=false) {
 		$this->fh = fopen($file ,'rb') or die('Can\'t open file ' . $file);
@@ -1256,37 +1130,29 @@ var $kerninfo;
 			$this->version = $version = $this->read_ulong();	// TTFont version again now
 		}
 		$this->readTableDirectory($debug);
-
-
-
 		///////////////////////////////////
 		// head - Font header table
 		///////////////////////////////////
 		$this->seek_table("head");
-		$this->skip(50); 
+		$this->skip(50);
 		$indexToLocFormat = $this->read_ushort();
 		$glyphDataFormat = $this->read_ushort();
-
 		///////////////////////////////////
 		// hhea - Horizontal header table
 		///////////////////////////////////
 		$this->seek_table("hhea");
-		$this->skip(32); 
+		$this->skip(32);
 		$metricDataFormat = $this->read_ushort();
 		$orignHmetrics = $numberOfHMetrics = $this->read_ushort();
-
 		///////////////////////////////////
 		// maxp - Maximum profile table
 		///////////////////////////////////
 		$this->seek_table("maxp");
 		$this->skip(4);
 		$numGlyphs = $this->read_ushort();
-
-
 		///////////////////////////////////
 		// cmap - Character to glyph index mapping table
 		///////////////////////////////////
-
 		$cmap_offset = $this->seek_table("cmap");
 		$this->skip(2);
 		$cmapTableCount = $this->read_ushort();
@@ -1305,7 +1171,6 @@ var $kerninfo;
 			}
 			$this->seek($save_pos );
 		}
-
 		if (!$unicode_cmap_offset)
 			die('Font does not have cmap for Unicode (platform 3, encoding 1, format 4, or platform 0, any encoding, format 4)');
 		// Format 12 CMAP does characters above Unicode BMP i.e. some HKCS characters U+20000 and above
@@ -1315,15 +1180,13 @@ var $kerninfo;
 			$length = $this->read_ulong();
 			$limit = $unicode_cmap_offset + $length;
 			$this->skip(4);
-
 			$nGroups = $this->read_ulong();
-
 			$glyphToChar = array();
 			$charToGlyph = array();
-			for($i=0; $i<$nGroups ; $i++) { 
-				$startCharCode = $this->read_ulong(); 
-				$endCharCode = $this->read_ulong(); 
-				$startGlyphCode = $this->read_ulong(); 
+			for($i=0; $i<$nGroups ; $i++) {
+				$startCharCode = $this->read_ulong();
+				$endCharCode = $this->read_ulong();
+				$startGlyphCode = $this->read_ulong();
 				$offset = 0;
 				for ($unichar=$startCharCode;$unichar<=$endCharCode;$unichar++) {
 					$glyph = $startGlyphCode + $offset ;
@@ -1334,24 +1197,19 @@ var $kerninfo;
 				}
 			}
 		}
-		else 
+		else
 			die('Font does not have cmap for Unicode (format 12)');
-
-
 		///////////////////////////////////
 		// hmtx - Horizontal metrics table
 		///////////////////////////////////
 		$scale = 1; // not used here
 		$this->getHMTX($numberOfHMetrics, $numGlyphs, $glyphToChar, $scale);
-
 		///////////////////////////////////
 		// loca - Index to location
 		///////////////////////////////////
 		$this->getLOCA($indexToLocFormat, $numGlyphs);
-
 		///////////////////////////////////////////////////////////////////
-
-		$glyphMap = array(0=>0); 
+		$glyphMap = array(0=>0);
 		$glyphSet = array(0=>0);
 		$codeToGlyph = array();
 		// Set a substitute if ASCII characters do not have glyphs
@@ -1370,9 +1228,7 @@ var $kerninfo;
 			}
 			$codeToGlyph[$code] = $glyphSet[$originalGlyphIdx];
 		}
-
 		list($start,$dummy) = $this->get_table_pos('glyf');
-
 		$n = 0;
 		while ($n < count($glyphMap)) {
 			$originalGlyphIdx = $glyphMap[$n];
@@ -1405,15 +1261,13 @@ var $kerninfo;
 				}
 			}
 		}
-
 		$numGlyphs = $n = count($glyphMap);
 		$numberOfHMetrics = $n;
-
 		///////////////////////////////////
 		// name
 		///////////////////////////////////
 		// Needs to have a name entry in 3,0 (e.g. symbol) - original font will be 3,1 (i.e. Unicode)
-		$name = $this->get_table('name'); 
+		$name = $this->get_table('name');
 		$name_offset = $this->seek_table("name");
 		$format = $this->read_ushort();
 		$numRecords = $this->read_ushort();
@@ -1428,17 +1282,15 @@ var $kerninfo;
 			$this->skip(8);
 		}
 		$this->add('name', $name);
-
 		///////////////////////////////////
 		// OS/2
 		///////////////////////////////////
-		if (isset($this->tables['OS/2'])) { 
+		if (isset($this->tables['OS/2'])) {
 			$os2 = $this->get_table('OS/2');
 			$os2 = $this->_set_ushort($os2, 42, 0x00);	// ulCharRange (Unicode ranges)
 			$os2 = $this->_set_ushort($os2, 44, 0x00);	// ulCharRange (Unicode ranges)
 			$os2 = $this->_set_ushort($os2, 46, 0x00);	// ulCharRange (Unicode ranges)
 			$os2 = $this->_set_ushort($os2, 48, 0x00);	// ulCharRange (Unicode ranges)
-
 			$os2 = $this->_set_ushort($os2, 50, 0x00);	// ulCharRange (Unicode ranges)
 			$os2 = $this->_set_ushort($os2, 52, 0x00);	// ulCharRange (Unicode ranges)
 			$os2 = $this->_set_ushort($os2, 54, 0x00);	// ulCharRange (Unicode ranges)
@@ -1448,47 +1300,39 @@ var $kerninfo;
 			$os2 = $this->_set_ushort($os2, 80, 0x0000);	// ulCodePageRange = Bit #31 Symbol ****  80 = Bit 0-15
 			$os2 = $this->_set_ushort($os2, 82, 0x0000);	// ulCodePageRange = Bit #32- Symbol **** 82 = Bits 48-63
 			$os2 = $this->_set_ushort($os2, 84, 0x0000);	// ulCodePageRange = Bit #32- Symbol **** 84 = Bits 32-47
-	
 			$os2 = $this->_set_ushort($os2, 64, 0x01);		// FirstCharIndex
 			$os2 = $this->_set_ushort($os2, 66, count($subset));		// LastCharIndex
 			// Set PANOSE first bit to 5 for Symbol
 			$os2 = $this->splice($os2, 32, chr(5).chr(0).chr(1).chr(0).chr(1).chr(0).chr(0).chr(0).chr(0).chr(0));
 			$this->add('OS/2', $os2 );
 		}
-
-
 		///////////////////////////////////
 		//tables copied from the original
 		///////////////////////////////////
-		$tags = array ('cvt ', 'fpgm', 'prep', 'gasp');	
+		$tags = array ('cvt ', 'fpgm', 'prep', 'gasp');
 		foreach($tags AS $tag) { 	// 1.02
-			if (isset($this->tables[$tag])) { $this->add($tag, $this->get_table($tag)); } 
+			if (isset($this->tables[$tag])) { $this->add($tag, $this->get_table($tag)); }
 		}
-
 		///////////////////////////////////
 		// post - PostScript
 		///////////////////////////////////
-		if (isset($this->tables['post'])) { 
+		if (isset($this->tables['post'])) {
 			$opost = $this->get_table('post');
 			$post = "\x00\x03\x00\x00" . substr($opost,4,12) . "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
 		}
 		$this->add('post', $post);
-
 		///////////////////////////////////
 		// hhea - Horizontal Header
 		///////////////////////////////////
 		$hhea = $this->get_table('hhea');
 		$hhea = $this->_set_ushort($hhea, 34, $numberOfHMetrics);
 		$this->add('hhea', $hhea);
-
 		///////////////////////////////////
 		// maxp - Maximum Profile
 		///////////////////////////////////
 		$maxp = $this->get_table('maxp');
 		$maxp = $this->_set_ushort($maxp, 4, $numGlyphs);
 		$this->add('maxp', $maxp);
-
-
 		///////////////////////////////////
 		// CMap table Formats [1,0,]6 and [3,0,]4
 		///////////////////////////////////
@@ -1501,7 +1345,7 @@ var $kerninfo;
 		$prevglidx = -1;
 		// for each character
 		foreach ($subset as $cid => $code) {
-			$glidx = $codeToGlyph[$code]; 
+			$glidx = $codeToGlyph[$code];
 			if ($cid == ($prevcid + 1) && $glidx == ($prevglidx + 1)) {
 				$range[$rangeid][] = $glidx;
 			} else {
@@ -1513,7 +1357,7 @@ var $kerninfo;
 			$prevcid = $cid;
 			$prevglidx = $glidx;
 		}
-		// cmap - Character to glyph mapping 
+		// cmap - Character to glyph mapping
 		$segCount = count($range) + 1;	// + 1 Last segment has missing character 0xFFFF
 		$searchRange = 1;
 		$entrySelector = 0;
@@ -1530,7 +1374,6 @@ var $kerninfo;
 			$searchRange,
 			$entrySelector,
 			$rangeShift);
-
 		// endCode(s)
 		foreach($range AS $start=>$subrange) {
 			$endCode = $start + (count($subrange)-1);
@@ -1538,23 +1381,21 @@ var $kerninfo;
 		}
 		$cmap[] =	0xFFFF;	// endCode of last Segment
 		$cmap[] =	0;	// reservedPad
-
 		// startCode(s)
 		foreach($range AS $start=>$subrange) {
 			$cmap[] = $start;	// startCode(s)
 		}
 		$cmap[] =	0xFFFF;	// startCode of last Segment
-		// idDelta(s) 
+		// idDelta(s)
 		foreach($range AS $start=>$subrange) {
 			$idDelta = -($start-$subrange[0]);
 			$n += count($subrange);
 			$cmap[] = $idDelta;	// idDelta(s)
 		}
 		$cmap[] =	1;	// idDelta of last Segment
-		// idRangeOffset(s) 
+		// idRangeOffset(s)
 		foreach($range AS $subrange) {
 			$cmap[] = 0;	// idRangeOffset[segCount]  	Offset in bytes to glyph indexArray, or 0
-
 		}
 		$cmap[] =	0;	// idRangeOffset of last Segment
 		foreach($range AS $subrange) {
@@ -1565,17 +1406,14 @@ var $kerninfo;
 		$cmap[] = 0;	// Mapping for last character
 		$cmapstr4 = '';
 		foreach($cmap AS $cm) { $cmapstr4 .= pack("n",$cm); }
-
 		///////////////////////////////////
 		// cmap - Character to glyph mapping
 		///////////////////////////////////
 		$entryCount = count($subset);
 		$length = 10 + $entryCount * 2;
-
 		$off = 20 + $length;
 		$hoff = $off >> 16;
 		$loff = $off & 0xFFFF;
-
 		$cmap = array(0, 2,	// Index : version, number of subtables
 			1, 0,			// Subtable : platform, encoding
 			0, 20,		// offset (hi,lo)
@@ -1590,7 +1428,6 @@ var $kerninfo;
 		foreach($cmap AS $cm) { $cmapstr .= pack("n",$cm); }
 		$cmapstr .= $cmapstr4;
 		$this->add('cmap', $cmapstr);
-
 		///////////////////////////////////
 		// hmtx - Horizontal Metrics
 		///////////////////////////////////
@@ -1601,7 +1438,6 @@ var $kerninfo;
 			$hmtxstr .= $hm;
 		}
 		$this->add('hmtx', $hmtxstr);
-
 		///////////////////////////////////
 		// glyf - Glyph data
 		///////////////////////////////////
@@ -1609,7 +1445,6 @@ var $kerninfo;
 		if ($glyfLength < $this->maxStrLenRead) {
 			$glyphData = $this->get_table('glyf');
 		}
-
 		$offsets = array();
 		$glyf = '';
 		$pos = 0;
@@ -1653,7 +1488,6 @@ var $kerninfo;
 		}
 		$offsets[] = $pos;
 		$this->add('glyf', $glyf);
-
 		///////////////////////////////////
 		// loca - Index to location
 		///////////////////////////////////
@@ -1667,23 +1501,19 @@ var $kerninfo;
 			foreach($offsets AS $offset) { $locastr .= pack("n",($offset/2)); }
 		}
 		$this->add('loca', $locastr);
-
 		///////////////////////////////////
 		// head - Font header
 		///////////////////////////////////
 		$head = $this->get_table('head');
 		$head = $this->_set_ushort($head, 50, $indexToLocFormat);
 		$this->add('head', $head);
-
 		fclose($this->fh);
-
 		// Put the TTF file together
 		$stm = '';
 		$this->endTTFile($stm);
 		//file_put_contents('testfont.ttf', $stm); exit;
 		return $stm ;
 	}
-
 	//////////////////////////////////////////////////////////////////////////////////
 	// Recursively get composite glyph data
 	function getGlyphData($originalGlyphIdx, &$maxdepth, &$depth, &$points, &$contours) {
@@ -1700,14 +1530,12 @@ var $kerninfo;
 		}
 		$depth--;
 	}
-
-
 	//////////////////////////////////////////////////////////////////////////////////
 	// Recursively get composite glyphs
 	function getGlyphs($originalGlyphIdx, &$start, &$glyphSet, &$subsetglyphs) {
 		$glyphPos = $this->glyphPos[$originalGlyphIdx];
 		$glyphLen = $this->glyphPos[$originalGlyphIdx + 1] - $glyphPos;
-		if (!$glyphLen) { 
+		if (!$glyphLen) {
 			return;
 		}
 		$this->seek($start + $glyphPos);
@@ -1738,9 +1566,7 @@ var $kerninfo;
 			}
 		}
 	}
-
 	//////////////////////////////////////////////////////////////////////////////////
-
 	function getHMTX($numberOfHMetrics, $numGlyphs, &$glyphToChar, $scale) {
 		$start = $this->seek_table("hmtx");
 		$aw = 0;
@@ -1762,7 +1588,6 @@ var $kerninfo;
 				$lsb = $this->read_ushort();
 			}
 			if (isset($glyphToChar[$glyph]) || $glyph == 0) {
-
 				if ($aw >= (1 << 15) ) { $aw = 0; }	// 1.03 Some (arabic) fonts have -ve values for width
 					// although should be unsigned value - comes out as e.g. 65108 (intended -50)
 				if ($glyph == 0) {
@@ -1793,7 +1618,7 @@ var $kerninfo;
 			if (isset($glyphToChar[$glyph])) {
 				foreach($glyphToChar[$glyph] AS $char) {
 					if ($char != 0 && $char != 65535) {
-						if ($char < 196608) { 
+						if ($char < 196608) {
 							$this->charWidths[$char*2] = chr($w >> 8);
 							$this->charWidths[$char*2 + 1] = chr($w & 0xFF);
 							$nCharWidths++;
@@ -1807,7 +1632,6 @@ var $kerninfo;
 		$this->charWidths[0] = chr($nCharWidths >> 8);
 		$this->charWidths[1] = chr($nCharWidths & 0xFF);
 	}
-
 	function getHMetric($numberOfHMetrics, $gid) {
 		$start = $this->seek_table("hmtx");
 		if ($gid < $numberOfHMetrics) {
@@ -1822,7 +1646,6 @@ var $kerninfo;
 		}
 		return $hm;
 	}
-
 	function getLOCA($indexToLocFormat, $numGlyphs) {
 		$start = $this->seek_table('loca');
 		$this->glyphPos = array();
@@ -1840,19 +1663,16 @@ var $kerninfo;
 				$this->glyphPos[] = ($arr[$n+1]);
 			}
 		}
-		else 
+		else
 			die('Unknown location table format '.$indexToLocFormat);
 	}
-
-
 	// CMAP Format 4
 	function getCMAP4($unicode_cmap_offset, &$glyphToChar, &$charToGlyph ) {
-		$this->maxUniChar = 0;	
+		$this->maxUniChar = 0;
 		$this->seek($unicode_cmap_offset + 2);
 		$length = $this->read_ushort();
 		$limit = $unicode_cmap_offset + $length;
 		$this->skip(2);
-
 		$segCount = $this->read_ushort() / 2;
 		$this->skip(6);
 		$endCount = array();
@@ -1865,7 +1685,6 @@ var $kerninfo;
 		$idRangeOffset_start = $this->_pos;
 		$idRangeOffset = array();
 		for($i=0; $i<$segCount; $i++) { $idRangeOffset[] = $this->read_ushort(); }
-
 		for ($n=0;$n<$segCount;$n++) {
 			$endpoint = ($endCount[$n] + 1);
 			for ($unichar=$startCount[$n];$unichar<$endpoint;$unichar++) {
@@ -1887,7 +1706,6 @@ var $kerninfo;
 				$glyphToChar[$glyph][] = $unichar;
 			}
 		}
-
 		// mPDF 5.4.05
 		if ($this->unAGlyphs) {
 		  if (isset($this->tables['post'])) {
@@ -1902,7 +1720,6 @@ var $kerninfo;
 			for ($i=0; $i<$nGlyfs; $i++) {
 				$glyphNameIndex[($this->read_ushort())] = $i;
 			}
-
 			$opost = $this->get_table('post');
 			$ptr = 34+($nGlyfs*2);
 			for ($i=0; $i<$nGlyfs; $i++) {
@@ -1928,16 +1745,16 @@ var $kerninfo;
 				// LAM with ALEF ligatures (Mandatory ligatures)
 				else if (preg_match('/^uni064406(22|23|25|27)(\.fina|\.fin){0,1}$/i',$name,$m)) {
 				  if ($m[1]=='22') {
-					if ($m[2]) { $uni = hexdec('FEF6'); } else { $uni = hexdec('FEF5'); } 
+					if ($m[2]) { $uni = hexdec('FEF6'); } else { $uni = hexdec('FEF5'); }
 				  }
 				  else if ($m[1]=='23') {
-					if ($m[2]) { $uni = hexdec('FEF8'); } else { $uni = hexdec('FEF7'); } 
+					if ($m[2]) { $uni = hexdec('FEF8'); } else { $uni = hexdec('FEF7'); }
 				  }
 				  else if ($m[1]=='25') {
-					if ($m[2]) { $uni = hexdec('FEFA'); } else { $uni = hexdec('FEF9'); } 
+					if ($m[2]) { $uni = hexdec('FEFA'); } else { $uni = hexdec('FEF9'); }
 				  }
 				  else if ($m[1]=='27') {
-					if ($m[2]) { $uni = hexdec('FEFC'); } else { $uni = hexdec('FEFB'); } 
+					if ($m[2]) { $uni = hexdec('FEFC'); } else { $uni = hexdec('FEFB'); }
 				  }
 				  if (!isset($glyphToChar[$gid]) || (isset($glyphToChar[$gid]) && is_array($glyphToChar[$gid]) && count($glyphToChar[$gid])==1 && $glyphToChar[$gid][0]>57343 && $glyphToChar[$gid][0]<63489)) {	// if set in PUA private use area E000-F8FF, or NOT Unicode mapped
 					// ADD TO CMAP
@@ -1949,10 +1766,7 @@ var $kerninfo;
 			}
 		  }
 		}
-
 	}
-
-
 		// Put the TTF file together
 	function endTTFile(&$stm) {
 		$stm = '';
@@ -1965,7 +1779,6 @@ var $kerninfo;
 		}
 		$searchRange = $searchRange * 16;
 		$rangeShift = $numTables * 16 - $searchRange;
-
 		// Header
 		if (_TTF_MAC_HEADER) {
 			$stm .= (pack("Nnnnn", 0x74727565, $numTables, $searchRange, $entrySelector, $rangeShift));	// Mac
@@ -1973,10 +1786,9 @@ var $kerninfo;
 		else {
 			$stm .= (pack("Nnnnn", 0x00010000 , $numTables, $searchRange, $entrySelector, $rangeShift));	// Windows
 		}
-
 		// Table directory
 		$tables = $this->otables;
-		ksort ($tables); 
+		ksort ($tables);
 		$offset = 12 + $numTables * 16;
 		foreach ($tables AS $tag=>$data) {
 			if ($tag == 'head') { $head_start = $offset; }
@@ -1987,21 +1799,17 @@ var $kerninfo;
 			$paddedLength = (strlen($data)+3)&~3;
 			$offset = $offset + $paddedLength;
 		}
-
 		// Table data
 		foreach ($tables AS $tag=>$data) {
 			$data .= "\0\0\0";
 			$stm .= substr($data,0,(strlen($data)&~3));
 		}
-
 		$checksum = $this->calcChecksum($stm);
 		$checksum = $this->sub32(array(0xB1B0,0xAFBA), $checksum);
 		$chk = pack("nn", $checksum[0],$checksum[1]);
 		$stm = $this->splice($stm,($head_start + 8),$chk);
 		return $stm ;
 	}
-
-
 	function repackageTTF($file, $TTCfontID=0, $debug=false, $unAGlyphs=false) {	// mPDF 5.4.05
 		$this->unAGlyphs = $unAGlyphs;	// mPDF 5.4.05
 		$this->filename = $file;
@@ -2036,19 +1844,15 @@ Tables which require glyphIndex
 hdmx
 kern
 LTSH
-
 Tables which do NOT require glyphIndex
 VDMX
-
 GDEF
 GPOS
 GSUB
 JSTF
-
 DSIG
 PCLT - not recommended
 */
-
 		foreach($tags AS $tag) {
 			if (isset($this->tables[$tag])) { $this->add($tag, $this->get_table($tag)); }
 		}
@@ -2057,9 +1861,5 @@ PCLT - not recommended
 		$this->endTTFile($stm);
 		return $stm ;
 	}
-
-
 }
-
-
 ?>

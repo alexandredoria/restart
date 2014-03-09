@@ -5,14 +5,12 @@
  * @package		COVEG - Controle de Vendas Globo
  * @author		Claudson Martins <claudson.m@gmail.com>
  */
-
 require_once 'db.class.php';
 class Categoria extends DB {
 	/**
 	 * @param object $db Variável objeto que faz a conexão com o banco de dados
 	 */
 	private $db;
-	
 	/**
 	 * Cria uma nova instancia da classe categoria, fazendo a conexão com o banco
 	 * @return object Variável objeto contendo as funcionalidades do MySQLi
@@ -20,14 +18,12 @@ class Categoria extends DB {
 	public function __construct(){
 		$this->db = parent::conectaDB();
 	}
-
 	/**
 	 * Destroi a instancia da classe, encenrrando a conexão com o banco
 	 */
 	public function __destruct(){
 		$this->db->close();
 	}
-
 	/**
 	 * Cadastra uma nova categoria
 	 * @param string $string Nome da categoria a ser cadastrada
@@ -40,11 +36,10 @@ class Categoria extends DB {
 		if ($insert->execute()) { return true; }
 		else { return false; }
 	}
-
 	/**
 	 * Edita uma categoria existente
 	 * @param int $id Número de ID da categoria a ser editada
-	 * @return string Mensagem de retorno	
+	 * @return string Mensagem de retorno
 	 */
 	public function editarCategoria($id, $nome) {
 		if ($edit = $this->db->query("UPDATE categoria SET nome = '$nome' WHERE id = $id")) {
@@ -64,7 +59,6 @@ class Categoria extends DB {
 		}
 		echo "<script>showGrowl();</script>";
 	}
-
 	/**
 	 * Deleta uma categoria existente
 	 * @param int $id Número de ID da categoria a ser excluída
@@ -90,22 +84,21 @@ class Categoria extends DB {
 		}
 		echo "<script>showGrowl();</script>";
 	}
-
-	/** 
+	/**
 	 * Obtém o nome de uma categoria já cadastrada
 	 * @param int $id Número de ID da categoria desejada
 	 * @return string $string Nome da categoria
 	 */
-	public function obterNome($id) {
-		if ($valor = $this->db->query("SELECT nome FROM categoria WHERE id = $id")) {
-			if ($valor->num_rows) {
-				$string = $valor->fetch_assoc();
-				return (array_shift($string));
-				$valor->free();
-			}
-		}
+	public function obterDados($campo, $id) {
+		if ($result = $this->db->query("SELECT `$campo` FROM categoria WHERE id = '$id'")) {
+			if ($result->num_rows) {
+				while ($string = $result->fetch_array()){
+					$valor = $string[$campo];
+				}
+				return $valor;
+			}$result->free();
+		}else return ($this->db->error);
 	}
-
 	/**
 	 * Gera um array com as informações das categoria cadastradas
 	 * @return array $rows Dados das categoria
@@ -129,7 +122,6 @@ class Categoria extends DB {
 		}
 		else return ($this->db->error);
 	}
-
 	/**
 	 * Método que verifica se a categoria que está sendo cadastrada já existe
 	 * @param string $valor Nome

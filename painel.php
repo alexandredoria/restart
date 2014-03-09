@@ -1,46 +1,56 @@
 <?php
-include 'classes/usuario.class.php';
-include 'classes/ocorrencia.class.php';
-$pageTitle  = "Restart";
+    include 'classes/usuario.class.php';
+    include 'classes/ocorrencia.class.php';
+    $pageTitle  = "Restart";
     include 'nucleo/cabecario.php';
     include("nucleo/barraLateral.php");
     if ($_SESSION['tipo_usuario'] != 1) {
       $expUser  = new Usuario;
-      $expUser->expirarUsuario($_SESSION['matricula']);           
+      $expUser->expirarUsuario($_SESSION['matricula']);
       unset($expUser);
   }
+  $ref = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : false ;
+  if ($ref) {
+    $ref = ($ref == "http://localhost/restart/") ? 1 : false ;
+    if ($ref) {
+      include 'classes/log.class.php';
+      $LOG = new LOG;
+      $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'LOGIN', 1);
+      unset($LOG);
+    }
+  }
+  unset($ref);
+  $listaOcorrencia    = new Ocorrencia;
 ?>
-
-      
-      <!-- Barra Lateral -->
-      <?php 
-
-      ?>
-
       <div id="page-wrapper">
-
         <div class="row">
           <div class="col-lg-12">
             <h1>Painel <small>Visão geral de Estatísticas</small></h1>
             <ol class="breadcrumb">
               <li class="active"><i class="fa fa-dashboard"></i> Painel</li>
             </ol>
-            
           </div>
         </div><!-- /.row -->
-
         <div class="row">
-          
           <div class="col-lg-4">
             <div class="panel panel-warning">
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-6">
-                    <i class="fa fa-check fa-5x"></i>
+                    <i class="glyphicon glyphicon-check fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">12</p>
-                    <p class="announcement-text">Lista de afazeres</p>
+                    <p class="announcement-heading">
+                    <?php
+                      $fechadas    = $listaOcorrencia->notificarOcorrencias(3, $_SESSION['matricula'], $_SESSION['tipo_usuario']);
+                      if (is_array($fechadas)) {
+                        foreach ($fechadas as $row) {
+                          echo $row['count'];
+                        }
+                      }
+                    ?>
+                    </p>
+                    <p class="announcement-text">Ocorrências fechadas</p>
                   </div>
                 </div>
               </div>
@@ -48,7 +58,7 @@ $pageTitle  = "Restart";
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
-                      Concluir tarefas
+                      Ver todas
                     </div>
                     <div class="col-xs-6 text-right">
                       <i class="fa fa-arrow-circle-right"></i>
@@ -66,8 +76,17 @@ $pageTitle  = "Restart";
                     <i class="glyphicon glyphicon-tasks fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">3</p>
-                    <p class="announcement-text">Erros encontrados</p>
+                    <p class="announcement-heading">
+                    <?php
+                      $incompletas     = $listaOcorrencia->notificarOcorrencias(4, $_SESSION['matricula'], $_SESSION['tipo_usuario']);
+                      if (is_array($incompletas)) {
+                        foreach ($incompletas as $row) {
+                          echo $row['count'];
+                        }
+                      }
+                    ?>
+                    </p>
+                    <p class="announcement-text">Erros encontrados<br></p><br>
                   </div>
                 </div>
               </div>
@@ -75,7 +94,7 @@ $pageTitle  = "Restart";
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
-                      Corrigir problemas
+                      <?php if ($_SESSION['tipo_usuario'] != 2) {echo "Ver todos";} else echo "Corrigir problemas";?>
                     </div>
                     <div class="col-xs-6 text-right">
                       <i class="fa fa-arrow-circle-right"></i>
@@ -90,11 +109,18 @@ $pageTitle  = "Restart";
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-6">
-                    <i class="fa fa-comments fa-5x"></i>
+                    <i class="glyphicon glyphicon-comment fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">2</p>
-                    <p class="announcement-text">Novos Chamados!</p>
+                    <p class="announcement-heading">
+                    <?php
+                      $abertas     = $listaOcorrencia->notificarOcorrencias(1, $_SESSION['matricula'], $_SESSION['tipo_usuario']);
+                        foreach ($abertas as $row) {
+                          echo $row['count'];
+                        }
+                    ?>
+                    </p>
+                    <p class="announcement-text"><?php if ($_SESSION['tipo_usuario'] != 2) {echo "Chamados abertos";} else echo "Novos chamados!";?></p>
                   </div>
                 </div>
               </div>
@@ -102,7 +128,7 @@ $pageTitle  = "Restart";
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
-                      Atender Chamados
+                      <?php if ($_SESSION['tipo_usuario'] != 2) {echo "Ver todos";} else echo "Assumir chamados";?>
                     </div>
                     <div class="col-xs-6 text-right">
                       <i class="fa fa-arrow-circle-right"></i>
@@ -113,7 +139,6 @@ $pageTitle  = "Restart";
             </div>
           </div>
         </div><!-- /.row -->
-
         <div class="row">
           <div class="col-lg-12">
             <div class="panel panel-primary">
@@ -126,7 +151,6 @@ $pageTitle  = "Restart";
             </div>
           </div>
         </div><!-- /.row -->
-
         <div class="row">
           <div class="col-lg-4">
             <div class="panel panel-primary">
@@ -144,7 +168,7 @@ $pageTitle  = "Restart";
           <div class="col-lg-4">
             <div class="panel panel-primary">
               <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-clock-o"></i> Atividades recentes</h3>
+                <h3 class="panel-title"><i class="glyphicon glyphicon-time"></i> Atividades recentes</h3>
               </div>
               <div class="panel-body">
                 <div class="list-group">
@@ -176,23 +200,16 @@ $pageTitle  = "Restart";
             </div>
           </div>
        </div><!-- /.row -->
-
       </div><!-- /#page-wrapper -->
-
     </div><!-- /#wrapper -->
-
-               
-
-   
-
+    <?php
+      unset($listaOcorrencia);
+    ?>
     <!-- Page Specific Plugins -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
     <script src="js/morris/chart-data-morris.js"></script>
     <script src="js/tablesorter/jquery.tablesorter.js"></script>
     <script src="js/tablesorter/tables.js"></script>
-
-    
-
   </body>
 </html>

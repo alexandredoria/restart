@@ -1,5 +1,4 @@
 // First Chart Example - Area Line Chart
-
 Morris.Area({
   // ID of the element in which to draw the chart.
   element: 'morris-chart-area',
@@ -48,7 +47,6 @@ Morris.Area({
   // Disables line smoothing
   smooth: false,
 });
-
 Morris.Donut({
   element: 'morris-chart-donut',
   data: [
@@ -59,7 +57,6 @@ Morris.Donut({
   ],
   formatter: function (y) { return y + "%" ;}
 });
-
 Morris.Line({
   // ID of the element in which to draw the chart.
   element: 'morris-chart-line',
@@ -108,7 +105,6 @@ Morris.Line({
   // Disables line smoothing
   smooth: false,
 });
-
 Morris.Bar ({
   element: 'morris-chart-bar',
   data: [

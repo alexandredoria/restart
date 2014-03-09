@@ -1,24 +1,23 @@
-  
-<?php 
 
-$pageTitle  = 
+<?php
+$pageTitle  =
 include 'classes/usuario.class.php';
+include 'classes/log.class.php';
 include 'classes/ocorrencia.class.php';
-$pageTitle  = "Patrimônios &middot; Visão Geral"; 
-  include 'nucleo/cabecario.php';  
+$pageTitle  = "Patrimônios &middot; Visão Geral";
+  include 'nucleo/cabecario.php';
   include("nucleo/barraLateral.php");
-    
   if (($_SESSION['tipo_usuario'] != "1") && ($_SESSION['tipo_usuario'] != "2")){
     header("Location: ../restart/painel.php");
     exit;
   }
-
   if (isset($_POST['filtro'])){
       $filtro = $_POST['filtro'];
   } else {
     $filtro = 0;
   }
   if (!empty($_POST)) {
+$LOG = new LOG;
     if (isset($_POST['IdPatrimonio'])) {
       $num_patrimonio   = $_POST['IdPatrimonio'];
       $objPatrimonio  = new Patrimonio;
@@ -32,10 +31,10 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
                             <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
                             <h4 class='modal-title' id='modal_excPatrimonioLabel'>Patrimonio excluído!</h4>
                           </div>
-                          
                         </div>
                       </div>
                     </div>";
+              $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'DEL_EQU', $result);
             }
             else {
               echo "<!-- Modal -->
@@ -48,7 +47,6 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
                           </div>
                           <div class='modal-body'>
                             <p>".$result."</p>
-<br><br><p><b>Contate à COLINF</b></p>
                           </div>
                         </div>
                       </div>
@@ -66,10 +64,10 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
     </div>
     <div class="col-lg-6" align="right">
       <a href="cadPatrimonio.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Novo patrimônio</button></a>
-    </div>      
+    </div>
   </div><!-- /.row -->
   <div class="row">
-    <div class="col-lg-12">            
+    <div class="col-lg-12">
       <ol class="breadcrumb">
         <li class="active"><i class="glyphicon glyphicon-user"></i> Patrimônios</li>
       </ol>
@@ -84,7 +82,7 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
         <tr>
           <td>
             &nbsp;&nbsp;<input type='checkbox' id="toggle" onClick="toggle(this)">&nbsp;&nbsp;&nbsp;Exibição:&nbsp;
-          </td>  
+          </td>
           <td>
             <form role="form" action="patrimonios.php" method="POST">
             <select style="font-weight:bold" id="filtro" name="filtro" class="form-control" onchange="this.form.submit()">
@@ -93,7 +91,7 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
               <option <?php if ($filtro == 2 ){echo "selected";}?> value="2">Monitores</option>
               <option <?php if ($filtro == 3 ){echo "selected";}?> value="3">Estabilizadores</option>
               <option <?php if ($filtro == 4 ){echo "selected";}?> value="4">Nobreaks</option>
-              <option <?php if ($filtro == 5 ){echo "selected";}?> value="5">Mesas</option>              
+              <option <?php if ($filtro == 5 ){echo "selected";}?> value="5">Mesas</option>
               <option <?php if ($filtro == 6 ){echo "selected";}?> value="6">Cadeiras</option>
               <option <?php if ($filtro == 7 ){echo "selected";}?> value="7">Ar-condicionadores</option>
               <option <?php if ($filtro == 8 ){echo "selected";}?> value="8">Armários</option>
@@ -107,10 +105,10 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
               <button type="button" id="exc" class="btn btn-primary" onclick="getCheckboxValues(this); return false;">
                 <i class='glyphicon glyphicon-remove'></i> Excluir
               </button>
-            </a>  
+            </a>
           </td>
         </tr>
-      </table> 
+      </table>
       <div class="table-responsive">
         <table id="" class="table table-striped table-hover">
           <p>
@@ -123,7 +121,6 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
               <th>Posição</th>
               <th>Situação</th>
               <th>Configuração</th>
-              
               <th>Data de cadastro</th>
               <th>Data de atualização</th>
             </tr>
@@ -161,32 +158,31 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
                       echo "
                         <td ><input type='checkbox'   name='foo[]' id='foo[]' value='".$row['num_patrimonio']."'></td>
                         <td>
-                          <a title='Ver patrimônio' href='verPatrimonio.php?p=".$row['num_patrimonio']."'>                              
+                          <a title='Ver patrimônio' href='verPatrimonio.php?p=".$row['num_patrimonio']."'>
                             <i class='glyphicon glyphicon-search'></i>
                           </a>
                         </td>
                         <td>
-                          <a title='Editar patrimônio'  href='alterarPatrimonio.php?p=".$row['num_patrimonio']."'>                           
+                          <a title='Editar patrimônio'  href='alterarPatrimonio.php?p=".$row['num_patrimonio']."'>
                             <i class='glyphicon glyphicon-pencil'></i>
                           </a>
                         </td>
                         <td>
-                          <a title='Excluir patrimônio' data-toggle='modal' data-id='".$row['num_patrimonio']."' href='#modal_excPatrimonioSimples' class='abre-excluirModal'>                              
+                          <a title='Excluir patrimônio' data-toggle='modal' data-id='".$row['num_patrimonio']."' href='#modal_excPatrimonioSimples' class='abre-excluirModal'>
                             <i class='glyphicon glyphicon-remove'></i>
                           </a>
                         </td>
                         <td>" . $row['num_patrimonio'] . "</td>
                         <td>" . $tipo . "</td>
-                         <td>" . $row['id_laboratorio'] . "</td>
+                         <td>" . $row['Laboratorio_id'] . "</td>
                         <td>" . $row['num_posicionamento'] . "</td>
                         <td>" . $situacao . "</td>
                         <td>" . $row['Configuracao_id'] . "</td>
-                       
                         <td>"; if ($row['data_cadastro']===null){echo "";} else {echo date('d/m/Y', strtotime($row['data_cadastro']));} echo "</td>
                         <td>"; if ($row['data_atualizacao']===null){echo date('d/m/Y', strtotime($row['data_cadastro']));} else {echo date('d/m/Y', strtotime($row['data_atualizacao']));} echo "</td>
-                      </tr>"; 
+                      </tr>";
                   }
-                } else echo 
+                } else echo
                   " <tr>
                       <td></td>
                       <td>". $result."</td>
@@ -196,7 +192,7 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td></td> 
+                      <td></td>
                     </tr>";
                   unset($listaUser);
             ?>
@@ -205,7 +201,6 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
       </div>
     </div>
   </div><!-- /.row -->
-  
   <div class='modal fade' id='modal_excPatrimoniosMultiplos' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimoniosMultiplosLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content panel-danger'>
@@ -215,7 +210,7 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
           </div>
           <div class='modal-body'>
             Você realmente deseja excluiros seguintes patrimônios?
-          <div id="linhas"> 
+          <div id="linhas">
           <?php
             echo
               "<script>
@@ -235,21 +230,18 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
                   }
                 }
               </script>";
-          ?>        
+          ?>
           </div>
           </div>
           <div class="modal-footer">
             <form id="confirm" method="post" action="patrimonios.php">
               <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
               <button id="submit-modal" class="btn btn-danger">Sim</button>
-
             </form>
           </div>
         </div>
       </div>
     </div>
-
-
     <div class='modal fade' id='modal_excPatrimonioSimples' tabindex='-1' role='dialog' aria-labelledby='modal_excPatrimoniosSimplesLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content panel-danger'>
@@ -265,18 +257,13 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
               <input type="hidden" name="IdPatrimonio" id="IdPatrimonio" value=""/>
               <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
               <button id="submit-modal" class="btn btn-danger">Sim</button>
-
             </form>
           </div>
         </div>
       </div>
     </div>
-
-
       </div><!-- /#page-wrapper -->
-
     </div><!-- /#wrapper -->
-
 <script language="JavaScript">
   $(document).ready(function() {
     var $submit = $("#exc").hide(),
@@ -284,30 +271,23 @@ $pageTitle  = "Patrimônios &middot; Visão Geral";
       $submit.toggle( $cbs.is(":checked") );
     });
   });
-
   function toggle(source) {
     checkboxes = document.getElementsByName('foo[]');
     for (var i=0, n=checkboxes.length;i<n;i++) {
-      checkboxes[i].checked = source.checked;    
-    }  
+      checkboxes[i].checked = source.checked;
+    }
     $("#exc").toggle('show');
   }
-  
   window.addEventListener("DOMContentLoaded", function () {
     var confirm = document.getElementById("confirm");
     document.getElementById("submit-modal").addEventListener("click", function () {
       confirm.submit();
     });
   });
-
   $(document).on("click", ".abre-excluirModal", function () {
      var idPat = $(this).data('id');
      $(".modal-footer #IdPatrimonio").val(idPat);
 });
-
-
 </script>
-  
-
   </body>
-</html> 
+</html>

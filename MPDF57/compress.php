@@ -1,30 +1,17 @@
 <?php
-
-$excl = array( 'HTML-CSS', 'DIRECTW', 'TABLES', 'LISTS', 'IMAGES-CORE', 
+$excl = array( 'HTML-CSS', 'DIRECTW', 'TABLES', 'LISTS', 'IMAGES-CORE',
 'IMAGES-BMP', 'IMAGES-WMF', 'TABLES-ADVANCED-BORDERS', 'HTMLHEADERS-FOOTERS', 'COLUMNS', 'TOC', 'INDEX', 'BOOKMARKS', 'BARCODES', 'FORMS', 'WATERMARK', 'CJK-FONTS', 'RTL', 'INDIC', 'ANNOTATIONS', 'BACKGROUNDS', 'CSS-FLOAT', 'CSS-IMAGE-FLOAT', 'CSS-POSITION', 'CSS-PAGE', 'BORDER-RADIUS', 'HYPHENATION', 'ENCRYPTION', 'IMPORTS', 'PROGRESS-BAR');
-
-
 	// *DIRECTW* = Write, WriteText, WriteCell, Text, Shaded_box, AutosizeText
 	// IMAGES-CORE = [PNG, GIF, and JPG] NB background-images and watermark images
-
 	// Excluding 'HTML-CSS' will also exclude: 'TABLES', 'LISTS', 'TABLES-ADVANCED-BORDERS', 'HTMLHEADERS-FOOTERS', 'FORMS', 'BACKGROUNDS', 'CSS-FLOAT', 'CSS-IMAGE-FLOAT', 'CSS-POSITION', 'CSS-PAGE', 'BORDER-RADIUS'
-
 // Text is marked in mpdf_source.php with e.g. :
 /*-- TABLES-ADVANCED-BORDERS --*/
 /*-- END TABLES-ADVANCED-BORDERS --*/
 	// *TABLES-ADVANCED-BORDERS*
-
-
 if (!isset($_POST['generate']) || $_POST['generate']!='generate') {
-
-
 if (!file_exists('mpdf_source.php')) {
-	die("ERROR - Could not find mpdf_source.php file in current directory. Please rename mpdf.php as mpdf_source.php"); 
+	die("ERROR - Could not find mpdf_source.php file in current directory. Please rename mpdf.php as mpdf_source.php");
 }
-
-
-
-
 echo '<html>
 <head>
 <script language=javascript>
@@ -39,7 +26,7 @@ function checkedAll (frm1) {
           {
           checked = false
           }
-	for (var i =0; i < aa.elements.length; i++) 
+	for (var i =0; i < aa.elements.length; i++)
 	{
 	 aa.elements[i].checked = checked;
 	}
@@ -60,7 +47,6 @@ function checkedAll (frm1) {
 </ul>
 </div>
 <input type="checkbox" name="checkall" onclick="checkedAll(frm1);"> <i>Select/Unselect All</i><br /><br />
-
 <form id="frm1" action="compress.php" method="POST">
 ';
 foreach($excl AS $k=>$ex) {
@@ -70,7 +56,6 @@ foreach($excl AS $k=>$ex) {
 	}
 	echo ' /> '.$ex.'<br />';
 }
-
 echo '<br />
 <input type="submit" name="generate" value="generate" />
 </form>
@@ -78,15 +63,13 @@ echo '<br />
 </html>';
 exit;
 }
-
 $inc = $_POST['inc'];
-if (is_array($inc) && count($inc)>0 ) { 
+if (is_array($inc) && count($inc)>0 ) {
 	foreach($inc AS $i=>$v) {
 		$key = array_search($i, $excl);
 		unset($excl[$key]);
 	}
 }
-
 if (!defined('PHP_VERSION_ID')) {
     $version = explode('.', PHP_VERSION);
     define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
@@ -94,12 +77,10 @@ if (!defined('PHP_VERSION_ID')) {
 if (PHP_VERSION_ID < 50300) { $mqr = @get_magic_quotes_runtime(); }
 	else { $mqr=0; }
 if ($mqr) { set_magic_quotes_runtime(0); }
-
 $l = file('mpdf_source.php');
 if (!count($l)) { die("ERROR - Could not find mpdf_source.php file in current directory"); }
 $exclflags = array();
 $x = '';
-
 	// Excluding 'HTML-CSS' will also exclude: 'TABLES', 'LISTS', 'TABLES-ADVANCED-BORDERS', 'HTMLHEADERS-FOOTERS', 'FORMS', 'BACKGROUNDS', 'CSS-FLOAT', 'CSS-IMAGE-FLOAT', 'CSS-POSITION', 'CSS-PAGE', 'BORDER-RADIUS'
 if ($excl[0]=='HTML-CSS') {
 	$excl[] = 'TABLES';
@@ -115,7 +96,6 @@ if ($excl[0]=='HTML-CSS') {
 	$excl[] = 'BORDER-RADIUS';
 }
 $excl = array_unique($excl);
-
 foreach($l AS $k=>$ln) {
 	$exclude = false;
 	// *XXXXX*
@@ -142,8 +122,8 @@ foreach($l AS $k=>$ln) {
 		}
 		$exclude = true;
 	}
-	if (count($exclflags)==0 && !$exclude) { 
-		$x .= $ln; 
+	if (count($exclflags)==0 && !$exclude) {
+		$x .= $ln;
 	}
 }
 // mPDF 5.0
@@ -158,15 +138,10 @@ else {
 if (!$check) { die("ERROR - Could not write to mpdf.php file. Are permissions correctly set?"); }
 echo '<p><b>mPDF file generated successfully!</b></p>';
 echo '<div>mPDF file size '.number_format((strlen($x)/1024)).' kB</div>';
-
 unset($l);
 unset($x);
-
 include('mpdf.php');
 $mpdf = new mPDF();
-
 echo '<div>Memory usage on loading mPDF class '.number_format((memory_get_usage(true)/(1024*1024)),2).' MB</div>';
-
 exit;
-
 ?>

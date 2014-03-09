@@ -4,20 +4,17 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
-
 </head>
 <body>
 <div id="morris-chart-area" style="height: 250px;"></div>
 <div id="morris-chart-donut" style="height: 250px;"></div>
 <div id="morris-chart-line" style="height: 250px;"></div>
 <div id="morris-chart-bar" style="height: 250px;"></div>
-
 <?php
 $data1 = array ("2011"=>3,"2014"=>5);
 $data2 = array ("Hardware"=>3,"Software"=>2, "Outros"=>5,"de pensar"=>85);
 ?>
 <script>// First Chart Example - Area Line Chart
-
 Morris.Area({
   // ID of the element in which to draw the chart.
   element: 'morris-chart-area',
@@ -29,7 +26,6 @@ Morris.Area({
 		echo "{ d: '".$key."', chamados: ".$value." },";
 	}
 	?>
-
 	{ d: '2014', Chamadosos: 1 }  ],
   // The name of the data record attribute that contains x-chamadoss.
   xkey: 'd',
@@ -41,7 +37,6 @@ Morris.Area({
   // Disables line smoothing
   smooth: false,
 });
-
 Morris.Donut({
   element: 'morris-chart-donut',
   data: [
@@ -54,7 +49,6 @@ Morris.Donut({
   ],
   formatter: function (y) { return y + "%" ;}
 });
-
 </script>
 </body>
 </html>

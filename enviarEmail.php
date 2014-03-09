@@ -10,7 +10,6 @@
         $usuario = "noreplay.restart@gmail.com";
         $senha = "restart00";
         $erros = "";
-        
         //Valida o content_type do e-mail
         if( $content_type == "html")
             $content_type = "text/html; charset=utf-8";

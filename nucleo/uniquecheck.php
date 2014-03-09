@@ -1,5 +1,6 @@
 <?php
 /**	if (!empty($_GET)) {
+$LOG = new LOG;
 		if (isset($_GET['nome_categ'])) {
 			require '../classes/categoria.classes.php';
 			$nome		= $_GET['nome_categ'];

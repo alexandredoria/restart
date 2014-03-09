@@ -15,7 +15,6 @@ function showConfirm (acao,excluirID) {
 	else {
 		$('#dialog_box').fadeOut('fast');
 	}
-
 }
 /*************************************************
  * Exibe as mensagens após a conclusão de uma ação
@@ -25,13 +24,11 @@ function showGrowl () {
     	$('#growl_box').click(function(){
     		$(this).fadeOut();
     	});
-
         setTimeout(function () {
         	$('#growl_box').fadeOut();
         },10000);
     });
 };
-
 /*************************************************
  * Limpa os campos do formulario e retira classes
  *************************************************/
@@ -44,7 +41,7 @@ function resetForm (form) {
  *************************************************/
 function ajaxEdit (location, form, value) {
 	$.get(
-		"nucleo/editrequests.php", 
+		"nucleo/editrequests.php",
 		{module: location, id: value},
 		function (data) {
 			cleanFormCSS(form, value);
@@ -59,7 +56,6 @@ function ajaxEdit (location, form, value) {
 					}
 					$('#' + dados[6]).prop('checked', true);
 				break;
-
 				case 'usuario':
 					for (var i = 5; i <= 13; i++) {	// Contador dos inputs de radio
 						if (dados[i] == 1) {
@@ -68,7 +64,7 @@ function ajaxEdit (location, form, value) {
 						} else{
 							campos[i] = campos[i].concat('_n');
 							$('#' + campos[i]).prop('checked', true);
-						};	
+						};
 					}
 					if ($("#plogin_n").is(':checked')) $("#steps form fieldset:nth-child(2) p:first label[for='plogin_n']").click();
 					else $("#steps form fieldset:nth-child(2) p:first label[for='plogin_s']").click();
@@ -91,11 +87,9 @@ function cleanFormCSS (form_id, texto) {
 		case 'formCateg':
 			var word = ' Categoria';
 		break;
-
 		case 'formCli':
 			var word = ' Cliente';
 		break;
-
 		case 'formUsuario':
 			var word = ' Usuário';
 			if (texto == 'Cadastrar') {
@@ -115,7 +109,6 @@ function cleanFormCSS (form_id, texto) {
 				$('input#email').rules("remove", "remote");
 			}
 		break;
-
 		case 'formProd':
 			var word = ' Patrimonio';
 			if ($('#OFF').is(':checked')) {
@@ -132,7 +125,6 @@ function cleanFormCSS (form_id, texto) {
 			}
 		break;
 	}
-
 	var titulo = '#' + form_id + ' fieldset legend';
 	$(titulo).parent().find('label.error').remove();
 	$(titulo).parent().find('input').removeClass('valid error');
@@ -188,18 +180,15 @@ $(document).ready(function(){
 	 ********************************/
 	var altura = $("#user_info").height() * -1.1;
 	$("#user_info").css({ 'bottom': altura });
-
 	$("#user_info .header").click(function () {
 		var posicao = parseInt($("#user_info").css('bottom'));
 		var novaAltura = posicao < 0 ? 0 : altura;
 		$("#user_info").animate({ bottom: novaAltura });
 	});
-	
 	/*********************************
 	 * Efeitos jQuery da tabela
 	 ********************************/
 	$('div.menu-op form.search').submit(function(e){ e.preventDefault(); });
-
 	$("input#pesquisar").on("keyup", function(e) {
 		clearTimeout($.data(this, 'timer'));	// Set Timeout
 		$("article div#message").fadeOut();

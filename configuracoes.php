@@ -1,27 +1,16 @@
 <?php
-
-
 $pageTitle  = "Configurações";
-  
   include 'classes/usuario.class.php';
+include 'classes/log.class.php';
   include 'classes/ocorrencia.class.php';
-  include 'classes/configsistema.class.php';
+  include 'classes/configuracao.class.php';
   include 'nucleo/cabecario.php';
   include("nucleo/barraLateral.php");
-  
-
-  
 ?>
-
-       
-
-         
       <div id="page-wrapper">
-      
        <div class="row">
         <div class="col-lg-6">
           <h1>Configurações de sistema</h1>
-          
         </div>
         <div class="col-lg-6" align="right">
           <a href="DB.php"><i class="glyphicon glyphicon-home"></i> Base de dados</a> &nbsp;&nbsp;
@@ -30,9 +19,8 @@ $pageTitle  = "Configurações";
           <a href="laboratorios.php"><i class="glyphicon glyphicon-map-marker"></i> Laboratórios</a>
         </div>
       </div><!-- /.row -->
-
   <div class="row">
-    <div class="col-lg-12">            
+    <div class="col-lg-12">
       <ol class="breadcrumb">
         <li class="active"><i class="glyphicon glyphicon-cog"></i> Configurações</li>
       </ol>
@@ -40,13 +28,11 @@ $pageTitle  = "Configurações";
   </div><!-- /.row -->
   <div class="row">
         <div class="col-lg-12">
-          
           </div>
       </div><!-- /.row -->
       <form role="form" class="validatedForm"  id="perfil" action="perfil.php" method="post">
       <div class="row">
         <div class="col-lg-4">
-      
             <div class="form-group">
               <label>Servidor da base de dados</label>
             </div>
@@ -57,49 +43,34 @@ $pageTitle  = "Configurações";
               <label>Usuário da base de dados</label>
             </div>
             <div class="form-group">
-              <label>Servidor SMTP</label>          
-            </div> 
+              <label>Servidor SMTP</label>
+            </div>
             <div class="form-group">
               <label>Porta SMTP</label>
             </div>
             <div class="form-group">
               <label>Email SMTP</label>
-            </div>  
+            </div>
             <div class="form-group">
              <label>Segurança SMTP</label>
-            </div> 
+            </div>
             <div class="form-group">
               <label>Usuário SMTP</label>
             </div>
           </div>
-          
         <div class="col-lg-4">
-          
         </div>
         <div class="col-lg-4">
-          
         </div>
       </div><!-- /.row -->
       </form>
-
-        
-
-        
-
-        
-
       </div><!-- /#page-wrapper -->
-
     </div><!-- /#wrapper -->
-
-   
-
     <!-- Page Specific Plugins -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
     <script src="js/morris/chart-data-morris.js"></script>
     <script src="js/tablesorter/jquery.tablesorter.js"></script>
     <script src="js/tablesorter/tables.js"></script>
-
   </body>
 </html>

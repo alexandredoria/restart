@@ -1,14 +1,9 @@
 <?php
-
 class bmp {
-
 var $mpdf = null;
-
 function bmp(&$mpdf) {
 	$this->mpdf = $mpdf;
 }
-
-
 function _getBMPimage($data, $file) {
 	$info = array();
 		// Adapted from script by Valentin Schmidt
@@ -19,7 +14,7 @@ function _getBMPimage($data, $file) {
 		$flip = ($height<0);
 		if ($flip) $height =-$height;
 		$biBitCount=$this->_twobytes2int_le(substr($data,28,2));
-		$biCompression=$this->_fourbytes2int_le(substr($data,30,4)); 
+		$biCompression=$this->_fourbytes2int_le(substr($data,30,4));
 		$info = array('w'=>$width, 'h'=>$height);
 		if ($biBitCount<16){
 			$info['cs'] = 'Indexed';
@@ -37,18 +32,15 @@ function _getBMPimage($data, $file) {
 			$info['cs'] = 'DeviceRGB';
 			$info['bpc'] = 8;
 		}
-
 		if ($this->mpdf->restrictColorSpace==1 || $this->mpdf->PDFX || $this->mpdf->restrictColorSpace==3) {
 			if (($this->mpdf->PDFA && !$this->mpdf->PDFAauto) || ($this->mpdf->PDFX && !$this->mpdf->PDFXauto)) { $this->mpdf->PDFAXwarnings[] = "Image cannot be converted to suitable colour space for PDFA or PDFX file - ".$file." - (Image replaced by 'no-image'.)"; }
-			return array('error' => "BMP Image cannot be converted to suitable colour space - ".$file." - (Image replaced by 'no-image'.)"); 
+			return array('error' => "BMP Image cannot be converted to suitable colour space - ".$file." - (Image replaced by 'no-image'.)");
 		}
-
 		$biXPelsPerMeter=$this->_fourbytes2int_le(substr($data,38,4));	// horizontal pixels per meter, usually set to zero
 		//$biYPelsPerMeter=$this->_fourbytes2int_le(substr($data,42,4));	// vertical pixels per meter, usually set to zero
 		$biXPelsPerMeter=round($biXPelsPerMeter/1000 *25.4);
 		//$biYPelsPerMeter=round($biYPelsPerMeter/1000 *25.4);
-		$info['set-dpi'] = $biXPelsPerMeter; 
-
+		$info['set-dpi'] = $biXPelsPerMeter;
 		switch ($biCompression){
 		  case 0:
 			$str = substr($data,$bfOffBits);
@@ -82,7 +74,6 @@ function _getBMPimage($data, $file) {
 				}
 			}
 			break;
-
 		  case 16:
 			$w_row = $width*2 + $padCnt;
 			if ($flip){
@@ -105,12 +96,10 @@ function _getBMPimage($data, $file) {
 				}
 			}
 			break;
-
 		  case 24:
 		  case 32:
 			$byteCnt = $biBitCount/8;
 			$w_row = $width*$byteCnt + $padCnt;
-
 			if ($flip){
 				for ($y=0;$y<$height;$y++){
 					$y0 = $y*$w_row;
@@ -129,30 +118,25 @@ function _getBMPimage($data, $file) {
 				}
 			}
 			break;
-
 		  default:
-			return array('error' => 'Error parsing BMP image - Unsupported image biBitCount'); 
+			return array('error' => 'Error parsing BMP image - Unsupported image biBitCount');
 		}
 		if ($this->mpdf->compress) {
 			$bmpdata=gzcompress($bmpdata);
 			$info['f']='FlateDecode';
-		} 
+		}
 		$info['data']=$bmpdata;
 		$info['type']='bmp';
 		return $info;
 }
-
 function _fourbytes2int_le($s) {
 	//Read a 4-byte integer from string
 	return (ord($s[3])<<24) + (ord($s[2])<<16) + (ord($s[1])<<8) + ord($s[0]);
 }
-
 function _twobytes2int_le($s) {
 	//Read a 2-byte integer from string
 	return (ord(substr($s, 1, 1))<<8) + ord(substr($s, 0, 1));
 }
-
-
 # Decoder for RLE8 compression in windows bitmaps
 # see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/gdi/bitmaps_6x0u.asp
 function rle8_decode ($str, $width){
@@ -189,12 +173,11 @@ function rle8_decode ($str, $width){
     }
     return $out;
 }
-
 # Decoder for RLE4 compression in windows bitmaps
 # see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/gdi/bitmaps_6x0u.asp
 function rle4_decode ($str, $width){
     $w = floor($width/2) + ($width % 2);
-    $lineWidth = $w + (3 - ( ($width-1) / 2) % 4);    
+    $lineWidth = $w + (3 - ( ($width-1) / 2) % 4);
     $pixels = array();
     $cnt = strlen($str);
     for ($i=0;$i<$cnt;$i++){
@@ -203,7 +186,7 @@ function rle4_decode ($str, $width){
             case 0: # ESCAPE
                 $i++;
                 switch (ord($str[$i])){
-                    case 0: # NEW LINE                        
+                    case 0: # NEW LINE
                         while (count($pixels)%$lineWidth!=0)
                             $pixels[]=0;
                         break;
@@ -232,17 +215,12 @@ function rle4_decode ($str, $width){
                     $pixels[] = ($j%2==0 ? ($c & 240)>>4 : $c & 15);
         }
     }
-    
     $out = '';
     if (count($pixels)%2) $pixels[]=0;
     $cnt = count($pixels)/2;
     for ($i=0;$i<$cnt;$i++)
         $out .= chr(16*$pixels[2*$i] + $pixels[2*$i+1]);
     return $out;
-} 
-
-
-
 }
-
+}
 ?>

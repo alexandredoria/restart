@@ -1,5 +1,6 @@
 <?php
 	if (!empty($_GET)) {
+$LOG = new LOG;
 		if (isset($_GET['module'], $_GET['id'])) {
 			$module		= $_GET['module'];
 			$id			= $_GET['id'];
@@ -11,7 +12,6 @@
 					echo "||nome_categ*";
 					unset($module);
 				break;
-				
 				case 'Patrimonio':
 					require '../class/Patrimonio.class.php';
 					$module = new Patrimonio;
@@ -19,7 +19,6 @@
 					echo "||nome_prod*unid*categ_prod*custo*venda*notes*ativo";
 					unset($module);
 				break;
-
 				case 'usuario':
 					require '../class/usuario.class.php';
 					$module = new Usuario;
@@ -33,7 +32,7 @@
 					 */
 					if (count($perm) <= 2) {
 						$perm[1] = 0;	// Preenche a segunda posição com 0
-						for ($i=1; $i <= 7; $i++) { 
+						for ($i=1; $i <= 7; $i++) {
 							$perm[] = 0;	// Preenche as demais com 0
 						}
 					}
@@ -46,7 +45,6 @@
 					echo "||nome_user*email*user*pass*repass*plogin*pconf*pprod*pcat*puser*pcli*pvenda*pent*pparc";
 					unset($module);
 				break;
-
 				case 'cliente':
 					require '../class/cliente.class.php';
 					$module	= new Cliente;
@@ -56,7 +54,6 @@
 					echo "||nome_cli*documento*insc_uf*cep*endereco*bairro*cidade*uf*email_cli*telefone*notas_cli*tipo_cli";
 					unset($module);
 				break;
-
 				default:
 					# code...
 				break;

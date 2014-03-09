@@ -1,7 +1,4 @@
 <?php
-
-
-
 $html = '
 <h1>mPDF</h1>
 <h2>Basic Example Using CSS Styles</h2>
@@ -13,29 +10,19 @@ $html = '
 <h4>Heading using Small-Caps - supported from mPDF version 5</h4>
 <p>Proin aliquet lorem id felis. Curabitur vel libero at mauris nonummy tincidunt. Donec imperdiet. Vestibulum sem sem, lacinia vel, molestie et, laoreet eget, urna. Curabitur viverra faucibus pede. Morbi lobortis. Donec dapibus. Donec tempus. Ut arcu enim, rhoncus ac, venenatis eu, porttitor mollis, dui. Sed vitae risus. In elementum sem placerat dui. Nam tristique eros in nisl. Nulla cursus sapien non quam porta porttitor. Quisque dictum ipsum ornare tortor. Fusce ornare tempus enim. </p>
 ';
-
-
 //==============================================================
 //==============================================================
 //==============================================================
-
 include("../mpdf.php");
-
-$mpdf=new mPDF('c'); 
-
+$mpdf=new mPDF('c');
 $mpdf->SetDisplayMode('fullpage');
-
 // LOAD a stylesheet
 $stylesheet = file_get_contents('mpdfstyleA4.css');
 $mpdf->WriteHTML($stylesheet,1);	// The parameter 1 tells that this is css/style only and no body/html/text
-
 $mpdf->WriteHTML($html);
-
 $mpdf->Output();
-
 exit;
 //==============================================================
 //==============================================================
 //==============================================================
-
 ?>

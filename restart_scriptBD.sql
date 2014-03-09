@@ -1,10 +1,8 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
 CREATE SCHEMA IF NOT EXISTS `restart` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `restart` ;
-
 -- -----------------------------------------------------
 -- Table `restart`.`Usuario`
 -- -----------------------------------------------------
@@ -22,8 +20,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Usuario` (
   `situacao` SMALLINT NULL,
   PRIMARY KEY (`matricula`))
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Laboratorio`
 -- -----------------------------------------------------
@@ -32,8 +28,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Laboratorio` (
   `nome_laboratorio` VARCHAR(14) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Categoria`
 -- -----------------------------------------------------
@@ -42,8 +36,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Categoria` (
   `nome` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Patrimonio`
 -- -----------------------------------------------------
@@ -69,8 +61,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Patrimonio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Ocorrencia`
 -- -----------------------------------------------------
@@ -100,8 +90,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Defeito`
 -- -----------------------------------------------------
@@ -111,8 +99,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Defeito` (
   `detalhe` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Ocorrencia_has_Defeito`
 -- -----------------------------------------------------
@@ -133,8 +119,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Ocorrencia_has_Defeito` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Imagem_HD`
 -- -----------------------------------------------------
@@ -145,8 +129,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Imagem_HD` (
   `data_atualizacao` TIMESTAMP NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Equipamento`
 -- -----------------------------------------------------
@@ -173,8 +155,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Equipamento` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Software`
 -- -----------------------------------------------------
@@ -186,8 +166,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Software` (
   `tipo_licenca` SMALLINT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Software_has_Imagem_HD`
 -- -----------------------------------------------------
@@ -208,8 +186,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Software_has_Imagem_HD` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Licenca`
 -- -----------------------------------------------------
@@ -232,8 +208,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Licenca` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `restart`.`Configuracao`
 -- -----------------------------------------------------
@@ -249,8 +223,6 @@ CREATE TABLE IF NOT EXISTS `restart`.`Configuracao` (
   `usuario_db` VARCHAR(45) NOT NULL,
   `senha_db` VARCHAR(45) NOT NULL)
 ENGINE = InnoDB;
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

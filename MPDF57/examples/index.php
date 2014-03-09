@@ -1,7 +1,5 @@
 <?php
-
 $ff = scandir('./');
-
 sort($ff);
 $files = array();
 foreach($ff AS $f) {
@@ -11,15 +9,11 @@ foreach($ff AS $f) {
 	}
 }
 echo '<html><body><h3>mPDF Example Files</h3>';
-
 foreach($files AS $n=>$f) {
 	echo '<p>'.$n.') '.$f[0].' &nbsp; <a href="'.$f[1].'">PDF</a> &nbsp;  <small><a href="show_code.php?filename='.$f[1].'">PHP</a></small></p>';
 }
-
 echo '</body></html>';
 exit;
-
-
 // For PHP4 compatability
 if (!function_exists('scandir')) {
 	function scandir($dir = './', $sort = 0) {
@@ -34,7 +28,5 @@ if (!function_exists('scandir')) {
 			sort($files, SORT_STRING);
 		return $files;
 	}
-} 
-
-
+}
 ?>

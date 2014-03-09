@@ -1,72 +1,64 @@
-  
+
 <?php
-    include 'classes/usuario.class.php';
+include 'classes/laboratorio.class.php';
+include 'classes/usuario.class.php';
+include 'classes/log.class.php';
 include 'classes/ocorrencia.class.php';
-$pageTitle  = "Cadastrar usuário";  
+$pageTitle  = "Cadastrar laboratório";
     include 'nucleo/cabecario.php';
     include("nucleo/barraLateral.php");
     if ($_SESSION['tipo_usuario'] != "1"){
       header("Location: ../restart/painel.php");
     exit;
-
   }
-
       // Verifica se algum form foi enviado
       if (!empty($_POST)) {
+$LOG = new LOG;
         // Verifica se as variáveis relacionadas ao cadastro/edição existem
-        if (isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'])) {
-          $nome    = $_POST['nome']; 
-          $matricula    = $_POST['matricula'];
-          $tipo_usuario    = $_POST['tipo_usuario'];
-          
-          include_once 'nucleo/funcoes.php';
+        if (isset($_POST['nome'])) {
+          $nome    = $_POST['nome'];
           // Verifica se será realizado um CADASTRO ou EDIÇÃO
           if ($_POST['acao'] == 'add') {
-            $senha = "123";
-            $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
-            $addUser  = new Usuario;
-            $result   = $addUser->cadastrarUsuario( $nome, $matricula, $senha, $tipo_usuario);
+            $addUser  = new Laboratorio;
+            $result   = $addUser->cadastrarLaboratorio($nome);
             if (is_bool($result)) {
               echo "<!-- Modal -->
-                    <div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+                    <div class='modal fade bs-modal-sm' id='modal_cadLaboratorio' tabindex='-1' role='dialog' aria-labelledby='modal_cadLaboratorioLabel' aria-hidden='true'>
                       <div class='modal-dialog modal-sm'>
                         <div class='modal-content panel-success'>
                           <div class='modal-header panel-heading'>
                             <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                            <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário cadastrado com sucesso!</h4>
+                            <h4 class='modal-title' id='modal_cadLaboratorioLabel'>Laboratório cadastrado com sucesso!</h4>
                           </div>
-                          
                         </div>
                       </div>
                     </div>";
+                    $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'ADD_LAB', 1);
             }
             else {
               echo "<!-- Modal -->
-                    <div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+                    <div class='modal fade' id='modal_cadLaboratorio' tabindex='-1' role='dialog' aria-labelledby='modal_cadLaboratorioLabel' aria-hidden='true'>
                       <div class='modal-dialog'>
                         <div class='modal-content panel-danger'>
                           <div class='modal-header panel-heading'>
                             <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                            <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível cadastrar o usuário</h4>
+                            <h4 class='modal-title' id='modal_cadLaboratorioLabel'>Não foi possível cadastrar o laboratório</h4>
                           </div>
                           <div class='modal-body'>
                             <p>".$result."</p>
-<br><br><p><b>Contate à COLINF</b></p>
                           </div>
                         </div>
                       </div>
                     </div>";
+                    $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'ADD_LAB', 0);
             }
             unset($addUser);
-            echo "<script>$('#modal_cadUsuario').modal('show');</script>";
+            echo "<script>$('#modal_cadLaboratorio').modal('show');</script>";
           }
-        
         }
-        
       }
     ?>
     <div id="page-wrapper">
-
       <div class="row">
         <div class="col-lg-12">
           <h1> Cadastrar laboratório</h1>
@@ -77,35 +69,28 @@ $pageTitle  = "Cadastrar usuário";
           </ol>
         </div>
       </div><!-- /.row -->
-      
       <div id="steps">
-        <form role="form" id="formUsuario" name="formUsuario" action="cadUsuario.php" method="post">
-        
+        <form role="form" id="formLaboratorio" name="formLaboratorio" action="cadLaboratorio.php" method="post">
         <div class="row">
-          <div class="col-lg-4">            
+          <div class="col-lg-4">
               <input type="hidden" name="acao" value="add">
               <div class="form-group">
                 <label>Nome</label>
                 <input class="form-control" id="nome" name="nome" required autocomplete="off">
               </div>
-
-                    
           </div>
         </div><!-- /.row -->
-
         <div class="row">
           <div class="col-lg-4"  align="right">
             <button type="submit" class="btn btn-default">Enviar</button>
-            <button type="reset" class="btn btn-default">Limpar</button>                     
-          </div>          
+            <button type="reset" class="btn btn-default">Limpar</button>
+          </div>
           <div class="col-lg-4"></div>
           <div class="col-lg-4"></div>
         </div><!-- /.row -->
-
         </form>
       </div><!-- /#STEPS -->
     </div><!-- /#page-wrapper -->
   </div><!-- /#wrapper -->
-  
 </body>
 </html>

@@ -1,5 +1,4 @@
 <?php
-
 /////////////////
 $unicode_ranges = array(
 array('starthex'=> '0000', 'endhex'=>'007E', 'startdec'=> 0, 'enddec'=>126 , 'range'=>'Basic Latin'),
@@ -97,7 +96,6 @@ array('starthex'=> '2D30', 'endhex'=>'2D7F', 'startdec'=> 11568, 'enddec'=> 1164
 array('starthex'=> '2D80', 'endhex'=>'2DDF', 'startdec'=> 11648, 'enddec'=> 11743, 'range'=>'Ethiopic Extended'),
 array('starthex'=> '2DE0', 'endhex'=>'2DFF', 'startdec'=> 11744, 'enddec'=> 11775, 'range'=>'Cyrillic Extended-A'),
 array('starthex'=> '2E00', 'endhex'=>'2E7F', 'startdec'=> 11776, 'enddec'=> 11903, 'range'=>'Supplemental Punctuation'),
-
 array('starthex'=> '2E80', 'endhex'=>'2EFF', 'startdec'=> 11904, 'enddec'=>12031 , 'range'=>'CJK Radicals Supplement', 'cjk'=>true),
 array('starthex'=> '2F00', 'endhex'=>'2FDF', 'startdec'=> 12032, 'enddec'=>12255 , 'range'=>'Kangxi Radicals', 'cjk'=>true),
 array('starthex'=> '2FF0', 'endhex'=>'2FFF', 'startdec'=> 12272, 'enddec'=>12287 , 'range'=>'Ideographic Description Characters', 'cjk'=>true),
@@ -117,49 +115,34 @@ array('starthex'=> '4DC0', 'endhex'=>'4DFF', 'startdec'=> 19904, 'enddec'=> 1996
 array('starthex'=> '4E00', 'endhex'=>'9FFF', 'startdec'=> 19968, 'enddec'=>40959 , 'range'=>'CJK Unified Ideographs', 'cjk'=>true),
 array('starthex'=> 'A000', 'endhex'=>'A48F', 'startdec'=> 40960, 'enddec'=>42127 , 'range'=>'Yi Syllables', 'cjk'=>true),
 array('starthex'=> 'A490', 'endhex'=>'A4CF', 'startdec'=> 42128, 'enddec'=> 42191, 'range'=>'Yi Radicals', 'cjk'=>true),
-
 array('starthex'=> 'A4D0', 'endhex'=>'A4FF', 'startdec'=> 42192, 'enddec'=> 42239, 'range'=>'Lisu'),
-
 array('starthex'=> 'A500', 'endhex'=>'A63F', 'startdec'=> 42240, 'enddec'=> 42559, 'range'=>'Vai'),
 array('starthex'=> 'A640', 'endhex'=>'A69F', 'startdec'=> 42560, 'enddec'=> 42655, 'range'=>'Cyrillic Extended-B'),
-
 array('starthex'=> 'A6A0', 'endhex'=>'A6FF', 'startdec'=> 42656, 'enddec'=> 42751, 'range'=>'Bamum'),
-
 array('starthex'=> 'A700', 'endhex'=>'A71F', 'startdec'=> 42752, 'enddec'=> 42783, 'range'=>'Modifier Tone Letters'),
 array('starthex'=> 'A720', 'endhex'=>'A7FF', 'startdec'=> 42784, 'enddec'=> 43007, 'range'=>'Latin Extended-D'),
 array('starthex'=> 'A800', 'endhex'=>'A82F', 'startdec'=> 43008, 'enddec'=> 43055, 'range'=>'Syloti Nagri'),
-
 array('starthex'=> 'A840', 'endhex'=>'A87F', 'startdec'=> 43072, 'enddec'=> 43135, 'range'=>'Phags-pa', 'vertical'=>true),
 array('starthex'=> 'A880', 'endhex'=>'A8DF', 'startdec'=> 43136, 'enddec'=> 43231, 'range'=>'Saurashtra'),
-
 array('starthex'=> 'A900', 'endhex'=>'A92F', 'startdec'=> 43264, 'enddec'=> 43311, 'range'=>'Kayah Li'),
 array('starthex'=> 'A930', 'endhex'=>'A95F', 'startdec'=> 43312, 'enddec'=> 43359, 'range'=>'Rejang'),
-
 array('starthex'=> 'A960', 'endhex'=>'A97F', 'startdec'=> 43360, 'enddec'=> 43391, 'range'=>'Hangul Choseong', 'cjk'=>true),
 array('starthex'=> 'A980', 'endhex'=>'A9DF', 'startdec'=> 43392, 'enddec'=> 43487, 'range'=>'Javanese'),
-
 array('starthex'=> 'AA00', 'endhex'=>'AA5F', 'startdec'=> 43520, 'enddec'=> 43615, 'range'=>'Cham'),
 array('starthex'=> 'AA60', 'endhex'=>'AA7B', 'startdec'=> 43616, 'enddec'=> 43647, 'range'=>'Myanmar', 'special'=>true),
 array('starthex'=> 'AA80', 'endhex'=>'AADF', 'startdec'=> 43648, 'enddec'=> 43743, 'range'=>'Tai Viet'),
-
 array('starthex'=> 'ABC0', 'endhex'=>'ABF9', 'startdec'=> 43968, 'enddec'=> 44025, 'range'=>'Meetei Mayek'),
-
 array('starthex'=> 'AC00', 'endhex'=>'D7FF', 'startdec'=> 44032, 'enddec'=>55295 , 'range'=>'Hangul Syllables', 'cjk'=>true),
-
 /*
 array('starthex'=> 'D800', 'endhex'=>'DB7F', 'startdec'=> 55296, 'enddec'=>56191 , 'range'=>'High Surrogates', 'reserved'=>true),
 array('starthex'=> 'DB80', 'endhex'=>'DBFF', 'startdec'=> 56192, 'enddec'=>56319 , 'range'=>'High Private Use Surrogates', 'reserved'=>true),
 array('starthex'=> 'DC00', 'endhex'=>'DFFF', 'startdec'=> 56320, 'enddec'=>57343 , 'range'=>'Low Surrogates', 'reserved'=>true),
 */
-
 array('starthex'=> 'E000', 'endhex'=>'F8FF', 'startdec'=> 57344, 'enddec'=>63743 , 'range'=>'Private Use', 'pua'=>true),
-
 array('starthex'=> 'F900', 'endhex'=>'FAFF', 'startdec'=> 63744, 'enddec'=>64255 , 'range'=>'CJK Compatibility Ideographs', 'cjk'=>true),
 array('starthex'=> 'FB00', 'endhex'=>'FB4F', 'startdec'=> 64256, 'enddec'=>64335 , 'range'=>'Alphabetic Presentation Forms'),
 array('starthex'=> 'FB50', 'endhex'=>'FDFF', 'startdec'=> 64336, 'enddec'=>65023 , 'range'=>'Arabic Presentation Forms-A', 'rtl'=>true),
-
 array('starthex'=> 'FE00', 'endhex'=>'FE0F', 'startdec'=> 65024, 'enddec'=> 65039, 'range'=>'Variation Selectors'),
-
 array('starthex'=> 'FE10', 'endhex'=>'FE1F', 'startdec'=> 65040, 'enddec'=> 65055, 'range'=>'Vertical Forms'),
 array('starthex'=> 'FE20', 'endhex'=>'FE2F', 'startdec'=> 65056, 'enddec'=>65071 , 'range'=>'Combining Half Marks', 'combining'=>true),
 array('starthex'=> 'FE30', 'endhex'=>'FE4F', 'startdec'=> 65072, 'enddec'=>65103 , 'range'=>'CJK Compatibility Forms', 'cjk'=>true),
@@ -168,9 +151,7 @@ array('starthex'=> 'FE70', 'endhex'=>'FEFE', 'startdec'=> 65136, 'enddec'=>65278
 array('starthex'=> 'FEFF', 'endhex'=>'FEFF', 'startdec'=> 65279, 'enddec'=>65279 , 'range'=>'Specials'),
 array('starthex'=> 'FF00', 'endhex'=>'FFEF', 'startdec'=> 65280, 'enddec'=>65519 , 'range'=>'Halfwidth and Fullwidth Forms', 'cjk'=>true),
 array('starthex'=> 'FFF0', 'endhex'=>'FFFD', 'startdec'=> 65520, 'enddec'=>65533 , 'range'=>'Specials'),
-
 /* PLANE 1 */
-
 array('starthex'=> '10000', 'endhex'=>'1007F', 'startdec'=> 65536 , 'enddec'=> 65663, 'range'=>'Linear B Syllabary'),
 array('starthex'=> '10080', 'endhex'=>'100FF', 'startdec'=> 65664 , 'enddec'=> 65791, 'range'=>'Linear B Ideograms'),
 array('starthex'=> '10100', 'endhex'=>'1013F', 'startdec'=> 65792 , 'enddec'=> 65855, 'range'=>'Aegean Numbers'),
@@ -190,14 +171,10 @@ array('starthex'=> '10800', 'endhex'=>'1083F', 'startdec'=> 67584 , 'enddec'=> 6
 array('starthex'=> '10900', 'endhex'=>'1091F', 'startdec'=> 67840 , 'enddec'=> 67871, 'range'=>'Phoenician'),
 array('starthex'=> '10920', 'endhex'=>'1093F', 'startdec'=> 67872 , 'enddec'=> 67903, 'range'=>'Lydian'),
 array('starthex'=> '10A00', 'endhex'=>'10A5F', 'startdec'=> 68096 , 'enddec'=> 68191, 'range'=>'Kharoshthi'),
-
 array('starthex'=> '11080', 'endhex'=>'110CF', 'startdec'=> 69760 , 'enddec'=> 69839, 'range'=>'Kaithi'),
-
 array('starthex'=> '12000', 'endhex'=>'123FF', 'startdec'=> 73728 , 'enddec'=> 74751, 'range'=>'Cuneiform (Sumero-Akkadian)'),
 array('starthex'=> '12400', 'endhex'=>'1247F', 'startdec'=> 74752 , 'enddec'=> 74879, 'range'=>'Cuneiform Numbers and Punctuation'),
-
 array('starthex'=> '13000', 'endhex'=>'1342F', 'startdec'=> 77824 , 'enddec'=> 78895, 'range'=>'Egyptian Hieroglyphs'),
-
 array('starthex'=> '1D000', 'endhex'=>'1D0FF', 'startdec'=> 118784 , 'enddec'=> 119039, 'range'=>'Byzantine Musical Symbols'),
 array('starthex'=> '1D100', 'endhex'=>'1D1FF', 'startdec'=> 119040 , 'enddec'=> 119295, 'range'=>'Musical Symbols'),
 array('starthex'=> '1D200', 'endhex'=>'1D24F', 'startdec'=> 119296 , 'enddec'=> 119375, 'range'=>'Ancient Greek Musical Notation'),
@@ -206,13 +183,9 @@ array('starthex'=> '1D360', 'endhex'=>'1D37F', 'startdec'=> 119648 , 'enddec'=> 
 array('starthex'=> '1D400', 'endhex'=>'1D7FF', 'startdec'=> 119808 , 'enddec'=> 120831, 'range'=>'Mathematical Alphanumeric Symbols'),
 array('starthex'=> '1F000', 'endhex'=>'1F02F', 'startdec'=> 126976 , 'enddec'=> 127023, 'range'=>'Mahjong Tiles'),
 array('starthex'=> '1F030', 'endhex'=>'1F09F', 'startdec'=> 127024 , 'enddec'=> 127135, 'range'=>'Domino Tiles'),
-
 /* PLANE 2 */
-
 array('starthex'=> '20000', 'endhex'=>'2A6DF', 'startdec'=> 131072 , 'enddec'=> 173791, 'range'=>'CJK Unified Ideographs Extension B'),
 array('starthex'=> '2A700', 'endhex'=>'2B734', 'startdec'=> 173824 , 'enddec'=> 177972, 'range'=>'CJK Unified Ideographs Extension C'),
 array('starthex'=> '2F800', 'endhex'=>'2FA1F', 'startdec'=> 194560 , 'enddec'=> 195103, 'range'=>'CJK Compatibility Ideographs Supplement'),
-
 );
-
 ?>

@@ -4,7 +4,6 @@
 	*
 	*
 	*/
-	
 	class DB{
 		/**
 		 * @param string $serverDB Nome do servidor
@@ -16,7 +15,6 @@
 		var $tabelaDB	= 'restart';
 		var $userDB		= 'root';
 		var $senhaDB	= '';
-
 		/**
 		 * Conecta-se ao banco de dados usando o MySQLi
 		 * @return object $db Variável contendo todas as funções do MySQLi
@@ -34,5 +32,5 @@
 				return $db;
 			}
 		}
-	}	
+	}
 ?>
