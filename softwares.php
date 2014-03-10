@@ -125,8 +125,12 @@ if (!empty($_POST)) {
                   $result     = $listaUser->listarSoftwares();
                   if (is_array($result)) {
                     foreach ($result as $row) {
-                      if ($row['tipo_licenca'] == 1){
-
+                      if ($row['tipo_licenca'] == 0){
+                        $tipo_licenca = "Livre";
+                      } else if ($row['tipo_licenca'] == 1){
+                        $tipo_licenca = "Individual";
+                      } else if ($row['tipo_licenca'] == 2){
+                        $tipo_licenca = "Por volume";
                       }
                       echo "
                       <tr id='fooTr'>
@@ -144,7 +148,7 @@ if (!empty($_POST)) {
                       <td>" . $row['nome'] . "</td>
                       <td>" . $row['fabricante'] . "</td>
                       <td>" . $row['versao'] . "</td>
-                      <td>" . $row['tipo_licenca'] . "</td>
+                      <td>" . $tipo_licenca. "</td>
                       </tr>";
                     }
                   } else echo

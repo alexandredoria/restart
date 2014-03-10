@@ -83,12 +83,6 @@ class Categoria extends DB {
 			// Verifica se algum resultado foi retornado
 			if ($result->num_rows) {
 				$rows = $result->fetch_all(MYSQLI_ASSOC);
-				foreach ($rows as $i => $value) {
-					if ($count = $this->db->query("SELECT COUNT(id) FROM Patrimonios WHERE categoria_id = " . $value['id'])) {
-						$num = $count->fetch_row();
-						$rows[$i]['count'] = $num[0];
-					}
-				}
 				$result->free(); // Libera a variável de consulta da memória
 				return $rows;
 			}

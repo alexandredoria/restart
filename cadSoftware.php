@@ -91,6 +91,9 @@ if (!empty($_POST)) {
           <label>Tipo de licença</label>
               <div class="form-group">
                 <label class="radio-inline">
+                  <input type="radio" name="tipo_licenca" id="tipo_usuario2" value="0" required autocomplete="off"> Livre
+                </label>
+                <label class="radio-inline">
                   <input type="radio" name="tipo_licenca" id="tipo_usuario2" value="1" required autocomplete="off"> Individual
                 </label>
                 <label class="radio-inline">

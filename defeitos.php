@@ -82,7 +82,8 @@ if (!empty($_POST)) {
       <div class="row">
         <div class="col-lg-12">
           <ol class="breadcrumb">
-            <li class="active"><i class="glyphicon glyphicon-user"></i> Defeitos</li>
+            <li><a href="ocorrencias.php"><i class="glyphicon glyphicon-tasks"></i> Ocorrências</a></li>
+            <li class="active"><i class="glyphicon glyphicon-warning-sign"></i> Defeitos</li>
           </ol>
         </div>
       </div><!-- /.row -->

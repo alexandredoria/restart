@@ -88,8 +88,8 @@ class Ocorrencia extends DB {
 		//$data_previa = date_parse_from_format('d/M/Y', $data_previa);
 		//$data_previa = date('Y-m-d H:i:s', strtotime($data_previa));
 		//$data_previa = implode('-', array_reverse(explode('/',$data_previa)));
-		$data_previa = date('Y-m-d',$data_previa);//converte a data do padrao brasileiro para o padrão timestamp
-		$data_previa = strtotime('Y-m-d H:i:s',$data_previa);
+		//$data_previa = date('Y-m-d',$data_previa);//converte a data do padrao brasileiro para o padrão timestamp
+		$data_previa = strtotime('Y-m-d H:i:s', $data_previa);
 		//$data_previa = strtotime('d-m-Y H:i:s',$data_previa);//converte a data do padrao brasileiro para o padrão timestamp
 		//$data_previa = strtotime('Y-m-d H:i:s',$data_previa);//converte a data do padrao brasileiro para o padrão timestamp
 		//$data_previa = strtotime($data_previa);//converte a data em timestamp
@@ -124,6 +124,12 @@ class Ocorrencia extends DB {
 		if ($check = $this->db->query("SELECT estado_servico FROM ocorrencia WHERE ((estado_servico != 2) AND (estado_servico != 4)) AND (id = ".$id.")")) {
 			if ($check->num_rows) return "A ocorrência escolhida foi excluída pelo solicitante.";
 			else {
+				foreach ($defeito as $row){
+					$insert = $this->db->prepare("INSERT INTO ocorrencia_has_defeito (Ocorrencia_id, Defeito_id) VALUES (?, ?)");
+					$insert->bind_param('ii', $id, $row);
+					$insert->execute();
+				}	
+				
 				date_default_timezone_set("America/Bahia");
 				$data_entrega = date("Y-m-d H:i:s", time());
 				$estado_servico = 3;
@@ -136,7 +142,7 @@ class Ocorrencia extends DB {
 	}
 	public function reabrirOcorrencia($id) {
 		if ($check = $this->db->query("SELECT estado_servico FROM ocorrencia WHERE (estado_servico != 3) AND (id = ".$id.")")) {
-			if ($check->num_rows) return "A ocorrência escolhida foi excluída.";
+			if ($check->num_rows) return "A ocorrência escolhida já foi reaberta.";
 			else {
 				date_default_timezone_set("America/Bahia");
 				$data_atualizacao = date("Y-m-d H:i:s", time());

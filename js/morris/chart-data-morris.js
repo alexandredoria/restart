@@ -1,3 +1,4 @@
+
 // First Chart Example - Area Line Chart
 Morris.Area({
   // ID of the element in which to draw the chart.

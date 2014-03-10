@@ -82,7 +82,7 @@ class Imagem_HD extends DB {
 	 * @return array $rows Dados das imagem_hd
 	 */
 	public function listarImagem_HD() {
-			$result	= $this->db->query("SELECT * from imagem_hd ORDER BY 'data_atualizacao' ASC ");
+			$result	= $this->db->query("SELECT * from imagem_hd ORDER BY 'nome_arquivo' ASC ");
 		// Executa a query dos Patrimonio e se não houver erros realiza as ações
 		if ($result) {
 			// Verifica se algum resultado foi retornado

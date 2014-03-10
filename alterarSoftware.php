@@ -93,11 +93,15 @@ $Software = new Software;
         <label>Tipo de licença</label>
               <div class="form-group">
                 <label class="radio-inline">
+                  <input type="radio" name="tipo_licenca" <?php if ($tipo_licenca == 0 ){echo "checked='checked'";}?>id="tipo_usuario3" value="0" required autocomplete="off"> Livre
+                </label>
+                <label class="radio-inline">
                   <input type="radio" name="tipo_licenca" <?php if ($tipo_licenca == 1 ){echo "checked='checked'";}?> id="tipo_usuario2" value="1" required autocomplete="off"> Individual
                 </label>
                 <label class="radio-inline">
                   <input type="radio" name="tipo_licenca" <?php if ($tipo_licenca == 2 ){echo "checked='checked'";}?>id="tipo_usuario3" value="2" required autocomplete="off"> Por volume
                 </label>
+
               </div>
 
       </div>

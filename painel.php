@@ -25,7 +25,7 @@
       <div id="page-wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h1>Painel <small>Visão geral de Estatísticas</small></h1>
+            <h1>Painel <small>Visão geral de estatísticas</small></h1>
             <ol class="breadcrumb">
               <li class="active"><i class="fa fa-dashboard"></i> Painel</li>
             </ol>

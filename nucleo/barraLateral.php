@@ -40,14 +40,14 @@
               ?>
               <?php
                 if (($_SESSION['tipo_usuario'] == 1) ||($_SESSION['tipo_usuario'] == 2)) {
-                 echo ((($pageTitle == "Imagens de disco rígido &middot; Visão Geral") || ($pageTitle == "Cadastrar imagem de disco rígido")) ? "<li class='active'>" : "<li>");
+                 echo ((($pageTitle == "Imagens de disco rígido") || ($pageTitle == "Cadastrar imagem de disco rígido")) ? "<li class='active'>" : "<li>");
                   echo "<a href='imagens_HD.php'><i class='glyphicon glyphicon-floppy-disk'></i> Imagens de disco rígido</a></li>";
                 }
               ?>
               
               <?php
                 if (($_SESSION['tipo_usuario'] == 1) ||($_SESSION['tipo_usuario'] == 2)) {
-                 echo ((($pageTitle == "Softwares &middot; Visão Geral") || ($pageTitle == "Cadastrar software")) ? "<li class='active'>" : "<li>");
+                 echo ((($pageTitle == "Softwares") || ($pageTitle == "Cadastrar software")) ? "<li class='active'>" : "<li>");
                   echo "<a href='softwares.php'><i class='glyphicon glyphicon-th'></i> Softwares</a></li>";
                 }
               ?>
