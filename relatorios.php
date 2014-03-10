@@ -227,24 +227,6 @@ $LOG = new LOG;
         <label>
           <input type="checkbox"> Vencimento da garantia dos equipamentos
         </label>
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="input-group">
-              <i class="glyphicon glyphicon-calendar input-group-addon"> </i>
-              <input id="date-picker-1" placeholder="De" name="date-picker-1" type="text" class="date-picker form-control" data-date-language="pt-BR" />
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="input-group">
-              <i class="glyphicon glyphicon-calendar input-group-addon"> </i>
-              <input id="date-picker-1" placeholder="Até" name="date-picker-1" type="text" class="date-picker form-control" data-date-language="pt-BR" />
-            </div>
-          </div>
-          <div class="col-lg-3">
-          </div>
-          <div class="col-lg-3">
-          </div>
-        </div><!--row-->
       </div><!--checkbox-->
     </div><!--col-lg-12-->
   </div> <!--row-->
