@@ -18,17 +18,17 @@ if (isset($_GET['p'])){$numPatAntigo = $_GET['p'];}
 if (!empty($_GET)) {
   $LOG = new LOG;
     // Verifica se as variáveis relacionadas ao cadastro/edição existem
-  if (isset($_POST['num_patrimonio'], $_POST['categoria'], $_POST['num_posicionamento'], $_POST['situacao'], $_POST['laboratorio'],  $_POST['equipamento'])) {
+  if (isset($_GET['num_patrimonio'], $_GET['categoria'], $_GET['num_posicionamento'], $_GET['situacao'], $_GET['laboratorio'],  $_GET['equipamento'])) {
     $num_patrimonio   = $_GET['num_patrimonio'];
-    $tipo    = $_GET['tipo'];
+    $categoria    = $_GET['categoria'];
     $num_posicionamento   = $_GET['num_posicionamento'];
     $situacao    = $_GET['situacao'];
-    $lab    = $_GET['lab'];
-    $config = $_GET['config'];
+    $laboratorio    = $_GET['laboratorio'];
+    $equipamento = $_GET['equipamento'];
       // Verifica se será realizado EDIÇÃO
     if ($_GET['acao'] == 'atualiza') {
       $editPat = new Patrimonio;
-      $result = $editPat->alterarPatrimonio($numPatAntigo, $num_patrimonio, $tipo, $num_posicionamento, $situacao, $lab, $config);
+      $result = $editPat->alterarPatrimonio($numPatAntigo, $num_patrimonio, $num_posicionamento, $situacao, $categoria, $equipamento, $laboratorio);
       if (is_bool($result)) {
         echo "<!-- Modal -->
         <div class='modal fade bs-modal-sm' id='modal_editPatrimonio' tabindex='-1' role='dialog' aria-labelledby='modal_editPatrimonioLabel' aria-hidden='true'>
@@ -53,8 +53,7 @@ if (!empty($_GET)) {
         <h4 class='modal-title' id='modal_editPatrimonioLabel'>Não foi possível alterar o patrimônio</h4>
         </div>
         <div class='modal-body'>
-        <p>".$result."</p>
-        <br><br><p><b>Contate à COLINF</b></p>
+        <p><b>".$result."</b></p>
         </div>
         </div>
         </div>
@@ -89,7 +88,7 @@ $pat = new Patrimonio;
         </div>
         <label>Categoria</label>
         <div class="form-group">
-          <select style="font-weight:bold" id="categoria" name="categoria" class="form-control" onchange="this.form.submit();">
+          <select style="font-weight:bold" id="categoria" name="categoria" class="form-control">
             <?php
             $cat = new Categoria;
             $result = $cat->listarCategoria();
@@ -107,7 +106,7 @@ $pat = new Patrimonio;
             $equip = new Equipamento;
             $result = $equip->listarEquipamentos(0);
             foreach ($result as $row) {
-              echo " <option value='".$row['id']."'> ".$row['modelo']."</option>";
+              echo " <option"; if (((isset($equipamento)) && ($equipamento == $row['id']))){echo " selected ";} else {echo "";} echo " value='".$row['id']."'> ".$row['modelo']."</option>";
             }
             unset($equip);
             ?>
@@ -122,7 +121,7 @@ $pat = new Patrimonio;
             $lab = new Laboratorio;
             $result = $lab->listarLaboratorios();
             foreach ($result as $row) {
-              echo "<option value='" . $row['id'] . "'> " . $row['nome'] . "</option>";
+              echo "<option"; if (((isset($laboratorio)) && ($laboratorio == $row['id']))){echo " selected ";} else {echo "";} echo " value='" . $row['id'] . "'> " . $row['nome'] . "</option>";
             }
             unset($lab);
             ?>
@@ -134,9 +133,9 @@ $pat = new Patrimonio;
         </div>
         <label>Situação</label>
         <div class="form-group">
-          <select style="font-weight:bold" id="situacao" name="situacao" value="<?php echo $pat->obterDados('situacao', $numPatAntigo);?>" class="form-control">
-            <option value="1">Ativo</option>
-            <option value="2">Desativado</option>
+          <select style="font-weight:bold" id="situacao" name="situacao" value="<?php echo $sit = $pat->obterDados('situacao', $numPatAntigo);?>" class="form-control">
+            <option<?php if (((isset($sit)) && ($sit == 1))){echo " selected ";} else {echo "";} ?> value="1">Ativo</option>
+            <option<?php if (((isset($sit)) && ($sit == 2))){echo " selected ";} else {echo "";} ?> value="2">Desativado</option>
           </select>
         </div>
       </div>

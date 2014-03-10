@@ -64,16 +64,16 @@ class Patrimonio extends DB {
 	 * @param int $user ID do funcionario que editou
 	 * @return string Mensagem de retorno
 	 */
-	public function alterarPatrimonio($numPatAntigo, $num_patrimonio, $Categoria_id, $num_posicionamento, $situacao, $lab, $config) {
+	public function alterarPatrimonio($numPatAntigo, $num_patrimonio, $num_posicionamento, $situacao, $categoria, $equipamento, $laboratorio){
 		if ($check = $this->db->query("SELECT num_patrimonio FROM patrimonio WHERE num_patrimonio = '$num_patrimonio'")) {
 			if (($check->num_rows) > 1) return "O patrimônio $num_patrimonio já está cadastrado no sistema.";
 			else{
 				date_default_timezone_set("America/Bahia");
 				$data_atualizacao = date("Y-m-d H:i:s", time());
-				$edit = $this->db->prepare("UPDATE patrimonio SET num_patrimonio = ?, Categoria_id = ?, num_posicionamento = ?, situacao = ?, Laboratorio_id = ?, Configuracao_id = ?, data_atualizacao = ? WHERE num_patrimonio = ?");
-				$edit->bind_param('siiiiiss', $num_patrimonio, $Categoria_id, $num_posicionamento, $situacao, $lab, $config, $data_atualizacao, $numPatAntigo);
+				$edit = $this->db->prepare("UPDATE patrimonio SET num_patrimonio = ?, Equipamento_id = ?, Categoria_id = ?, Laboratorio_id = ?, num_posicionamento = ?, situacao = ?, data_atualizacao = ? WHERE num_patrimonio = ?");
+				$edit->bind_param('siiiiiss', $num_patrimonio, $equipamento, $categoria, $laboratorio, $num_posicionamento, $situacao, $data_atualizacao, $numPatAntigo);
 				if ($edit->execute()) { return true; }
-				else { return ($this->db->error); }
+				else { return "Desculpe! Existe uma ocorrência relacionada a este número de patrimônio.";}
 		    }
 		    $check->free();
 		}
@@ -87,7 +87,7 @@ class Patrimonio extends DB {
 		$delete = $this->db->prepare("DELETE FROM patrimonio WHERE num_patrimonio = ?");
 		$delete->bind_param('s', $num_patrimonio);
 		if ($delete->execute()) { return true; }
-				else { return ($this->db->error); }
+				else { return "Desculpe! Existe uma ocorrência relacionada a este número de patrimônio.";; }
 	}
 	/**
 	 * Obtém o dado desejado de um Patrimonio

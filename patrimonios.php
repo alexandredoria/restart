@@ -47,7 +47,7 @@ $LOG = new LOG;
                             <h4 class='modal-title' id='modal_excPatrimonioLabel'>Não foi possível excluir o patrimônio</h4>
                           </div>
                           <div class='modal-body'>
-                            <p>".$result."</p>
+                            <b><p>".$result."</p></b>
                           </div>
                         </div>
                       </div>
@@ -184,7 +184,7 @@ $LOG = new LOG;
         <div class='modal-content panel-danger'>
           <div class='modal-header panel-heading'>
             <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-            <h4 class='modal-title' id='modal_excUsuarioLabel'>Os usuários serão excluídos</h4>
+            <h4 class='modal-title' id='modal_excUsuarioLabel'>Os patrimônios serão excluídos</h4>
           </div>
           <div class='modal-body'>
             Você realmente deseja excluiros seguintes patrimônios?
@@ -225,10 +225,10 @@ $LOG = new LOG;
         <div class='modal-content panel-danger'>
           <div class='modal-header panel-heading'>
             <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-            <h4 class='modal-title' id='modal_excUsuarioLabel'>O usuário será excluído</h4>
+            <h4 class='modal-title' id='modal_excUsuarioLabel'>O patrimônio será excluído</h4>
           </div>
           <div class='modal-body'>
-            Você realmente deseja excluir a conta relacionada à matrícula?
+            Você realmente deseja excluir este patrimônio?
           </div>
           <div class="modal-footer">
             <form id="confirm" method="post" action="patrimonios.php">
