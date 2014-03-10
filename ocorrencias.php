@@ -11,6 +11,9 @@ $pageTitle  = "Ocorrências &middot; Visão Geral";
   } else {
     $filtro = 0;
   }
+  if (isset($_GET['f'])){
+    $filtro = $_GET['f'];
+  }
   if (!empty($_POST)) {
   $LOG = new LOG;
     if (isset($_POST['IdOcorrencia'])) {
@@ -59,7 +62,8 @@ $pageTitle  = "Ocorrências &middot; Visão Geral";
       <h1>Ocorrências <small>Visão geral</small></h1>
     </div>
     <div class="col-lg-6" align="right">
-       <?php if(($_SESSION['tipo_usuario'] == 1) OR ($_SESSION['tipo_usuario'] == 3)) {echo "<a href='cadOcorrencia.php'><button type='button' class='btn btn-primary'><i class='glyphicon glyphicon-plus-sign'></i> Nova ocorrência</button></a>";}?>
+       <?php if($_SESSION['tipo_usuario'] == 1) {echo "<a href='defeitos.php'><button type='button' class='btn btn-default'><i class='glyphicon glyphicon-warning-sign'></i> Defeitos</button></a>";}?>
+        &nbsp;<?php if(($_SESSION['tipo_usuario'] == 1) OR ($_SESSION['tipo_usuario'] == 3)) {echo "<a href='cadOcorrencia.php'><button type='button' class='btn btn-primary'><i class='glyphicon glyphicon-plus-sign'></i> Nova ocorrência</button></a>";}?>
     </div>
   </div><!-- /.row -->
   <div class="row">

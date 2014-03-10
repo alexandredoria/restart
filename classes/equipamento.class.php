@@ -37,7 +37,7 @@ class Equipamento extends DB {
 	 * @return boolean Se foi possível cadastrar ou não a categoria
 	 */
 	public function cadastrarEquipamento($num_equipamento, $tipo, $num_posicionamento, $situacao, $lab, $config) {
-	date_default_timezone_set("America/Bahia");
+		date_default_timezone_set("America/Bahia");
 		if ($check = $this->db->query("SELECT num_equipamento FROM equipamento WHERE num_equipamento = '$num_equipamento'")) {
 			if ($check->num_rows) return "O número de equipamento \"$num_equipamento\"  já está cadastrado no sistema.";
 			else {
@@ -74,8 +74,8 @@ class Equipamento extends DB {
 				$edit->bind_param('siiiiiss', $num_equipamento, $tipo, $num_posicionamento, $situacao, $lab, $config, $data_atualizacao, $numPatAntigo);
 				if ($edit->execute()) { return true; }
 				else { return ($this->db->error); }
-		    }
-		    $check->free();
+			}
+			$check->free();
 		}
 	}
 	/**
@@ -87,7 +87,7 @@ class Equipamento extends DB {
 		$delete = $this->db->prepare("DELETE FROM equipamento WHERE num_equipamento = ?");
 		$delete->bind_param('s', $num_equipamento);
 		if ($delete->execute()) { return true; }
-				else { return ($this->db->error); }
+		else { return ($this->db->error); }
 	}
 	/**
 	 * Obtém o dado desejado de um Equipamento
@@ -118,15 +118,15 @@ class Equipamento extends DB {
 				if ($result->num_rows) {
 					while ($row = $result->fetch_assoc()) {
 						echo "
-							<tr><td>" . $row['id'] . "</td>
-							<td><a data-reveal-id='formEquipamentos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Equipamento', 'formProd', " . $row['id'] . ")\">" . $row['nome'] . "</a></td>
-							<td>" . $row['unidade'] . "</td>
-							<td>" . $row['preco_custo'] . "</td>
-							<td>" . $row['preco_venda'] . "</td>
-							<td>
-								<a class='btn_white' data-reveal-id='formEquipamentos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Equipamento', 'formProd', " . $row['id'] . ")\">Editar</a>
-								<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
-							</td></tr>";
+						<tr><td>" . $row['id'] . "</td>
+						<td><a data-reveal-id='formEquipamentos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Equipamento', 'formProd', " . $row['id'] . ")\">" . $row['nome'] . "</a></td>
+						<td>" . $row['unidade'] . "</td>
+						<td>" . $row['preco_custo'] . "</td>
+						<td>" . $row['preco_venda'] . "</td>
+						<td>
+						<a class='btn_white' data-reveal-id='formEquipamentos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Equipamento', 'formProd', " . $row['id'] . ")\">Editar</a>
+						<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
+						</td></tr>";
 					}
 				}
 				else echo "<tr><td></td><td>Nenhum resultado encontrado para $termo</td><td></td><td></td><td></td><td></td>";
@@ -139,15 +139,15 @@ class Equipamento extends DB {
 			if (is_array($result)) {
 				foreach ($result as $row) {
 					echo "
-						<tr><td>" . $row['id'] . "</td>
-						<td><a data-reveal-id='formEquipamentos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Equipamento', 'formProd', " . $row['id'] . ")\">" . $row['nome'] . "</a></td>
-						<td>" . $row['unidade'] . "</td>
-						<td>" . $row['preco_custo'] . "</td>
-						<td>" . $row['preco_venda'] . "</td>
-						<td>
-							<a class='btn_white' data-reveal-id='formEquipamentos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Equipamento', 'formProd', " . $row['id'] . ")\">Editar</a>
-							<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
-						</td></tr>";
+					<tr><td>" . $row['id'] . "</td>
+					<td><a data-reveal-id='formEquipamentos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Equipamento', 'formProd', " . $row['id'] . ")\">" . $row['nome'] . "</a></td>
+					<td>" . $row['unidade'] . "</td>
+					<td>" . $row['preco_custo'] . "</td>
+					<td>" . $row['preco_venda'] . "</td>
+					<td>
+					<a class='btn_white' data-reveal-id='formEquipamentos' data-animation='fade' data-focus='#nome_prod' onclick=\"ajaxEdit('Equipamento', 'formProd', " . $row['id'] . ")\">Editar</a>
+					<a class='btn_white del' onclick=\"showConfirm('show'," . $row['id'] . ")\">Excluir</a>
+					</td></tr>";
 				}
 			}
 			unset($result);
@@ -163,10 +163,11 @@ class Equipamento extends DB {
 	 * @return array $rows Dados dos Equipamento
 	 */
 	public function listarEquipamentos($filtro) {
+		$sql = "SELECT e.*, c.`nome` AS nome_categoria FROM equipamento AS e INNER JOIN `categoria` AS c ON e.`Categoria_id` = c.`id` INNER JOIN `imagem_hd` AS i ON e.`Imagem_HD_id` = i.`id`";
 		if ($filtro != 0 ){
-			$result = $this->db->query("SELECT * FROM equipamento WHERE tipo = '".$filtro."' ORDER BY 'id' DESC ");
+			$result = $this->db->query($sql." WHERE e.`id` = '".$filtro."' ORDER BY 'id' DESC ");
 		} else {
-			$result	= $this->db->query("SELECT * FROM equipamento ORDER BY 'id' DESC ");
+			$result	= $this->db->query($sql." ORDER BY 'id' DESC ");
 		}
 		// Executa a query dos Equipamento e se não houver erros realiza as ações
 		if ($result) {

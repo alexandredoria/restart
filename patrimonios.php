@@ -70,7 +70,7 @@ $LOG = new LOG;
   <div class="row">
     <div class="col-lg-12">
       <ol class="breadcrumb">
-        <li class="active"><i class="glyphicon glyphicon-user"></i> Patrimônios</li>
+        <li class="active"><i class="glyphicon glyphicon-edit"></i> Patrimônios</li>
       </ol>
     </div>
   </div><!-- /.row -->

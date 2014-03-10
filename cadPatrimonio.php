@@ -71,7 +71,7 @@ if (!empty($_POST)) {
     <div class="col-lg-12">
       <h1> Cadastrar patrimônio</h1>
       <ol class="breadcrumb">
-        <li><a href="patrimonios.php"><i class="glyphicon glyphicon-user"></i> Patrimônios</a></li>
+        <li><a href="patrimonios.php"><i class="glyphicon glyphicon-edit"></i> Patrimônios</a></li>
         <li class="active"><i class="glyphicon glyphicon-plus-sign"></i> Cadastrar patrimônio</li>
       </ol>
     </div>

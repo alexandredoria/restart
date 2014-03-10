@@ -41,23 +41,11 @@ class Categoria extends DB {
 	 * @param int $id Número de ID da categoria a ser editada
 	 * @return string Mensagem de retorno
 	 */
-	public function editarCategoria($id, $nome) {
-		if ($edit = $this->db->query("UPDATE categoria SET nome = '$nome' WHERE id = $id")) {
-			if ($this->db->affected_rows) {
-				echo "<div id='growl_box' class='good'><p>Categoria editada.</p></div>";
-			}
-			else {
-				echo
-				"<div id='growl_box' class='bad'>
-					<p>Não foi possível editar a categoria.
-					<br><span>Lembre-se que categoria devem possuir um nome exclusivo<span></p>
-				</div>";
-			}
-		}
-		else {
-			echo "<div id='growl_box' class='bad'><p>" . $this->db->error . "</p></div>";
-		}
-		echo "<script>showGrowl();</script>";
+	public function alterarCategoria($idDefeito, $nome) {
+		$edit = $this->db->prepare("UPDATE categoria SET nome = ? WHERE id = ?");
+		$edit->bind_param('si', $nome, $id);
+		if ($edit->execute()) { return true; }
+		else { return ($this->db->error);}
 	}
 	/**
 	 * Deleta uma categoria existente
@@ -65,24 +53,10 @@ class Categoria extends DB {
 	 * @return string Mensagem de retorno
 	 */
 	public function deletarCategoria($id) {
-		$del_matricula		= $this->db->real_escape_string(trim($id));
-		if ($update = $this->db->query("DELETE FROM categoria WHERE id = $del_matricula")) {
-			if ($this->db->affected_rows) {
-				echo "<div id='growl_box' class='good'><p>Categoria removida.</p></div>";
-			}
-			else {
-				echo
-				"<div id='growl_box' class='bad'>
-					<p>Não foi possível remover a categoria.
-					<br><span>Lembre-se que para remover, a categoria não pode alocar Patrimonios.<span></p>
-				</div>";
-			}
-		}
-		else {
-			$erromsg = ($this->db->error == "Cannot delete or update a parent row: a foreign key constraint fails (`coveg`.`Patrimonios`, CONSTRAINT `fk_Patrimonios_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)") ? "A categoria não pôde ser removida.<br><span>Não é possível remover categoria que estão alocando Patrimonios.</span>" : $this->db->error ;
-			echo "<div id='growl_box' class='bad'><p>" . $erromsg . "</p></div>";
-		}
-		echo "<script>showGrowl();</script>";
+		$delete = $this->db->prepare("DELETE FROM categoria WHERE id = ?");
+		$delete->bind_param('i', $id);
+		if ($delete->execute()) { return true; }
+				else { return ($this->db->error); }
 	}
 	/**
 	 * Obtém o nome de uma categoria já cadastrada

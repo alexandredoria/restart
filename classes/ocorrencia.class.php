@@ -120,7 +120,7 @@ class Ocorrencia extends DB {
 			}
 		}
 	}
-	public function fecharOcorrencia($id) {
+	public function fecharOcorrencia($id, $defeito) {
 		if ($check = $this->db->query("SELECT estado_servico FROM ocorrencia WHERE ((estado_servico != 2) AND (estado_servico != 4)) AND (id = ".$id.")")) {
 			if ($check->num_rows) return "A ocorrência escolhida foi excluída pelo solicitante.";
 			else {

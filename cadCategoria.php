@@ -1,12 +1,13 @@
 
 <?php
-include 'classes/usuario.class.php';
+include 'classes/categoria.class.php';
 include 'classes/log.class.php';
 include 'classes/ocorrencia.class.php';
-$pageTitle  = "Cadastrar usuário";
+include 'classes/usuario.class.php';
+$pageTitle  = "Cadastrar categoria";
 include 'nucleo/cabecario.php';
 include("nucleo/barraLateral.php");
-if ($_SESSION['tipo_usuario'] != "1"){
+if ($_SESSION['tipo_usuario'] != "1") {
   header("Location: ../restart/painel.php");
   exit;
 }
@@ -14,51 +15,45 @@ if ($_SESSION['tipo_usuario'] != "1"){
 if (!empty($_POST)) {
   $LOG = new LOG;
         // Verifica se as variáveis relacionadas ao cadastro/edição existem
-  if (isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'])) {
+  if (isset($_POST['nome'])) {
     $nome    = $_POST['nome'];
-    $matricula    = $_POST['matricula'];
-    $tipo_usuario    = $_POST['tipo_usuario'];
-    include_once 'nucleo/funcoes.php';
-          // Verifica se será realizado um CADASTRO ou EDIÇÃO
-    if ($_POST['acao'] == 'add') {
-      $senha = "123";
-      $senha    = (!empty($senha)) ? criptografar_senha($senha) : $senha ;
-      $addUser  = new Usuario;
-      $result   = $addUser->cadastrarUsuario( $nome, $matricula, $senha, $tipo_usuario);
+    // Verifica se será realizado um CADASTRO ou EDIÇÃO
+    if ($_POST['acao'] == 'add') {      
+      $addDef  = new Categoria;
+      $result   = $addDef->cadastrarCategoria($nome);
       if (is_bool($result)) {
         echo "<!-- Modal -->
-        <div class='modal fade bs-modal-sm' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+        <div class='modal fade bs-modal-sm' id='modal_cadCategoria' tabindex='-1' role='dialog' aria-labelledby='modal_cadCategoriaLabel' aria-hidden='true'>
         <div class='modal-dialog modal-sm'>
         <div class='modal-content panel-success'>
         <div class='modal-header panel-heading'>
         <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Usuário cadastrado com sucesso!</h4>
+        <h4 class='modal-title' id='modal_cadCategoriaLabel'>Categoria cadastrado com sucesso!</h4>
         </div>
         </div>
         </div>
         </div>";
-        $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'ADD_CAT', 1);
+        $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'ADD_DEF', 1);
       }
       else {
         echo "<!-- Modal -->
-        <div class='modal fade' id='modal_cadUsuario' tabindex='-1' role='dialog' aria-labelledby='modal_cadUsuarioLabel' aria-hidden='true'>
+        <div class='modal fade' id='modal_cadCategoria' tabindex='-1' role='dialog' aria-labelledby='modal_cadCategoriaLabel' aria-hidden='true'>
         <div class='modal-dialog'>
         <div class='modal-content panel-danger'>
         <div class='modal-header panel-heading'>
         <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-        <h4 class='modal-title' id='modal_cadUsuarioLabel'>Não foi possível cadastrar o usuário</h4>
+        <h4 class='modal-title' id='modal_cadCategoriaLabel'>Não foi possível cadastrar o categoria</h4>
         </div>
         <div class='modal-body'>
         <p>".$result."</p>
-        <br><br><p><b>Contate à COLINF</b></p>
         </div>
         </div>
         </div>
         </div>";
         $LOG->gerarLOG($_SESSION['matricula'], $_SERVER['REMOTE_ADDR'], 'ADD_CAT', 0);
       }
-      unset($addUser);
-      echo "<script>$('#modal_cadUsuario').modal('show');</script>";
+      unset($addDef);
+      echo "<script>$('#modal_cadCategoria').modal('show');</script>";
     }
   }
 }
@@ -66,34 +61,22 @@ if (!empty($_POST)) {
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
-      <h1> Cadastrar usuário</h1>
+      <h1> Cadastrar categoria</h1>
       <ol class="breadcrumb">
-        <li><a href="usuarios.php"><i class="glyphicon glyphicon-user"></i> Usuários</a></li>
-        <li class="active"><i class="glyphicon glyphicon-plus-sign"></i> Cadastrar usuário</li>
+        <li><a href="equipamentos.php"><i class="glyphicon glyphicon-hdd"></i> Equipamentos</a></li>
+        <li><a href="categorias.php"><i class="glyphicon glyphicon-tag"></i> Categorias</a></li>
+        <li class="active"><i class="glyphicon glyphicon-plus-sign"></i> Cadastrar categoria</li>
       </ol>
     </div>
   </div><!-- /.row -->
   <div id="steps">
-    <form role="form" id="formUsuario" name="formUsuario" action="cadUsuario.php" method="post">
+    <form role="form" id="formCategoria" name="formCategoria" action="cadCategoria.php" method="post">
       <div class="row">
         <div class="col-lg-4">
           <input type="hidden" name="acao" value="add">
           <div class="form-group">
             <label>Nome</label>
             <input class="form-control" id="nome" name="nome" required autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label>Matricula</label>
-            <input class="form-control" id="matricula" name="matricula" required autocomplete="off">
-          </div>
-          <label>Tipo de usuário</label>
-          <div class="form-group">
-            <label class="radio-inline">
-              <input type="radio" name="tipo_usuario" id="tipo_usuario2" value="2" required autocomplete="off"> Bolsista
-            </label>
-            <label class="radio-inline">
-              <input type="radio" name="tipo_usuario" id="tipo_usuario3" value="3" required autocomplete="off"> Professor
-            </label>
           </div>
         </div>
       </div><!-- /.row -->

@@ -54,7 +54,7 @@
                   </div>
                 </div>
               </div>
-              <a href="#">
+              <a href="ocorrencias.php?f=3">
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
@@ -90,7 +90,7 @@
                   </div>
                 </div>
               </div>
-              <a href="#">
+              <a href="ocorrencias.php?f=4">
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
@@ -124,7 +124,7 @@
                   </div>
                 </div>
               </div>
-              <a href="#">
+              <a href="ocorrencias.php?f=1">
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
