@@ -204,6 +204,23 @@ class Usuario extends DB {
 			}$result->free();
 		}else return ($this->db->error);
 	}
+
+
+	public function mostrarUsuarios() {
+		// Executa a query das categoria e se não houver erros realiza as ações
+		if ($result	= $this->db->query("SELECT * FROM usuario ORDER BY matricula ASC")) {
+			// Verifica se algum resultado foi retornado
+			if ($result->num_rows) {
+				$rows = $result->fetch_all(MYSQLI_ASSOC);
+				$result->free(); // Libera a variável de consulta da memória
+				return $rows;
+			}
+			else return 'Nenhum usuário foi encontrado.';
+		}
+		else return ($this->db->error);
+	}
+
+
 	/**
 	 * Gera um array com as informações dos usuários cadastrados
 	 * @return array $rows Dados dos usuários

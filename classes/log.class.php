@@ -141,6 +141,31 @@ class LOG extends DB {
 		$insert->bind_param('ssssi', $matricula, $ip, $data_hora, $frase, $resultado);
 		$insert->execute();
 	}
+
+	public function listarLogs($filtro) {
+		$sql = "SELECT * from log";
+		if ($filtro != 0 ){
+			$result = $this->db->query($sql." WHERE matricula = '".$filtro."' ORDER BY 'data_hora' ASC ");
+		} else {
+			$result	= $this->db->query($sql." ORDER BY 'data_hora' ASC ");
+		}
+		// Executa a query dos Patrimonio e se não houver erros realiza as ações
+		if ($result) {
+			// Verifica se algum resultado foi retornado
+			if ($result->num_rows) {
+				$rows				= $result->fetch_all(MYSQLI_ASSOC);
+				//$count				= $this->db->query("SELECT COUNT(num_patrimonio) FROM atrimonio");
+				//$count				= $count->fetch_row();
+				//$rows[0]['itens']	= $count[0];
+				//$rows[0]['limite']	= $limite;
+				$result->free(); // Libera a variável de consulta da memória
+				return $rows;
+			}
+			else return 'Nenhum log foi encontrado.';//Nenhum Patrimonio foi encontrado.';
+		}
+		else return ($this->db->error);
+	}
+
 	/**
 	 * TODO Auto-generated comment.
 	 */

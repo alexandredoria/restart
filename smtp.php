@@ -2,9 +2,13 @@
   include 'classes/usuario.class.php';
 include 'classes/log.class.php';
 include 'classes/ocorrencia.class.php';
+include 'classes/configuracao.class.php';
+
 $pageTitle  = "SMTP";
   include 'nucleo/cabecario.php';
   include("nucleo/barraLateral.php");
+  $configuracao = new Configuracao;
+  $seguranca_smtp = $configuracao->obterDadosDB('seguranca_smtp');
 ?>
       <div id="page-wrapper">
       <div class="row">
@@ -20,30 +24,30 @@ $pageTitle  = "SMTP";
       </ol>
     </div>
   </div><!-- /.row -->
-      <form role="form" class="validatedForm"  id="perfil" action="perfil.php" method="post">
+      <form role="form" class="validatedForm" id="perfil" action="perfil.php" method="post">
       <div class="row">
         <div class="col-lg-4">
             <input type="hidden" name="acao" value="atualiza">
             <div class="form-group">
               <label>Servidor SMTP</label>
-              <input class="form-control" id="sobrenome" name="sobrenome" required autocomplete="off">
+              <input class="form-control" id="servidor_smtp" value="<?php echo $configuracao->obterDadosDB('servidor_smtp');?>" name="servidor_smtp" required autocomplete="off">
             </div>
             <div class="form-group">
               <label>Porta SMTP</label>
-              <input type="email" class="form-control" id="email" name="email" required autocomplete="off">
+              <input type="text" class="form-control" value="<?php echo $configuracao->obterDadosDB('porta_smtp');?>" id="porta_smtp" name="porta_smtp" required autocomplete="off">
             </div>
             <div class="form-group">
               <label>Email SMTP</label>
-              <input class="form-control" type="text" id="telefone_residencial" name="telefone_residencial" data-mask="(99) 9999-9999" required autocomplete="off">
+              <input class="form-control" type="email"  value="<?php echo $configuracao->obterDadosDB('email_smtp');?>" id="email_smtp" name="email_smtp" required autocomplete="off">
             </div>
             <label>Segurança SMTP</label>
               <div class="form-group">
                     <div class="radio">
-                      <input type="radio" name="seguranca_SMTP" id="senhaRadio">
+                      <input type="radio" name="seguranca_SMTP" <?php if ($seguranca_smtp == "SSL" ){echo "checked='checked'";}?> id="seguranca_smtp">
                       <label>SSL</label>
                     </div>
                   <div class="radio">
-                    <input type="radio" name="seguranca_SMTP" id="senhaRadio">
+                    <input type="radio" name="seguranca_SMTP" id="seguranca_smtp">
                     <label>TLS</label>
                   </div>
               </div>
@@ -51,18 +55,18 @@ $pageTitle  = "SMTP";
         <div class="col-lg-4">
             <div class="form-group">
               <label>Usuário SMTP</label>
-              <input class="form-control" type="text" id="telefone_celular" name="telefone_celular" data-mask="(99) 9999-9999" required autocomplete="off">
+              <input class="form-control" type="text" id="user_smtp" name="user_smtp" value="<?php echo $configuracao->obterDadosDB('usuario_smtp');?>"  required autocomplete="off">
             </div>
             <div class="radio">
               <br>
-                <input type="radio" name="senhaRadio" id="senhaRadio" value="0" onClick="Disab(this.value)" checked>
+                <input type="radio" name="seguranca_smtp" id="seguranca_smtp" value="0" onClick="Disab(this.value)" checked>
                 <input type="hidden" id="antigasenha" name="antigasenha">
                 <label> Desejo continuar com a mesma senha SMTP</label>
             </div>
               <div class="form-group">
                   <label>
                   <div class="radio">
-                    <input type="radio" name="senhaRadio" id="senhaRadio" value="1"  onClick="Disab(this.value)">
+                    <input type="radio" name="seguranca_smtp" id="seguranca_smtp" value="1"  onClick="Disab(this.value)">
                     <input class="form-control" type="password" maxlength="10" id="novasenha" placeholder="Nova senha" name="novasenha" required autocomplete="off">
                     <input class="form-control" type="password" maxlength="10" placeholder="Confirma" id="confirma" name="confirmsenha" required autocomplete="off">
                   </div>
@@ -87,3 +91,5 @@ $pageTitle  = "SMTP";
     <script src="js/tablesorter/tables.js"></script>
   </body>
 </html>
+<?php
+unset($configuracao);?>

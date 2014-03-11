@@ -4,7 +4,7 @@ include 'classes/imagem_hd.class.php';
 include 'classes/log.class.php';
 include 'classes/ocorrencia.class.php';
 include 'classes/usuario.class.php';
-$pageTitle  = "Cadastrar imagem_hd";
+$pageTitle  = "Cadastrar imagem de disco rígido";
 include 'nucleo/cabecario.php';
 include("nucleo/barraLateral.php");
 if (($_SESSION['tipo_usuario'] != "1") && ($_SESSION['tipo_usuario'] != "2")) {

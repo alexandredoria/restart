@@ -291,7 +291,7 @@ if ($_SESSION['tipo_usuario'] == 2){
    <div class='form-group'>
    <div class='input-group'>
    <i class='glyphicon glyphicon-calendar input-group-addon'> </i>
-   <input id='data_previa' placeholder='Prévia de entrega' data-date-format='yyyy-mm-dd' name='data_previa' type='text' class='date-picker form-control' data-date-language='pt-BR' required autocomplete='off' />
+   <input id='data_previa' placeholder='Prévia de entrega' data-date-format='dd-mm-yyyy' name='data_previa' type='text' class='date-picker form-control' data-date-language='pt-BR' required autocomplete='off' />
    </div>
    </div>";
  }

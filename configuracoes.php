@@ -6,6 +6,7 @@ include 'classes/log.class.php';
   include 'classes/configuracao.class.php';
   include 'nucleo/cabecario.php';
   include("nucleo/barraLateral.php");
+  $configuracao = new Configuracao;
 ?>
       <div id="page-wrapper">
        <div class="row">
@@ -13,7 +14,7 @@ include 'classes/log.class.php';
           <h1>Configurações de sistema</h1>
         </div>
         <div class="col-lg-6" align="right">
-          <a href="DB.php"><i class="glyphicon glyphicon-home"></i> Base de dados</a> &nbsp;&nbsp;
+          <!-- <a href="DB.php"><i class="glyphicon glyphicon-home"></i> Base de dados</a> &nbsp;&nbsp;-->
           <a href="smtp.php"><i class="glyphicon glyphicon-envelope"></i> SMTP</a> &nbsp;&nbsp;
           <a href="log.php"><i class="glyphicon glyphicon-transfer"></i> Log</a> &nbsp;&nbsp;
           <a href="laboratorios.php"><i class="glyphicon glyphicon-map-marker"></i> Laboratórios</a>
@@ -33,29 +34,29 @@ include 'classes/log.class.php';
       <form role="form" class="validatedForm"  id="perfil" action="perfil.php" method="post">
       <div class="row">
         <div class="col-lg-4">
-            <div class="form-group">
-              <label>Servidor da base de dados</label>
+            <!--<div class="form-group">
+              <label>Servidor da base de dados</label>&nbsp;
             </div>
              <div class="form-group">
-              <label>Nome da base de dados</label>
+              <label>Nome da base de dados</label>&nbsp;
             </div>
             <div class="form-group">
-              <label>Usuário da base de dados</label>
+              <label>Usuário da base de dados</label>&nbsp;
+            </div> -->
+            <div class="form-group">
+              <label>Servidor SMTP</label>&nbsp;<?php echo $configuracao->obterDadosDB('servidor_smtp');?>
             </div>
             <div class="form-group">
-              <label>Servidor SMTP</label>
+              <label>Porta SMTP</label>&nbsp;<?php echo $configuracao->obterDadosDB('porta_smtp');?>
             </div>
             <div class="form-group">
-              <label>Porta SMTP</label>
+              <label>Email SMTP</label>&nbsp;<?php echo $configuracao->obterDadosDB('email_smtp');?>
             </div>
             <div class="form-group">
-              <label>Email SMTP</label>
+             <label>Segurança SMTP</label>&nbsp;<?php echo $configuracao->obterDadosDB('seguranca_smtp');?>
             </div>
             <div class="form-group">
-             <label>Segurança SMTP</label>
-            </div>
-            <div class="form-group">
-              <label>Usuário SMTP</label>
+              <label>Usuário SMTP</label>&nbsp;<?php echo $configuracao->obterDadosDB('usuario_smtp');?>
             </div>
           </div>
         <div class="col-lg-4">

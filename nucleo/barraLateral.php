@@ -53,8 +53,8 @@
               ?>
               <?php
                 if ($_SESSION['tipo_usuario'] == 1) {
-                 echo ((($pageTitle == "Relatórios")) ? "<li class='active'>" : "<li>");
-                  echo "<a href='relatorios.php'><i class='glyphicon glyphicon-file'></i> Relatórios</a></li>";
+                 //echo ((($pageTitle == "Relatórios")) ? "<li class='active'>" : "<li>");
+                  //echo "<a href='relatorios.php'><i class='glyphicon glyphicon-file'></i> Relatórios</a></li>";
                 }
               ?>
             </li>
