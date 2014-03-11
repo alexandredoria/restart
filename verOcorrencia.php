@@ -253,6 +253,20 @@ if ($solicitante == $_SESSION['matricula']) {
     </div>
     ";
   } else if ($estado_servico == 3){
+    echo "<div class='form-group'><label><i class='glyphicon glyphicon-warning-sign'></i> Defeitos encontrados</label><br>";
+    $defeitos = $ocorrencia->exibirDefeito($idOcorrencia);
+    
+    foreach ($defeitos as $row){
+      $nomeDefeito = $ocorrencia->nomeDefeito($row['Defeito_id']);
+      foreach ($nomeDefeito as $linha){
+        if ($linha['categoria'] == 1){$categoria = "Hardware";}
+        else if ($linha['categoria'] == 2){$categoria = "Software";}
+        echo $categoria." - ".$linha['detalhe']."<br>";
+      }  
+
+    }
+    
+    echo "</div>";
     echo "
     <div class='form-group'>
     <button type='submit' name='reabrir' class='btn btn-danger'>
@@ -301,17 +315,29 @@ if ($_SESSION['tipo_usuario'] == 2){
     <option value=''>Selecione um ou mais defeitos</option>";
     $def = new Defeito;
     $result = $def->listarDefeitos(0);
+    
     foreach ($result as $row) {
       echo " <option value='".$row['id']."'> ".$row['detalhe']."</option>";
-    }
+    }  
     unset($def);
     echo"
     </select>
     </div>";
   } else if ($estado_servico == 3) {
+    echo "<div class='form-group'><label><i class='glyphicon glyphicon-warning-sign'></i> Defeitos encontrados</label><br>";
+    $defeitos = $ocorrencia->exibirDefeito($idOcorrencia);
+    
+    foreach ($defeitos as $row){
+      $nomeDefeito = $ocorrencia->nomeDefeito($row['Defeito_id']);
+      foreach ($nomeDefeito as $linha){
+        if ($linha['categoria'] == 1){$categoria = "Hardware";}
+        else if ($linha['categoria'] == 2){$categoria = "Software";}
+        echo $categoria." - ".$linha['detalhe']."<br>";
+      }  
+
+    }
+    echo "</div>";
     echo "
-    <div class='form-group'>
-    </div>
     <div class='form-group'></div>";
   }
 } else if  ($bolsista_alocado != $_SESSION['matricula']){

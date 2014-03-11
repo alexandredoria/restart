@@ -181,6 +181,29 @@ class Ocorrencia extends DB {
 			}$result->free();
 		}else return ($this->db->error);
 	}
+
+	public function exibirDefeito($id) {
+		$result = $this->db->query("SELECT * FROM Ocorrencia_has_Defeito WHERE Ocorrencia_id = '$id'");
+		if ($result) {
+			if ($result->num_rows) {
+				$rows				= $result->fetch_all(MYSQLI_ASSOC);
+				$result->free();
+				return $rows;
+			}
+		}else return ($this->db->error);
+	}
+
+	public function nomeDefeito($id) {
+		$result = $this->db->query("SELECT * FROM Defeito WHERE id = '$id' ORDER by categoria");
+		if ($result) {
+			if ($result->num_rows) {
+				$rows				= $result->fetch_all(MYSQLI_ASSOC);
+				$result->free();
+				return $rows;
+			}
+		}else return ($this->db->error);
+	}
+
 	/**
 	 * Realiza a busca de um Ocorrencia na base de dados
 	 * @param string $termo O que se deseja encontrar
