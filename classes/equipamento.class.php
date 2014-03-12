@@ -163,9 +163,9 @@ class Equipamento extends DB {
 	 * @return array $rows Dados dos Equipamento
 	 */
 	public function listarEquipamentos($filtro) {
-		$sql = "SELECT e.*, c.`nome` AS nome_categoria FROM equipamento AS e INNER JOIN `categoria` AS c ON e.`Categoria_id` = c.`id` INNER JOIN `imagem_hd` AS i ON e.`Imagem_HD_id` = i.`id`";
+		$sql = "SELECT e.*, c.`nome` AS nome_categoria FROM equipamento AS e INNER JOIN `categoria` AS c ON e.`Categoria_id` = c.`id` LEFT JOIN `imagem_hd` AS i ON e.`Imagem_HD_id` = i.`id`";
 		if ($filtro != 0 ){
-			$result = $this->db->query($sql." WHERE e.`id` = '".$filtro."' ORDER BY 'id' DESC ");
+			$result = $this->db->query($sql." WHERE c.`id` = '".$filtro."' ORDER BY 'id' DESC ");
 		} else {
 			$result	= $this->db->query($sql." ORDER BY 'id' DESC ");
 		}

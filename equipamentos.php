@@ -154,7 +154,7 @@ if (!empty($_POST)) {
                   } else {$Imagem_HD_id = "Nº ".$row['Imagem_HD_id'];}
 
 
-                  if($timestampNow > $timestampvalidade){echo "<tr id='fooTr'class='danger'>";} else echo "<tr id='fooTr'>";
+                  echo "<tr id='fooTr'>";
                   echo "
                   <td ><input type='checkbox'   name='foo[]' id='foo[]' value='".$row['id']."'></td>
                   <td>
